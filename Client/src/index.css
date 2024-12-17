@@ -1,0 +1,15 @@
+*{
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+}
+
+:root{
+  --backgrounInput :#E8E8E8;
+  --blueDark: #2B3D5E;
+}
+
+
+body{
+  overflow-y:hidden; ;
+}

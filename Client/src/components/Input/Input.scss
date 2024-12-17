@@ -1,0 +1,53 @@
+
+
+.containerInput{
+        background-color: var(--backgrounInput);
+        border-radius: 8px 8px 0px 0px;
+        min-height: 55px;
+        min-width: 328px;
+        border-bottom: solid 1px rgba(0, 0, 0, 0.6);
+}
+
+
+.iconInput{
+        margin: 16px 15px;
+}
+
+input {
+        background-color: var(--backgrounInput);
+        border-color: var(--backgrounInput);
+        font-size: 16px;
+        font-weight:400;
+        letter-spacing: 0.15px;
+        font-family: Roboto;
+        height: 24px;
+}
+
+.labelInput{
+        font-family: Roboto;
+        font-weight: 400;
+        font-size: 12px;
+        letter-spacing: 0.4px;
+        color:rgba(0, 0, 0, 0.6);
+}
+
+.iconLogin{
+        justify-content: center;
+        padding-top: 32px ;
+        padding-bottom: 26px;
+}
+.formControl{
+        width: 25rem;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        margin:0 auto;
+}
+
+.lienButtom{
+        margin-top: 49px;
+        background-color: var(--blueDark);
+        height: 20px;
+        width: 100%;
+        border-radius: 20px;  
+}

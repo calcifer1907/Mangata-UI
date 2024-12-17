@@ -1,0 +1,22 @@
+import { verifyToken } from "../auth.js";
+
+// Middleware para proteger las rutas
+export const authenticate = (req, res, next) => {
+  const token = req.headers["authorization"];
+
+  if (!token) {
+    return res.status(403).json({ message: "Token no proporcionado" });
+  }
+
+  // Eliminar "Bearer " del token
+  const bearerToken = token.split(" ")[1];
+
+  const decoded = verifyToken(bearerToken);
+  if (!decoded) {
+    return res.status(403).json({ message: "Token no válido" });
+  }
+
+  // Si el token es válido, adjuntamos la información del usuario al request
+  req.user = decoded;
+  next();
+};

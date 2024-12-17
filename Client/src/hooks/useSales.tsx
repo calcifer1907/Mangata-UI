@@ -1,0 +1,33 @@
+import { useCallback, useEffect, useState } from "react";
+import { getLIstForTable } from "../utils/api/agent";
+import { format } from "@formkit/tempo";
+
+interface IProps {
+  page: string;
+}
+
+const PATH_ADMIN = "mySales";
+const PATH_EMPLOYEE = "mycommissions";
+
+export const useSales = ({ page }: IProps) => {
+  const [dataList, setDataList] = useState([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  const responseData = useCallback(async () => {
+    const body = { date: "2024-12-14" };
+    let data = [];
+    if (page.includes("admin")) {
+      data = await getLIstForTable.getListData(body, PATH_ADMIN);
+    } else {
+      data = await getLIstForTable.getListData(body, PATH_EMPLOYEE);
+    }
+    setDataList(data);
+    setLoading(false);
+  }, [page]);
+
+  useEffect(() => {
+    responseData();
+  }, [responseData]);
+
+  return { dataList, loading };
+};

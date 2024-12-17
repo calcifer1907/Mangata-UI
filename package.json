@@ -1,0 +1,15 @@
+{
+        "name": "vite-fullstack",
+        "workspaces": [
+                "Client",
+                "Server"
+        ],
+        "scripts": {
+                "dev:Client": "npm --prefix Client run dev",
+                "dev:Server": "npm --prefix Server run dev",
+                "dev": "concurrently \"npm run dev:Client\" \"npm run dev:Server\""
+        },
+        "devDependencies": {
+                "concurrently": "^8.2.2"
+        }
+}
