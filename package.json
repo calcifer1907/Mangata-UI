@@ -5,8 +5,8 @@
                 "Server"
         ],
         "scripts": {
-                "dev:Client": "npm --prefix Client run dev",
-                "dev:Server": "npm --prefix Server run dev",
+                "dev:Client": "npm --prefix Client run dev -- --host",
+                "dev:Server": "npm --prefix Server run dev -- --host",
                 "dev": "concurrently \"npm run dev:Client\" \"npm run dev:Server\""
         },
         "devDependencies": {
