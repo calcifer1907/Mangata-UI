@@ -1,54 +1,32 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from "react";
+
 import { Box, Button, Grid2, Typography } from "@mui/material";
-
-import Accompanist from "../components/Accompanist/Accompanist";
-
 import { Icon } from "@iconify/react";
-
-import React, { useState } from "react";
-
 import { format } from "@formkit/tempo";
 
 import { formatPrice } from "../generalFunctions/formaters";
-
-// import { getAccompanist } from "../utils/api/agent";
+import Accompanist from "../components/Accompanist/Accompanist";
 
 import { IFields } from "../interfaces/IAccompanist";
 
-const KEY_NAME = "name";
-const KEY_LUNCH = "lunch";
-
-/**Hooks */
-import { useAccompanist } from "../hooks/useAccompanist";
-
-/**Hooks */
-// import { useAccompanist } from "../hooks/useAccompanist";
+const PRICE = 390000;
 
 const ReservationEmployee = () => {
-  // const { valueAccompanist } = useAccompanist();
-
   const [fields, setFields] = useState<IFields[]>([
     { name: "", lunch: { label: "", value: 0 } },
   ]);
   const [errors, setErrors] = useState<{ name: boolean; lunch: boolean }[]>([]);
-
   const [isVisibleGrid, setIsVisibleGrid] = useState(false);
 
-  const { optionsLunches } = useAccompanist();
+  const optionsLunches = [
+    { value: "pizza", label: "Pizza" },
+    { value: "pasta", label: "Pasta" },
+    { value: "salad", label: "Ensalada" },
+    { value: "burger", label: "Hamburguesa" },
+  ];
 
-  const PRICE = 390000;
-
-  const validateFileds = () => {
-    const validationErros = fields.map((field) => ({
-      name: field.name === "",
-      lunch: field.lunch.label === "",
-    }));
-
-    setErrors(validationErros);
-
-    return !validationErros.some((error) => error.name || error.lunch);
-  };
-
+  // Maneja los cambios en los campos
   const handleChange = (index: number, fieldName: string, value: string) => {
     const updatedFields = [...fields];
     updatedFields[index] = { ...updatedFields[index], [fieldName]: value };
@@ -58,52 +36,35 @@ const ReservationEmployee = () => {
     const updatedErrors = [...errors];
     updatedErrors[index] = {
       ...updatedErrors[index],
-      [fieldName]: value.toString().trim() === "",
+      [fieldName]: value.trim() === "",
     };
     setErrors(updatedErrors);
   };
 
-  const handleAddAccompanist = () => {
-    if (validateFileds()) {
+  // Valida que todos los campos estén llenos
+  const validateFields = (): boolean => {
+    const validationErrors = fields.map((field) => ({
+      name: field.name.trim() === "",
+      lunch: field.lunch.label.trim() === "",
+    }));
+    setErrors(validationErrors);
+    return !validationErrors.some((error) => error.name || error.lunch);
+  };
+
+  // Agrega una nueva fila si la validación es exitosa
+  const addField = () => {
+    if (validateFields()) {
       setFields([...fields, { name: "", lunch: { label: "", value: 0 } }]);
       setErrors([...errors, { name: false, lunch: false }]);
+    } else {
+      alert("Por favor, complete todos los campos antes de agregar más.");
     }
   };
 
-  const createIDReserver = () => {
-    const indexValue = 0;
-    const personReserver = fields[indexValue].name;
-    let iniciales = personReserver
-      .split(" ")
-      .map((letter: string) => letter.charAt(0))
-      .join("");
-    const date = new Date();
-    const formatDate = format(date, "YYYYMMDDHHmmss", "en");
-    iniciales = iniciales.slice(0, 2).toUpperCase();
-    return `${iniciales}${formatDate}`;
-  };
-
-  const handleReservation = async () => {
-    const CODE_RESERVATION = createIDReserver();
-    const ID_EMPLOYEE = 1;
-    const TELEPHONE = "123456";
-    const AGREED_PRICE = "390.000";
-    const ACCOMPANIST = fields;
-    const body = {
-      CODE_RESERVATION,
-      ID_EMPLOYEE,
-      TELEPHONE,
-      AGREED_PRICE,
-      ACCOMPANIST,
-    };
-    console.log(ACCOMPANIST);
-    // const data = getAccompanist.saveReservation(body);
-    // console.log(data);
-  };
-
-  const handleRemoveField = (indexAccompanist: number) => {
-    const updatedFields = fields.filter((_, i) => i !== indexAccompanist);
-    const updatedErrors = errors.filter((_, i) => i !== indexAccompanist);
+  // Elimina una fila específica
+  const removeField = (index: number) => {
+    const updatedFields = fields.filter((_, i) => i !== index);
+    const updatedErrors = errors.filter((_, i) => i !== index);
     setFields(updatedFields);
     setErrors(updatedErrors);
   };
@@ -177,7 +138,7 @@ const ReservationEmployee = () => {
               <Button
                 size="small"
                 sx={{ textTransform: "none", fontSize: 14, color: "#FFFFFF" }}
-                onClick={handleAddAccompanist}
+                onClick={addField}
                 startIcon={
                   <Icon
                     icon="solar:user-plus-bold-duotone"
@@ -207,10 +168,21 @@ const ReservationEmployee = () => {
                   }
                   index={index}
                   handleChange={handleChange}
-                  onRemove={handleRemoveField}
+                  onRemove={removeField}
                   field={field}
                   errors={errors[index] || { name: false, lunch: false }}
                   optionsLunches={optionsLunches}
+                />
+              ))}
+              {fields.map((field, index) => (
+                <FieldRows
+                  key={index}
+                  index={index}
+                  field={field}
+                  errors={errors[index] || { name: false, lunch: false }}
+                  onChange={handleChange}
+                  onRemove={removeField}
+                  lunchOptions={lunchOptions}
                 />
               ))}
             </Box>
@@ -534,7 +506,7 @@ const ReservationEmployee = () => {
                     fontSize: 14,
                     color: { xs: "#2B3D5E", sm: "#2B3D5E", md: "#FFFFFF" },
                   }}
-                  onClick={handleReservation}
+                  // onClick={handleReservation}
                   startIcon={
                     <Box
                       component={Icon}

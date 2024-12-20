@@ -80,3 +80,12 @@ export const getListSalesAdmin = async (request, response) => {
     return response.status(500).json({ message: "sometghin gos wrong" });
   }
 };
+
+export const getMinMax = async (_request, response) => {
+  try {
+    const [row] = await pool.query("SELECT MIN,MAX FROM min_max;");
+    response.json(row[0]);
+  } catch (error) {
+    return response.status(500).json({ message: "sometghin gos wrong" });
+  }
+};

@@ -49,7 +49,7 @@ const Navbar = (props: Props) => {
       <AppBar
         component="nav"
         sx={{ background: "#2B3D5E", height: 64 }}
-        position="fixed"
+        position="sticky"
       >
         <Toolbar>
           <IconButton

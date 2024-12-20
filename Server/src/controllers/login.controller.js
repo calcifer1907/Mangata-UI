@@ -1,16 +1,14 @@
 import { pool } from "../Connection.js";
 import { comparePassword, createToken } from "../auth.js";
 
-const SQL_FIND_USER = `SELECT us.EMAIL,us.PASSWORD,CONCAT(us.FIRST_NAME," ",us.LAST_NAME) AS USER_NAME,rl.DESCRIPTION,us.ROLE_ID
+const SQL_FIND_USER = `SELECT us.ID,us.EMAIL,us.PASSWORD,CONCAT(us.FIRST_NAME," ",us.LAST_NAME) AS USER_NAME,rl.DESCRIPTION,us.ROLE_ID
   FROM Users us INNER JOIN roles rl ON rl.ID = us.ROLE_ID;`;
 
 export const getAllUser = async (request, response) => {
   const { email, password } = request.body;
   try {
     const [row] = await pool.query(SQL_FIND_USER);
-    console.log("BODY", { email, password });
     const findUser = row.find((user) => user.EMAIL === email);
-
     if (!findUser) {
       return response.status(401).json({ message: "Usuario no encontrado" });
     }
@@ -28,8 +26,11 @@ export const getAllUser = async (request, response) => {
 
     response.json({
       TOKEN: token,
-      ROLE: findUser.DESCRIPTION,
-      USER_NAME: findUser.USER_NAME,
+      USER_INFO: {
+        ROLE: findUser.DESCRIPTION,
+        USER_NAME: findUser.USER_NAME,
+        ID_EMPLOYEE: findUser.ID,
+      },
       MENU: menuRoles,
     });
   } catch (error) {

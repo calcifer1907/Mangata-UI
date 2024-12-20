@@ -20,6 +20,8 @@ export const getAccompanist = {
 export const methodUser = {
   createUser: (body: IUsers): Promise<object> =>
     requestApis.post("/api/createUser", body),
+  getUserId: (body: any): Promise<any> =>
+    requestApis.post("/api/getuserid", body),
 };
 
 interface IGetListData {

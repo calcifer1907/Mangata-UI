@@ -30,5 +30,5 @@ export const requestApis = {
     api.post(uri, body).then(responSeBody).catch(redirect),
   put: (uri: string, body: object) =>
     api.put(uri, body).then(responSeBody).catch(redirect),
-  del: (uri: string) => api.delete(uri).then(responSeBody).catch(redirect),
+  del: (uri: string) => api.delete(uri).then(responSeBody),
 };

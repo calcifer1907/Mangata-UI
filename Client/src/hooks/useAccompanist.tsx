@@ -7,6 +7,7 @@ import {
   cloneElement,
   useMemo,
   useContext,
+  FC,
 } from "react";
 
 import { getAccompanist } from "../utils/api/agent";
@@ -15,7 +16,7 @@ import { IOptions } from "../interfaces/IAccompanist";
 
 const CreateContext = createContext<any>(true);
 
-const AccompanistContext = (props: any) => {
+const AccompanistContext: FC<any> = (props) => {
   const childrenWithProps = cloneElement(props.children, {
     ...props,
     children: props.children.props.children,
@@ -50,7 +51,6 @@ const AccompanistContext = (props: any) => {
   );
 };
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const useAccompanist = () => {
   return useContext(CreateContext);
 };

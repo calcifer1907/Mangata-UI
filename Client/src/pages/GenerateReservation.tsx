@@ -10,11 +10,19 @@ import { formatPrice } from "../generalFunctions/formaters";
 const MIN = 290000;
 const MAX = 380000;
 
+interface IMinMax {
+  MIN: string;
+  MAX: string;
+}
+
 const GenerateReservation = () => {
   const [valueSlider, setValueSlider] = useState<number | number[]>(MAX);
-
+  const [minmax, setMinMax] = useState<IMinMax>({ MIN: "", MAX: "" });
   const { userInfo } = useContextUser();
-  const { USER_NAME } = userInfo;
+  const { USER_INFO } = userInfo;
+
+  // const getMinMax =
+
   const handleOnChangeSlider = (_event: Event, newValue: number | number[]) => {
     setValueSlider(newValue);
   };
@@ -113,7 +121,7 @@ const GenerateReservation = () => {
             size={256}
             style={{ width: "100%", height: "100%" }}
             viewBox={`0 0 250 250`}
-            value={`http://192.168.0.233:5173/ReservationEmployee?user=${USER_NAME}?price=${valueSlider}`}
+            value={`http://192.168.0.233:5173/ReservationEmployee/?id=${USER_INFO.ID_EMPLOYEE}&price=${valueSlider}`}
           />
         </Box>
       </Container>

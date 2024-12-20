@@ -5,7 +5,21 @@ export const getListUSers = async (request, response, next) => {
     const [row] = await pool.query("SELECT * FROM users;");
     response.json(row);
   } catch (error) {
-    next(error);
+    return response.status(500).json({ message: "sometghin gos wrong" });
+  }
+};
+
+export const getSearchUser = async (request, response) => {
+  try {
+    const { id } = request.body;
+    const [row] = await pool.query(
+      "SELECT CONCAT(FIRST_NAME,' ',LAST_NAME) AS USER_NAME FROM users WHERE ID=?;",
+      [id]
+    );
+
+    response.json(row);
+  } catch (error) {
+    return response.status(500).json({ message: "sometghin gos wrong" });
   }
 };
 
@@ -37,6 +51,6 @@ export const createUser = async (request, response, next) => {
     );
     response.json(row);
   } catch (error) {
-    next(error);
+    return response.status(500).json({ message: "sometghin gos wrong" });
   }
 };

@@ -1,41 +1,63 @@
-import React, { useState } from "react";
-import { Button, Box, Typography } from "@mui/material";
-import FieldRows from "../components/Accompanist/FieldRow";
+import React, { useCallback, useEffect, useState } from "react";
+import { Button, Box, Typography, Grid2 } from "@mui/material";
+import FieldRows from "../components/Accompanist/Accompanist";
+import { format } from "@formkit/tempo";
+import { Icon } from "@iconify/react";
+import { formatPrice } from "../generalFunctions/formaters";
+import { useSearchParams } from "react-router-dom";
 
-// Definimos los tipos
-interface Field {
-  name: string;
-  lunch: string;
-}
+import { useAccompanist } from "../hooks/useAccompanist";
 
-interface FieldError {
-  name: boolean;
-  lunch: boolean;
-}
+import {
+  IFields,
+  IErrorFieldAccompanist,
+  IOptions,
+} from "../interfaces/IAccompanist";
+import { methodUser } from "../utils/api/agent";
 
 const NameLunchForm: React.FC = () => {
-  const [fields, setFields] = useState<Field[]>([{ name: "", lunch: "" }]);
-  const [errors, setErrors] = useState<FieldError[]>([]);
+  const [fields, setFields] = useState<IFields[]>([
+    { name: "", lunch: { label: "", value: 0 } },
+  ]);
+  const [errors, setErrors] = useState<IErrorFieldAccompanist[]>([]);
+  const [isVisibleGrid, setIsVisibleGrid] = useState(false);
+  const [getUserId, setGetUserId] = useState<any>(null);
+  const [searchParams] = useSearchParams();
+  const { optionsLunches } = useAccompanist();
 
-  // Opciones de almuerzos
-  const lunchOptions = [
-    { value: "pizza", label: "Pizza" },
-    { value: "pasta", label: "Pasta" },
-    { value: "salad", label: "Ensalada" },
-    { value: "burger", label: "Hamburguesa" },
-  ];
+  const PRICE = searchParams.get("price");
 
+  const getuserId = useCallback(async () => {
+    const ID = searchParams.get("id");
+    const body = {
+      id: ID,
+    };
+    const [data] = await methodUser.getUserId(body);
+    console.log(data);
+    setGetUserId(data);
+  }, []);
+
+  useEffect(() => {
+    getuserId();
+  }, [getuserId]);
   // Maneja los cambios en los campos
-  const handleChange = (index: number, fieldName: string, value: string) => {
+  const handleChange = (
+    index: number,
+    fieldName: string,
+    value: string | IOptions
+  ) => {
     const updatedFields = [...fields];
     updatedFields[index] = { ...updatedFields[index], [fieldName]: value };
     setFields(updatedFields);
-
+    const errorValue =
+      fieldName === "name"
+        ? (value as string).trim() === ""
+        : (value as IOptions).label === "";
     // Limpiar errores al cambiar algo
     const updatedErrors = [...errors];
     updatedErrors[index] = {
       ...updatedErrors[index],
-      [fieldName]: value.trim() === "",
+      [fieldName]: errorValue,
     };
     setErrors(updatedErrors);
   };
@@ -44,7 +66,7 @@ const NameLunchForm: React.FC = () => {
   const validateFields = (): boolean => {
     const validationErrors = fields.map((field) => ({
       name: field.name.trim() === "",
-      lunch: field.lunch.trim() === "",
+      lunch: field.lunch.value === 0,
     }));
     setErrors(validationErrors);
     return !validationErrors.some((error) => error.name || error.lunch);
@@ -53,10 +75,8 @@ const NameLunchForm: React.FC = () => {
   // Agrega una nueva fila si la validación es exitosa
   const addField = () => {
     if (validateFields()) {
-      setFields([...fields, { name: "", lunch: "" }]);
+      setFields([...fields, { name: "", lunch: { label: "", value: 0 } }]);
       setErrors([...errors, { name: false, lunch: false }]);
-    } else {
-      alert("Por favor, complete todos los campos antes de agregar más.");
     }
   };
 
@@ -68,43 +88,479 @@ const NameLunchForm: React.FC = () => {
     setErrors(updatedErrors);
   };
 
-  // Envía el formulario
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    if (validateFields()) {
-      console.log("Datos enviados:", fields);
-    } else {
-      console.log("Por favor, complete todos los campos.");
-    }
+  const calculatePrice = () => {
+    const newPrice = PRICE * fields.length;
+    const FORMAT_PRICE = new Intl.NumberFormat("es-CO", {
+      style: "currency",
+      currency: "COP",
+    }).format(newPrice);
+    return FORMAT_PRICE;
+  };
+
+  const createIDReserver = () => {
+    const indexValue = 0;
+    const personReserver = fields[indexValue].name;
+    let iniciales = personReserver
+      .split(" ")
+      .map((letter: string) => letter.charAt(0))
+      .join("");
+    const date = new Date();
+    const formatDate = format(date, "YYYYMMDDHHmmss", "en");
+    iniciales = iniciales.slice(0, 2).toUpperCase();
+    return `${iniciales}${formatDate}`;
+  };
+
+  const handleReservation = async () => {
+    const CODE_RESERVATION = createIDReserver();
+    const ID_EMPLOYEE = 1;
+    const TELEPHONE = "123456";
+    const AGREED_PRICE = "390.000";
+    const ACCOMPANIST = fields;
+    const body = {
+      CODE_RESERVATION,
+      ID_EMPLOYEE,
+      TELEPHONE,
+      AGREED_PRICE,
+      ACCOMPANIST,
+    };
+    console.log(ACCOMPANIST);
+    // const data = getAccompanist.saveReservation(body);
+    // console.log(data);
   };
 
   return (
-    <Box p={4}>
-      <Typography variant="h4" gutterBottom>
-        Agregar Nombres y Almuerzos
-      </Typography>
-      <form onSubmit={handleSubmit}>
-        {fields.map((field, index) => (
-          <FieldRows
-            key={index}
-            index={index}
-            field={field}
-            errors={errors[index] || { name: false, lunch: false }}
-            onChange={handleChange}
-            onRemove={removeField}
-            lunchOptions={lunchOptions}
-          />
-        ))}
-        <Box mt={2} display="flex" gap={2}>
-          <Button variant="contained" color="primary" onClick={addField}>
-            Agregar más
-          </Button>
-          <Button type="submit" variant="contained" color="success">
-            Enviar
-          </Button>
+    <Grid2 spacing={2} container>
+      <Grid2 size={{ xs: 12, sm: 12, md: 12, lg: 6 }}>
+        <Box
+          sx={{
+            paddingInline: 4,
+            position: "relative",
+          }}
+        >
+          <Box style={{ marginBottom: 30 }}>
+            <Typography
+              sx={{ fontSize: 36, color: "#2B3D5E", fontWeight: 800 }}
+            >
+              Reserva tu día - CR728PE
+            </Typography>
+            <Box
+              style={{
+                backgroundColor: "#2B3D5E",
+                height: 6,
+                position: "absolute",
+                top: 50,
+                width: "90%",
+                left: 0,
+              }}
+            />
+            {getUserId && (
+              <h5
+                style={{
+                  fontSize: 24,
+                  fontWeight: 300,
+                  color: "#2B3D5E",
+                  marginTop: 5,
+                }}
+              >
+                Asesor: <span>{getUserId?.USER_NAME}</span>
+              </h5>
+            )}
+          </Box>
+          <Box
+            style={{
+              backgroundColor: "#2B3D5E",
+              height: 40,
+              width: 178,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: 100,
+              gap: 8,
+              marginBottom: 20,
+            }}
+          >
+            <Button
+              size="small"
+              sx={{ textTransform: "none", fontSize: 14, color: "#FFFFFF" }}
+              onClick={addField}
+              startIcon={
+                <Icon
+                  icon="solar:user-plus-bold-duotone"
+                  width="24"
+                  height="24"
+                  style={{ color: "#FFFFFF" }}
+                />
+              }
+            >
+              Agregar persona
+            </Button>
+          </Box>
+          <Box
+            sx={{
+              maxHeight: { xs: 370, sm: 370, md: 500 },
+              overflowY: "auto",
+              overflowX: "hidden",
+              height: "100%",
+            }}
+          >
+            {fields.map((field, index) => (
+              <FieldRows
+                icon={index !== 0}
+                title={
+                  index === 0 ? "Datos Personales" : `Acompañande ${index}`
+                }
+                key={index}
+                index={index}
+                field={field}
+                errors={errors[index] || { name: false, lunch: false }}
+                onChange={handleChange}
+                onRemove={removeField}
+                lunchOptions={optionsLunches}
+              />
+            ))}
+          </Box>
         </Box>
-      </form>
-    </Box>
+      </Grid2>
+      <Grid2
+        size={{ xs: 1, sm: 1 }}
+        sx={{ display: { xs: "none", sm: "none", md: "block" } }}
+      >
+        <Box
+          style={{
+            backgroundColor: "#2B3D5E",
+            height: "70%",
+            position: "relative",
+            top: 100,
+            width: 6,
+          }}
+        />
+      </Grid2>
+      <Grid2
+        component="div"
+        size={{ xs: 12, sm: 12, md: 12, lg: 5 }}
+        sx={{
+          position: {
+            xs: "absolute",
+            sm: "absolute",
+            md: "inherit",
+          },
+          bottom: { xs: 0, sm: 0, md: "inherit" },
+          borderRadius: "16px 16px 0px 0px",
+          backgroundColor: {
+            xs: "#2B3D5E",
+            sm: "#2B3D5E",
+            md: "#FFFFFF",
+            lg: "#FFFFFF",
+          },
+          zIndex: 1,
+          transform: {
+            xs: `translateY(${!isVisibleGrid ? "0" : "calc(100% - 6rem"}))`,
+            md: "translateY(0)",
+          },
+          maxHeight: { xs: 550, sm: 550 },
+          transition: "transform 0.2s",
+          overflow: "hidden",
+          cursor: "pointer",
+          width: "100%",
+          paddingBottom: 2,
+        }}
+        onClick={() => setIsVisibleGrid((prev) => !prev)}
+      >
+        <Box
+          sx={{
+            backgroundColor: "#D9D9D947",
+            width: "60%",
+            height: "3px",
+            margin: "0 auto",
+            marginTop: 1,
+            display: { xs: "block", md: "none" },
+          }}
+        />
+        <Box
+          sx={{
+            width: {
+              xs: "calc(100% - 30px)",
+              sm: "calc(100% - 30px)",
+              md: 550,
+            },
+            margin: "0 auto",
+          }}
+        >
+          <Box
+            component="img"
+            sx={{
+              content: {
+                xs: "url(http://192.168.0.233:5173/images/logoMangataWhite.png)",
+                sm: "url(http://192.168.0.233:5173/images/logoMangataWhite.png)",
+                md: "url(http://localhost:5173/images/logoMangataBlue.png)",
+              },
+              display: { xs: "none", md: "flex" },
+              margin: "0 auto",
+            }}
+            alt="Logo Mangata"
+          />
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginBottom: 4,
+                marginTop: 4,
+                gap: 2,
+              }}
+            >
+              <Box
+                component={Icon}
+                icon="solar:bill-check-bold-duotone"
+                sx={{
+                  width: "24px",
+                  height: "24px",
+                  color: { xs: "#FFFFFF", sm: "#FFFFFF", md: "#2B3D5E" },
+                }}
+              />
+
+              <Typography
+                sx={{
+                  color: { xs: "#FFFFFF", md: "#2B3D5E" },
+                  fontSize: 20,
+                  fontWeight: 800,
+                }}
+              >
+                Resumen de compra
+                {isVisibleGrid && (
+                  <Typography
+                    component="span"
+                    sx={{
+                      color: { xs: "#FFFFFF", md: "#2B3D5E" },
+                      fontSize: 14,
+                      fontWeight: 800,
+                    }}
+                  >
+                    Total: <span>{calculatePrice()}</span>
+                  </Typography>
+                )}
+              </Typography>
+            </Box>
+            <Box
+              component="img"
+              sx={{
+                content: {
+                  xs: "url(http://192.168.0.233:5173/images/logoMangataWhite.png)",
+                  sm: "url(http://192.168.0.233:5173/images/logoMangataWhite.png)",
+                },
+                width: "70px",
+                height: "70px",
+                objectFit: "cover",
+                display: { xs: "block", sm: "block", md: "flex" },
+              }}
+              alt="Logo Mangata"
+            />
+          </Box>
+          <Box>
+            <Box position="relative">
+              <Box
+                component={Icon}
+                icon="solar:suitcase-tag-bold-duotone"
+                sx={{
+                  width: "24px",
+                  height: "24px",
+                  color: { xs: "#FFFFFF", sm: "#FFFFFF", md: "#2B3D5E" },
+                  position: "absolute",
+                }}
+              />
+
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  flexDirection: "row",
+                  borderBottom: "1px solid",
+                  borderColor: { xs: "#ffff", md: "#000000" },
+                  marginInlineStart: 5,
+                  marginBottom: 2,
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography sx={{ color: { xs: "#FFFFFF", md: "#000" } }}>
+                    Paquete Estandar
+                  </Typography>
+
+                  <Box
+                    component={Icon}
+                    icon="solar:info-circle-bold-duotone"
+                    sx={{
+                      width: "24px",
+                      height: "24px",
+                      color: {
+                        xs: "#FFFFFF",
+                        sm: "#FFFFFF",
+                        md: "#2B3D5E",
+                      },
+                    }}
+                  />
+                </Box>
+                <Typography sx={{ color: { xs: "#FFFFFF", md: "#000" } }}>
+                  {formatPrice(PRICE)}
+                </Typography>
+              </Box>
+            </Box>
+            <Box position="relative" sx={{ marginBottom: 2 }}>
+              <Box
+                component={Icon}
+                icon="solar:calendar-bold-duotone"
+                sx={{
+                  width: "24px",
+                  height: "24px",
+                  color: { xs: "#FFFFFF", sm: "#FFFFFF", md: "#2B3D5E" },
+                  position: "absolute",
+                }}
+              />
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  borderBottom: "1px solid",
+                  borderColor: { xs: "#ffff", md: "#000000" },
+                  marginInlineStart: 5,
+                }}
+              >
+                <Typography sx={{ color: { xs: "#FFFFFF", md: "#000" } }}>
+                  Fecha
+                </Typography>
+                <Typography sx={{ color: { xs: "#FFFFFF", md: "#000" } }}>
+                  {format(new Date(), "DD/MM/YYYY")}
+                </Typography>
+              </Box>
+            </Box>
+            <Box position="relative" style={{ marginBottom: 16 }}>
+              <Box
+                component={Icon}
+                icon="solar:users-group-rounded-bold-duotone"
+                sx={{
+                  width: "24px",
+                  height: "24px",
+                  color: { xs: "#FFFFFF", sm: "#FFFFFF", md: "#2B3D5E" },
+                  position: "absolute",
+                }}
+              />
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  flexDirection: "row",
+                  borderBottom: "1px solid",
+                  borderColor: { xs: "#ffff", md: "#000000" },
+                  marginInlineStart: 5,
+                }}
+              >
+                <Typography sx={{ color: { xs: "#FFFFFF", md: "#000" } }}>
+                  Personas
+                </Typography>
+                <Typography sx={{ color: { xs: "#FFFFFF", md: "#000" } }}>
+                  {fields.length}
+                </Typography>
+              </Box>
+            </Box>
+            <Box position="relative" style={{ marginBottom: 16 }}>
+              <Icon
+                icon="solar:cart-large-4-bold-duotone"
+                width="24"
+                height="24"
+                style={{ color: "#2B3D5E", position: "absolute" }}
+              />
+              <Box
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  flexDirection: "row",
+                  marginInlineStart: 48,
+                }}
+              >
+                <Typography
+                  sx={{
+                    color: { xs: "#FFFFFF", md: "#2B3D5E" },
+                    fontSize: 20,
+                    fontWeight: 800,
+                  }}
+                >
+                  Total
+                </Typography>
+                <Typography
+                  sx={{
+                    color: { xs: "#FFFFFF", md: "#2B3D5E" },
+                    fontSize: 20,
+                    fontWeight: 800,
+                  }}
+                >
+                  {calculatePrice()}
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+          <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+            <Box
+              sx={{
+                backgroundColor: {
+                  xs: "#FFFFFF",
+                  sm: "#FFFFFF",
+                  md: "#2B3D5E",
+                },
+                height: 40,
+                width: 178,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: 100,
+                gap: 8,
+              }}
+            >
+              <Button
+                size="small"
+                sx={{
+                  textTransform: "none",
+                  fontSize: 14,
+                  color: { xs: "#2B3D5E", sm: "#2B3D5E", md: "#FFFFFF" },
+                }}
+                onClick={handleReservation}
+                startIcon={
+                  <Box
+                    component={Icon}
+                    icon="solar:user-plus-bold-duotone"
+                    sx={{
+                      width: "24px",
+                      height: "24px",
+                      color: {
+                        xs: "#2B3D5E",
+                        sm: "#2B3D5E",
+                        md: "#FFFFFF",
+                      },
+                    }}
+                  />
+                }
+              >
+                Reservar
+              </Button>
+            </Box>
+          </Box>
+        </Box>
+      </Grid2>
+    </Grid2>
   );
 };
 
