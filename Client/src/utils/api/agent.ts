@@ -32,3 +32,7 @@ export const getLIstForTable = {
   getListData: (body: IGetListData, uri: string): Promise<any> =>
     requestApis.post(`/api/${uri}`, body),
 };
+
+export const getMinMax = {
+  getListData: (): Promise<any> => requestApis.get(`/api/MimMax`),
+};

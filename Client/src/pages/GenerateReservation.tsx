@@ -1,5 +1,5 @@
 import { Box, Slider, Typography, Container } from "@mui/material";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { useContextUser } from "../hooks/useContextUser";
 
@@ -7,25 +7,30 @@ import QRCode from "react-qr-code";
 
 import { formatPrice } from "../generalFunctions/formaters";
 
-const MIN = 290000;
-const MAX = 380000;
+import { getMinMax } from "../utils/api/agent";
 
-interface IMinMax {
-  MIN: string;
-  MAX: string;
-}
+import { IMinMax } from "../interfaces/IAccompanist";
 
 const GenerateReservation = () => {
-  const [valueSlider, setValueSlider] = useState<number | number[]>(MAX);
-  const [minmax, setMinMax] = useState<IMinMax>({ MIN: "", MAX: "" });
+  const [valueSlider, setValueSlider] = useState<number | number[]>(0);
+  const [minmax, setMinMax] = useState<IMinMax>({ MIN: 0, MAX: 0 });
   const { userInfo } = useContextUser();
   const { USER_INFO } = userInfo;
 
-  // const getMinMax =
+  const funcMinMax = useCallback(async () => {
+    const { MIN, MAX } = await getMinMax.getListData();
+    setMinMax({ MIN: Number(MIN), MAX: Number(MAX) });
+    setValueSlider(Number(MAX));
+  }, []);
+
+  useEffect(() => {
+    funcMinMax();
+  }, [funcMinMax]);
 
   const handleOnChangeSlider = (_event: Event, newValue: number | number[]) => {
     setValueSlider(newValue);
   };
+
   return (
     <Box style={{ position: "relative", top: 64 }}>
       <Box>
@@ -85,28 +90,28 @@ const GenerateReservation = () => {
             step={5000}
             valueLabelDisplay="auto"
             shiftStep={30}
-            min={MIN}
-            max={MAX}
+            min={minmax.MIN}
+            max={390000}
             onChange={handleOnChangeSlider}
           />
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Typography
               variant="body2"
               onClick={() => {
-                setValueSlider(MIN);
+                setValueSlider(minmax.MIN);
               }}
               sx={{ cursor: "pointer" }}
             >
-              {formatPrice(MIN)} min
+              {formatPrice(minmax.MIN)} min
             </Typography>
             <Typography
               variant="body2"
               onClick={() => {
-                setValueSlider(MAX);
+                setValueSlider(minmax.MAX);
               }}
               sx={{ cursor: "pointer" }}
             >
-              {formatPrice(MAX)} max
+              {formatPrice(minmax.MAX)} max
             </Typography>
           </Box>
         </Box>

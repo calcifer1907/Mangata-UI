@@ -29,3 +29,8 @@ export interface ILunches {
   ID: number;
   DESCRIPTION: string;
 }
+
+export interface IMinMax {
+  MIN: number;
+  MAX: number;
+}
