@@ -99,7 +99,6 @@ const Accompanist: FC<IPropsAccompanist> = ({
               {...params}
               variant="filled"
               label="Elige el almuerzo"
-              placeholder="Almuerzos"
               fullWidth
               error={errors.lunch}
               helperText={errors.lunch ? "El Almuerzo es obligatorio" : ""}
