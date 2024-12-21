@@ -58,7 +58,6 @@ const ListOfCommissions = () => {
     },
   ];
 
-  console.log(loading);
   if (loading) {
     return (
       <Box sx={{ display: "grid", placeItems: "center", height: "100%" }}>
