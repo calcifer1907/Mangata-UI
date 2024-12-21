@@ -1,5 +1,13 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Button, Box, Typography, Grid2 } from "@mui/material";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  Button,
+  Box,
+  Typography,
+  Grid2,
+  Modal,
+  TextField,
+  InputAdornment,
+} from "@mui/material";
 import FieldRows from "../components/Accompanist/Accompanist";
 import { format } from "@formkit/tempo";
 import { Icon } from "@iconify/react";
@@ -13,19 +21,27 @@ import {
   IErrorFieldAccompanist,
   IOptions,
 } from "../interfaces/IAccompanist";
-import { methodUser } from "../utils/api/agent";
+import { getAccompanist, methodUser } from "../utils/api/agent";
+import { enqueueSnackbar } from "notistack";
+import { generarCodigoReservaUX } from "../generalFunctions/generateCodeReservation";
 
 const NameLunchForm: React.FC = () => {
   const [fields, setFields] = useState<IFields[]>([
     { name: "", lunch: { label: "", value: 0 } },
   ]);
+  const [valueCel, setValueCel] = useState<string>("");
   const [errors, setErrors] = useState<IErrorFieldAccompanist[]>([]);
   const [isVisibleGrid, setIsVisibleGrid] = useState(false);
   const [getUserId, setGetUserId] = useState<any>(null);
   const [searchParams] = useSearchParams();
   const { optionsLunches } = useAccompanist();
 
+  const CODE_RESERVATION = useMemo(() => {
+    return generarCodigoReservaUX();
+  }, []);
+
   const PRICE = searchParams.get("price");
+  const MIN_PRICE = searchParams.get("minPrice");
 
   const getuserId = useCallback(async () => {
     const ID = searchParams.get("id");
@@ -33,7 +49,6 @@ const NameLunchForm: React.FC = () => {
       id: ID,
     };
     const [data] = await methodUser.getUserId(body);
-    console.log(data);
     setGetUserId(data);
   }, []);
 
@@ -89,7 +104,7 @@ const NameLunchForm: React.FC = () => {
   };
 
   const calculatePrice = () => {
-    const newPrice = PRICE * fields.length;
+    const newPrice = Number(PRICE) * fields.length;
     const FORMAT_PRICE = new Intl.NumberFormat("es-CO", {
       style: "currency",
       currency: "COP",
@@ -97,35 +112,77 @@ const NameLunchForm: React.FC = () => {
     return FORMAT_PRICE;
   };
 
-  const createIDReserver = () => {
-    const indexValue = 0;
-    const personReserver = fields[indexValue].name;
-    let iniciales = personReserver
-      .split(" ")
-      .map((letter: string) => letter.charAt(0))
-      .join("");
-    const date = new Date();
-    const formatDate = format(date, "YYYYMMDDHHmmss", "en");
-    iniciales = iniciales.slice(0, 2).toUpperCase();
-    return `${iniciales}${formatDate}`;
+  const handleReservation = async () => {
+    const ID_EMPLOYEE = getUserId.ID;
+    const TELEPHONE = valueCel;
+    const AGREED_PRICE = PRICE;
+    const ACCOMPANIST = fields;
+    if (validateFields()) {
+      const body = {
+        CODE_RESERVATION,
+        ID_EMPLOYEE,
+        TELEPHONE,
+        AGREED_PRICE,
+        ACCOMPANIST,
+        MIN_PRICE,
+        CREATED_AT: format(new Date(), "YYYY-MM-DD", "en"),
+      };
+      handleClose();
+      const data = await getAccompanist.saveReservation(body);
+      if (data.message === "success") {
+        enqueueSnackbar("Se guardo correctamente la reserva", {
+          variant: "success",
+          anchorOrigin: {
+            vertical: "top",
+            horizontal: "right",
+          },
+        });
+        window.location.href = "https://www.instagram.com/mangatacartagena/";
+      }
+      console.log(data);
+    }
   };
 
-  const handleReservation = async () => {
-    const CODE_RESERVATION = createIDReserver();
-    const ID_EMPLOYEE = 1;
-    const TELEPHONE = "123456";
-    const AGREED_PRICE = "390.000";
-    const ACCOMPANIST = fields;
-    const body = {
-      CODE_RESERVATION,
-      ID_EMPLOYEE,
-      TELEPHONE,
-      AGREED_PRICE,
-      ACCOMPANIST,
-    };
-    console.log(ACCOMPANIST);
-    // const data = getAccompanist.saveReservation(body);
-    // console.log(data);
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleClose = () => setOpenModal(!openModal);
+
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    boxShadow: 24,
+    borderRadius: "16px",
+    pt: 2,
+    px: 1,
+    pb: 3,
+  };
+
+  const handleCopy = async () => {
+    const code_reserva = document.getElementById("code_reserva");
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(code_reserva?.textContent || "");
+      } else {
+        const textarea = document.createElement("textarea");
+        textarea.value = code_reserva?.textContent || "";
+        textarea.style.position = "fixed";
+        textarea.style.top = "-9999px";
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+      }
+    } catch (error) {
+      console.log("Error al copiar el codigo de reserva", error);
+      enqueueSnackbar(JSON.stringify(error), {
+        variant: "error",
+        anchorOrigin: { vertical: "top", horizontal: "right" },
+      });
+    }
   };
 
   return (
@@ -137,18 +194,18 @@ const NameLunchForm: React.FC = () => {
             position: "relative",
           }}
         >
-          <Box style={{ marginBottom: 30 }}>
+          <Box style={{ marginBottom: 20 }}>
             <Typography
-              sx={{ fontSize: 36, color: "#2B3D5E", fontWeight: 800 }}
+              sx={{ fontSize: "25px", color: "#2B3D5E", fontWeight: 800 }}
             >
-              Reserva tu día - CR728PE
+              Reserva tu día {CODE_RESERVATION}
             </Typography>
             <Box
               style={{
                 backgroundColor: "#2B3D5E",
                 height: 6,
                 position: "absolute",
-                top: 50,
+                top: 36,
                 width: "90%",
                 left: 0,
               }}
@@ -197,7 +254,7 @@ const NameLunchForm: React.FC = () => {
           </Box>
           <Box
             sx={{
-              maxHeight: { xs: 370, sm: 370, md: 500 },
+              maxHeight: { xs: 350, sm: 330, md: 500 },
               overflowY: "auto",
               overflowX: "hidden",
               height: "100%",
@@ -341,6 +398,7 @@ const NameLunchForm: React.FC = () => {
                       color: { xs: "#FFFFFF", md: "#2B3D5E" },
                       fontSize: 14,
                       fontWeight: 800,
+                      display: { xs: "block", md: "none" },
                     }}
                   >
                     Total: <span>{calculatePrice()}</span>
@@ -413,7 +471,7 @@ const NameLunchForm: React.FC = () => {
                   />
                 </Box>
                 <Typography sx={{ color: { xs: "#FFFFFF", md: "#000" } }}>
-                  {formatPrice(PRICE)}
+                  {formatPrice(Number(PRICE))}
                 </Typography>
               </Box>
             </Box>
@@ -537,7 +595,9 @@ const NameLunchForm: React.FC = () => {
                   fontSize: 14,
                   color: { xs: "#2B3D5E", sm: "#2B3D5E", md: "#FFFFFF" },
                 }}
-                onClick={handleReservation}
+                onClick={() => {
+                  if (validateFields()) setOpenModal(true);
+                }}
                 startIcon={
                   <Box
                     component={Icon}
@@ -560,6 +620,158 @@ const NameLunchForm: React.FC = () => {
           </Box>
         </Box>
       </Grid2>
+
+      <Modal
+        open={openModal}
+        onClose={handleClose}
+        aria-labelledby="parent-modal-title"
+        aria-describedby="parent-modal-description"
+      >
+        <Box sx={{ ...style, width: 400 }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "row",
+            }}
+          >
+            <h2 style={{ textAlign: "center", color: "#000000DE" }}>
+              Reserva <span id="code_reserva">{CODE_RESERVATION}</span>
+            </h2>
+            <Box onClick={handleCopy}>
+              <Icon
+                icon="solar:copy-bold-duotone"
+                width="24"
+                height="24"
+                style={{ color: "#2B3D5E" }}
+              />
+            </Box>
+          </Box>
+          <Box
+            sx={{
+              display: "block",
+              color: "#00000099",
+              fontSize: "14px",
+              px: 2,
+            }}
+          >
+            <h3>{fields[0].name}</h3>
+            <h3>{format(new Date(), "DD/MM/YYYY")}</h3>
+            <h3>{calculatePrice()}</h3>
+          </Box>
+          <Box sx={{ margin: 2 }}>
+            <TextField
+              label="Celular"
+              variant="filled"
+              type="number"
+              placeholder="Ingresa tu número de celular"
+              fullWidth
+              value={valueCel}
+              error={valueCel === ""}
+              onChange={(e) => {
+                setValueCel(e.target.value);
+              }}
+              helperText={valueCel === "" ? "Este campo es obligatorio" : ""}
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Icon
+                        icon="solar:phone-calling-rounded-bold-duotone"
+                        width="24"
+                        height="24"
+                        style={{ color: "#2B3D5E" }}
+                      />
+                    </InputAdornment>
+                  ),
+                },
+              }}
+            />
+          </Box>
+          <Box
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginTop: 2,
+            }}
+          >
+            <Box
+              sx={{
+                backgroundColor: "#B99734",
+                height: 40,
+                width: 178,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: 100,
+                gap: 8,
+              }}
+            >
+              <Button
+                size="small"
+                sx={{
+                  textTransform: "none",
+                  fontSize: 14,
+                  color: "#333333",
+                }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (valueCel) handleReservation();
+                }}
+                startIcon={
+                  <Box
+                    component={Icon}
+                    icon="solar:dollar-bold-duotone"
+                    sx={{
+                      width: "24px",
+                      height: "24px",
+                      color: "#333333",
+                    }}
+                  />
+                }
+              >
+                Confirmar
+              </Button>
+            </Box>
+            <Box
+              sx={{
+                backgroundColor: "#2B3D5E",
+                height: 40,
+                width: 178,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: 100,
+                gap: 8,
+              }}
+            >
+              <Button
+                size="small"
+                sx={{
+                  textTransform: "none",
+                  fontSize: 14,
+                  color: "#FFFFFF",
+                }}
+                onClick={() => setOpenModal(false)}
+                startIcon={
+                  <Box
+                    component={Icon}
+                    icon="solar:close-circle-bold-duotone"
+                    sx={{
+                      width: "24px",
+                      height: "24px",
+                      color: "#FFFFFF",
+                    }}
+                  />
+                }
+              >
+                Cancelar
+              </Button>
+            </Box>
+          </Box>
+        </Box>
+      </Modal>
     </Grid2>
   );
 };

@@ -2,7 +2,7 @@ import { requestApis } from "./Request";
 
 import { ILogin, IUserInfo } from "../../interfaces/ILogin";
 import { IUsers } from "../../interfaces/IUser";
-import { ILunches } from "../../interfaces/IAccompanist";
+import { ILunches, IMinMax } from "../../interfaces/IAccompanist";
 
 const URI_LOGIN = "/auth/login";
 
@@ -11,16 +11,20 @@ export const login = {
     requestApis.post(URI_LOGIN, body),
 };
 
+interface IResponseApi {
+  message: string;
+}
+
 export const getAccompanist = {
   getLunches: (): Promise<ILunches[]> => requestApis.get("/api/lunches"),
-  saveReservation: (data: object): Promise<object> =>
+  saveReservation: (data: object): Promise<IResponseApi> =>
     requestApis.post("/api/reservations", data),
 };
 
 export const methodUser = {
   createUser: (body: IUsers): Promise<object> =>
     requestApis.post("/api/createUser", body),
-  getUserId: (body: any): Promise<any> =>
+  getUserId: (body: any): Promise<IResponseApi> =>
     requestApis.post("/api/getuserid", body),
 };
 
@@ -34,5 +38,5 @@ export const getLIstForTable = {
 };
 
 export const getMinMax = {
-  getListData: (): Promise<any> => requestApis.get(`/api/MimMax`),
+  getListData: (): Promise<IMinMax> => requestApis.get(`/api/MimMax`),
 };

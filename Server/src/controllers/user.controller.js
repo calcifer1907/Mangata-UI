@@ -13,7 +13,7 @@ export const getSearchUser = async (request, response) => {
   try {
     const { id } = request.body;
     const [row] = await pool.query(
-      "SELECT CONCAT(FIRST_NAME,' ',LAST_NAME) AS USER_NAME FROM users WHERE ID=?;",
+      "SELECT CONCAT(FIRST_NAME,' ',LAST_NAME) AS USER_NAME,ID FROM users WHERE ID=?;",
       [id]
     );
 

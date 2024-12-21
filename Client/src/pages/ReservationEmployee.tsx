@@ -506,7 +506,7 @@ const ReservationEmployee = () => {
                     fontSize: 14,
                     color: { xs: "#2B3D5E", sm: "#2B3D5E", md: "#FFFFFF" },
                   }}
-                  // onClick={handleReservation}
+                  onClick={handleReservation}
                   startIcon={
                     <Box
                       component={Icon}

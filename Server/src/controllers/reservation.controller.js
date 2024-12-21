@@ -7,20 +7,32 @@ export const createReservation = async (request, response) => {
     TELEPHONE,
     AGREED_PRICE,
     ACCOMPANIST,
+    MIN_PRICE,
+    CREATED_AT,
   } = request.body;
   try {
     const [row] = await pool.query(
-      "INSERT INTO reservations(CODE_RESERVATION,ID_EMPLOYEE,TELEPHONE,AGREED_PRICE) VALUES(?,?,?,?);",
-      [CODE_RESERVATION, ID_EMPLOYEE, TELEPHONE, AGREED_PRICE]
+      "INSERT INTO reservations(CODE_RESERVATION,ID_EMPLOYEE,TELEPHONE,CURRENT_COMMISSION,COMMISSION_EMPLOYEE,CREATED_AT) VALUES(?,?,?,?,?,?);",
+      [
+        CODE_RESERVATION,
+        ID_EMPLOYEE,
+        TELEPHONE,
+        MIN_PRICE,
+        AGREED_PRICE,
+        CREATED_AT,
+      ]
     );
-    ACCOMPANIST.forEach(async (items) => {
-      await pool.query(
-        "INSERT INTO accompanist(ID_RESERVATION,NAME_ACCOMPANIST,ID_LUNCHES) VALUES(?,?,?);",
-        [CODE_RESERVATION, items.name, items.lunche]
-      );
-    });
-
-    response.status(201).json({ id: row.insertId });
+    const newAccompanist = ACCOMPANIST.map((items) => [
+      CODE_RESERVATION,
+      items.name,
+      items.lunch.value.toString(),
+    ]);
+    await pool.query(
+      "INSERT INTO accompanist(ID_RESERVATION,NAME_ACCOMPANIST,ID_LUNCHES) VALUES ?;",
+      [newAccompanist]
+    );
+    console.log(row);
+    response.status(201).json({ id: row.insertId, message: "success" });
   } catch (error) {
     console.log(error);
     return response.status(500).json({ message: "sometghin gos wrong" });
