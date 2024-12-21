@@ -24,6 +24,7 @@ import {
 import { getAccompanist, methodUser } from "../utils/api/agent";
 import { enqueueSnackbar } from "notistack";
 import { generarCodigoReservaUX } from "../generalFunctions/generateCodeReservation";
+import { IGetUserId } from "../interfaces/IUser";
 
 const NameLunchForm: React.FC = () => {
   const [fields, setFields] = useState<IFields[]>([
@@ -32,25 +33,31 @@ const NameLunchForm: React.FC = () => {
   const [valueCel, setValueCel] = useState<string>("");
   const [errors, setErrors] = useState<IErrorFieldAccompanist[]>([]);
   const [isVisibleGrid, setIsVisibleGrid] = useState(false);
-  const [getUserId, setGetUserId] = useState<any>(null);
+  const [getUserId, setGetUserId] = useState<IGetUserId | null>(null);
   const [searchParams] = useSearchParams();
-  const { optionsLunches } = useAccompanist();
+  const { optionsLunches, minmax } = useAccompanist();
 
   const CODE_RESERVATION = useMemo(() => {
     return generarCodigoReservaUX();
   }, []);
 
-  const PRICE = searchParams.get("price");
-  const MIN_PRICE = searchParams.get("minPrice");
+  const PRICES = useMemo(
+    () => ({
+      PRICE_MAX: searchParams.get("price") ?? minmax.MAX,
+      PRICE_MIN: searchParams.get("minPrice") ?? minmax.MIN,
+    }),
+    [minmax, searchParams]
+  );
+
+  const ID_EMPLO_PARAM = searchParams.get("id");
 
   const getuserId = useCallback(async () => {
-    const ID = searchParams.get("id");
     const body = {
-      id: ID,
+      id: ID_EMPLO_PARAM ?? -1,
     };
-    const [data] = await methodUser.getUserId(body);
+    const data = await methodUser.getUserId(body);
     setGetUserId(data);
-  }, []);
+  }, [ID_EMPLO_PARAM]);
 
   useEffect(() => {
     getuserId();
@@ -104,7 +111,7 @@ const NameLunchForm: React.FC = () => {
   };
 
   const calculatePrice = () => {
-    const newPrice = Number(PRICE) * fields.length;
+    const newPrice = Number(PRICES.PRICE_MAX) * fields.length;
     const FORMAT_PRICE = new Intl.NumberFormat("es-CO", {
       style: "currency",
       currency: "COP",
@@ -113,9 +120,9 @@ const NameLunchForm: React.FC = () => {
   };
 
   const handleReservation = async () => {
-    const ID_EMPLOYEE = getUserId.ID;
+    const ID_EMPLOYEE = getUserId?.ID;
     const TELEPHONE = valueCel;
-    const AGREED_PRICE = PRICE;
+    const AGREED_PRICE = PRICES.PRICE_MAX;
     const ACCOMPANIST = fields;
     if (validateFields()) {
       const body = {
@@ -124,7 +131,7 @@ const NameLunchForm: React.FC = () => {
         TELEPHONE,
         AGREED_PRICE,
         ACCOMPANIST,
-        MIN_PRICE,
+        MIN_PRICE: PRICES.PRICE_MAX,
         CREATED_AT: format(new Date(), "YYYY-MM-DD", "en"),
       };
       handleClose();
@@ -139,7 +146,6 @@ const NameLunchForm: React.FC = () => {
         });
         window.location.href = "https://www.instagram.com/mangatacartagena/";
       }
-      console.log(data);
     }
   };
 
@@ -210,7 +216,7 @@ const NameLunchForm: React.FC = () => {
                 left: 0,
               }}
             />
-            {getUserId && (
+            {ID_EMPLO_PARAM && (
               <h5
                 style={{
                   fontSize: 24,
@@ -219,7 +225,11 @@ const NameLunchForm: React.FC = () => {
                   marginTop: 5,
                 }}
               >
-                Asesor: <span>{getUserId?.USER_NAME}</span>
+                {getUserId && (
+                  <>
+                    Asesor: <span>{getUserId?.USER_NAME}</span>
+                  </>
+                )}
               </h5>
             )}
           </Box>
@@ -471,7 +481,7 @@ const NameLunchForm: React.FC = () => {
                   />
                 </Box>
                 <Typography sx={{ color: { xs: "#FFFFFF", md: "#000" } }}>
-                  {formatPrice(Number(PRICE))}
+                  {formatPrice(Number(PRICES.PRICE_MAX))}
                 </Typography>
               </Box>
             </Box>

@@ -16,8 +16,13 @@ export const getSearchUser = async (request, response) => {
       "SELECT CONCAT(FIRST_NAME,' ',LAST_NAME) AS USER_NAME,ID FROM users WHERE ID=?;",
       [id]
     );
-
-    response.json(row);
+    if (row.length === 0) {
+      const [system] = await pool.query(
+        "SELECT CONCAT(FIRST_NAME,' ',LAST_NAME) AS USER_NAME,ID FROM users WHERE CONCAT(FIRST_NAME,LAST_NAME) LIKE '%system%';"
+      );
+      return response.json(system[0]);
+    }
+    response.json(row[0]);
   } catch (error) {
     return response.status(500).json({ message: "sometghin gos wrong" });
   }

@@ -6,6 +6,6 @@ const router = Router();
 import { createUser, getSearchUser } from "../controllers/user.controller.js";
 
 router.post("/createUser", createUser);
-router.post("/getuserid", getSearchUser);
+router.post("/getuserid", hashchange, getSearchUser);
 
 export default router;

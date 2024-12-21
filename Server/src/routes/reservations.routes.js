@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.post("/reservations", createReservation);
 router.post("/mycommissions", authenticate, getListSalesEmployee);
-router.post("/mySales", getListSalesAdmin);
+router.post("/mySales", authenticate, getListSalesAdmin);
 router.get("/lunches", getLunches);
 router.get("/MimMax", getMinMax);
 

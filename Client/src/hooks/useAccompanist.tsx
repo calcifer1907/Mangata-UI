@@ -10,9 +10,9 @@ import {
   FC,
 } from "react";
 
-import { getAccompanist } from "../utils/api/agent";
+import { getAccompanist, getMinMax } from "../utils/api/agent";
 
-import { IOptions } from "../interfaces/IAccompanist";
+import { IMinMax, IOptions } from "../interfaces/IAccompanist";
 
 const CreateContext = createContext<any>(true);
 
@@ -22,6 +22,7 @@ const AccompanistContext: FC<any> = (props) => {
     children: props.children.props.children,
   });
   const [optionsLunches, setOptionsLunches] = useState<IOptions[]>([]);
+  const [minmax, setMinMax] = useState<IMinMax>({ MIN: 0, MAX: 0 });
 
   const getLunches = useCallback(async () => {
     const data = await getAccompanist.getLunches();
@@ -32,6 +33,15 @@ const AccompanistContext: FC<any> = (props) => {
     setOptionsLunches(newOptions);
   }, []);
 
+  const getMax = useCallback(async () => {
+    const { MAX, MIN } = await getMinMax.getListData();
+    setMinMax({ MIN: Number(MIN), MAX: Number(MAX) });
+  }, []);
+
+  useEffect(() => {
+    getMax();
+  }, [getMax]);
+
   useEffect(() => {
     getLunches();
   }, [getLunches]);
@@ -40,8 +50,9 @@ const AccompanistContext: FC<any> = (props) => {
     () => ({
       optionsLunches,
       setOptionsLunches,
+      minmax,
     }),
-    [optionsLunches]
+    [optionsLunches, minmax]
   );
 
   return (

@@ -11,10 +11,11 @@ const PATH_EMPLOYEE = "mycommissions";
 
 export const useSales = ({ page }: IProps) => {
   const [dataList, setDataList] = useState([]);
+
   const [loading, setLoading] = useState<boolean>(true);
 
   const responseData = useCallback(async () => {
-    const body = { date: "2024-12-14" };
+    const body = { date: format(new Date(), "YYYY-MM-DD", "co") };
     let data = [];
     if (page.includes("admin")) {
       data = await getLIstForTable.getListData(body, PATH_ADMIN);

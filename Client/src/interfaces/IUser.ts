@@ -8,3 +8,8 @@ export interface IUsers {
   is_active: boolean;
   created_at: string;
 }
+
+export interface IGetUserId {
+  ID: number;
+  USER_NAME: string;
+}
