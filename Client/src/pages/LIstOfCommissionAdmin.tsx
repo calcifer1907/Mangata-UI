@@ -1,4 +1,12 @@
-import { Box, Button, Container, Paper, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Menu,
+  MenuItem,
+  Paper,
+  Typography,
+} from "@mui/material";
 import TableUI from "../components/TableUI/TableUI";
 
 import { useSales } from "../hooks/useSales";
@@ -9,6 +17,9 @@ import { Icon } from "@iconify/react";
 import { formatPrice } from "../generalFunctions/formaters";
 
 import searchIcon from "../../src/assets/searchIcon.svg";
+
+import { IGetListSales } from "../interfaces/IUser";
+import { useEffect, useState, ChangeEvent, MouseEvent } from "react";
 
 const FORMAT_DATE = "YYYY/MM/DD";
 
@@ -73,13 +84,53 @@ const STATUS = {
   confirmada: "#46AE32",
 };
 
-const handleChangeStatus = (code: string) => {
-  console.log(code);
-};
-
 const LIstOfCommissionAdmin = () => {
   const { dataList } = useSales({ page: "admin" });
+  const [dataListFilter, setDataListFilter] = useState<IGetListSales[]>([]);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
 
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleFilterCode = () => {
+    const searchInput = document.getElementById(
+      "searchInput"
+    ) as HTMLInputElement;
+    const value = searchInput.value;
+    const filter = dataList.filter((item) =>
+      item.CODE_RESERVATION.includes(value)
+    );
+    setDataListFilter(filter);
+  };
+
+  const handleOnchange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    const filter = dataList.filter((item) =>
+      item.CODE_RESERVATION.includes(value)
+    );
+    setDataListFilter(filter.length > 0 ? filter : dataList);
+  };
+
+  const handleChangeStatus = (code: string, status: string) => {
+    const changeStatus = dataList.findIndex(
+      ({ CODE_RESERVATION }) => CODE_RESERVATION === code
+    );
+    // console.log(changeStatus, status, code);
+    dataList[changeStatus].STATUS_RESERVATION = status;
+    // handleClose();
+  };
+
+  useEffect(() => {
+    console.log(dataList);
+
+    setDataListFilter(dataList);
+  }, [dataList]);
   return (
     <Box
       sx={{
@@ -89,15 +140,11 @@ const LIstOfCommissionAdmin = () => {
     >
       <Box
         sx={{
-          display: "grid",
-          gridTemplateColumns: {
-            xs: "repeat(1, 1fr)",
-            sm: "repeat(1, 1fr)",
-            md: "repeat(1, 1fr)",
-            lg: "repeat(2, 1fr)",
-          },
+          display: "flex",
+          justifyContent: "space-between",
+          flexWrap: "wrap",
           marginBottom: 4,
-          paddingInline: "40px",
+          paddingInline: { xs: "10px", md: "40px", lg: "40px" },
           gap: 2,
         }}
       >
@@ -106,14 +153,21 @@ const LIstOfCommissionAdmin = () => {
             sx={{
               height: 48,
               backgroundColor: "#EAE7EF",
-              width: "390px",
+              width: "100%",
+              maxWidth: "390px",
+              minWidth: "200px",
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
               borderRadius: "28px",
             }}
           >
-            <input id="searchInput" type="text" placeholder="Buscar..." />
+            <input
+              id="searchInput"
+              type="text"
+              placeholder="Buscar..."
+              onChange={handleOnchange}
+            />
             <img src={searchIcon} style={{ paddingInlineEnd: "18px" }} />
           </Box>
 
@@ -136,7 +190,7 @@ const LIstOfCommissionAdmin = () => {
                 fontSize: 14,
                 color: "#FFFFFF",
               }}
-              onClick={() => {}}
+              onClick={handleFilterCode}
             >
               Buscar
             </Button>
@@ -161,7 +215,7 @@ const LIstOfCommissionAdmin = () => {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              paddingInline: 4,
+              paddingInline: { xs: "8px", sm: "16px" },
               gap: 1,
               borderRight: "1px solid #454559",
             }}
@@ -179,7 +233,7 @@ const LIstOfCommissionAdmin = () => {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              paddingInline: 4,
+              paddingInline: { xs: "8px", sm: "16px" },
               gap: 1,
               borderRight: "1px solid #454559",
             }}
@@ -197,7 +251,7 @@ const LIstOfCommissionAdmin = () => {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              paddingInline: 4,
+              paddingInline: { xs: "6px", sm: "16px" },
               gap: 1,
             }}
           >
@@ -217,10 +271,11 @@ const LIstOfCommissionAdmin = () => {
           sx={{
             display: "flex",
             flexWrap: "wrap",
+            justifyContent: "center",
             gap: 2,
           }}
         >
-          {dataList.map((item) => (
+          {dataListFilter.map((item) => (
             <Paper
               key={item.CODE_RESERVATION}
               elevation={3}
@@ -261,14 +316,51 @@ const LIstOfCommissionAdmin = () => {
                   </Typography>
                   <Typography>{item.NAME_ACCOMPANIST}</Typography>
                 </Box>
-                <Icon
-                  icon="solar:pen-new-round-bold-duotone"
-                  width={32}
-                  height={32}
-                  color="#2B3D5E"
-                  style={{ height: "100%" }}
-                  onClick={() => handleChangeStatus(item.CODE_RESERVATION)}
-                />
+                <Box sx={{ height: "100%" }}>
+                  <Button
+                    id="basic-button"
+                    aria-controls={open ? "basic-menu" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? "true" : undefined}
+                    sx={{ height: "100%" }}
+                    onClick={handleClick}
+                    startIcon={
+                      <Icon
+                        icon="solar:pen-new-round-bold-duotone"
+                        width={32}
+                        height={32}
+                        color="#2B3D5E"
+                      />
+                    }
+                  />
+                  <Menu
+                    id="basic-menu"
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    MenuListProps={{
+                      "aria-labelledby": "basic-button",
+                    }}
+                  >
+                    <MenuItem
+                      id={item.CODE_RESERVATION}
+                      onClick={(e) => {
+                        console.log(e.target.id);
+                        console.log(e);
+                        handleChangeStatus(item.CODE_RESERVATION, "confirmada");
+                      }}
+                    >
+                      Confirmar
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        handleChangeStatus(item.CODE_RESERVATION, "cancelada");
+                      }}
+                    >
+                      Cancelar
+                    </MenuItem>
+                  </Menu>
+                </Box>
               </Box>
             </Paper>
           ))}

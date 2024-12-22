@@ -27,6 +27,7 @@ const redirect = (error: any) => {
   if (error.response.status === 403) {
     // Redirecciona al login
     window.location.href = "/login";
+    localStorage.removeItem("info");
   }
   return Promise.reject(error);
 };

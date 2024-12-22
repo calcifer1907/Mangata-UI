@@ -56,8 +56,8 @@ const Login: React.FC = () => {
       <Box
         sx={{
           backgroundColor: "#2B3D5E",
-          width: 584,
-          height: 584,
+          width: "70vw",
+          height: "70vw",
           borderRadius: "50%",
         }}
       >

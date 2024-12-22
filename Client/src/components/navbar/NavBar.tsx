@@ -119,7 +119,7 @@ const Navbar = (props: Props) => {
         >
           <NavListDrawer
             handleDrawerToggle={handleDrawerToggle}
-            navItems={navItems}
+            navItems={userInfo.MENU}
           />
         </Drawer>
       </nav>
