@@ -66,26 +66,27 @@ export const getListSalesEmployee = async (request, response) => {
   }
 };
 
-const findEmployee = (users, idUser) => {
-  return users.find((user) => user.ID === idUser);
+const findEmployee = (users, idEmployee) => {
+  return users.find((user) => user.ID === idEmployee);
 };
 
 export const getListSalesAdmin = async (request, response) => {
   try {
     const { date } = request.body;
-    console.log("DATE: ", date);
     const [row] = await pool.query(
-      "SELECT CODE_RESERVATION,ID_EMPLOYEE,STATUS_RESERVATION,COMMISSION_EMPLOYEE,CURRENT_COMMISSION,CREATED_AT FROM reservations WHERE CREATED_AT=?",
+      `SELECT re.CODE_RESERVATION,re.ID_EMPLOYEE,re.STATUS_RESERVATION,re.COMMISSION_EMPLOYEE,re.CURRENT_COMMISSION,re.CREATED_AT,ac.NAME_ACCOMPANIST
+       FROM reservations re INNER JOIN accompanist ac ON ac.ID_RESERVATION = re.CODE_RESERVATION  WHERE CREATED_AT=? GROUP BY ac.ID_RESERVATION;`,
       [date]
     );
+
     const [dataUser] = await pool.query(
-      "SELECT ID,CONCAT(FIRST_NAME,' ',LAST_NAME) AS USER_NAME FROM users WHERE ROLE_ID=2;"
+      "SELECT ID,CONCAT(FIRST_NAME,' ',LAST_NAME) AS USER_NAME FROM users WHERE ROLE_ID=2 OR ROLE_ID=3;"
     );
     const diff = row.map((values, index) => ({
       ...values,
       id: index + 1,
       DIFF: values.COMMISSION_EMPLOYEE - values.CURRENT_COMMISSION,
-      EMPLOYEE: findEmployee(dataUser, values.ID_EMPLOYEE).USER_NAME,
+      EMPLOYEE: findEmployee(dataUser, values.ID_EMPLOYEE)?.USER_NAME ?? "",
     }));
     response.json(diff);
   } catch (error) {

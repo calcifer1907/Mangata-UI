@@ -1,4 +1,4 @@
-import { Box, Container } from "@mui/material";
+import { Box, Button, Container, Typography } from "@mui/material";
 import TableUI from "../components/TableUI/TableUI";
 
 import { useSales } from "../hooks/useSales";
@@ -70,9 +70,22 @@ const LIstOfCommissionAdmin = () => {
   const { dataList } = useSales({ page: "admin" });
 
   return (
-    <Box sx={{ position: "relative", top: 15, left: 20 }}>
-      <Box style={{ marginBottom: 30 }}>
-        <Box>
+    <Box
+      sx={{
+        position: "relative",
+        top: 15,
+      }}
+    >
+      <Box
+        style={{
+          marginBottom: 30,
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          paddingInline: 40,
+        }}
+      >
+        <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
           <Box
             sx={{
               height: 48,
@@ -87,8 +100,101 @@ const LIstOfCommissionAdmin = () => {
             <input id="searchInput" type="text" placeholder="Buscar..." />
             <img src={searchIcon} style={{ paddingInlineEnd: "18px" }} />
           </Box>
+
+          <Box
+            sx={{
+              backgroundColor: "#2B3D5E",
+              height: 40,
+              width: 100,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: 100,
+              gap: 10,
+            }}
+          >
+            <Button
+              size="small"
+              sx={{
+                textTransform: "none",
+                fontSize: 14,
+                color: "#FFFFFF",
+              }}
+              onClick={() => {}}
+            >
+              Buscar
+            </Button>
+          </Box>
+        </Box>
+
+        <Box
+          sx={{
+            height: 48,
+            backgroundColor: "#EAE7EF",
+            width: "auto",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            borderRadius: "28px",
+            border: "1px solid #454559",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              paddingInline: 4,
+              gap: 1,
+              borderRight: "1px solid #454559",
+            }}
+          >
+            <Icon
+              icon="solar:user-bold-duotone"
+              width={24}
+              height={24}
+              color="#7D1C80"
+            />
+            <Typography>Sin pago</Typography>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              paddingInline: 4,
+              gap: 1,
+              borderRight: "1px solid #454559",
+            }}
+          >
+            <Icon
+              icon="solar:user-bold-duotone"
+              width={24}
+              height={24}
+              color="#A93D3F"
+            />
+            <Typography>Cancelada</Typography>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              paddingInline: 4,
+              gap: 1,
+            }}
+          >
+            <Icon
+              icon="solar:user-bold-duotone"
+              width={24}
+              height={24}
+              color="#2B3D5E"
+            />
+            <Typography>Realizada</Typography>
+          </Box>
         </Box>
       </Box>
+
       <Container>
         {dataList.length > 0 && <TableUI data={dataList} columns={columns} />}
       </Container>

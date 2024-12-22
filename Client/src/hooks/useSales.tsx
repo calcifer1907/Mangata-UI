@@ -15,7 +15,8 @@ export const useSales = ({ page }: IProps) => {
   const [loading, setLoading] = useState<boolean>(true);
 
   const responseData = useCallback(async () => {
-    const body = { date: format(new Date(), "YYYY-MM-DD", "co") };
+    //format(new Date(), "YYYY-MM-DD", "co")
+    const body = { date: "2024-12-21" };
     let data = [];
     if (page.includes("admin")) {
       data = await getLIstForTable.getListData(body, PATH_ADMIN);
