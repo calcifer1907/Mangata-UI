@@ -120,6 +120,7 @@ const Navbar = (props: Props) => {
           <NavListDrawer
             handleDrawerToggle={handleDrawerToggle}
             navItems={userInfo.MENU}
+            token={userInfo.TOKEN}
           />
         </Drawer>
       </nav>

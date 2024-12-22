@@ -123,11 +123,8 @@ const LIstOfCommissionAdmin = () => {
     );
     // console.log(changeStatus, status, code);
     dataList[changeStatus].STATUS_RESERVATION = status;
-    changeStatusReservation(
-      code,
-      status,
-      format(new Date(), "YYYY-MM-DDTHH:mm:ss", "co")
-    );
+    const updated = format(new Date(), "YYYY-MM-DDTHH:mm:ss", "co");
+    changeStatusReservation(code, status, updated);
     handleClose();
   };
 
@@ -349,10 +346,10 @@ const LIstOfCommissionAdmin = () => {
                   >
                     <MenuItem
                       id={item.CODE_RESERVATION}
-                      onClick={(e) => {
-                        console.log(e.target.id);
-                        console.log(e);
+                      onClick={() => {
+                        console.log(item.CODE_RESERVATION);
                         handleChangeStatus(item.CODE_RESERVATION, "confirmada");
+                        return item.CODE_RESERVATION;
                       }}
                     >
                       Confirmar

@@ -7,6 +7,7 @@ import CreateUser from "./pages/CreateUser";
 import ReservationEmployee from "./pages/ContainerContextReservation";
 import ListOfCommissionsEmployee from "./pages/ListOfCommissionsEmployee";
 import LIstOFCommissionAdmin from "./pages/LIstOfCommissionAdmin";
+import Logout from "./pages/Logout";
 
 // import About from './pages/About';
 // import Services from './pages/Services';
@@ -36,8 +37,8 @@ const App: React.FC = () => {
               element={<ListOfCommissionsEmployee />}
             />
             <Route path="/Reservations" element={<LIstOFCommissionAdmin />} />
-
             <Route path="/Login" element={<Login />} />
+            <Route path="/Logout" element={<Logout />} />
           </Routes>
         </Box>
       </ContextUser>
