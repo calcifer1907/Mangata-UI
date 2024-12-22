@@ -2,6 +2,8 @@ import { useCallback, useEffect, useState } from "react";
 import { getLIstForTable } from "../utils/api/agent";
 import { format } from "@formkit/tempo";
 
+import { IGetListSales } from "../interfaces/IUser";
+
 interface IProps {
   page: string;
 }
@@ -10,14 +12,14 @@ const PATH_ADMIN = "mySales";
 const PATH_EMPLOYEE = "mycommissions";
 
 export const useSales = ({ page }: IProps) => {
-  const [dataList, setDataList] = useState([]);
+  const [dataList, setDataList] = useState<IGetListSales[]>([]);
 
   const [loading, setLoading] = useState<boolean>(true);
 
   const responseData = useCallback(async () => {
     //format(new Date(), "YYYY-MM-DD", "co")
     const body = { date: "2024-12-21" };
-    let data = [];
+    let data: IGetListSales[] = [];
     if (page.includes("admin")) {
       data = await getLIstForTable.getListData(body, PATH_ADMIN);
     } else {

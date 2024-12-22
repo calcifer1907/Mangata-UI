@@ -1,7 +1,12 @@
 import { requestApis } from "./Request";
 
 import { ILogin, IUserInfo } from "../../interfaces/ILogin";
-import { IGetUserId, IUsers } from "../../interfaces/IUser";
+import {
+  IGetUserId,
+  IUsers,
+  IGetListSales,
+  IGetListData,
+} from "../../interfaces/IUser";
 import { ILunches, IMinMax } from "../../interfaces/IAccompanist";
 
 const URI_LOGIN = "/auth/login";
@@ -24,16 +29,12 @@ export const getAccompanist = {
 export const methodUser = {
   createUser: (body: IUsers): Promise<IResponseApi> =>
     requestApis.post("/api/createUser", body),
-  getUserId: (body: any): Promise<IGetUserId> =>
+  getUserId: (body: { date: string }): Promise<IGetUserId> =>
     requestApis.post("/api/getuserid", body),
 };
 
-interface IGetListData {
-  date: string;
-}
-
 export const getLIstForTable = {
-  getListData: (body: IGetListData, uri: string): Promise<any> =>
+  getListData: (body: IGetListData, uri: string): Promise<IGetListSales[]> =>
     requestApis.post(`/api/${uri}`, body),
 };
 
