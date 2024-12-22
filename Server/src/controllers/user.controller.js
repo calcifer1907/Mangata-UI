@@ -54,7 +54,7 @@ export const createUser = async (request, response, next) => {
         created_at,
       ]
     );
-    response.json(row);
+    response.json({ message: "success" });
   } catch (error) {
     return response.status(500).json({ message: "sometghin gos wrong" });
   }

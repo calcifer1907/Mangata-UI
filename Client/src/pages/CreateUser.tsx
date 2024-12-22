@@ -22,6 +22,9 @@ import { enqueueSnackbar } from "notistack";
 import { format } from "@formkit/tempo";
 
 import { methodUser } from "../utils/api/agent";
+import { hashPassword } from "../generalFunctions/auth";
+
+import { useNavigate } from "react-router-dom";
 
 const CreateUser = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -37,22 +40,25 @@ const CreateUser = () => {
     },
   });
 
+  const navigation = useNavigate();
+
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
       const newData = data;
       newData.is_active = 1;
       newData.created_at = format(new Date(), "YYYY/MM/DD");
+      newData.password = hashPassword(data.password);
       const response = await methodUser.createUser(newData as IUsers);
-      console.log(response);
-      enqueueSnackbar("Se guardo correctamente el usurio", {
-        variant: "success",
-        anchorOrigin: {
-          vertical: "top",
-          horizontal: "right",
-        },
-      });
-      reset();
-      //   navigation("/home");
+      if (response.message === "success") {
+        enqueueSnackbar("Se guardo correctamente el usurio", {
+          variant: "success",
+          anchorOrigin: {
+            vertical: "top",
+            horizontal: "right",
+          },
+        });
+        reset();
+      }
     } catch (e: any) {
       if (e.status === 409) {
         const { response } = e;
@@ -64,7 +70,7 @@ const CreateUser = () => {
           },
         });
       }
-      //   navigation("/Login");
+      navigation("/Login");
     }
   };
 
@@ -94,8 +100,8 @@ const CreateUser = () => {
       <Box
         sx={{
           backgroundColor: "#2B3D5E",
-          width: 650,
-          height: 650,
+          width: "74vw",
+          height: "74vw",
           borderRadius: "50%",
         }}
       >
@@ -105,6 +111,8 @@ const CreateUser = () => {
             justifyContent: "center",
             placeItems: "center",
             height: "100%",
+            width: "50%",
+            margin: "auto",
           }}
         >
           <Box
@@ -113,7 +121,6 @@ const CreateUser = () => {
             noValidate
             sx={{
               mt: 2,
-              width: "22rem",
             }}
           >
             <Controller
@@ -230,37 +237,39 @@ const CreateUser = () => {
               )}
             />
 
-            <Controller
-              name="account_bank"
-              control={control}
-              render={({ field, fieldState }) => (
-                <TextField
-                  {...field}
-                  fullWidth
-                  type="number"
-                  label="Cuenta banco"
-                  variant="filled"
-                  margin="normal"
-                  slotProps={{
-                    input: {
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <Icon
-                            icon="solar:key-minimalistic-square-bold-duotone"
-                            width="24"
-                            height="24"
-                            style={{ color: "#2B3D5E" }}
-                          />
-                        </InputAdornment>
-                      ),
-                    },
-                  }}
-                  sx={{ background: "#FFFFFF", borderRadius: "8px 8px 0 0" }}
-                  error={!!fieldState.error}
-                  helperText={fieldState.error?.message}
-                />
-              )}
-            />
+            {selectRole === "Empleado" && selectRole && (
+              <Controller
+                name="account_bank"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <TextField
+                    {...field}
+                    fullWidth
+                    type="number"
+                    label="Cuenta banco"
+                    variant="filled"
+                    margin="normal"
+                    slotProps={{
+                      input: {
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <Icon
+                              icon="solar:key-minimalistic-square-bold-duotone"
+                              width="24"
+                              height="24"
+                              style={{ color: "#2B3D5E" }}
+                            />
+                          </InputAdornment>
+                        ),
+                      },
+                    }}
+                    sx={{ background: "#FFFFFF", borderRadius: "8px 8px 0 0" }}
+                    error={!!fieldState.error}
+                    helperText={fieldState.error?.message}
+                  />
+                )}
+              />
+            )}
 
             <Controller
               name="password"
@@ -355,11 +364,16 @@ const CreateUser = () => {
                   }}
                   value={value}
                   onChange={(
-                    event: React.ChangeEvent<HTMLInputElement>,
-                    child: React.ReactNode
+                    event: React.ChangeEvent<
+                      HTMLInputElement | HTMLTextAreaElement
+                    >
                   ) => {
-                    const { props } = child as React.ReactElement;
-                    setSelectRole(props.children as string);
+                    const selectedRole = roles.find(
+                      (role) => role.value === Number(event.target.value)
+                    );
+                    if (selectedRole) {
+                      setSelectRole(selectedRole.label);
+                    }
                     onChange(event.target.value);
                   }}
                 >
