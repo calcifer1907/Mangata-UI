@@ -4,8 +4,10 @@ import TableUI from "../components/TableUI/TableUI";
 import { useSales } from "../hooks/useSales";
 import { GridColDef } from "@mui/x-data-grid";
 import { format } from "@formkit/tempo";
-
+import { Icon } from "@iconify/react";
 import { formatPrice } from "../generalFunctions/formaters";
+
+import searchIcon from "../../src/assets/searchIcon.svg";
 
 const FORMAT_DATE = "YYYY-MM-DD";
 
@@ -68,28 +70,24 @@ const LIstOfCommissionAdmin = () => {
   const { dataList } = useSales({ page: "admin" });
 
   return (
-    <Box sx={{ position: "relative", top: 70 }}>
-      <Box style={{ marginTop: 28, marginBottom: 30 }}>
-        <h2
-          style={{
-            fontSize: 36,
-            color: "#2B3D5E",
-            fontWeight: 800,
-            paddingInlineStart: 15,
-          }}
-        >
-          Reservas
-        </h2>
-        <Box
-          style={{
-            backgroundColor: "#2B3D5E",
-            height: 6,
-            position: "absolute",
-            top: 50,
-            width: "85%",
-            left: 0,
-          }}
-        />
+    <Box sx={{ position: "relative", top: 15, left: 20 }}>
+      <Box style={{ marginBottom: 30 }}>
+        <Box>
+          <Box
+            sx={{
+              height: 48,
+              backgroundColor: "#EAE7EF",
+              width: "390px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              borderRadius: "28px",
+            }}
+          >
+            <input id="searchInput" type="text" placeholder="Buscar..." />
+            <img src={searchIcon} style={{ paddingInlineEnd: "18px" }} />
+          </Box>
+        </Box>
       </Box>
       <Container>
         {dataList.length > 0 && <TableUI data={dataList} columns={columns} />}
