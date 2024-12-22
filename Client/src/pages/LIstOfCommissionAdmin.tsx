@@ -85,7 +85,7 @@ const STATUS = {
 };
 
 const LIstOfCommissionAdmin = () => {
-  const { dataList } = useSales({ page: "admin" });
+  const { dataList, changeStatusReservation } = useSales({ page: "admin" });
   const [dataListFilter, setDataListFilter] = useState<IGetListSales[]>([]);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -123,7 +123,12 @@ const LIstOfCommissionAdmin = () => {
     );
     // console.log(changeStatus, status, code);
     dataList[changeStatus].STATUS_RESERVATION = status;
-    // handleClose();
+    changeStatusReservation(
+      code,
+      status,
+      format(new Date(), "YYYY-MM-DDTHH:mm:ss", "co")
+    );
+    handleClose();
   };
 
   useEffect(() => {

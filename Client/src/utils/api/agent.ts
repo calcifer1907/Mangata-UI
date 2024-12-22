@@ -41,3 +41,14 @@ export const getLIstForTable = {
 export const getMinMax = {
   getListData: (): Promise<IMinMax> => requestApis.get(`/api/MimMax`),
 };
+
+interface IBodyChangeStatus {
+  id: string;
+  status: string;
+  updated: string;
+}
+
+export const getAdmin = {
+  changeStatus: (body: IBodyChangeStatus): Promise<any> =>
+    requestApis.post(`/api/changeStatusReservation`, body),
+};

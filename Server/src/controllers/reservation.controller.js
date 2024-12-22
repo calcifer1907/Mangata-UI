@@ -102,3 +102,18 @@ export const getMinMax = async (_request, response) => {
     return response.status(500).json({ message: "sometghin gos wrong" });
   }
 };
+
+export const changeStatusReservation = async (request, response) => {
+  try {
+    const { id, status, updated } = request.body;
+    const [row] = await pool.query(
+      "UPDATE reservations SET STATUS_RESERVATION=?,UPDATED_AT=? WHERE CODE_RESERVATION=?;",
+      [status, updated, id]
+    );
+
+    response.json(row[0]);
+  } catch (error) {
+    console.log(error);
+    return response.status(500).json({ message: "sometghin gos wrong" });
+  }
+};
