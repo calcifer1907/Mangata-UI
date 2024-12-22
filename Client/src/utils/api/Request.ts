@@ -22,11 +22,20 @@ api.interceptors.request.use(
   }
 );
 
-const redirect = () => (window.location.href = "/");
+const redirect = (error: any) => {
+  console.log(error);
+  if (error.response.status === 403) {
+    // Redirecciona al login
+    window.location.href = "/login";
+  }
+  return Promise.reject(error);
+};
 
 export const requestApis = {
-  get: (uri: string) => api.get(uri).then(responSeBody),
-  post: (uri: string, body: object) => api.post(uri, body).then(responSeBody),
-  put: (uri: string, body: object) => api.put(uri, body).then(responSeBody),
-  del: (uri: string) => api.delete(uri).then(responSeBody),
+  get: (uri: string) => api.get(uri).then(responSeBody).catch(redirect),
+  post: (uri: string, body: object) =>
+    api.post(uri, body).then(responSeBody).catch(redirect),
+  put: (uri: string, body: object) =>
+    api.put(uri, body).then(responSeBody).catch(redirect),
+  del: (uri: string) => api.delete(uri).then(responSeBody).catch(redirect),
 };

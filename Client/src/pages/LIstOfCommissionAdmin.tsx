@@ -1,15 +1,16 @@
-import { Box, Button, Container, Typography } from "@mui/material";
+import { Box, Button, Container, Paper, Typography } from "@mui/material";
 import TableUI from "../components/TableUI/TableUI";
 
 import { useSales } from "../hooks/useSales";
 import { GridColDef } from "@mui/x-data-grid";
 import { format } from "@formkit/tempo";
 import { Icon } from "@iconify/react";
+
 import { formatPrice } from "../generalFunctions/formaters";
 
 import searchIcon from "../../src/assets/searchIcon.svg";
 
-const FORMAT_DATE = "YYYY-MM-DD";
+const FORMAT_DATE = "YYYY/MM/DD";
 
 const columns: GridColDef[] = [
   {
@@ -66,6 +67,16 @@ const columns: GridColDef[] = [
   },
 ];
 
+const STATUS = {
+  pendiente: "#7D1C80",
+  cancelada: "#A93D3F",
+  confirmada: "#46AE32",
+};
+
+const handleChangeStatus = (code: string) => {
+  console.log(code);
+};
+
 const LIstOfCommissionAdmin = () => {
   const { dataList } = useSales({ page: "admin" });
 
@@ -77,12 +88,17 @@ const LIstOfCommissionAdmin = () => {
       }}
     >
       <Box
-        style={{
-          marginBottom: 30,
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          paddingInline: 40,
+        sx={{
+          display: "grid",
+          gridTemplateColumns: {
+            xs: "repeat(1, 1fr)",
+            sm: "repeat(1, 1fr)",
+            md: "repeat(1, 1fr)",
+            lg: "repeat(2, 1fr)",
+          },
+          marginBottom: 4,
+          paddingInline: "40px",
+          gap: 2,
         }}
       >
         <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
@@ -137,6 +153,7 @@ const LIstOfCommissionAdmin = () => {
             alignItems: "center",
             borderRadius: "28px",
             border: "1px solid #454559",
+            maxWidth: 520,
           }}
         >
           <Box
@@ -188,15 +205,76 @@ const LIstOfCommissionAdmin = () => {
               icon="solar:user-bold-duotone"
               width={24}
               height={24}
-              color="#2B3D5E"
+              color="#46AE32"
             />
-            <Typography>Realizada</Typography>
+            <Typography>Confirmada</Typography>
           </Box>
         </Box>
       </Box>
 
       <Container>
-        {dataList.length > 0 && <TableUI data={dataList} columns={columns} />}
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 2,
+          }}
+        >
+          {dataList.map((item) => (
+            <Paper
+              key={item.CODE_RESERVATION}
+              elevation={3}
+              sx={{
+                display: "flex",
+                gap: 2,
+                width: "auto",
+                height: "auto",
+                flexWrap: "wrap",
+                backgroundColor: "#E5E1E9",
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  paddingInline: "16px",
+                  paddingBlock: "8px",
+                  gap: 2,
+                }}
+              >
+                <Icon
+                  icon="solar:user-bold-duotone"
+                  width={32}
+                  height={32}
+                  color={STATUS[item.STATUS_RESERVATION as keyof typeof STATUS]}
+                  style={{ height: "100%" }}
+                />
+                <Box>
+                  <Typography sx={{ fontWeight: 600 }}>
+                    {item.CODE_RESERVATION}
+                  </Typography>
+                  <Typography>
+                    {format(item.CREATED_AT, FORMAT_DATE, "co")}-{" "}
+                    <Typography component="span" sx={{ fontWeight: 600 }}>
+                      {formatPrice(Number(item.COMMISSION_EMPLOYEE))}
+                    </Typography>
+                  </Typography>
+                  <Typography>{item.NAME_ACCOMPANIST}</Typography>
+                </Box>
+                <Icon
+                  icon="solar:pen-new-round-bold-duotone"
+                  width={32}
+                  height={32}
+                  color="#2B3D5E"
+                  style={{ height: "100%" }}
+                  onClick={() => handleChangeStatus(item.CODE_RESERVATION)}
+                />
+              </Box>
+            </Paper>
+          ))}
+        </Box>
+
+        {/* {dataList.length > 0 && <TableUI data={dataList} columns={columns} />} */}
       </Container>
     </Box>
   );
