@@ -144,7 +144,7 @@ const NameLunchForm: React.FC = () => {
             horizontal: "right",
           },
         });
-        window.location.href = "https://www.instagram.com/mangatacartagena/";
+        // window.location.href = "https://www.instagram.com/mangatacartagena/";
       }
     }
   };

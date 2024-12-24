@@ -12,13 +12,14 @@ const PATH_ADMIN = "mySales";
 const PATH_EMPLOYEE = "mycommissions";
 
 export const useSales = ({ page }: IProps) => {
+  const today = format(new Date(), "YYYY-MM-DD", "co");
   const [dataList, setDataList] = useState<IGetListSales[]>([]);
-
-  const [loading, setLoading] = useState<boolean>(true);
+  const [dateChange, setDateChange] = useState<string>(today);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const responseData = useCallback(async () => {
-    //format(new Date(), "YYYY-MM-DD", "co")
-    const body = { date: "2024-12-21" };
+    const body = { date: dateChange };
+    setLoading(true);
     let data: IGetListSales[] = [];
     if (page.includes("admin")) {
       data = await getLIstForTable.getListData(body, PATH_ADMIN);
@@ -27,7 +28,7 @@ export const useSales = ({ page }: IProps) => {
     }
     setDataList(data);
     setLoading(false);
-  }, [page]);
+  }, [page, dateChange]);
 
   const changeStatusReservation = async (
     id: string,
@@ -42,5 +43,11 @@ export const useSales = ({ page }: IProps) => {
     responseData();
   }, [responseData]);
 
-  return { dataList, loading, changeStatusReservation };
+  return {
+    dataList,
+    loading,
+    changeStatusReservation,
+    setDateChange,
+    dateChange,
+  };
 };

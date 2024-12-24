@@ -1,10 +1,13 @@
 import {
   Box,
   Button,
+  CircularProgress,
   Container,
+  InputAdornment,
   Menu,
   MenuItem,
   Paper,
+  TextField,
   Typography,
 } from "@mui/material";
 import TableUI from "../components/TableUI/TableUI";
@@ -85,13 +88,27 @@ const STATUS = {
 };
 
 const LIstOfCommissionAdmin = () => {
-  const { dataList, changeStatusReservation } = useSales({ page: "admin" });
+  const {
+    dataList,
+    changeStatusReservation,
+    loading,
+    dateChange,
+    setDateChange,
+  } = useSales({
+    page: "admin",
+  });
+
+  const [maxHeight, setMaxHeight] = useState<number>(window.innerHeight);
   const [dataListFilter, setDataListFilter] = useState<IGetListSales[]>([]);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
   const open = Boolean(anchorEl);
 
-  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+  const [codeRe, setCodeRe] = useState<string>("");
+
+  const handleClick = (event: MouseEvent<HTMLButtonElement>, code: string) => {
     setAnchorEl(event.currentTarget);
+    setCodeRe(code);
   };
 
   const handleClose = () => {
@@ -117,35 +134,46 @@ const LIstOfCommissionAdmin = () => {
     setDataListFilter(filter.length > 0 ? filter : dataList);
   };
 
-  const handleChangeStatus = (code: string, status: string) => {
+  const handleChangeStatus = (status: string) => {
     const changeStatus = dataList.findIndex(
-      ({ CODE_RESERVATION }) => CODE_RESERVATION === code
+      ({ CODE_RESERVATION }) => CODE_RESERVATION === codeRe
     );
     // console.log(changeStatus, status, code);
     dataList[changeStatus].STATUS_RESERVATION = status;
     const updated = format(new Date(), "YYYY-MM-DDTHH:mm:ss", "co");
-    changeStatusReservation(code, status, updated);
+    changeStatusReservation(codeRe, status, updated);
     handleClose();
   };
 
   useEffect(() => {
-    console.log(dataList);
-
     setDataListFilter(dataList);
   }, [dataList]);
+
+  const updateMaxHeight = () => {
+    setMaxHeight(window.innerHeight); // Usamos el alto del viewport
+  };
+
+  useEffect(() => {
+    // Actualizar al cargar
+    updateMaxHeight();
+
+    // Escuchar cambios de tamaño del viewport
+    window.addEventListener("resize", updateMaxHeight);
+
+    // Limpiar el listener al desmontar el componente
+    return () => {
+      window.removeEventListener("resize", updateMaxHeight);
+    };
+  }, []);
+
   return (
-    <Box
-      sx={{
-        position: "relative",
-        top: 15,
-      }}
-    >
+    <Box>
       <Box
         sx={{
           display: "flex",
           justifyContent: "space-between",
           flexWrap: "wrap",
-          marginBottom: 4,
+          marginBottom: 2,
           paddingInline: { xs: "10px", md: "40px", lg: "40px" },
           gap: 2,
         }}
@@ -267,8 +295,54 @@ const LIstOfCommissionAdmin = () => {
           </Box>
         </Box>
       </Box>
-
-      <Container>
+      <Box
+        sx={{
+          paddingInline: { xs: "10px", md: "40px", lg: "40px" },
+          height: "56px",
+          marginBottom: 2,
+          maxWidth: "390px",
+          minWidth: "200px",
+        }}
+      >
+        <TextField
+          fullWidth
+          label="Fecha"
+          variant="filled"
+          margin="none"
+          type="date"
+          value={dateChange}
+          onChange={(e) => setDateChange(e.target.value)}
+          slotProps={{
+            input: {
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Icon
+                    icon="solar:calendar-bold-duotone"
+                    width="24"
+                    height="24"
+                    style={{ color: "#2B3D5E" }}
+                  />
+                </InputAdornment>
+              ),
+            },
+          }}
+          InputLabelProps={{
+            shrink: true, // Asegura que la etiqueta permanezca arriba
+          }}
+          sx={{
+            background: "#FFFFFF",
+            borderRadius: "8px 8px 0 0",
+          }}
+        />
+      </Box>
+      <Container
+        sx={{
+          height: "auto",
+          overflowY: "auto",
+          maxHeight: maxHeight - 250,
+          paddingBottom: 1,
+        }}
+      >
         <Box
           sx={{
             display: "flex",
@@ -277,95 +351,115 @@ const LIstOfCommissionAdmin = () => {
             gap: 2,
           }}
         >
-          {dataListFilter.map((item) => (
-            <Paper
-              key={item.CODE_RESERVATION}
-              elevation={3}
+          {loading ? (
+            <Box
               sx={{
-                display: "flex",
-                gap: 2,
-                width: "auto",
-                height: "auto",
-                flexWrap: "wrap",
-                backgroundColor: "#E5E1E9",
+                position: "absolute",
+                letf: "50%",
+                top: "50%",
+                transform: "translate(-50%,-50%)",
               }}
             >
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  paddingInline: "16px",
-                  paddingBlock: "8px",
-                  gap: 2,
-                }}
-              >
-                <Icon
-                  icon="solar:user-bold-duotone"
-                  width={32}
-                  height={32}
-                  color={STATUS[item.STATUS_RESERVATION as keyof typeof STATUS]}
-                  style={{ height: "100%" }}
-                />
-                <Box>
-                  <Typography sx={{ fontWeight: 600 }}>
-                    {item.CODE_RESERVATION}
-                  </Typography>
-                  <Typography>
-                    {format(item.CREATED_AT, FORMAT_DATE, "co")}-{" "}
-                    <Typography component="span" sx={{ fontWeight: 600 }}>
-                      {formatPrice(Number(item.COMMISSION_EMPLOYEE))}
-                    </Typography>
-                  </Typography>
-                  <Typography>{item.NAME_ACCOMPANIST}</Typography>
-                </Box>
-                <Box sx={{ height: "100%" }}>
-                  <Button
-                    id="basic-button"
-                    aria-controls={open ? "basic-menu" : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? "true" : undefined}
-                    sx={{ height: "100%" }}
-                    onClick={handleClick}
-                    startIcon={
-                      <Icon
-                        icon="solar:pen-new-round-bold-duotone"
-                        width={32}
-                        height={32}
-                        color="#2B3D5E"
-                      />
-                    }
-                  />
-                  <Menu
-                    id="basic-menu"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    MenuListProps={{
-                      "aria-labelledby": "basic-button",
+              <CircularProgress />
+            </Box>
+          ) : (
+            <>
+              {dataListFilter.map((item) => (
+                <Paper
+                  key={item.CODE_RESERVATION}
+                  elevation={3}
+                  sx={{
+                    display: "flex",
+                    gap: 2,
+                    width: "auto",
+                    height: "auto",
+                    flexWrap: "wrap",
+                    backgroundColor: "#E5E1E9",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      paddingBlock: "8px",
+                      gap: 2,
                     }}
                   >
-                    <MenuItem
-                      id={item.CODE_RESERVATION}
-                      onClick={() => {
-                        console.log(item.CODE_RESERVATION);
-                        handleChangeStatus(item.CODE_RESERVATION, "confirmada");
-                        return item.CODE_RESERVATION;
-                      }}
-                    >
-                      Confirmar
-                    </MenuItem>
-                    <MenuItem
-                      onClick={() => {
-                        handleChangeStatus(item.CODE_RESERVATION, "cancelada");
-                      }}
-                    >
-                      Cancelar
-                    </MenuItem>
-                  </Menu>
-                </Box>
-              </Box>
-            </Paper>
-          ))}
+                    <Icon
+                      icon="solar:user-bold-duotone"
+                      width={32}
+                      height={32}
+                      color={
+                        STATUS[item.STATUS_RESERVATION as keyof typeof STATUS]
+                      }
+                      style={{ height: "100%" }}
+                    />
+                    <Box>
+                      <Typography sx={{ fontWeight: 600 }}>
+                        {item.CODE_RESERVATION}
+                      </Typography>
+                      <Typography>
+                        {format(item.CREATED_AT, FORMAT_DATE, "co")}-{" "}
+                        <Typography component="span" sx={{ fontWeight: 600 }}>
+                          {formatPrice(Number(item.COMMISSION_EMPLOYEE))}
+                        </Typography>
+                      </Typography>
+                      <Typography>{item.NAME_ACCOMPANIST}</Typography>
+                    </Box>
+                    {
+                      <Box sx={{ height: "100%" }}>
+                        <Button
+                          id="basic-button"
+                          aria-controls={open ? "basic-menu" : undefined}
+                          aria-haspopup="true"
+                          aria-expanded={open ? "true" : undefined}
+                          sx={{ height: "100%" }}
+                          onClick={(e) => {
+                            if (item.STATUS_RESERVATION !== "confirmada")
+                              handleClick(e, item.CODE_RESERVATION);
+                          }}
+                          startIcon={
+                            <Icon
+                              icon={
+                                item.STATUS_RESERVATION !== "confirmada"
+                                  ? "solar:pen-new-round-bold-duotone"
+                                  : "solar:unread-bold-duotone"
+                              }
+                              width={32}
+                              height={32}
+                              color="#2B3D5E"
+                            />
+                          }
+                        />
+                        <Menu
+                          id="basic-menu"
+                          anchorEl={anchorEl}
+                          open={open}
+                          onClose={handleClose}
+                          MenuListProps={{
+                            "aria-labelledby": "basic-button",
+                          }}
+                        >
+                          <MenuItem
+                            onClick={() => handleChangeStatus("confirmada")}
+                          >
+                            Confirmar
+                          </MenuItem>
+                          <MenuItem
+                            onClick={() => {
+                              handleChangeStatus("cancelada");
+                            }}
+                          >
+                            Cancelar
+                          </MenuItem>
+                        </Menu>
+                      </Box>
+                    }
+                  </Box>
+                </Paper>
+              ))}
+            </>
+          )}
         </Box>
 
         {/* {dataList.length > 0 && <TableUI data={dataList} columns={columns} />} */}
