@@ -98,8 +98,8 @@ const LIstOfCommissionAdmin = () => {
     page: "admin",
   });
 
-  const [maxHeight, setMaxHeight] = useState<number>(window.innerHeight);
   const [dataListFilter, setDataListFilter] = useState<IGetListSales[]>([]);
+  const [maxHeight, setMaxHeight] = useState<number>(window.innerHeight);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const open = Boolean(anchorEl);
@@ -121,7 +121,7 @@ const LIstOfCommissionAdmin = () => {
     ) as HTMLInputElement;
     const value = searchInput.value;
     const filter = dataList.filter((item) =>
-      item.CODE_RESERVATION.includes(value)
+      item.CODE_RESERVATION.includes(value.toUpperCase())
     );
     setDataListFilter(filter);
   };
@@ -129,7 +129,7 @@ const LIstOfCommissionAdmin = () => {
   const handleOnchange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const filter = dataList.filter((item) =>
-      item.CODE_RESERVATION.includes(value)
+      item.CODE_RESERVATION.includes(value.toUpperCase())
     );
     setDataListFilter(filter.length > 0 ? filter : dataList);
   };

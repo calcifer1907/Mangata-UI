@@ -26,6 +26,7 @@ export const useSales = ({ page }: IProps) => {
     } else {
       data = await getLIstForTable.getListData(body, PATH_EMPLOYEE);
     }
+
     setDataList(data);
     setLoading(false);
   }, [page, dateChange]);

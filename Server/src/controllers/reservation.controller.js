@@ -52,7 +52,8 @@ export const getListSalesEmployee = async (request, response) => {
   try {
     const { date } = request.body;
     const [row] = await pool.query(
-      "SELECT CODE_RESERVATION,STATUS_RESERVATION,COMMISSION_EMPLOYEE,CURRENT_COMMISSION,CREATED_AT FROM reservations WHERE CREATED_AT=?",
+      `SELECT re.CODE_RESERVATION,re.STATUS_RESERVATION,re.COMMISSION_EMPLOYEE,re.CURRENT_COMMISSION,re.CREATED_AT ,ac.NAME_ACCOMPANIST
+      FROM reservations re INNER JOIN accompanist ac ON ac.ID_RESERVATION = re.CODE_RESERVATION  WHERE re.CREATED_AT=? GROUP BY ac.ID_RESERVATION;`,
       [date]
     );
     const diff = row.map((values, index) => ({
