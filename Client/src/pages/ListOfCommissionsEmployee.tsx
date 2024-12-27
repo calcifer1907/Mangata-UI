@@ -56,6 +56,11 @@ const ListOfCommissions = () => {
     setDataListFilter(filter);
   };
 
+  const handleCountComission = () => {
+    const count = dataList.reduce((acc, item) => (acc += Number(item.DIFF)), 0);
+    return formatPrice(count);
+  };
+
   useEffect(() => {
     setDataListFilter(dataList);
   }, [dataList]);
@@ -298,6 +303,37 @@ const ListOfCommissions = () => {
             borderRadius: "8px 8px 0 0",
           }}
         />
+      </Box>
+      <Box
+        sx={{
+          borderBottom: "6px solid #2B3D5E",
+          width: "85%",
+          marginBottom: 1,
+        }}
+      >
+        <h2
+          style={{
+            fontSize: 36,
+            color: "#2B3D5E",
+            fontWeight: 800,
+            marginInlineStart: 24,
+          }}
+        >
+          Comision por diá
+        </h2>
+      </Box>
+      <Box>
+        <Typography
+          sx={{
+            fontSize: 24,
+            fontWeight: 400,
+            color: "#2B3D5E",
+            marginInlineStart: 3,
+            marginBottom: 2,
+          }}
+        >
+          {handleCountComission()}
+        </Typography>
       </Box>
       <Container
         sx={{

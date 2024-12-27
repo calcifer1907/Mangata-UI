@@ -131,7 +131,7 @@ const NameLunchForm: React.FC = () => {
         TELEPHONE,
         AGREED_PRICE,
         ACCOMPANIST,
-        MIN_PRICE: PRICES.PRICE_MAX,
+        MIN_PRICE: PRICES.PRICE_MIN,
         CREATED_AT: format(new Date(), "YYYY-MM-DD", "en"),
       };
       handleClose();
@@ -144,7 +144,7 @@ const NameLunchForm: React.FC = () => {
             horizontal: "right",
           },
         });
-        window.location.href = "https://www.instagram.com/mangatacartagena/";
+        // window.location.href = "https://www.instagram.com/mangatacartagena/";
       }
     }
   };
