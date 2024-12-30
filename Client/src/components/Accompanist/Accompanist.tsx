@@ -51,8 +51,8 @@ const Accompanist: FC<IPropsAccompanist> = ({
     </Box>
     <Stack
       direction={{ xs: "column", md: "row" }}
-      spacing={{ xs: 2, sm: 2, md: 5 }}
-      sx={{ flexWrap: { xs: "wrap", sm: "wrap", md: "nowrap" } }}
+      spacing={{ xs: 2, sm: 2, md: 2 }}
+      sx={{ flexWrap: "wrap" }}
     >
       <Box sx={{ marginBottom: { xs: 12, sm: 12, md: 0 } }}>
         <TextField
@@ -93,7 +93,7 @@ const Accompanist: FC<IPropsAccompanist> = ({
             )
           }
           getOptionLabel={(option) => option.label}
-          sx={{ width: "100%", maxWidth: 328, minWidth: 328 }}
+          sx={{ width: "100%", maxWidth: 328, minWidth: 328, margin: 0 }}
           renderInput={(params) => (
             <TextField
               {...params}
@@ -101,6 +101,7 @@ const Accompanist: FC<IPropsAccompanist> = ({
               label="Elige el almuerzo"
               fullWidth
               error={errors.lunch}
+              sx={{ marginLeft: 0 }}
               helperText={errors.lunch ? "El Almuerzo es obligatorio" : ""}
               InputProps={{
                 ...params.InputProps,

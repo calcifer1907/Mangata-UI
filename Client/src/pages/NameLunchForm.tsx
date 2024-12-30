@@ -26,6 +26,9 @@ import { enqueueSnackbar } from "notistack";
 import { generarCodigoReservaUX } from "../generalFunctions/generateCodeReservation";
 import { IGetUserId } from "../interfaces/IUser";
 
+const FORMAT = "DD/MM/YYYY";
+
+const today = format(new Date(), "YYYY-MM-DD", "co");
 const NameLunchForm: React.FC = () => {
   const [fields, setFields] = useState<IFields[]>([
     { name: "", lunch: { label: "", value: 0 } },
@@ -36,6 +39,7 @@ const NameLunchForm: React.FC = () => {
   const [getUserId, setGetUserId] = useState<IGetUserId | null>(null);
   const [searchParams] = useSearchParams();
   const { optionsLunches, minmax } = useAccompanist();
+  const [dateChange, setDateChange] = useState<string>(today);
 
   const CODE_RESERVATION = useMemo(() => {
     return generarCodigoReservaUX();
@@ -261,6 +265,78 @@ const NameLunchForm: React.FC = () => {
             >
               Agregar persona
             </Button>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              gap: 2,
+              flexWrap: "wrap",
+            }}
+          >
+            <TextField
+              fullWidth
+              label="Fecha"
+              variant="filled"
+              margin="none"
+              type="date"
+              value={dateChange}
+              onChange={(e) => setDateChange(e.target.value)}
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Icon
+                        icon="solar:calendar-bold-duotone"
+                        width="24"
+                        height="24"
+                        style={{ color: "#2B3D5E" }}
+                      />
+                    </InputAdornment>
+                  ),
+                },
+              }}
+              InputLabelProps={{
+                shrink: true, // Asegura que la etiqueta permanezca arriba
+              }}
+              sx={{
+                background: "#FFFFFF",
+                borderRadius: "8px 8px 0 0",
+                maxWidth: "328px",
+              }}
+            />
+            <TextField
+              label="Celular"
+              variant="filled"
+              type="number"
+              placeholder="Ingresa tu número de celular"
+              fullWidth
+              value={valueCel}
+              error={valueCel === ""}
+              onChange={(e) => {
+                setValueCel(e.target.value);
+              }}
+              sx={{
+                background: "#FFFFFF",
+                borderRadius: "8px 8px 0 0",
+                maxWidth: "328px",
+              }}
+              helperText={valueCel === "" ? "Este campo es obligatorio" : ""}
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Icon
+                        icon="solar:phone-calling-rounded-bold-duotone"
+                        width="24"
+                        height="24"
+                        style={{ color: "#2B3D5E" }}
+                      />
+                    </InputAdornment>
+                  ),
+                },
+              }}
+            />
           </Box>
           <Box
             sx={{
@@ -510,7 +586,7 @@ const NameLunchForm: React.FC = () => {
                   Fecha
                 </Typography>
                 <Typography sx={{ color: { xs: "#FFFFFF", md: "#000" } }}>
-                  {format(new Date(), "DD/MM/YYYY")}
+                  {format(dateChange, FORMAT, "co")}
                 </Typography>
               </Box>
             </Box>
@@ -667,38 +743,10 @@ const NameLunchForm: React.FC = () => {
             }}
           >
             <h3>{fields[0].name}</h3>
-            <h3>{format(new Date(), "DD/MM/YYYY")}</h3>
+            <h3>{format(dateChange, FORMAT, "co")}</h3>
             <h3>{calculatePrice()}</h3>
           </Box>
-          <Box sx={{ margin: 2 }}>
-            <TextField
-              label="Celular"
-              variant="filled"
-              type="number"
-              placeholder="Ingresa tu número de celular"
-              fullWidth
-              value={valueCel}
-              error={valueCel === ""}
-              onChange={(e) => {
-                setValueCel(e.target.value);
-              }}
-              helperText={valueCel === "" ? "Este campo es obligatorio" : ""}
-              slotProps={{
-                input: {
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <Icon
-                        icon="solar:phone-calling-rounded-bold-duotone"
-                        width="24"
-                        height="24"
-                        style={{ color: "#2B3D5E" }}
-                      />
-                    </InputAdornment>
-                  ),
-                },
-              }}
-            />
-          </Box>
+
           <Box
             style={{
               display: "flex",
