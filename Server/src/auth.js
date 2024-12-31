@@ -26,6 +26,5 @@ export const hashPassword = (password) => {
 };
 
 export const comparePassword = (password, hash) => {
-  console.log(hashPassword(password));
   return bcrypt.compareSync(password, hash);
 };
