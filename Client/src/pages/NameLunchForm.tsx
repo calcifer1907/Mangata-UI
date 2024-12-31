@@ -57,7 +57,7 @@ const NameLunchForm: React.FC = () => {
 
   const getuserId = useCallback(async () => {
     const body = {
-      id: ID_EMPLO_PARAM ?? -1,
+      id: Number(ID_EMPLO_PARAM) || -1,
     };
     const data = await methodUser.getUserId(body);
     setGetUserId(data);

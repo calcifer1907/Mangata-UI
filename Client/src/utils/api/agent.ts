@@ -29,7 +29,7 @@ export const getAccompanist = {
 export const methodUser = {
   createUser: (body: IUsers): Promise<IResponseApi> =>
     requestApis.post("/api/createUser", body),
-  getUserId: (body: { date: string }): Promise<IGetUserId> =>
+  getUserId: (body: { id: number }): Promise<IGetUserId> =>
     requestApis.post("/api/getuserid", body),
 };
 
