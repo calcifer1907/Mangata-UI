@@ -11,7 +11,11 @@ import { handleError } from "./handles/handleEror.js";
 const app = express();
 
 const corsOptions = {
-  origin: ["http://localhost:5173", "http://192.168.0.233:5173"],
+  origin: [
+    "http://localhost:5173",
+    "http://192.168.0.233:5173",
+    "http://172.20.10.3:5173",
+  ],
 };
 
 const PORT = 8080;
