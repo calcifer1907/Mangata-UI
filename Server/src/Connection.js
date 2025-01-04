@@ -27,14 +27,14 @@ export const pool = new pg.Pool({
   },
 });
 
-const getGpVersion = async () => {
-  const client = await pool.connect();
-  try {
-    const result = await client.query("SELECT version()");
-    console.log("Version: ", result.rows[0]);
-  } finally {
-    client.release();
-  }
-};
+// const getGpVersion = async () => {
+//   const client = await pool.connect();
+//   try {
+//     const result = await client.query("SELECT version()");
+//     console.log("Version: ", result.rows[0]);
+//   } finally {
+//     client.release();
+//   }
+// };
 
-getGpVersion();
+// getGpVersion();

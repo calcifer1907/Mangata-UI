@@ -41,9 +41,10 @@ export const createReservation = async (request, response) => {
 
 export const getLunches = async (_request, response) => {
   try {
-    const [row] = await pool.query("SELECT ID,DESCRIPTION FROM lunches;");
-    response.json(row);
+    const result = await pool.query("SELECT ID,DESCRIPTION FROM lunches;");
+    console.log(result);
   } catch (error) {
+    console.log(error);
     return response.status(500).json({ message: "sometghin gos wrong" });
   }
 };
