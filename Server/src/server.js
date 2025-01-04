@@ -20,6 +20,10 @@ const corsOptions = {
 
 const PORT = process.env.PORT || 8080;
 
+app.get("/", (request, response) => {
+  response.json({ message: "Server" });
+});
+
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(cors(corsOptions));
