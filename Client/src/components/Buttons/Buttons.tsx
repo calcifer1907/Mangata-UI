@@ -5,8 +5,7 @@ import "./Button.scss";
 interface IButton {
   title: string;
 }
-
-const Buttons: React.FC<IButton> = ({ title }) => {
+const Buttons: React.FC<IButton> = () => {
   return (
     <div>
       <div className="i-solar:user-bold-duotone w-24px h-24px"></div>

@@ -1,7 +1,7 @@
-import { useContextUser } from "../hooks/useContextUser";
+// import { useContextUser } from "../hooks/useContextUser";
 
 const Home = () => {
-  const { userInfo } = useContextUser();
+  // const { userInfo } = useContextUser();
   return (
     <>
       <div className="container mt-4">

@@ -15,9 +15,9 @@ export interface IPropsAccompanist {
   index: number;
   errors: IErrorFieldAccompanist;
   field: IFields;
-  handleChange: (index: number, name: string, value: string) => void;
+  onChange: (index: number, name: string, value: string | IOptions) => void;
   onRemove: (index: number) => void;
-  optionsLunches: IOptions[];
+  lunchOptions: IOptions[];
 }
 
 export interface IErrorFieldAccompanist {
@@ -28,4 +28,9 @@ export interface IErrorFieldAccompanist {
 export interface ILunches {
   ID: number;
   DESCRIPTION: string;
+}
+
+export interface IMinMax {
+  MIN: number;
+  MAX: number;
 }

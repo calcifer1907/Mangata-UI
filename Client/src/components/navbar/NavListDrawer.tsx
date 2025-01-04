@@ -9,10 +9,17 @@ import { NavLink } from "react-router-dom";
 
 interface IProps {
   handleDrawerToggle: () => void;
-  navItems: { title: string; path: string }[];
+  navItems: { TITLE: string; PATH: string }[];
+  token: string;
 }
 
-const NavListDrawer = ({ handleDrawerToggle, navItems }: IProps) => {
+const navItem = [
+  { title: "Inicio", path: "/home" },
+  { title: "Iniciar sesión ", path: "/Login" },
+  // { title: "Reservas", path: "/ReservationEmployee" },
+];
+
+const NavListDrawer = ({ handleDrawerToggle, navItems, token }: IProps) => {
   return (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography variant="h6" sx={{ my: 2 }}>
@@ -20,17 +27,33 @@ const NavListDrawer = ({ handleDrawerToggle, navItems }: IProps) => {
       </Typography>
       <Divider />
       <List>
-        {navItems.map((item) => (
-          <ListItem key={item.title} disablePadding>
-            <ListItemButton
-              sx={{ textAlign: "center" }}
-              component={NavLink}
-              to={item.path}
-            >
-              <ListItemText primary={item.title} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        {token ? (
+          navItems.map((item) => (
+            <ListItem key={item.TITLE} disablePadding>
+              <ListItemButton
+                sx={{ textAlign: "center" }}
+                component={NavLink}
+                to={item.PATH}
+              >
+                <ListItemText primary={item.TITLE} />
+              </ListItemButton>
+            </ListItem>
+          ))
+        ) : (
+          <>
+            {navItem.map((item) => (
+              <ListItem key={item.title} disablePadding>
+                <ListItemButton
+                  sx={{ textAlign: "center" }}
+                  component={NavLink}
+                  to={item.path}
+                >
+                  <ListItemText primary={item.title} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </>
+        )}
       </List>
     </Box>
   );

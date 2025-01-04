@@ -14,7 +14,7 @@ import {
   FieldValues,
 } from "react-hook-form";
 import { Icon } from "@iconify/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IUsers } from "../interfaces/IUser";
 
 import { enqueueSnackbar } from "notistack";
@@ -22,10 +22,14 @@ import { enqueueSnackbar } from "notistack";
 import { format } from "@formkit/tempo";
 
 import { methodUser } from "../utils/api/agent";
+import { hashPassword } from "../generalFunctions/auth";
+
+import { useNavigate } from "react-router-dom";
 
 const CreateUser = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [selectRole, setSelectRole] = useState<string>("");
+  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
   const { handleSubmit, reset, control } = useForm<IUsers>({
     defaultValues: {
       first_name: "",
@@ -37,22 +41,25 @@ const CreateUser = () => {
     },
   });
 
+  const navigation = useNavigate();
+
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
       const newData = data;
       newData.is_active = 1;
       newData.created_at = format(new Date(), "YYYY/MM/DD");
+      newData.password = hashPassword(data.password);
       const response = await methodUser.createUser(newData as IUsers);
-      console.log(response);
-      enqueueSnackbar("Se guardo correctamente el usurio", {
-        variant: "success",
-        anchorOrigin: {
-          vertical: "top",
-          horizontal: "right",
-        },
-      });
-      reset();
-      //   navigation("/home");
+      if (response.message === "success") {
+        enqueueSnackbar("Se guardo correctamente el usurio", {
+          variant: "success",
+          anchorOrigin: {
+            vertical: "top",
+            horizontal: "right",
+          },
+        });
+        reset();
+      }
     } catch (e: any) {
       if (e.status === 409) {
         const { response } = e;
@@ -64,7 +71,7 @@ const CreateUser = () => {
           },
         });
       }
-      //   navigation("/Login");
+      navigation("/Login");
     }
   };
 
@@ -77,26 +84,38 @@ const CreateUser = () => {
     { value: 2, label: "Empleado" },
   ];
 
-  // const handleFindRole = (id: number) => {
-  //   return roles.some(({ value }) => value);
-  // };
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      setInnerWidth(window.innerWidth);
+    });
+    return () => {
+      window.removeEventListener("resize", () => {
+        setInnerWidth(window.innerWidth);
+      });
+    };
+  }, []);
 
   return (
     <Container
       sx={{
         display: "flex",
-        height: "100vh",
-        alignItems: "center",
-        justifyContent: "center",
+        justifyContent: { xs: "normal", md: "center" }, // Centrar contenido
+        alignItems: "center", // Centrar contenido
+        minHeight: "100vh", // Altura completa de la pantalla
         flexDirection: "column",
+        paddingTop: { xs: 3, sm: 0, md: 0 }, // Padding top
       }}
     >
       <Box
         sx={{
-          backgroundColor: "#2B3D5E",
-          width: 650,
-          height: 650,
-          borderRadius: "50%",
+          width: { xs: `${innerWidth - 10}px`, sm: "400px", md: "650px" }, // Tamaño dinámico
+          height: { xs: "auto", sm: "400px", md: "650px" }, // Tamaño dinámico
+          backgroundColor: { xs: "#FFFFFF", md: "#2B3D5E" }, // Color del círculo
+          borderRadius: "50%", // Hacerlo circular
+          display: "flex", // Centrar contenido dentro del círculo
+          flexDirection: "column", // Organizar en columna
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
         <Box
@@ -105,6 +124,8 @@ const CreateUser = () => {
             justifyContent: "center",
             placeItems: "center",
             height: "100%",
+            width: { xs: "70%", sm: "60%", md: "60%" },
+            margin: "auto",
           }}
         >
           <Box
@@ -113,7 +134,6 @@ const CreateUser = () => {
             noValidate
             sx={{
               mt: 2,
-              width: "22rem",
             }}
           >
             <Controller
@@ -132,7 +152,7 @@ const CreateUser = () => {
                   fullWidth
                   label="Primer nombre"
                   variant="filled"
-                  margin="normal"
+                  margin="none"
                   slotProps={{
                     input: {
                       startAdornment: (
@@ -147,7 +167,12 @@ const CreateUser = () => {
                       ),
                     },
                   }}
-                  sx={{ background: "#FFFFFF", borderRadius: "8px 8px 0 0" }}
+                  sx={{
+                    background: "#FFFFFF",
+                    borderRadius: "8px 8px 0 0",
+                    marginBottom: { xs: 1, sm: 2, md: 2 },
+                    marginTop: { xs: 0, sm: 1, md: 1 },
+                  }}
                   error={!!fieldState.error}
                   helperText={fieldState.error?.message}
                 />
@@ -171,7 +196,7 @@ const CreateUser = () => {
                   type="text"
                   label="Apellido"
                   variant="filled"
-                  margin="normal"
+                  margin="none"
                   slotProps={{
                     input: {
                       startAdornment: (
@@ -186,7 +211,12 @@ const CreateUser = () => {
                       ),
                     },
                   }}
-                  sx={{ background: "#FFFFFF", borderRadius: "8px 8px 0 0" }}
+                  sx={{
+                    background: "#FFFFFF",
+                    borderRadius: "8px 8px 0 0",
+                    marginBottom: { xs: 1, sm: 2, md: 2 },
+                    marginTop: { xs: 0, sm: 1, md: 1 },
+                  }}
                   error={!!fieldState.error}
                   helperText={fieldState.error?.message}
                 />
@@ -208,7 +238,7 @@ const CreateUser = () => {
                   fullWidth
                   label="emil"
                   variant="filled"
-                  margin="normal"
+                  margin="none"
                   slotProps={{
                     input: {
                       startAdornment: (
@@ -223,44 +253,56 @@ const CreateUser = () => {
                       ),
                     },
                   }}
-                  sx={{ background: "#FFFFFF", borderRadius: "8px 8px 0 0" }}
+                  sx={{
+                    background: "#FFFFFF",
+                    borderRadius: "8px 8px 0 0",
+                    marginBottom: { xs: 1, sm: 2, md: 2 },
+                    marginTop: { xs: 0, sm: 1, md: 1 },
+                  }}
                   error={!!fieldState.error}
                   helperText={fieldState.error?.message}
                 />
               )}
             />
 
-            <Controller
-              name="account_bank"
-              control={control}
-              render={({ field, fieldState }) => (
-                <TextField
-                  {...field}
-                  fullWidth
-                  type="number"
-                  label="Cuenta banco"
-                  variant="filled"
-                  margin="normal"
-                  slotProps={{
-                    input: {
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <Icon
-                            icon="solar:key-minimalistic-square-bold-duotone"
-                            width="24"
-                            height="24"
-                            style={{ color: "#2B3D5E" }}
-                          />
-                        </InputAdornment>
-                      ),
-                    },
-                  }}
-                  sx={{ background: "#FFFFFF", borderRadius: "8px 8px 0 0" }}
-                  error={!!fieldState.error}
-                  helperText={fieldState.error?.message}
-                />
-              )}
-            />
+            {selectRole === "Empleado" && selectRole && (
+              <Controller
+                name="account_bank"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <TextField
+                    {...field}
+                    fullWidth
+                    type="number"
+                    label="Cuenta banco"
+                    variant="filled"
+                    margin="none"
+                    slotProps={{
+                      input: {
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <Icon
+                              icon="solar:key-minimalistic-square-bold-duotone"
+                              width="24"
+                              height="24"
+                              style={{ color: "#2B3D5E" }}
+                            />
+                          </InputAdornment>
+                        ),
+                      },
+                    }}
+                    sx={{
+                      background: "#FFFFFF",
+                      borderRadius: "8px 8px 0 0",
+                      marginBottom: { xs: 1, sm: 2, md: 2 },
+                      marginTop: { xs: 0, sm: 1, md: 1 },
+                    }}
+                    error={!!fieldState.error}
+                    helperText={fieldState.error?.message}
+                  />
+                )}
+              />
+            )}
 
             <Controller
               name="password"
@@ -284,7 +326,7 @@ const CreateUser = () => {
                   type={showPassword ? "text" : "password"}
                   label="Contraseña"
                   variant="filled"
-                  margin="normal"
+                  margin="none"
                   slotProps={{
                     input: {
                       startAdornment: (
@@ -314,7 +356,12 @@ const CreateUser = () => {
                       ),
                     },
                   }}
-                  sx={{ background: "#FFFFFF", borderRadius: "8px 8px 0 0" }}
+                  sx={{
+                    background: "#FFFFFF",
+                    borderRadius: "8px 8px 0 0",
+                    marginBottom: { xs: 1, sm: 2, md: 2 },
+                    marginTop: { xs: 0, sm: 1, md: 1 },
+                  }}
                   error={!!fieldState.error}
                   helperText={fieldState.error?.message}
                 />
@@ -333,9 +380,14 @@ const CreateUser = () => {
                   select
                   label="Role"
                   fullWidth
-                  sx={{ background: "#FFFFFF", borderRadius: "8px 8px 0 0" }}
+                  sx={{
+                    background: "#FFFFFF",
+                    borderRadius: "8px 8px 0 0",
+                    marginBottom: { xs: 1, sm: 2, md: 2 },
+                    marginTop: { xs: 0, sm: 1, md: 1 },
+                  }}
                   variant="filled"
-                  margin="normal"
+                  margin="none"
                   placeholder="Seleccione un role"
                   error={!!fieldState.error}
                   helperText={fieldState.error?.message}
@@ -355,11 +407,16 @@ const CreateUser = () => {
                   }}
                   value={value}
                   onChange={(
-                    event: React.ChangeEvent<HTMLInputElement>,
-                    child: React.ReactNode
+                    event: React.ChangeEvent<
+                      HTMLInputElement | HTMLTextAreaElement
+                    >
                   ) => {
-                    const { props } = child as React.ReactElement;
-                    setSelectRole(props.children as string);
+                    const selectedRole = roles.find(
+                      (role) => role.value === Number(event.target.value)
+                    );
+                    if (selectedRole) {
+                      setSelectRole(selectedRole.label);
+                    }
                     onChange(event.target.value);
                   }}
                 >
@@ -384,11 +441,12 @@ const CreateUser = () => {
                 variant="text"
                 color="primary"
                 startIcon={
-                  <Icon
+                  <Box
+                    component={Icon}
                     icon="solar:safe-square-bold-duotone"
                     width="24"
                     height="24"
-                    style={{ color: "#2B3D5E" }}
+                    sx={{ color: { xs: "#FFFFFF", md: "#2B3D5E" } }}
                   />
                 }
                 sx={{
@@ -399,7 +457,8 @@ const CreateUser = () => {
                   borderRadius: 100,
                   fontSize: 14,
                   fontWeight: 500,
-                  color: "#2B3D5E",
+                  color: { xs: "#FFFFFF", md: "#2B3D5E" },
+                  backgroundColor: { xs: "#2B3D5E", md: "#FFFFFF" },
                 }}
               >
                 Guardar
@@ -416,7 +475,7 @@ const CreateUser = () => {
           height: 20,
           marginTop: 49,
         }}
-      ></Box>
+      />
     </Container>
   );
 };

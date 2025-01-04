@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, FC, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -22,7 +22,7 @@ interface LoginFormInputs {
   password: string;
 }
 
-const Login: React.FC = () => {
+const Login: FC = () => {
   const {
     register,
     handleSubmit,
@@ -30,6 +30,7 @@ const Login: React.FC = () => {
   } = useForm<LoginFormInputs>();
   const navigation = useNavigate();
   const { setUserInfo } = useContextUser();
+  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
 
   const onSubmit: SubmitHandler<LoginFormInputs> = async (data) => {
     try {
@@ -43,31 +44,53 @@ const Login: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      setInnerWidth(window.innerWidth);
+    });
+    return () => {
+      window.removeEventListener("resize", () => {
+        setInnerWidth(window.innerWidth);
+      });
+    };
+  }, []);
+
   return (
     <Container
       sx={{
         display: "flex",
-        height: "100vh",
-        alignItems: "center",
-        justifyContent: "center",
+        justifyContent: { xs: "initial", md: "center" }, // Centrar contenido
+        alignItems: "center", // Centrar contenido
+        minHeight: "100vh", // Altura completa de la pantalla
         flexDirection: "column",
       }}
     >
       <Box
         sx={{
-          backgroundColor: "#2B3D5E",
-          width: 584,
-          height: 584,
-          borderRadius: "50%",
+          width: { xs: `${innerWidth - 10}px`, sm: "400px", md: "600px" }, // Tamaño dinámico
+          height: { xs: `${innerWidth - 10}px`, sm: "400px", md: "600px" }, // Tamaño dinámico
+          backgroundColor: "#2B3D5E", // Color del círculo
+          borderRadius: "50%", // Hacerlo circular
+          display: "flex", // Centrar contenido dentro del círculo
+          flexDirection: "column", // Organizar en columna
+          justifyContent: "center",
+          alignItems: "center",
+          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", // Sombra
         }}
       >
         <Box display="flex" justifyContent="center">
-          <img src={LogoMangata} alt="Mangata" />
+          {/* <img src={LogoMangata} alt="Mangata" /> */}
+          <Box
+            component="img"
+            src={LogoMangata}
+            sx={{ width: { xs: "120px", md: "200px" } }}
+          />
         </Box>
         <Box
           sx={{
             display: "flex",
             justifyContent: "center",
+            width: { xs: "260px", md: "500px", lg: "600px" },
           }}
         >
           <Box
@@ -75,7 +98,7 @@ const Login: React.FC = () => {
             onSubmit={handleSubmit(onSubmit)}
             noValidate
             sx={{
-              mt: 2,
+              mt: { xs: 0, sm: 2, md: 4 },
               width: "22rem",
             }}
           >
@@ -83,7 +106,7 @@ const Login: React.FC = () => {
               fullWidth
               label="Usuario"
               variant="filled"
-              margin="normal"
+              margin="none"
               slotProps={{
                 input: {
                   startAdornment: (
@@ -98,7 +121,12 @@ const Login: React.FC = () => {
                   ),
                 },
               }}
-              sx={{ background: "#FFFFFF", borderRadius: "8px 8px 0 0" }}
+              sx={{
+                background: "#FFFFFF",
+                borderRadius: "8px 8px 0 0",
+                marginBottom: { xs: 1, sm: 2, md: 2 },
+                marginTop: { xs: 0, sm: 1, md: 1 },
+              }}
               {...register("email", {
                 required: "El correo es obligatorio",
                 pattern: {
@@ -114,7 +142,7 @@ const Login: React.FC = () => {
               type="password"
               label="Contraseña"
               variant="filled"
-              margin="normal"
+              margin="none"
               slotProps={{
                 input: {
                   startAdornment: (
@@ -129,7 +157,12 @@ const Login: React.FC = () => {
                   ),
                 },
               }}
-              sx={{ background: "#FFFFFF", borderRadius: "8px 8px 0 0" }}
+              sx={{
+                background: "#FFFFFF",
+                borderRadius: "8px 8px 0 0",
+                marginTop: { xs: 1, sm: 1, md: 1 },
+                marginBottom: { xs: 0, sm: 2, md: 2 },
+              }}
               {...register("password", {
                 required: "La contraseña es obligatoria",
                 minLength: {

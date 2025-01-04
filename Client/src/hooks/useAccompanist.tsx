@@ -7,20 +7,22 @@ import {
   cloneElement,
   useMemo,
   useContext,
+  FC,
 } from "react";
 
-import { getAccompanist } from "../utils/api/agent";
+import { getAccompanist, getMinMax } from "../utils/api/agent";
 
-import { IOptions } from "../interfaces/IAccompanist";
+import { IMinMax, IOptions } from "../interfaces/IAccompanist";
 
 const CreateContext = createContext<any>(true);
 
-const AccompanistContext = (props: any) => {
+const AccompanistContext: FC<any> = (props) => {
   const childrenWithProps = cloneElement(props.children, {
     ...props,
     children: props.children.props.children,
   });
   const [optionsLunches, setOptionsLunches] = useState<IOptions[]>([]);
+  const [minmax, setMinMax] = useState<IMinMax>({ MIN: 0, MAX: 0 });
 
   const getLunches = useCallback(async () => {
     const data = await getAccompanist.getLunches();
@@ -31,6 +33,15 @@ const AccompanistContext = (props: any) => {
     setOptionsLunches(newOptions);
   }, []);
 
+  const getMax = useCallback(async () => {
+    const { MAX, MIN } = await getMinMax.getListData();
+    setMinMax({ MIN: Number(MIN), MAX: Number(MAX) });
+  }, []);
+
+  useEffect(() => {
+    getMax();
+  }, [getMax]);
+
   useEffect(() => {
     getLunches();
   }, [getLunches]);
@@ -39,8 +50,9 @@ const AccompanistContext = (props: any) => {
     () => ({
       optionsLunches,
       setOptionsLunches,
+      minmax,
     }),
-    [optionsLunches]
+    [optionsLunches, minmax]
   );
 
   return (
@@ -50,7 +62,6 @@ const AccompanistContext = (props: any) => {
   );
 };
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const useAccompanist = () => {
   return useContext(CreateContext);
 };
