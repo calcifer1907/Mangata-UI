@@ -18,7 +18,7 @@ const corsOptions = {
   ],
 };
 
-const PORT = 8080;
+const PORT = 80;
 
 app.use(express.json());
 app.use(morgan("dev"));
