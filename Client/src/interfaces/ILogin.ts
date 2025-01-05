@@ -4,13 +4,12 @@ export interface ILogin {
 }
 
 interface IMenu {
-  TITLE: string;
-  PATH: string;
+  title: string;
+  path: string;
 }
 
 export interface IUserInfo {
   TOKEN: string;
-  USER_NAME: string;
-  ROLE: string;
+  USER_INFO: { USER_NAME: string; ROLE: string; ID_EMPLOYEE: number };
   MENU: IMenu[];
 }

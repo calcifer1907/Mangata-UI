@@ -10,17 +10,17 @@ const theme = createTheme({
       xl: 1400,
     },
   },
-  components: {
-    MuiCssBaseline: {
-      styleOverrides: {
-        body: {
-          margin: 0,
-          padding: 0,
-          boxSizing: "border-box",
-        },
-      },
-    },
-  },
+  // components: {
+  //   MuiCssBaseline: {
+  //     styleOverrides: {
+  //       body: {
+  //         margin: 0,
+  //         padding: 0,
+  //         boxSizing: "border-box",
+  //       },
+  //     },
+  //   },
+  // },
 });
 
 export default theme;

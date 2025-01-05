@@ -3,11 +3,10 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-12-2024 a las 01:05:51
+-- Tiempo de generación: 04-01-2025 a las 20:34:44
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
-SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -28,52 +27,26 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `accompanist`
 --
 
-CREATE TABLE IF NOT EXISTS `accompanist` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `ID_RESERVATION` varchar(12) NOT NULL,
+CREATE TABLE `accompanist` (
+  `ID` int(11) NOT NULL,
+  `ID_RESERVATION` varchar(16) NOT NULL,
   `NAME_ACCOMPANIST` varchar(100) NOT NULL,
-  `ID_LUNCHES` int(2) NOT NULL,
-  PRIMARY KEY (`ID`),
-  KEY `ID_LUNCHES` (`ID_LUNCHES`),
-  KEY `ID_RESERVATION` (`ID_RESERVATION`)
+  `ID_LUNCHES` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- RELACIONES PARA LA TABLA `accompanist`:
---   `ID_LUNCHES`
---       `lunches` -> `ID`
---   `ID_RESERVATION`
---       `reservations` -> `CODE_RESERVATION`
---
-
---
--- Truncar tablas antes de insertar `accompanist`
---
-
-TRUNCATE TABLE `accompanist`;
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `lunches`
 --
 
-CREATE TABLE IF NOT EXISTS `lunches` (
-  `ID` int(2) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `lunches` (
+  `ID` int(2) NOT NULL,
   `DESCRIPTION` varchar(50) NOT NULL,
   `CREATED_AT` timestamp NOT NULL DEFAULT current_timestamp(),
-  `UPDATED_AT` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `UPDATED_AT` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- RELACIONES PARA LA TABLA `lunches`:
---
-
---
--- Truncar tablas antes de insertar `lunches`
---
-
-TRUNCATE TABLE `lunches`;
 --
 -- Volcado de datos para la tabla `lunches`
 --
@@ -91,60 +64,89 @@ INSERT INTO `lunches` (`ID`, `DESCRIPTION`, `CREATED_AT`, `UPDATED_AT`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `reservations`
+-- Estructura de tabla para la tabla `menu_roles`
 --
 
-CREATE TABLE IF NOT EXISTS `reservations` (
-  `CODE_RESERVATION` varchar(12) NOT NULL,
-  `ID_EMPLOYEE` int(4) NOT NULL,
-  `CREATED_AT` date NOT NULL,
-  `STATUS_RESERVATION` varchar(20) DEFAULT 'Pendiente',
-  `TELEPHONE` varchar(12) NOT NULL,
-  PRIMARY KEY (`CODE_RESERVATION`),
-  KEY `INDEX_ID_EMPLOYEE` (`ID_EMPLOYEE`) USING BTREE
+CREATE TABLE `menu_roles` (
+  `ID` int(1) NOT NULL,
+  `ROLE_ID` int(1) DEFAULT NULL,
+  `TITLE` varchar(50) NOT NULL,
+  `PATH` varchar(50) NOT NULL,
+  `CREATED_AT` timestamp NOT NULL DEFAULT current_timestamp(),
+  `UPDATED_AT` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- RELACIONES PARA LA TABLA `reservations`:
---   `ID_EMPLOYEE`
---       `users` -> `ID`
+-- Volcado de datos para la tabla `menu_roles`
 --
 
+INSERT INTO `menu_roles` (`ID`, `ROLE_ID`, `TITLE`, `PATH`, `CREATED_AT`, `UPDATED_AT`) VALUES
+(1, 1, 'Ventas', 'Reservations', '2024-12-15 01:10:05', '2024-12-15 01:26:58'),
+(2, 1, 'Creación usuarios', 'CreateUser', '2024-12-15 01:10:05', '2024-12-15 01:25:35'),
+(3, 2, 'Generar Reserva', 'GenerateReservation', '2024-12-15 01:10:48', '2024-12-15 01:26:03'),
+(4, 2, 'Mis Comisiones', 'MyCommissions', '2024-12-15 01:10:48', '2024-12-15 01:26:11'),
+(5, 1, 'Cerrar sesión', 'Logout', '2024-12-15 01:45:47', '2024-12-15 01:45:47'),
+(6, 2, 'Cerrar sesión', 'Logout', '2024-12-15 01:45:47', '2024-12-15 01:45:47'),
+(7, 3, 'Creación usuarios', 'CreateUser', '2024-12-15 01:10:05', '2024-12-15 01:25:35'),
+(8, 3, 'Ventas', 'Reservations', '2024-12-15 01:10:05', '2024-12-15 01:26:58');
+
+-- --------------------------------------------------------
+
 --
--- Truncar tablas antes de insertar `reservations`
+-- Estructura de tabla para la tabla `min_max`
 --
 
-TRUNCATE TABLE `reservations`;
+CREATE TABLE `min_max` (
+  `ID` int(1) NOT NULL,
+  `MAX` varchar(7) NOT NULL,
+  `MIN` varchar(7) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `min_max`
+--
+
+INSERT INTO `min_max` (`ID`, `MAX`, `MIN`) VALUES
+(1, '400000', '280000');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `reservations`
+--
+
+CREATE TABLE `reservations` (
+  `CODE_RESERVATION` varchar(16) NOT NULL,
+  `ID_EMPLOYEE` int(4) NOT NULL,
+  `TELEPHONE` varchar(12) NOT NULL,
+  `STATUS_RESERVATION` varchar(20) DEFAULT 'pendiente',
+  `CURRENT_COMMISSION` varchar(6) NOT NULL,
+  `COMMISSION_EMPLOYEE` varchar(6) NOT NULL,
+  `CREATED_AT` date NOT NULL,
+  `UPDATED_AT` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `roles`
 --
 
-CREATE TABLE IF NOT EXISTS `roles` (
-  `ID` int(1) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `roles` (
+  `ID` int(1) NOT NULL,
   `DESCRIPTION` varchar(50) NOT NULL,
   `CREATED_AT` timestamp NOT NULL DEFAULT current_timestamp(),
-  `UPDATED_AT` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `UPDATED_AT` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- RELACIONES PARA LA TABLA `roles`:
---
-
---
--- Truncar tablas antes de insertar `roles`
---
-
-TRUNCATE TABLE `roles`;
 --
 -- Volcado de datos para la tabla `roles`
 --
 
 INSERT INTO `roles` (`ID`, `DESCRIPTION`, `CREATED_AT`, `UPDATED_AT`) VALUES
 (1, 'Administrador', '2024-12-11 23:57:31', '2024-12-11 23:57:31'),
-(2, 'Empleado', '2024-12-11 23:57:31', '2024-12-11 23:57:31');
+(2, 'Empleado', '2024-12-11 23:57:31', '2024-12-11 23:57:31'),
+(3, 'System', '2024-12-15 01:24:46', '2024-12-15 01:24:46');
 
 -- --------------------------------------------------------
 
@@ -152,8 +154,8 @@ INSERT INTO `roles` (`ID`, `DESCRIPTION`, `CREATED_AT`, `UPDATED_AT`) VALUES
 -- Estructura de tabla para la tabla `users`
 --
 
-CREATE TABLE IF NOT EXISTS `users` (
-  `ID` int(4) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `users` (
+  `ID` int(4) NOT NULL,
   `FIRST_NAME` varchar(50) NOT NULL,
   `LAST_NAME` varchar(50) NOT NULL,
   `EMAIL` varchar(50) NOT NULL,
@@ -162,23 +164,111 @@ CREATE TABLE IF NOT EXISTS `users` (
   `PASSWORD` varchar(80) NOT NULL,
   `IS_ACTIVE` tinyint(1) DEFAULT 1,
   `CREATED_AT` timestamp NOT NULL DEFAULT current_timestamp(),
-  `UPDATED_AT` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  PRIMARY KEY (`ID`),
-  UNIQUE KEY `UNIQUE_EMAIL` (`EMAIL`),
-  KEY `INDEX_EMAIL` (`EMAIL`)
+  `UPDATED_AT` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- RELACIONES PARA LA TABLA `users`:
---   `ROLE_ID`
---       `roles` -> `ID`
+-- Volcado de datos para la tabla `users`
+--
+
+INSERT INTO `users` (`ID`, `FIRST_NAME`, `LAST_NAME`, `EMAIL`, `BANK_ACCOUNT`, `ROLE_ID`, `PASSWORD`, `IS_ACTIVE`, `CREATED_AT`, `UPDATED_AT`) VALUES
+(16, 'Mangata', 'System', 'mangata@gmail.com', NULL, 3, '$2a$10$534/rJVTHc7tJpDzHaYclejX1D4t9sZXcvjIEGSpUQZbS7LBRdcVe', 1, '2024-12-21 20:15:42', '2024-12-21 20:15:42'),
+(20, 'Carlos', 'Taborda', 'tabordac2@gmail.com', '', 1, '$2a$10$534/rJVTHc7tJpDzHaYclejX1D4t9sZXcvjIEGSpUQZbS7LBRdcVe', 1, '2025-01-01 05:00:00', '2025-01-01 18:09:41'),
+(23, 'Carlos', 'Taborda', 'tabordac22@gmail.com', '12345', 2, '$2a$10$534/rJVTHc7tJpDzHaYclejX1D4t9sZXcvjIEGSpUQZbS7LBRdcVe', 1, '2025-01-01 05:00:00', '2025-01-01 18:16:43');
+
+--
+-- Índices para tablas volcadas
 --
 
 --
--- Truncar tablas antes de insertar `users`
+-- Indices de la tabla `accompanist`
+--
+ALTER TABLE `accompanist`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `accompanist_ibfk_lunches` (`ID_LUNCHES`),
+  ADD KEY `accompanist_fk_id_reservation` (`ID_RESERVATION`);
+
+--
+-- Indices de la tabla `lunches`
+--
+ALTER TABLE `lunches`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indices de la tabla `menu_roles`
+--
+ALTER TABLE `menu_roles`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `ROLE_ID` (`ROLE_ID`);
+
+--
+-- Indices de la tabla `min_max`
+--
+ALTER TABLE `min_max`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indices de la tabla `reservations`
+--
+ALTER TABLE `reservations`
+  ADD PRIMARY KEY (`CODE_RESERVATION`),
+  ADD KEY `INDEX_ID_EMPLOYEE` (`ID_EMPLOYEE`) USING BTREE,
+  ADD KEY `INDEX_DATE` (`CODE_RESERVATION`);
+
+--
+-- Indices de la tabla `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indices de la tabla `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`ID`),
+  ADD UNIQUE KEY `UNIQUE_EMAIL` (`EMAIL`),
+  ADD KEY `INDEX_EMAIL` (`EMAIL`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
 --
 
-TRUNCATE TABLE `users`;
+--
+-- AUTO_INCREMENT de la tabla `accompanist`
+--
+ALTER TABLE `accompanist`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT de la tabla `lunches`
+--
+ALTER TABLE `lunches`
+  MODIFY `ID` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT de la tabla `menu_roles`
+--
+ALTER TABLE `menu_roles`
+  MODIFY `ID` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT de la tabla `min_max`
+--
+ALTER TABLE `min_max`
+  MODIFY `ID` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `ID` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `users`
+--
+ALTER TABLE `users`
+  MODIFY `ID` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+
 --
 -- Restricciones para tablas volcadas
 --
@@ -187,8 +277,14 @@ TRUNCATE TABLE `users`;
 -- Filtros para la tabla `accompanist`
 --
 ALTER TABLE `accompanist`
-  ADD CONSTRAINT `accompanist_ibfk_1` FOREIGN KEY (`ID_LUNCHES`) REFERENCES `lunches` (`ID`),
-  ADD CONSTRAINT `accompanist_ibfk_2` FOREIGN KEY (`ID_RESERVATION`) REFERENCES `reservations` (`CODE_RESERVATION`);
+  ADD CONSTRAINT `accompanist_fk_id_reservation` FOREIGN KEY (`ID_RESERVATION`) REFERENCES `reservations` (`CODE_RESERVATION`),
+  ADD CONSTRAINT `accompanist_ibfk_lunches` FOREIGN KEY (`ID_LUNCHES`) REFERENCES `lunches` (`ID`);
+
+--
+-- Filtros para la tabla `menu_roles`
+--
+ALTER TABLE `menu_roles`
+  ADD CONSTRAINT `menu_roles_ibfk_1` FOREIGN KEY (`ROLE_ID`) REFERENCES `roles` (`ID`);
 
 --
 -- Filtros para la tabla `reservations`
@@ -201,7 +297,6 @@ ALTER TABLE `reservations`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`ROLE_ID`) REFERENCES `roles` (`ID`);
-SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

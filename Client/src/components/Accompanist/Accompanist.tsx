@@ -22,9 +22,9 @@ const Accompanist: FC<IPropsAccompanist> = ({
   errors,
   field,
   index,
-  handleChange,
+  onChange,
   onRemove,
-  optionsLunches,
+  lunchOptions,
 }) => (
   <Box sx={{ marginBottom: 2 }}>
     <Box
@@ -51,8 +51,8 @@ const Accompanist: FC<IPropsAccompanist> = ({
     </Box>
     <Stack
       direction={{ xs: "column", md: "row" }}
-      spacing={{ xs: 2, sm: 2, md: 5 }}
-      sx={{ flexWrap: { xs: "wrap", sm: "wrap", md: "nowrap" } }}
+      spacing={{ xs: 2, sm: 2, md: 2 }}
+      sx={{ flexWrap: "wrap" }}
     >
       <Box sx={{ marginBottom: { xs: 12, sm: 12, md: 0 } }}>
         <TextField
@@ -62,37 +62,58 @@ const Accompanist: FC<IPropsAccompanist> = ({
           fullWidth
           sx={{ width: "100%", maxWidth: 328, minWidth: 328 }}
           value={field.name}
-          onChange={(e) => handleChange(index, KEY_NAME, e.target.value)}
+          onChange={(e) => onChange(index, KEY_NAME, e.target.value)}
           error={errors.name}
           helperText={errors.name ? "El Nombre es obligatorio" : ""}
+          slotProps={{
+            input: {
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Icon
+                    icon="solar:user-bold-duotone"
+                    width="24"
+                    height="24"
+                    style={{ color: "#2B3D5E" }}
+                  />
+                </InputAdornment>
+              ),
+            },
+          }}
         />
       </Box>
       <Box>
         <Autocomplete
-          options={optionsLunches}
-          value={
-            optionsLunches.find(
-              (option) => option.value === field.lunch.value
-            ) || null
-          }
+          options={lunchOptions}
+          value={field.lunch}
           onChange={(_, newValue: IOptions | null) =>
-            handleChange(
+            onChange(
               index,
               KEY_LUNCH,
-              newValue ? newValue.value.toString() : ""
+              newValue ? newValue : { label: "", value: 0 }
             )
           }
           getOptionLabel={(option) => option.label}
-          sx={{ width: "100%", maxWidth: 328, minWidth: 328 }}
+          sx={{ width: "100%", maxWidth: 328, minWidth: 328, margin: 0 }}
           renderInput={(params) => (
             <TextField
               {...params}
               variant="filled"
               label="Elige el almuerzo"
-              placeholder="Almuerzos"
               fullWidth
               error={errors.lunch}
+              sx={{ marginLeft: 0 }}
               helperText={errors.lunch ? "El Almuerzo es obligatorio" : ""}
+              InputProps={{
+                ...params.InputProps,
+                startAdornment: (
+                  <Icon
+                    icon="solar:ladle-bold-duotone"
+                    width="24"
+                    height="24"
+                    style={{ color: "#2B3D5E" }}
+                  />
+                ),
+              }}
             />
           )}
         />

@@ -48,8 +48,8 @@ const Navbar = (props: Props) => {
     <>
       <AppBar
         component="nav"
-        sx={{ background: "#2B3D5E", height: 64 }}
-        position="fixed"
+        sx={{ background: "#FCF8FF", height: 64 }}
+        position="sticky"
       >
         <Toolbar>
           <IconButton
@@ -63,7 +63,7 @@ const Navbar = (props: Props) => {
               icon="solar:hamburger-menu-bold-duotone"
               width="32"
               height="32"
-              style={{ color: "#fff" }}
+              style={{ color: "#2B3D5E" }}
             />
           </IconButton>
           <Typography
@@ -75,12 +75,12 @@ const Navbar = (props: Props) => {
             {userInfo.TOKEN ? (
               userInfo.MENU.map((item) => (
                 <Button
-                  key={item.TITLE}
-                  sx={{ color: "#fff" }}
-                  to={`/${item.PATH}`}
+                  key={item.title}
+                  sx={{ color: "#1C1B21" }}
+                  to={`/${item.path}`}
                   component={NavLink}
                 >
-                  {item.TITLE}
+                  {item.title}
                 </Button>
               ))
             ) : (
@@ -88,7 +88,7 @@ const Navbar = (props: Props) => {
                 {navItems.map((item) => (
                   <Button
                     key={item.path}
-                    sx={{ color: "#fff" }}
+                    sx={{ color: "#1C1B21" }}
                     to={item.path}
                     component={NavLink}
                   >
@@ -119,7 +119,8 @@ const Navbar = (props: Props) => {
         >
           <NavListDrawer
             handleDrawerToggle={handleDrawerToggle}
-            navItems={navItems}
+            navItems={userInfo.MENU}
+            token={userInfo.TOKEN}
           />
         </Drawer>
       </nav>
