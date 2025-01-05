@@ -1,5 +1,11 @@
-export const handleError = (error, request, response, next) => {
-  console.log(error);
+import { Response, Request, NextFunction } from "express";
+
+export const handleError = (
+  error: any,
+  _request: Request,
+  response: Response,
+  next: NextFunction
+): Response<any, Record<string, any>> | undefined => {
   if (error.code === "ER_DUP_ENTRY") {
     return response.status(409).json({
       status: 409,

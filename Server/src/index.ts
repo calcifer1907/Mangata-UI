@@ -3,7 +3,6 @@ import morgan from "morgan";
 import cors from "cors";
 
 import usersRouters from "./routes/users.routes";
-import protectedRoute from "./routes/protected.routes";
 import loginRouters from "./routes/login.routes";
 import reservations from "./routes/reservations.routes";
 import { handleError } from "./handles/handleEror";
@@ -30,8 +29,8 @@ app.use(cors(corsOptions));
 
 app.use("/auth", loginRouters);
 app.use("/api", usersRouters);
-app.use("/api", protectedRoute);
 app.use("/api", reservations);
+//@ts-ignore
 app.use(handleError);
 
 app.listen(PORT, () => {

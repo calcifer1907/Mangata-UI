@@ -2,7 +2,10 @@ import { Request, Response } from "express";
 
 import { pool } from "../Connection";
 
-export const getListUSers = async (_request: Request, response: Response) => {
+export const getListUSers = async (
+  _request: Request,
+  response: Response
+): Promise<Response<any, Record<string, any>> | undefined> => {
   try {
     const result = await pool.query("SELECT * FROM users;");
     response.json(result.rows);
@@ -11,20 +14,23 @@ export const getListUSers = async (_request: Request, response: Response) => {
   }
 };
 
-export const getSearchUser = async (request: Request, response: Response) => {
+export const getSearchUser = async (
+  request: Request,
+  response: Response
+): Promise<Response<any, Record<string, any>> | undefined> => {
   try {
     const { id } = request.body;
-    const [row] = await pool.query(
+    const result = await pool.query(
       "SELECT CONCAT(FIRST_NAME,' ',LAST_NAME) AS USER_NAME,ID FROM users WHERE ID=?;",
       [id]
     );
-    if (row.length === 0) {
-      const [system] = await pool.query(
+    if (result.rows.length === 0) {
+      const system = await pool.query(
         "SELECT CONCAT(FIRST_NAME,' ',LAST_NAME) AS USER_NAME,ID FROM users WHERE CONCAT(FIRST_NAME,LAST_NAME) LIKE '%system%';"
       );
-      return response.json(system[0]);
+      return response.json(system.rows[0]);
     }
-    response.json(row[0]);
+    response.json(result.rows[0]);
   } catch (error) {
     return response.status(500).json({ message: "sometghin gos wrong" });
   }

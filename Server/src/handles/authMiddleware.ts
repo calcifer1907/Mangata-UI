@@ -1,7 +1,12 @@
-import { verifyToken } from "../auth.js";
+import { Response, Request, NextFunction } from "express";
+import { verifyToken } from "../auth";
 
 // Middleware para proteger las rutas
-export const authenticate = (req, res, next) => {
+export const authenticate = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const token = req.headers["authorization"];
 
   if (!token) {
@@ -17,6 +22,7 @@ export const authenticate = (req, res, next) => {
   }
 
   // Si el token es válido, adjuntamos la información del usuario al request
+  //@ts-ignore
   req.user = decoded;
   next();
 };

@@ -22,7 +22,8 @@ export const pool = new pg.Pool({
   database: DB_DATABASE,
   user: DB_USER,
   password: DB_PASSWORD,
-  port: DB_PORT,
+  port: DB_PORT ? parseInt(DB_PORT, 10) : undefined,
+  ssl: true,
 });
 
 // const getGpVersion = async () => {

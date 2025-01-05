@@ -15,7 +15,7 @@ export const createReservation = async (
     CREATED_AT,
   } = request.body;
   try {
-    const [row] = await pool.query(
+    const result = await pool.query(
       "INSERT INTO reservations(CODE_RESERVATION,ID_EMPLOYEE,TELEPHONE,CURRENT_COMMISSION,COMMISSION_EMPLOYEE,CREATED_AT) VALUES(?,?,?,?,?,?);",
       [
         CODE_RESERVATION,
@@ -35,7 +35,7 @@ export const createReservation = async (
       "INSERT INTO accompanist(ID_RESERVATION,NAME_ACCOMPANIST,ID_LUNCHES) VALUES ?;",
       [newAccompanist]
     );
-    response.status(201).json({ id: row.insertId, message: "success" });
+    response.status(201).json({ id: result.rowCount, message: "success" });
   } catch (_error) {
     return response.status(500).json({ message: "sometghin gos wrong" });
   }
@@ -57,12 +57,12 @@ export const getListSalesEmployee = async (
 ) => {
   try {
     const { date } = request.body;
-    const [row] = await pool.query(
+    const result = await pool.query(
       `SELECT re.CODE_RESERVATION,re.STATUS_RESERVATION,re.COMMISSION_EMPLOYEE,re.CURRENT_COMMISSION,re.CREATED_AT ,ac.NAME_ACCOMPANIST
       FROM reservations re INNER JOIN accompanist ac ON ac.ID_RESERVATION = re.CODE_RESERVATION  WHERE re.CREATED_AT=? GROUP BY ac.ID_RESERVATION;`,
       [date]
     );
-    const diff = row.map((values: any, index: number) => ({
+    const diff = result.rows.map((values: any, index: number) => ({
       ...values,
       id: index + 1,
       DIFF: values.COMMISSION_EMPLOYEE - values.CURRENT_COMMISSION,
@@ -83,20 +83,21 @@ export const getListSalesAdmin = async (
 ) => {
   try {
     const { date } = request.body;
-    const [row] = await pool.query(
+    const result = await pool.query(
       `SELECT re.CODE_RESERVATION,re.ID_EMPLOYEE,re.STATUS_RESERVATION,re.COMMISSION_EMPLOYEE,re.CURRENT_COMMISSION,re.CREATED_AT,ac.NAME_ACCOMPANIST
        FROM reservations re INNER JOIN accompanist ac ON ac.ID_RESERVATION = re.CODE_RESERVATION  WHERE CREATED_AT=? GROUP BY ac.ID_RESERVATION;`,
       [date]
     );
 
-    const [dataUser] = await pool.query(
+    const dataUser = await pool.query(
       "SELECT ID,CONCAT(FIRST_NAME,' ',LAST_NAME) AS USER_NAME FROM users WHERE ROLE_ID=2 OR ROLE_ID=3;"
     );
-    const diff = row.map((values, index) => ({
+    const diff = result.rows.map((values, index) => ({
       ...values,
       id: index + 1,
       DIFF: values.COMMISSION_EMPLOYEE - values.CURRENT_COMMISSION,
-      EMPLOYEE: findEmployee(dataUser, values.ID_EMPLOYEE)?.USER_NAME ?? "",
+      EMPLOYEE:
+        findEmployee(dataUser.rows, values.ID_EMPLOYEE)?.USER_NAME ?? "",
     }));
     response.json(diff);
   } catch (error) {
@@ -106,8 +107,8 @@ export const getListSalesAdmin = async (
 
 export const getMinMax = async (_request: Request, response: Response) => {
   try {
-    const [row] = await pool.query("SELECT MIN,MAX FROM min_max;");
-    response.json(row[0]);
+    const result = await pool.query("SELECT MIN,MAX FROM min_max;");
+    response.json(result.rows[0]);
   } catch (error) {
     return response.status(500).json({ message: "sometghin gos wrong" });
   }
@@ -119,12 +120,12 @@ export const changeStatusReservation = async (
 ) => {
   try {
     const { id, status, updated } = request.body;
-    const [row] = await pool.query(
+    const result = await pool.query(
       "UPDATE reservations SET STATUS_RESERVATION=?,UPDATED_AT=? WHERE CODE_RESERVATION=?;",
       [status, updated, id]
     );
 
-    response.json(row[0]);
+    response.json(result.rows[0]);
   } catch (error) {
     console.log(error);
     return response.status(500).json({ message: "sometghin gos wrong" });
