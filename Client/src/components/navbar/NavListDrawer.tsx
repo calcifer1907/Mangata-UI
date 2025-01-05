@@ -9,7 +9,7 @@ import { NavLink } from "react-router-dom";
 
 interface IProps {
   handleDrawerToggle: () => void;
-  navItems: { TITLE: string; PATH: string }[];
+  navItems: { title: string; path: string }[];
   token: string;
 }
 
@@ -29,13 +29,13 @@ const NavListDrawer = ({ handleDrawerToggle, navItems, token }: IProps) => {
       <List>
         {token ? (
           navItems.map((item) => (
-            <ListItem key={item.TITLE} disablePadding>
+            <ListItem key={item.title} disablePadding>
               <ListItemButton
                 sx={{ textAlign: "center" }}
                 component={NavLink}
-                to={item.PATH}
+                to={item.path}
               >
-                <ListItemText primary={item.TITLE} />
+                <ListItemText primary={item.title} />
               </ListItemButton>
             </ListItem>
           ))

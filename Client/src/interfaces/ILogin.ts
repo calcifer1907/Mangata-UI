@@ -4,8 +4,8 @@ export interface ILogin {
 }
 
 interface IMenu {
-  TITLE: string;
-  PATH: string;
+  title: string;
+  path: string;
 }
 
 export interface IUserInfo {

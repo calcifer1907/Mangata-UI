@@ -19,7 +19,7 @@ interface IUserInfoContext {
 const initialUserInfo = {
   TOKEN: "",
   USER_INFO: { ROLE: "", USER_NAME: "", ID_EMPLOYEE: 0 },
-  MENU: [{ TITLE: "", PATH: "" }],
+  MENU: [{ title: "", path: "" }],
 };
 const ContextUser = createContext<IUserInfoContext>({
   userInfo: initialUserInfo,

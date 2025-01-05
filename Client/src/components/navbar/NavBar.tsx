@@ -75,12 +75,12 @@ const Navbar = (props: Props) => {
             {userInfo.TOKEN ? (
               userInfo.MENU.map((item) => (
                 <Button
-                  key={item.TITLE}
+                  key={item.title}
                   sx={{ color: "#1C1B21" }}
-                  to={`/${item.PATH}`}
+                  to={`/${item.path}`}
                   component={NavLink}
                 >
-                  {item.TITLE}
+                  {item.title}
                 </Button>
               ))
             ) : (
