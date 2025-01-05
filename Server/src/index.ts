@@ -2,11 +2,11 @@ import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 
-import usersRouters from "../src/routes/users.routes.js";
-import protectedRoute from "../src/routes/protected.routes.js";
-import loginRouters from "../src/routes/login.routes.js";
-import reservations from "../src/routes/reservations.routes.js";
-import { handleError } from "./handles/handleEror.js";
+import usersRouters from "./routes/users.routes";
+import protectedRoute from "./routes/protected.routes";
+import loginRouters from "./routes/login.routes";
+import reservations from "./routes/reservations.routes";
+import { handleError } from "./handles/handleEror";
 
 const app = express();
 
@@ -20,7 +20,7 @@ const corsOptions = {
 
 const PORT = process.env.PORT || 8080;
 
-app.get("/", (request, response) => {
+app.get("/", (_request, response) => {
   response.json({ message: "Server" });
 });
 

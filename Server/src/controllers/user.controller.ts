@@ -1,15 +1,17 @@
-import { pool } from "../Connection.js";
+import { Request, Response } from "express";
 
-export const getListUSers = async (request, response, next) => {
+import { pool } from "../Connection";
+
+export const getListUSers = async (_request: Request, response: Response) => {
   try {
-    const [row] = await pool.query("SELECT * FROM users;");
-    response.json(row);
+    const result = await pool.query("SELECT * FROM users;");
+    response.json(result.rows);
   } catch (error) {
     return response.status(500).json({ message: "sometghin gos wrong" });
   }
 };
 
-export const getSearchUser = async (request, response) => {
+export const getSearchUser = async (request: Request, response: Response) => {
   try {
     const { id } = request.body;
     const [row] = await pool.query(
@@ -28,7 +30,7 @@ export const getSearchUser = async (request, response) => {
   }
 };
 
-export const createUser = async (request, response, next) => {
+export const createUser = async (request: Request, response: Response) => {
   const {
     first_name,
     last_name,
@@ -41,7 +43,7 @@ export const createUser = async (request, response, next) => {
   } = request.body;
 
   try {
-    const [row] = await pool.query(
+    await pool.query(
       "INSERT INTO users(FIRST_NAME,LAST_NAME,EMAIL,BANK_ACCOUNT,PASSWORD,ROLE_ID,IS_ACTIVE,CREATED_AT) VALUES (?,?,?,?,?,?,?,?);",
       [
         first_name,

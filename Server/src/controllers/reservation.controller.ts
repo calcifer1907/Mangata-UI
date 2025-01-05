@@ -1,6 +1,10 @@
-import { pool } from "../Connection.js";
+import { Request, Response } from "express";
+import { pool } from "../Connection";
 
-export const createReservation = async (request, response) => {
+export const createReservation = async (
+  request: Request,
+  response: Response
+) => {
   const {
     CODE_RESERVATION,
     ID_EMPLOYEE,
@@ -22,7 +26,7 @@ export const createReservation = async (request, response) => {
         CREATED_AT,
       ]
     );
-    const newAccompanist = ACCOMPANIST.map((items) => [
+    const newAccompanist = ACCOMPANIST.map((items: any) => [
       CODE_RESERVATION,
       items.name,
       items.lunch.value.toString(),
@@ -31,25 +35,26 @@ export const createReservation = async (request, response) => {
       "INSERT INTO accompanist(ID_RESERVATION,NAME_ACCOMPANIST,ID_LUNCHES) VALUES ?;",
       [newAccompanist]
     );
-    console.log(row);
     response.status(201).json({ id: row.insertId, message: "success" });
-  } catch (error) {
-    console.log(error);
+  } catch (_error) {
     return response.status(500).json({ message: "sometghin gos wrong" });
   }
 };
 
-export const getLunches = async (_request, response) => {
+export const getLunches = async (_request: Request, response: Response) => {
   try {
     const result = await pool.query("SELECT ID,DESCRIPTION FROM lunches;");
-    console.log(result);
+    response.send(result.rows);
   } catch (error) {
     console.log(error);
     return response.status(500).json({ message: "sometghin gos wrong" });
   }
 };
 
-export const getListSalesEmployee = async (request, response) => {
+export const getListSalesEmployee = async (
+  request: Request,
+  response: Response
+) => {
   try {
     const { date } = request.body;
     const [row] = await pool.query(
@@ -57,7 +62,7 @@ export const getListSalesEmployee = async (request, response) => {
       FROM reservations re INNER JOIN accompanist ac ON ac.ID_RESERVATION = re.CODE_RESERVATION  WHERE re.CREATED_AT=? GROUP BY ac.ID_RESERVATION;`,
       [date]
     );
-    const diff = row.map((values, index) => ({
+    const diff = row.map((values: any, index: number) => ({
       ...values,
       id: index + 1,
       DIFF: values.COMMISSION_EMPLOYEE - values.CURRENT_COMMISSION,
@@ -68,11 +73,14 @@ export const getListSalesEmployee = async (request, response) => {
   }
 };
 
-const findEmployee = (users, idEmployee) => {
-  return users.find((user) => user.ID === idEmployee);
+const findEmployee = (users: any, idEmployee: string) => {
+  return users.find((user: any) => user.ID === idEmployee);
 };
 
-export const getListSalesAdmin = async (request, response) => {
+export const getListSalesAdmin = async (
+  request: Request,
+  response: Response
+) => {
   try {
     const { date } = request.body;
     const [row] = await pool.query(
@@ -96,7 +104,7 @@ export const getListSalesAdmin = async (request, response) => {
   }
 };
 
-export const getMinMax = async (_request, response) => {
+export const getMinMax = async (_request: Request, response: Response) => {
   try {
     const [row] = await pool.query("SELECT MIN,MAX FROM min_max;");
     response.json(row[0]);
@@ -105,7 +113,10 @@ export const getMinMax = async (_request, response) => {
   }
 };
 
-export const changeStatusReservation = async (request, response) => {
+export const changeStatusReservation = async (
+  request: Request,
+  response: Response
+) => {
   try {
     const { id, status, updated } = request.body;
     const [row] = await pool.query(

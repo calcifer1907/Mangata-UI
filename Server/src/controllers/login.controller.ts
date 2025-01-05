@@ -1,18 +1,19 @@
-import { pool } from "../Connection.js";
-import { comparePassword, createToken } from "../auth.js";
+import { pool } from "../Connection";
+import { Request, Response } from "express";
+import { comparePassword, createToken } from "../auth";
 
 const SQL_FIND_USER = `SELECT us.ID,us.EMAIL,us.PASSWORD,CONCAT(us.FIRST_NAME," ",us.LAST_NAME) AS USER_NAME,rl.DESCRIPTION,us.ROLE_ID
   FROM Users us INNER JOIN roles rl ON rl.ID = us.ROLE_ID;`;
 
-export const getAllUser = async (request, response) => {
+export const getAllUser = async (request: Request, response: Response) => {
   const { email, password } = request.body;
   try {
-    const [row] = await pool.query(SQL_FIND_USER);
-    const findUser = row.find((user) => user.EMAIL === email);
+    const resultUser = await pool.query(SQL_FIND_USER);
+    const findUser = resultUser.rows.find((user: any) => user.EMAIL === email);
     if (!findUser) {
       return response.status(401).json({ message: "Usuario no encontrado" });
     }
-    const [menuRoles] = await pool.query(
+    const resultRoles = await pool.query(
       "SELECT TITLE,PATH FROM menu_roles WHERE ROLE_ID=?",
       [findUser.ROLE_ID]
     );
@@ -31,7 +32,7 @@ export const getAllUser = async (request, response) => {
         USER_NAME: findUser.USER_NAME,
         ID_EMPLOYEE: findUser.ID,
       },
-      MENU: menuRoles,
+      MENU: resultRoles.rows,
     });
   } catch (error) {
     console.log(error);
