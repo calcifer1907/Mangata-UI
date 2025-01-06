@@ -1,12 +1,12 @@
 export interface IUsers {
-  first_name: string;
-  last_name: string;
-  email: string;
-  account_bank: string;
-  role: string;
-  password: string;
-  is_active: boolean;
-  created_at: string;
+  FIRST_NAME: string;
+  LAST_NAME: string;
+  EMAIL: string;
+  BANK_ACCOUNT: string;
+  ROLE_ID: number;
+  PASSWORD: string;
+  IS_ACTIVE: boolean;
+  CREATED_aT: string;
 }
 
 export interface IGetUserId {
