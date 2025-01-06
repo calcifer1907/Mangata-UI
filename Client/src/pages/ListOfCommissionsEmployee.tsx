@@ -36,7 +36,7 @@ const ListOfCommissions = () => {
   const handleOnchange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const filter = dataList.filter((item) =>
-      item.CODE_RESERVATION.includes(value.toUpperCase())
+      item.code_reservation.includes(value.toUpperCase())
     );
     setDataListFilter(filter.length > 0 ? filter : dataList);
   };
@@ -51,7 +51,7 @@ const ListOfCommissions = () => {
     ) as HTMLInputElement;
     const value = searchInput.value;
     const filter = dataList.filter((item) =>
-      item.CODE_RESERVATION.includes(value.toUpperCase())
+      item.code_reservation.includes(value.toUpperCase())
     );
     setDataListFilter(filter);
   };
@@ -86,13 +86,13 @@ const ListOfCommissions = () => {
   //     flex: 1,
   //   },
   //   {
-  //     field: "CODE_RESERVATION",
+  //     field: "code_reservation",
   //     headerName: "Id Reserva",
   //     sortable: false,
   //     flex: 3,
   //   },
   //   {
-  //     field: "STATUS_RESERVATION",
+  //     field: "status_reservation",
   //     headerName: "Estado Reserva",
   //     sortable: false,
   //     flex: 3,
@@ -119,7 +119,7 @@ const ListOfCommissions = () => {
   //     flex: 3,
   //   },
   //   {
-  //     field: "CREATED_AT",
+  //     field: "created_at",
   //     headerName: "Fecha Creación",
   //     sortable: false,
   //     valueGetter: (value) => format(value, FORMAT_DATE),
@@ -366,7 +366,7 @@ const ListOfCommissions = () => {
             <>
               {dataListFilter.map((item) => (
                 <Paper
-                  key={item.CODE_RESERVATION}
+                  key={item.code_reservation}
                   elevation={3}
                   sx={{
                     display: "flex",
@@ -392,18 +392,18 @@ const ListOfCommissions = () => {
                       width={32}
                       height={32}
                       color={
-                        STATUS[item.STATUS_RESERVATION as keyof typeof STATUS]
+                        STATUS[item.status_reservation as keyof typeof STATUS]
                       }
                       style={{ height: "100%" }}
                     />
                     <Box>
                       <Typography sx={{ fontWeight: 600 }}>
-                        {item.CODE_RESERVATION}
+                        {item.code_reservation}
                       </Typography>
                       <Typography>
-                        {format(item.CREATED_AT, FORMAT_DATE, "co")}
+                        {format(item.created_at, FORMAT_DATE, "co")}
                       </Typography>
-                      <Typography>{item.NAME_ACCOMPANIST}</Typography>
+                      <Typography>{item.name_accompanist}</Typography>
                     </Box>
                   </Box>
                 </Paper>

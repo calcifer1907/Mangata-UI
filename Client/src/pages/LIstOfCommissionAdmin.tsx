@@ -34,7 +34,7 @@ const FORMAT_DATE = "YYYY/MM/DD";
 //     flex: 1,
 //   },
 //   {
-//     field: "CODE_RESERVATION",
+//     field: "code_reservation",
 //     headerName: "Id Reserva",
 //     sortable: false,
 //     flex: 3,
@@ -46,7 +46,7 @@ const FORMAT_DATE = "YYYY/MM/DD";
 //     flex: 3,
 //   },
 //   {
-//     field: "STATUS_RESERVATION",
+//     field: "status_reservation",
 //     headerName: "Estado reserva",
 //     sortable: false,
 //     flex: 3,
@@ -59,7 +59,7 @@ const FORMAT_DATE = "YYYY/MM/DD";
 //     flex: 3,
 //   },
 //   {
-//     field: "COMMISSION_EMPLOYEE",
+//     field: "commission_employee",
 //     headerName: "Se Vendio en",
 //     sortable: false,
 //     valueGetter: (value) => formatPrice(value as number),
@@ -73,7 +73,7 @@ const FORMAT_DATE = "YYYY/MM/DD";
 //     flex: 3,
 //   },
 //   {
-//     field: "CREATED_AT",
+//     field: "created_at",
 //     headerName: "Fecha Creación",
 //     sortable: false,
 //     valueGetter: (value) => format(value, FORMAT_DATE),
@@ -121,7 +121,7 @@ const LIstOfCommissionAdmin = () => {
     ) as HTMLInputElement;
     const value = searchInput.value;
     const filter = dataList.filter((item) =>
-      item.CODE_RESERVATION.includes(value.toUpperCase())
+      item.code_reservation.includes(value.toUpperCase())
     );
     setDataListFilter(filter);
   };
@@ -129,17 +129,17 @@ const LIstOfCommissionAdmin = () => {
   const handleOnchange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const filter = dataList.filter((item) =>
-      item.CODE_RESERVATION.includes(value.toUpperCase())
+      item.code_reservation.includes(value.toUpperCase())
     );
     setDataListFilter(filter.length > 0 ? filter : dataList);
   };
 
   const handleChangeStatus = (status: string) => {
     const changeStatus = dataList.findIndex(
-      ({ CODE_RESERVATION }) => CODE_RESERVATION === codeRe
+      ({ code_reservation }) => code_reservation === codeRe
     );
     // console.log(changeStatus, status, code);
-    dataList[changeStatus].STATUS_RESERVATION = status;
+    dataList[changeStatus].status_reservation = status;
     const updated = format(new Date(), "YYYY-MM-DDTHH:mm:ss", "co");
     changeStatusReservation(codeRe, status, updated);
     handleClose();
@@ -366,7 +366,7 @@ const LIstOfCommissionAdmin = () => {
             <>
               {dataListFilter.map((item) => (
                 <Paper
-                  key={item.CODE_RESERVATION}
+                  key={item.code_reservation}
                   elevation={3}
                   sx={{
                     display: "flex",
@@ -390,21 +390,21 @@ const LIstOfCommissionAdmin = () => {
                       width={32}
                       height={32}
                       color={
-                        STATUS[item.STATUS_RESERVATION as keyof typeof STATUS]
+                        STATUS[item.status_reservation as keyof typeof STATUS]
                       }
                       style={{ height: "100%" }}
                     />
                     <Box>
                       <Typography sx={{ fontWeight: 600 }}>
-                        {item.CODE_RESERVATION}
+                        {item.code_reservation}
                       </Typography>
                       <Typography>
-                        {format(item.CREATED_AT, FORMAT_DATE, "co")}-{" "}
+                        {format(item.created_at, FORMAT_DATE, "co")}-{" "}
                         <Typography component="span" sx={{ fontWeight: 600 }}>
-                          {formatPrice(Number(item.COMMISSION_EMPLOYEE))}
+                          {formatPrice(Number(item.commission_employee))}
                         </Typography>
                       </Typography>
-                      <Typography>{item.NAME_ACCOMPANIST}</Typography>
+                      <Typography>{item.name_accompanist}</Typography>
                     </Box>
                     {
                       <Box sx={{ height: "100%" }}>
@@ -415,13 +415,13 @@ const LIstOfCommissionAdmin = () => {
                           aria-expanded={open ? "true" : undefined}
                           sx={{ height: "100%" }}
                           onClick={(e) => {
-                            if (item.STATUS_RESERVATION !== "confirmada")
-                              handleClick(e, item.CODE_RESERVATION);
+                            if (item.status_reservation !== "confirmada")
+                              handleClick(e, item.code_reservation);
                           }}
                           startIcon={
                             <Icon
                               icon={
-                                item.STATUS_RESERVATION !== "confirmada"
+                                item.status_reservation !== "confirmada"
                                   ? "solar:pen-new-round-bold-duotone"
                                   : "solar:unread-bold-duotone"
                               }

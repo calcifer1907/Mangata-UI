@@ -18,9 +18,9 @@ const GenerateReservation = () => {
   const { USER_INFO } = userInfo;
 
   const funcMinMax = useCallback(async () => {
-    const { MIN, MAX } = await getMinMax.getListData();
-    setMinMax({ MIN: Number(MIN), MAX: Number(MAX) });
-    setValueSlider(Number(MAX));
+    const { min, max } = await getMinMax.getListData();
+    setMinMax({ MIN: Number(min), MAX: Number(max) });
+    setValueSlider(Number(max));
   }, []);
 
   useEffect(() => {

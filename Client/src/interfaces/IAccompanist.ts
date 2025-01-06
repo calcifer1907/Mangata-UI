@@ -26,11 +26,16 @@ export interface IErrorFieldAccompanist {
 }
 
 export interface ILunches {
-  ID: number;
-  DESCRIPTION: string;
+  id: number;
+  description: string;
 }
 
 export interface IMinMax {
   MIN: number;
   MAX: number;
+}
+
+export interface IMinMaxResponse {
+  min: number;
+  max: number;
 }

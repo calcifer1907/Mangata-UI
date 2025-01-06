@@ -10,20 +10,20 @@ export interface IUsers {
 }
 
 export interface IGetUserId {
-  ID: number;
-  USER_NAME: string;
+  id: number;
+  user_name: string;
 }
 
 export interface IGetListSales {
-  CODE_RESERVATION: string;
-  COMMISSION_EMPLOYEE: string;
-  CREATED_AT: string;
-  CURRENT_COMMISSION: string;
+  code_reservation: string;
+  commission_employee: string;
+  created_at: string;
+  current_commission: string;
   DIFF: string;
   EMPLOYEE: string;
   ID_EMPLOYEE: string;
-  NAME_ACCOMPANIST: string;
-  STATUS_RESERVATION: string;
+  name_accompanist: string;
+  status_reservation: string;
   id: number;
 }
 

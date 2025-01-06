@@ -7,7 +7,7 @@ import {
   IGetListSales,
   IGetListData,
 } from "../../interfaces/IUser";
-import { ILunches, IMinMax } from "../../interfaces/IAccompanist";
+import { ILunches, IMinMaxResponse } from "../../interfaces/IAccompanist";
 
 const URI_LOGIN = "/auth/login";
 
@@ -39,7 +39,7 @@ export const getLIstForTable = {
 };
 
 export const getMinMax = {
-  getListData: (): Promise<IMinMax> => requestApis.get(`/api/MimMax`),
+  getListData: (): Promise<IMinMaxResponse> => requestApis.get(`/api/MimMax`),
 };
 
 interface IBodyChangeStatus {

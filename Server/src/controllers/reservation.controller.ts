@@ -16,7 +16,7 @@ export const createReservation = async (
   } = request.body;
   try {
     const result = await pool.query(
-      "INSERT INTO reservations(CODE_RESERVATION,ID_EMPLOYEE,TELEPHONE,CURRENT_COMMISSION,COMMISSION_EMPLOYEE,CREATED_AT) VALUES(?,?,?,?,?,?);",
+      "INSERT INTO reservations(CODE_RESERVATION,ID_EMPLOYEE,TELEPHONE,CURRENT_COMMISSION,COMMISSION_EMPLOYEE,CREATED_AT) VALUES($1,$2,$3,$4,$5,$6);",
       [
         CODE_RESERVATION,
         ID_EMPLOYEE,
@@ -26,17 +26,20 @@ export const createReservation = async (
         CREATED_AT,
       ]
     );
-    const newAccompanist = ACCOMPANIST.map((items: any) => [
-      CODE_RESERVATION,
-      items.name,
-      items.lunch.value.toString(),
-    ]);
+
+    const idsReservation = ACCOMPANIST.map(() => CODE_RESERVATION);
+    const namesAccompanist = ACCOMPANIST.map((items: any) => items.name);
+    const idsLunches = ACCOMPANIST.map((items: any) =>
+      items.lunch.value.toString()
+    );
+
     await pool.query(
-      "INSERT INTO accompanist(ID_RESERVATION,NAME_ACCOMPANIST,ID_LUNCHES) VALUES ?;",
-      [newAccompanist]
+      "INSERT INTO accompanist(ID_RESERVATION,NAME_ACCOMPANIST,ID_LUNCHES) SELECT * FROM UNNEST($1::text[], $2::text[], $3::int[]);",
+      [idsReservation, namesAccompanist, idsLunches]
     );
     response.status(201).json({ id: result.rowCount, message: "success" });
-  } catch (_error) {
+  } catch (error) {
+    console.log(error);
     return response.status(500).json({ message: "sometghin gos wrong" });
   }
 };
@@ -58,17 +61,22 @@ export const getListSalesEmployee = async (
   try {
     const { date } = request.body;
     const result = await pool.query(
-      `SELECT re.CODE_RESERVATION,re.STATUS_RESERVATION,re.COMMISSION_EMPLOYEE,re.CURRENT_COMMISSION,re.CREATED_AT ,ac.NAME_ACCOMPANIST
-      FROM reservations re INNER JOIN accompanist ac ON ac.ID_RESERVATION = re.CODE_RESERVATION  WHERE re.CREATED_AT=? GROUP BY ac.ID_RESERVATION;`,
+      `SELECT re.CODE_RESERVATION, re.STATUS_RESERVATION, re.COMMISSION_EMPLOYEE, re.CURRENT_COMMISSION, re.CREATED_AT, ac.NAME_ACCOMPANIST
+        FROM reservations re 
+        INNER JOIN accompanist ac ON ac.ID_RESERVATION = re.CODE_RESERVATION  
+        WHERE re.CREATED_AT=$1 
+        GROUP BY re.CODE_RESERVATION, re.STATUS_RESERVATION, re.COMMISSION_EMPLOYEE, re.CURRENT_COMMISSION, re.CREATED_AT, ac.NAME_ACCOMPANIST`,
       [date]
     );
+    console.log(result.rows);
     const diff = result.rows.map((values: any, index: number) => ({
       ...values,
       id: index + 1,
-      DIFF: values.COMMISSION_EMPLOYEE - values.CURRENT_COMMISSION,
+      DIFF: values.commission_employee - values.current_commission,
     }));
     response.json(diff);
   } catch (error) {
+    console.log(error);
     return response.status(500).json({ message: "sometghin gos wrong" });
   }
 };
@@ -84,8 +92,11 @@ export const getListSalesAdmin = async (
   try {
     const { date } = request.body;
     const result = await pool.query(
-      `SELECT re.CODE_RESERVATION,re.ID_EMPLOYEE,re.STATUS_RESERVATION,re.COMMISSION_EMPLOYEE,re.CURRENT_COMMISSION,re.CREATED_AT,ac.NAME_ACCOMPANIST
-       FROM reservations re INNER JOIN accompanist ac ON ac.ID_RESERVATION = re.CODE_RESERVATION  WHERE CREATED_AT=? GROUP BY ac.ID_RESERVATION;`,
+      `SELECT re.CODE_RESERVATION, re.ID_EMPLOYEE, re.STATUS_RESERVATION, re.COMMISSION_EMPLOYEE, re.CURRENT_COMMISSION, re.CREATED_AT, ac.NAME_ACCOMPANIST
+      FROM reservations re
+      INNER JOIN accompanist ac ON ac.ID_RESERVATION = re.CODE_RESERVATION
+      WHERE CREATED_AT = $1
+      GROUP BY re.CODE_RESERVATION, re.ID_EMPLOYEE, re.STATUS_RESERVATION, re.COMMISSION_EMPLOYEE, re.CURRENT_COMMISSION, re.CREATED_AT, ac.NAME_ACCOMPANIST`,
       [date]
     );
 
