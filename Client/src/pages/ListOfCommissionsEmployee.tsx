@@ -38,7 +38,7 @@ const ListOfCommissions = () => {
     const filter = dataList.filter((item) =>
       item.code_reservation.includes(value.toUpperCase())
     );
-    setDataListFilter(filter.length > 0 ? filter : dataList);
+    setDataListFilter(filter);
   };
 
   const updateMaxHeight = () => {

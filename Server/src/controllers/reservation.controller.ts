@@ -60,11 +60,11 @@ export const getListSalesEmployee = async (
   try {
     const { date, id_employee } = request.body;
     const result = await pool.query(
-      `SELECT re.CODE_RESERVATION, re.STATUS_RESERVATION, re.COMMISSION_EMPLOYEE, re.CURRENT_COMMISSION, re.CREATED_AT, ac.NAME_ACCOMPANIST
+      `SELECT re.CODE_RESERVATION, re.STATUS_RESERVATION, re.COMMISSION_EMPLOYEE, re.CURRENT_COMMISSION, re.CREATED_AT,  MIN(ac.NAME_ACCOMPANIST) AS NAME_ACCOMPANIST
         FROM reservations re 
         INNER JOIN accompanist ac ON ac.ID_RESERVATION = re.CODE_RESERVATION  
         WHERE re.CREATED_AT=$1 AND re.ID_EMPLOYEE = $2
-        GROUP BY re.CODE_RESERVATION, re.STATUS_RESERVATION, re.COMMISSION_EMPLOYEE, re.CURRENT_COMMISSION, re.CREATED_AT, ac.NAME_ACCOMPANIST`,
+        GROUP BY re.CODE_RESERVATION, re.STATUS_RESERVATION, re.COMMISSION_EMPLOYEE, re.CURRENT_COMMISSION, re.CREATED_AT`,
       [date, id_employee]
     );
     const diff = result.rows.map((values: any, index: number) => ({
@@ -89,11 +89,11 @@ export const getListSalesAdmin = async (
   try {
     const { date } = request.body;
     const result = await pool.query(
-      `SELECT re.CODE_RESERVATION, re.ID_EMPLOYEE, re.STATUS_RESERVATION, re.COMMISSION_EMPLOYEE, re.CURRENT_COMMISSION, re.CREATED_AT, ac.NAME_ACCOMPANIST
+      `SELECT re.CODE_RESERVATION, re.ID_EMPLOYEE, re.STATUS_RESERVATION, re.COMMISSION_EMPLOYEE, re.CURRENT_COMMISSION, re.CREATED_AT, MIN( ac.NAME_ACCOMPANIST) AS NAME_ACCOMPANIST
       FROM reservations re
       INNER JOIN accompanist ac ON ac.ID_RESERVATION = re.CODE_RESERVATION
       WHERE CREATED_AT = $1
-      GROUP BY re.CODE_RESERVATION, re.ID_EMPLOYEE, re.STATUS_RESERVATION, re.COMMISSION_EMPLOYEE, re.CURRENT_COMMISSION, re.CREATED_AT, ac.NAME_ACCOMPANIST`,
+      GROUP BY re.CODE_RESERVATION, re.ID_EMPLOYEE, re.STATUS_RESERVATION, re.COMMISSION_EMPLOYEE, re.CURRENT_COMMISSION, re.CREATED_AT`,
       [date]
     );
 
@@ -129,13 +129,12 @@ export const changeStatusReservation = async (
   try {
     const { id, status, updated } = request.body;
     const result = await pool.query(
-      "UPDATE reservations SET STATUS_RESERVATION=?,UPDATED_AT=? WHERE CODE_RESERVATION=?;",
+      "UPDATE reservations SET STATUS_RESERVATION=$1,UPDATED_AT=$2 WHERE CODE_RESERVATION=$3;",
       [status, updated, id]
     );
 
     response.json(result.rows[0]);
   } catch (error) {
-    console.log(error);
     return response.status(500).json({ message: "sometghin gos wrong" });
   }
 };
