@@ -38,8 +38,7 @@ export const createReservation = async (
       [idsReservation, namesAccompanist, idsLunches]
     );
     response.status(201).json({ id: result.rowCount, message: "success" });
-  } catch (error) {
-    console.log(error);
+  } catch (_error) {
     return response.status(500).json({ message: "sometghin gos wrong" });
   }
 };
@@ -59,24 +58,22 @@ export const getListSalesEmployee = async (
   response: Response
 ) => {
   try {
-    const { date } = request.body;
+    const { date, id_employee } = request.body;
     const result = await pool.query(
       `SELECT re.CODE_RESERVATION, re.STATUS_RESERVATION, re.COMMISSION_EMPLOYEE, re.CURRENT_COMMISSION, re.CREATED_AT, ac.NAME_ACCOMPANIST
         FROM reservations re 
         INNER JOIN accompanist ac ON ac.ID_RESERVATION = re.CODE_RESERVATION  
-        WHERE re.CREATED_AT=$1 
+        WHERE re.CREATED_AT=$1 AND re.ID_EMPLOYEE = $2
         GROUP BY re.CODE_RESERVATION, re.STATUS_RESERVATION, re.COMMISSION_EMPLOYEE, re.CURRENT_COMMISSION, re.CREATED_AT, ac.NAME_ACCOMPANIST`,
-      [date]
+      [date, id_employee]
     );
-    console.log(result.rows);
     const diff = result.rows.map((values: any, index: number) => ({
       ...values,
       id: index + 1,
       DIFF: values.commission_employee - values.current_commission,
     }));
     response.json(diff);
-  } catch (error) {
-    console.log(error);
+  } catch (_error) {
     return response.status(500).json({ message: "sometghin gos wrong" });
   }
 };
