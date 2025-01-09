@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const JWT_SECRET = process.env.JWT_SECRET || "mangata.cartagena";
+const JWT_SECRET = process.env.JWT_SECRET || "mangata.cartagena.2025";
 const JWT_EXPIRATION = process.env.JWT_EXPIRATION || "1h";
 
 export const createToken = (userId: string, username: string) => {
