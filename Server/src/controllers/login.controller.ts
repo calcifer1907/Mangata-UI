@@ -12,7 +12,6 @@ export const getAllUser = async (request: Request, response: Response) => {
   try {
     const resultUser = await pool.query(SQL_FIND_USER);
     const findUser = resultUser.rows.find((user: any) => user.email === email);
-
     if (!findUser) {
       return response.status(401).json({ message: "Usuario no encontrado" });
     }

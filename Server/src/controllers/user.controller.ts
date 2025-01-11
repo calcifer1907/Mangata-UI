@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 
 import { pool } from "../Connection";
+import { throws } from "assert";
 
 export const getListUSers = async (
   _request: Request,
@@ -21,7 +22,7 @@ export const getSearchUser = async (
   try {
     const { id } = request.body;
     const result = await pool.query(
-      "SELECT CONCAT(FIRST_NAME,' ',LAST_NAME) AS USER_NAME,ID FROM users WHERE ID=?;",
+      "SELECT CONCAT(FIRST_NAME,' ',LAST_NAME) AS USER_NAME,ID FROM users WHERE ID=$1;",
       [id]
     );
     if (result.rows.length === 0) {
@@ -38,32 +39,39 @@ export const getSearchUser = async (
 
 export const createUser = async (request: Request, response: Response) => {
   const {
-    first_name,
-    last_name,
-    email,
-    account_bank,
-    role,
-    password,
-    is_active,
-    created_at,
+    FIRST_NAME,
+    LAST_NAME,
+    EMAIL,
+    BANK_ACCOUNT,
+    ROLE_ID,
+    PASSWORD,
+    IS_ACTIVE,
+    CREATED_AT,
   } = request.body;
 
   try {
-    await pool.query(
-      "INSERT INTO users(FIRST_NAME,LAST_NAME,EMAIL,BANK_ACCOUNT,PASSWORD,ROLE_ID,IS_ACTIVE,CREATED_AT) VALUES (?,?,?,?,?,?,?,?);",
-      [
-        first_name,
-        last_name,
-        email,
-        account_bank,
-        password,
-        role,
-        is_active,
-        created_at,
-      ]
+    const values = [
+      FIRST_NAME,
+      LAST_NAME,
+      EMAIL,
+      BANK_ACCOUNT,
+      PASSWORD,
+      ROLE_ID,
+      IS_ACTIVE,
+      CREATED_AT,
+    ];
+    const result = await pool.query(
+      "INSERT INTO users(FIRST_NAME,LAST_NAME,EMAIL,BANK_ACCOUNT,PASSWORD,ROLE_ID,IS_ACTIVE,CREATED_AT) VALUES($1,$2,$3,$4,$5,$6,$7,$8);",
+      values
     );
+    if (result.rowCount === 0) throw new Error("Error al insertar");
     response.json({ message: "success" });
   } catch (error) {
+    if ((error as { code: string })?.code === "23505")
+      return response
+        .status(409)
+        .json({ message: "Error: El correo electrónico ya está registrado." });
+
     return response.status(500).json({ message: "sometghin gos wrong" });
   }
 };

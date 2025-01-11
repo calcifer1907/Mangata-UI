@@ -24,31 +24,27 @@ import { format } from "@formkit/tempo";
 import { methodUser } from "../utils/api/agent";
 import { hashPassword } from "../generalFunctions/auth";
 
-import { useNavigate } from "react-router-dom";
-
 const CreateUser = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [selectRole, setSelectRole] = useState<string>("");
   const [innerWidth, setInnerWidth] = useState(window.innerWidth);
   const { handleSubmit, reset, control } = useForm<IUsers>({
     defaultValues: {
-      first_name: "",
-      last_name: "",
-      email: "",
-      account_bank: "",
-      role: "",
-      password: "",
+      FIRST_NAME: "",
+      LAST_NAME: "",
+      EMAIL: "",
+      BANK_ACCOUNT: "",
+      ROLE_ID: 0,
+      PASSWORD: "",
     },
   });
-
-  const navigation = useNavigate();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
       const newData = data;
-      newData.is_active = 1;
-      newData.created_at = format(new Date(), "YYYY/MM/DD");
-      newData.password = hashPassword(data.password);
+      newData.IS_ACTIVE = true;
+      newData.CREATED_AT = format(new Date(), "YYYY/MM/DD");
+      newData.PASSWORD = hashPassword(data.PASSWORD);
       const response = await methodUser.createUser(newData as IUsers);
       if (response.message === "success") {
         enqueueSnackbar("Se guardo correctamente el usurio", {
@@ -71,7 +67,6 @@ const CreateUser = () => {
           },
         });
       }
-      navigation("/Login");
     }
   };
 
@@ -137,7 +132,7 @@ const CreateUser = () => {
             }}
           >
             <Controller
-              name="first_name"
+              name="FIRST_NAME"
               control={control}
               rules={{
                 required: "El nombre es obligario",
@@ -180,7 +175,7 @@ const CreateUser = () => {
             />
 
             <Controller
-              name="last_name"
+              name="LAST_NAME"
               control={control}
               rules={{
                 required: "El apellido es obligario",
@@ -223,7 +218,7 @@ const CreateUser = () => {
               )}
             />
             <Controller
-              name="email"
+              name="EMAIL"
               control={control}
               rules={{
                 required: "El correo es obligatorio",
@@ -265,47 +260,8 @@ const CreateUser = () => {
               )}
             />
 
-            {selectRole === "Empleado" && selectRole && (
-              <Controller
-                name="account_bank"
-                control={control}
-                render={({ field, fieldState }) => (
-                  <TextField
-                    {...field}
-                    fullWidth
-                    type="number"
-                    label="Cuenta banco"
-                    variant="filled"
-                    margin="none"
-                    slotProps={{
-                      input: {
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <Icon
-                              icon="solar:key-minimalistic-square-bold-duotone"
-                              width="24"
-                              height="24"
-                              style={{ color: "#2B3D5E" }}
-                            />
-                          </InputAdornment>
-                        ),
-                      },
-                    }}
-                    sx={{
-                      background: "#FFFFFF",
-                      borderRadius: "8px 8px 0 0",
-                      marginBottom: { xs: 1, sm: 2, md: 2 },
-                      marginTop: { xs: 0, sm: 1, md: 1 },
-                    }}
-                    error={!!fieldState.error}
-                    helperText={fieldState.error?.message}
-                  />
-                )}
-              />
-            )}
-
             <Controller
-              name="password"
+              name="PASSWORD"
               control={control}
               rules={{
                 required: "La contraseña es obligatoria",
@@ -368,7 +324,7 @@ const CreateUser = () => {
               )}
             />
             <Controller
-              name="role"
+              name="ROLE_ID"
               control={control}
               rules={{ required: "El role obligario" }}
               render={({
@@ -428,7 +384,44 @@ const CreateUser = () => {
                 </TextField>
               )}
             />
-
+            {selectRole === "Empleado" && selectRole && (
+              <Controller
+                name="BANK_ACCOUNT"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <TextField
+                    {...field}
+                    fullWidth
+                    type="number"
+                    label="Cuenta banco"
+                    variant="filled"
+                    margin="none"
+                    slotProps={{
+                      input: {
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <Icon
+                              icon="solar:key-minimalistic-square-bold-duotone"
+                              width="24"
+                              height="24"
+                              style={{ color: "#2B3D5E" }}
+                            />
+                          </InputAdornment>
+                        ),
+                      },
+                    }}
+                    sx={{
+                      background: "#FFFFFF",
+                      borderRadius: "8px 8px 0 0",
+                      marginBottom: { xs: 1, sm: 2, md: 2 },
+                      marginTop: { xs: 0, sm: 1, md: 1 },
+                    }}
+                    error={!!fieldState.error}
+                    helperText={fieldState.error?.message}
+                  />
+                )}
+              />
+            )}
             <Box
               sx={{
                 display: "grid",

@@ -124,7 +124,7 @@ const NameLunchForm: React.FC = () => {
   };
 
   const handleReservation = async () => {
-    const ID_EMPLOYEE = getUserId?.ID;
+    const ID_EMPLOYEE = getUserId?.id;
     const TELEPHONE = valueCel;
     const AGREED_PRICE = PRICES.PRICE_MAX;
     const ACCOMPANIST = fields;
@@ -231,7 +231,7 @@ const NameLunchForm: React.FC = () => {
               >
                 {getUserId && (
                   <>
-                    Asesor: <span>{getUserId?.USER_NAME}</span>
+                    Asesor: <span>{getUserId?.user_name}</span>
                   </>
                 )}
               </h5>

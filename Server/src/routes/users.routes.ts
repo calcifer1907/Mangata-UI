@@ -3,11 +3,17 @@ import { authenticate } from "../handles/authMiddleware";
 import { handleError } from "../handles/handleEror";
 const router = Router();
 
-import { createUser, getSearchUser } from "../controllers/user.controller";
+import {
+  createUser,
+  getSearchUser,
+  getListUSers,
+} from "../controllers/user.controller";
 
 //@ts-ignore
 router.post("/createUser", createUser);
 //@ts-ignore
 router.post("/getuserid", getSearchUser);
+//@ts-ignore
+router.post("/getusers", getListUSers);
 
 export default router;

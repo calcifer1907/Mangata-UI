@@ -26,16 +26,16 @@ const AccompanistContext: FC<any> = (props) => {
 
   const getLunches = useCallback(async () => {
     const data = await getAccompanist.getLunches();
-    const newOptions = data.map(({ ID, DESCRIPTION }) => ({
-      value: ID,
-      label: DESCRIPTION,
+    const newOptions = data.map(({ id, description }) => ({
+      value: id,
+      label: description,
     }));
     setOptionsLunches(newOptions);
   }, []);
 
   const getMax = useCallback(async () => {
-    const { MAX, MIN } = await getMinMax.getListData();
-    setMinMax({ MIN: Number(MIN), MAX: Number(MAX) });
+    const { min, max } = await getMinMax.getListData();
+    setMinMax({ MIN: Number(min), MAX: Number(max) });
   }, []);
 
   useEffect(() => {
