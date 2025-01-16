@@ -20,9 +20,9 @@ const App: React.FC = () => {
     <Router>
       <ContextUser>
         <MyNavbar />
-        <Box sx={{ flex: 1, paddingTop: "16px", position: "relative" }}>
+        <Box sx={{ flex: 1, position: "relative" }}>
           <Routes>
-            <Route path="/home" element={<Home />} />
+            <Route path="/" element={<Home />} />
             <Route path="/CreateUser" element={<CreateUser />} />
             <Route
               path="/GenerateReservation"

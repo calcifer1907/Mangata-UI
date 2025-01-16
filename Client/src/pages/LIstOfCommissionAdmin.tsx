@@ -399,12 +399,17 @@ const LIstOfCommissionAdmin = () => {
                         {item.code_reservation}
                       </Typography>
                       <Typography>
-                        {format(item.created_at, FORMAT_DATE, "co")}-{" "}
+                        {format(item.created_at, FORMAT_DATE, "co")} -{" "}
                         <Typography component="span" sx={{ fontWeight: 600 }}>
-                          {formatPrice(Number(item.commission_employee))}
+                          {formatPrice(
+                            Number(item.commission_employee) *
+                              item.ACCOMPANIST.length
+                          )}
                         </Typography>
                       </Typography>
-                      <Typography>{item.name_accompanist}</Typography>
+                      <Typography>
+                        {item.ACCOMPANIST[0].name_accompanist}
+                      </Typography>
                     </Box>
                     {
                       <Box sx={{ height: "100%" }}>

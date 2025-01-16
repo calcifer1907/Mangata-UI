@@ -14,6 +14,11 @@ export interface IGetUserId {
   user_name: string;
 }
 
+interface IAccompanistListSales {
+  name_accompanist: string;
+  descrition: string;
+}
+
 export interface IGetListSales {
   code_reservation: string;
   commission_employee: string;
@@ -24,6 +29,7 @@ export interface IGetListSales {
   ID_EMPLOYEE: string;
   name_accompanist: string;
   status_reservation: string;
+  ACCOMPANIST: IAccompanistListSales[];
   id: number;
 }
 
