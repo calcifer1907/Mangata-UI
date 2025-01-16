@@ -10,7 +10,6 @@ import { useState, ChangeEvent, useEffect } from "react";
 /**Libreries */
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
-import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import InputAdornment from "@mui/material/InputAdornment";
 import Paper from "@mui/material/Paper";
@@ -66,17 +65,6 @@ const ListOfCommissions = () => {
 
   const updateMaxHeight = () => {
     setMaxHeight(window.innerHeight); // Usamos el alto del viewport
-  };
-
-  const handleFilterCode = () => {
-    const searchInput = document.getElementById(
-      "searchInput"
-    ) as HTMLInputElement;
-    const value = searchInput.value;
-    const filter = dataList.filter((item) =>
-      item.code_reservation.includes(value.toUpperCase())
-    );
-    setDataListFilter(filter);
   };
 
   const handleCountComission = () => {
@@ -191,31 +179,6 @@ const ListOfCommissions = () => {
               onChange={handleOnchange}
             />
             <img src={searchIcon} style={{ paddingInlineEnd: "18px" }} />
-          </Box>
-
-          <Box
-            sx={{
-              backgroundColor: "#2B3D5E",
-              height: 40,
-              width: 100,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: 100,
-              gap: 10,
-            }}
-          >
-            <Button
-              size="small"
-              sx={{
-                textTransform: "none",
-                fontSize: 14,
-                color: "#FFFFFF",
-              }}
-              onClick={handleFilterCode}
-            >
-              Buscar
-            </Button>
           </Box>
         </Box>
 
