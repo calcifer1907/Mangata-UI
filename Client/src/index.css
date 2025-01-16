@@ -7,6 +7,8 @@
 :root{
   --backgrounInput :#E8E8E8;
   --blueDark: #2B3D5E;
+  --blueLigth:#6490c7;
+  --blueDarkLigth:#4672a5;
 }
 
 
@@ -23,7 +25,7 @@ body{
   display: flex;
   flex-direction: column;
   flex: 1;
-  overflow-y: hidden;
+  overflow-x: hidden;
 }
 
 
@@ -40,5 +42,55 @@ body{
   color:#47464F;
   font-size: 16px;
   padding: 0px 20px;
+}
+
+/* Contenedor principal */
+.video-background-container {
+  position: relative;
+  width: 100%;
+  height: calc(56.25vw); /* Altura completa de la pantalla */
+  overflow: hidden;
+}
+
+/* Video de fondo */
+.video-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Asegura que el video cubra todo el contenedor */
+  z-index: -1; /* Envía el video detrás del contenido */
+}
+
+/* Contenido superpuesto */
+.content-overlay {
+  position: relative;
+  color: white;
+  text-align: center;
+  z-index: 1; /* Asegura que el contenido esté sobre el video */
+  padding: 20px;
+}
+
+.content-overlay h1 {
+  font-size: 3rem;
+  margin: 0;
+}
+
+.content-overlay p {
+  font-size: 1.2rem;
+  margin-top: 10px;
+}
+
+/* Overlay oscuro */
+.video-background-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /*background: rgba(0, 0, 0, 0.5); /* Oscurece el video */
+  z-index: 0; /* Asegura que esté detrás del contenido pero delante del video */
 }
 
