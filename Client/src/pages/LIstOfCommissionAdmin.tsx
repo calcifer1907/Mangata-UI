@@ -11,11 +11,13 @@ import {
   Typography,
 } from "@mui/material";
 // import TableUI from "../components/TableUI/TableUI";
+// import { GridColDef } from "@mui/x-data-grid";
 
 import { useSales } from "../hooks/useSales";
-// import { GridColDef } from "@mui/x-data-grid";
 import { format } from "@formkit/tempo";
 import { Icon } from "@iconify/react";
+
+import DialogListAccompanist from "../components/Dialogs/DialogListAccompanist";
 
 import { formatPrice } from "../generalFunctions/formaters";
 
@@ -23,6 +25,8 @@ import searchIcon from "../../src/assets/searchIcon.svg";
 
 import { IGetListSales } from "../interfaces/IUser";
 import { useEffect, useState, ChangeEvent, MouseEvent } from "react";
+
+import { IAccompanistListSales } from "../interfaces/IUser";
 
 const FORMAT_DATE = "YYYY/MM/DD";
 
@@ -101,7 +105,11 @@ const LIstOfCommissionAdmin = () => {
   const [dataListFilter, setDataListFilter] = useState<IGetListSales[]>([]);
   const [maxHeight, setMaxHeight] = useState<number>(window.innerHeight);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [openDialog, setOpenDialog] = useState(false);
 
+  const [arrayShowAccompanist, setArrayShowAccompanist] = useState<
+    IAccompanistListSales[]
+  >([]);
   const open = Boolean(anchorEl);
 
   const [codeRe, setCodeRe] = useState<string>("");
@@ -167,7 +175,7 @@ const LIstOfCommissionAdmin = () => {
   }, []);
 
   return (
-    <Box>
+    <Box sx={{ paddingTop: 4 }}>
       <Box
         sx={{
           display: "flex",
@@ -392,7 +400,11 @@ const LIstOfCommissionAdmin = () => {
                       color={
                         STATUS[item.status_reservation as keyof typeof STATUS]
                       }
-                      style={{ height: "100%" }}
+                      onClick={() => {
+                        setOpenDialog(true);
+                        setArrayShowAccompanist(item.ACCOMPANIST);
+                      }}
+                      style={{ height: "100%", cursor: "pointer" }}
                     />
                     <Box>
                       <Typography sx={{ fontWeight: 600 }}>
@@ -466,7 +478,11 @@ const LIstOfCommissionAdmin = () => {
             </>
           )}
         </Box>
-
+        <DialogListAccompanist
+          open={openDialog}
+          setOpen={setOpenDialog}
+          accompanist={arrayShowAccompanist}
+        />
         {/* {dataList.length > 0 && <TableUI data={dataList} columns={columns} />} */}
       </Container>
     </Box>

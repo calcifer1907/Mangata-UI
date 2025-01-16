@@ -14,9 +14,9 @@ export interface IGetUserId {
   user_name: string;
 }
 
-interface IAccompanistListSales {
+export interface IAccompanistListSales {
   name_accompanist: string;
-  descrition: string;
+  description: string;
 }
 
 export interface IGetListSales {
