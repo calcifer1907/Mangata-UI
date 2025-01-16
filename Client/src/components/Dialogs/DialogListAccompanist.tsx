@@ -2,6 +2,7 @@
  * @author Carlos Taborda
  * @description this component show list data of the Accompanist
  * @version 1.0
+ *
  */
 
 import { useState } from "react";

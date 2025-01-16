@@ -1,23 +1,42 @@
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Container,
-  InputAdornment,
-  Paper,
-  TextField,
-  Typography,
-} from "@mui/material";
-// import TableUI from "../components/TableUI/TableUI";
-import { useSales } from "../hooks/useSales";
-// import { GridColDef } from "@mui/x-data-grid";
-import { format } from "@formkit/tempo";
-import { formatPrice } from "../generalFunctions/formaters";
+/**
+ * @author Carlos Taborda
+ * @description This component is the loader to display the employee's commissions and reserve them per day.
+ * @version 1.0
+ *
+ */
+
 import { useState, ChangeEvent, useEffect } from "react";
+
+/**Libreries */
+import Box from "@mui/material/Box";
+import CircularProgress from "@mui/material/CircularProgress";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import InputAdornment from "@mui/material/InputAdornment";
+import Paper from "@mui/material/Paper";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import { Icon } from "@iconify/react";
+import { format } from "@formkit/tempo";
+
+/**Hooks */
+import { useSales } from "../hooks/useSales";
+
+/**Functions */
+import { formatPrice } from "../generalFunctions/formaters";
+
+/**Interface */
 import { IAccompanistListSales, IGetListSales } from "../interfaces/IUser";
+
+/**SVG */
 import searchIcon from "../../src/assets/searchIcon.svg";
+
+/**Component */
 import DialogListAccompanist from "../components/Dialogs/DialogListAccompanist";
+
+// import TableUI from "../components/TableUI/TableUI";
+// import { GridColDef } from "@mui/x-data-grid";
+
 const FORMAT_DATE = "YYYY-MM-DD";
 
 const STATUS = {
@@ -32,6 +51,10 @@ const ListOfCommissions = () => {
   });
   const [maxHeight, setMaxHeight] = useState<number>(window.innerHeight);
   const [dataListFilter, setDataListFilter] = useState<IGetListSales[]>([]);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [arrayShowAccompanist, setArrayShowAccompanist] = useState<
+    IAccompanistListSales[]
+  >([]);
 
   const handleOnchange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -40,12 +63,6 @@ const ListOfCommissions = () => {
     );
     setDataListFilter(filter);
   };
-
-  const [openDialog, setOpenDialog] = useState(false);
-
-  const [arrayShowAccompanist, setArrayShowAccompanist] = useState<
-    IAccompanistListSales[]
-  >([]);
 
   const updateMaxHeight = () => {
     setMaxHeight(window.innerHeight); // Usamos el alto del viewport
