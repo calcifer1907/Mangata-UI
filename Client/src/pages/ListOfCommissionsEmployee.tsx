@@ -15,9 +15,9 @@ import { format } from "@formkit/tempo";
 import { formatPrice } from "../generalFunctions/formaters";
 import { useState, ChangeEvent, useEffect } from "react";
 import { Icon } from "@iconify/react";
-import { IGetListSales } from "../interfaces/IUser";
+import { IAccompanistListSales, IGetListSales } from "../interfaces/IUser";
 import searchIcon from "../../src/assets/searchIcon.svg";
-
+import DialogListAccompanist from "../components/Dialogs/DialogListAccompanist";
 const FORMAT_DATE = "YYYY-MM-DD";
 
 const STATUS = {
@@ -40,6 +40,12 @@ const ListOfCommissions = () => {
     );
     setDataListFilter(filter);
   };
+
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const [arrayShowAccompanist, setArrayShowAccompanist] = useState<
+    IAccompanistListSales[]
+  >([]);
 
   const updateMaxHeight = () => {
     setMaxHeight(window.innerHeight); // Usamos el alto del viewport
@@ -127,16 +133,16 @@ const ListOfCommissions = () => {
   //   },
   // ];
 
-  if (loading) {
-    return (
-      <Box sx={{ display: "grid", placeItems: "center", height: "100%" }}>
-        <CircularProgress />
-      </Box>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <Box sx={{ display: "grid", placeItems: "center", height: "100%" }}>
+  //       <CircularProgress />
+  //     </Box>
+  //   );
+  // }
 
   return (
-    <Box>
+    <Box sx={{ paddingTop: 4 }}>
       <Box
         sx={{
           display: "flex",
@@ -347,7 +353,7 @@ const ListOfCommissions = () => {
           sx={{
             display: "flex",
             flexWrap: "wrap",
-            justifyContent: "center",
+            justifyContent: { xs: "center", lg: "flex-start" },
             gap: 2,
           }}
         >
@@ -355,7 +361,7 @@ const ListOfCommissions = () => {
             <Box
               sx={{
                 position: "absolute",
-                letf: "50%",
+                left: "50%",
                 top: "50%",
                 transform: "translate(-50%,-50%)",
               }}
@@ -394,7 +400,11 @@ const ListOfCommissions = () => {
                       color={
                         STATUS[item.status_reservation as keyof typeof STATUS]
                       }
-                      style={{ height: "100%" }}
+                      onClick={() => {
+                        setOpenDialog(true);
+                        setArrayShowAccompanist(item.ACCOMPANIST);
+                      }}
+                      style={{ height: "100%", cursor: "pointer" }}
                     />
                     <Box>
                       <Typography sx={{ fontWeight: 600 }}>
@@ -411,7 +421,11 @@ const ListOfCommissions = () => {
             </>
           )}
         </Box>
-
+        <DialogListAccompanist
+          open={openDialog}
+          setOpen={setOpenDialog}
+          accompanist={arrayShowAccompanist}
+        />
         {/* {dataList.length > 0 && <TableUI data={dataList} columns={columns} />} */}
       </Container>
     </Box>

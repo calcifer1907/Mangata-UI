@@ -1,5 +1,5 @@
 import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
+import Dialog, { DialogProps } from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
@@ -7,6 +7,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { Box, Paper, Typography } from "@mui/material";
 
 import { IAccompanistListSales } from "../../interfaces/IUser";
+import { useState } from "react";
 
 interface IProps {
   open: boolean;
@@ -15,6 +16,8 @@ interface IProps {
 }
 
 export default function ScrollDialog({ accompanist, open, setOpen }: IProps) {
+  const [scroll] = useState<DialogProps["scroll"]>("paper");
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -23,6 +26,7 @@ export default function ScrollDialog({ accompanist, open, setOpen }: IProps) {
     <Dialog
       open={open}
       onClose={handleClose}
+      scroll={scroll}
       aria-labelledby="scroll-dialog-title"
       aria-describedby="scroll-dialog-description"
     >
@@ -30,11 +34,7 @@ export default function ScrollDialog({ accompanist, open, setOpen }: IProps) {
       <DialogContent dividers>
         <DialogContentText id="scroll-dialog-description" tabIndex={-1}>
           {accompanist.map((values) => (
-            <Paper
-              elevation={3}
-              key={values.name_accompanist}
-              sx={{ marginBottom: 2 }}
-            >
+            <Paper key={values.name_accompanist} sx={{ marginBottom: 2 }}>
               <Box sx={{ display: "flex", flexDirection: "column" }}>
                 <img
                   width="100%"
@@ -44,7 +44,6 @@ export default function ScrollDialog({ accompanist, open, setOpen }: IProps) {
                 />
 
                 <Typography
-                  component="p"
                   sx={{
                     color: "var(--blueDarkLigth)",
                     fontWeight: 600,
