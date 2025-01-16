@@ -59,21 +59,34 @@ export const getListSalesEmployee = async (
 ) => {
   try {
     const { date, id_employee } = request.body;
-    const result = await pool.query(
-      `SELECT re.CODE_RESERVATION, re.STATUS_RESERVATION, re.COMMISSION_EMPLOYEE, re.CURRENT_COMMISSION, re.CREATED_AT,  MIN(ac.NAME_ACCOMPANIST) AS NAME_ACCOMPANIST
-        FROM reservations re 
-        INNER JOIN accompanist ac ON ac.ID_RESERVATION = re.CODE_RESERVATION  
-        WHERE re.CREATED_AT=$1 AND re.ID_EMPLOYEE = $2
-        GROUP BY re.CODE_RESERVATION, re.STATUS_RESERVATION, re.COMMISSION_EMPLOYEE, re.CURRENT_COMMISSION, re.CREATED_AT`,
+
+    const resultReservations = await pool.query(
+      `SELECT CODE_RESERVATION, ID_EMPLOYEE, STATUS_RESERVATION, COMMISSION_EMPLOYEE, CURRENT_COMMISSION, CREATED_AT FROM reservations  
+      WHERE CREATED_AT = $1 AND ID_EMPLOYEE = $2`,
       [date, id_employee]
     );
-    const diff = result.rows.map((values: any, index: number) => ({
+
+    const codeReservations = resultReservations.rows.map(
+      (values) => values.code_reservation
+    );
+
+    const resultAccompanist = await pool.query(
+      `SELECT ac.NAME_ACCOMPANIST, lun.DESCRIPTION, ac.ID_RESERVATION FROM  
+      accompanist ac INNER JOIN lunches lun ON lun.ID = ac.ID_LUNCHES WHERE ac.ID_RESERVATION = ANY($1::text[])`,
+      [codeReservations]
+    );
+
+    const diff = resultReservations.rows.map((values: any, index: number) => ({
       ...values,
       id: index + 1,
       DIFF: values.commission_employee - values.current_commission,
+      ACCOMPANIST: resultAccompanist.rows.filter(
+        (item) => item.id_reservation === values.code_reservation
+      ),
     }));
     response.json(diff);
   } catch (_error) {
+    console.log(_error);
     return response.status(500).json({ message: "sometghin gos wrong" });
   }
 };
