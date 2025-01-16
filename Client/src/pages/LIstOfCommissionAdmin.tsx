@@ -355,7 +355,7 @@ const LIstOfCommissionAdmin = () => {
           sx={{
             display: "flex",
             flexWrap: "wrap",
-            justifyContent: "center",
+            justifyContent: { xs: "center", lg: "flex-start" },
             gap: 2,
           }}
         >
@@ -363,9 +363,11 @@ const LIstOfCommissionAdmin = () => {
             <Box
               sx={{
                 position: "absolute",
-                letf: "50%",
+                left: "50%",
                 top: "50%",
                 transform: "translate(-50%,-50%)",
+                display: "flex",
+                justifyContent: "center",
               }}
             >
               <CircularProgress />

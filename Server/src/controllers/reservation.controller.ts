@@ -92,7 +92,6 @@ export const getListSalesAdmin = async (
       `SELECT CODE_RESERVATION, ID_EMPLOYEE, STATUS_RESERVATION, COMMISSION_EMPLOYEE, CURRENT_COMMISSION, CREATED_AT FROM reservations  WHERE CREATED_AT = $1`,
       [date]
     );
-    console.log(resultReservations.rows);
     const codeReservations = resultReservations.rows.map(
       (values) => values.code_reservation
     );
