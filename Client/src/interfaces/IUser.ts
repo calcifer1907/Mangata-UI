@@ -29,6 +29,7 @@ export interface IGetListSales {
   ID_EMPLOYEE: string;
   name_accompanist: string;
   status_reservation: string;
+  ACCOMPANIST: IAccompanistListSales[];
   id: number;
 }
 
