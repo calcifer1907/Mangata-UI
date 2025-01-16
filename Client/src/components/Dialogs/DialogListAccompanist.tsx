@@ -1,3 +1,12 @@
+/**
+ * @author Carlos Taborda
+ * @description this component show list data of the Accompanist
+ * @version 1.0
+ */
+
+import { useState } from "react";
+
+/**Libreries */
 import Button from "@mui/material/Button";
 import Dialog, { DialogProps } from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -6,8 +15,8 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Box, Paper, Typography } from "@mui/material";
 
+/**Interface */
 import { IAccompanistListSales } from "../../interfaces/IUser";
-import { useState } from "react";
 
 interface IProps {
   open: boolean;
