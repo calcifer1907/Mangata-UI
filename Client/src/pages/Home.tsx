@@ -3,6 +3,8 @@
 import { Box, Typography } from "@mui/material";
 import Card from "../components/Cards/Cards";
 
+import QuiltedImageList from "../components/QuiltedImageList/QuiltedImageList";
+
 import YouTubeEmbed from "../components/YouTubeEmbed/YouTubeEmbed";
 
 const Home = () => {
@@ -59,19 +61,19 @@ const Home = () => {
               gap: "50px",
             }}
           >
-            <Card title="Deportes acuáticos" img="/images/MangataKayak.png" />
-            <Card
-              title="Restaurante con aire acondicionado o al aire libre"
-              img="/images/MangataEat.jpg"
-            />
-            <Card
-              title="Copa de champaña de bienvenida o jugo"
-              img="/images/MangataBed.jpg"
-            />
             <Card
               title="Transporte marítimo ida y regreso."
               img="/images/MangataBed.jpg"
             />
+            <Card
+              title="Copa de champaña de bienvenida o jugo"
+              img="/images/MangataCopa.jpg"
+            />
+            <Card
+              title="Restaurante con aire acondicionado o al aire libre"
+              img="/images/MangataEat.jpg"
+            />
+            <Card title="Deportes acuáticos" img="/images/MangataKayak.png" />
           </Box>
         </Box>
       </Box>
@@ -100,53 +102,7 @@ const Home = () => {
         >
           con un solo bocado
         </Typography>
-        <Box
-          className="image-grid"
-          sx={{
-            display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            gridTemplateRows: "repeat(3, 1fr)",
-            gridColumnGap: "12px",
-            gridRowGap: "12px",
-          }}
-        >
-          <div style={{ gridArea: "1 / 1 / 3 / 3" }}>
-            <img
-              src="/images/MangataEat.jpg"
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            />
-          </div>
-          <div style={{ gridArea: "1 / 3 / 2 / 4" }}>
-            <img
-              src="/images/MangataEat.jpg"
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            />
-          </div>
-          <div style={{ gridArea: "1 / 4 / 2 / 5" }}>
-            <img
-              src="/images/MangataEat.jpg"
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            />
-          </div>
-          <div style={{ gridArea: "3 / 1 / 4 / 2" }}>
-            <img
-              src="/images/MangataEat.jpg"
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            />
-          </div>
-          <div style={{ gridArea: "3 / 2 / 4 / 3" }}>
-            <img
-              src="/images/MangataEat.jpg"
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            />
-          </div>
-          <div style={{ gridArea: "2 / 3 / 4 / 5" }}>
-            <img
-              src="/images/MangataEat.jpg"
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            />
-          </div>
-        </Box>
+        <QuiltedImageList />
       </Box>
       <Box
         component="footer"
