@@ -17,13 +17,7 @@ const Home = () => {
         className="video-background-container"
         sx={{ marginBottom: { xs: 0, md: "200px" } }}
       >
-        {/* Video de fondo */}
         <YouTubeEmbed />
-        {/* Contenido superpuesto */}
-        <div className="content-overlay">
-          {/* <h1>Mangata</h1> */}
-          {/* <p>Este es un contenido que se muestra sobre el video de fondo.</p> */}
-        </div>
       </Box>
 
       <Box

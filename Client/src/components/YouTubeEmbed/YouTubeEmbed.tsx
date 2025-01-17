@@ -9,19 +9,12 @@ const YouTubeEmbed: React.FC = () => {
 
   return (
     <div>
-      {!isLoaded && (
-        <img
-          src="https://img.youtube.com/vi/bKUlPNfPho8/hqdefault.jpg"
-          alt="Video thumbnail"
-          style={{
-            position: "absolute",
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            zIndex: 1,
-          }}
-        />
-      )}
+      <div className={`video-background-container ${isLoaded ? "active" : ""}`}>
+        <div className="content-overlay">
+          <h1>Mangata</h1>
+        </div>
+      </div>
+
       <iframe
         className="video-background"
         src="https://www.youtube-nocookie.com/embed/bKUlPNfPho8?modestbranding=1&amp;enablejsapi=1&amp;disablekb=1&amp;wmode=transparent&amp;controls=0&amp;playsinline=0&amp;showinfo=0&amp;mute=1&amp;rel=0&amp;autoplay=1&amp;loop=1&amp;iv_load_policy=3&amp;playlist=bKUlPNfPho8"
