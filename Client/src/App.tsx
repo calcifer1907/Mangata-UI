@@ -14,6 +14,7 @@ import Logout from "./pages/Logout";
 import MyNavbar from "./components/navbar/NavBar";
 import GenerateReservation from "./pages/GenerateReservation";
 import Box from "@mui/material/Box";
+import NotFound from "./pages/NotFound";
 
 const App: React.FC = () => {
   return (
@@ -39,6 +40,7 @@ const App: React.FC = () => {
             <Route path="/Reservations" element={<LIstOFCommissionAdmin />} />
             <Route path="/Login" element={<Login />} />
             <Route path="/Logout" element={<Logout />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Box>
       </ContextUser>
