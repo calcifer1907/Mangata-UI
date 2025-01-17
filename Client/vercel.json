@@ -1,8 +1,17 @@
 {
+        "version": 2,
         "rewrites": [
                 {
                         "source": "/:path*",
                         "destination": "/index.html"
                 }
-        ]
+        ],
+        "routes": [
+                {
+                        "src": "/api/(.*)",
+                        "dest": "/api/$1"
+                }
+        ],
+        "cleanUrls": true,
+        "trailingSlash": false
 }
