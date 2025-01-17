@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import ContextUser from "./hooks/useContextUser";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -14,6 +14,7 @@ import Logout from "./pages/Logout";
 import MyNavbar from "./components/navbar/NavBar";
 import GenerateReservation from "./pages/GenerateReservation";
 import Box from "@mui/material/Box";
+import NotFound from "./pages/NotFound";
 
 const App: React.FC = () => {
   return (
@@ -39,6 +40,7 @@ const App: React.FC = () => {
             <Route path="/Reservations" element={<LIstOFCommissionAdmin />} />
             <Route path="/Login" element={<Login />} />
             <Route path="/Logout" element={<Logout />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Box>
       </ContextUser>

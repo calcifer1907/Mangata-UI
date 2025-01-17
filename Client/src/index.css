@@ -50,6 +50,15 @@ body{
   width: 100%;
   height: calc(56.25vw); /* Altura completa de la pantalla */
   overflow: hidden;
+  opacity: 1;
+  z-index: 1;
+  background-color: #3c4059;
+  transition: all 0.4s ease;
+}
+
+.video-background-container.active {
+  /* Define aquí los estilos para el estado activo */
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 /* Video de fondo */
@@ -59,6 +68,7 @@ body{
   left: 0;
   width: 100%;
   height: 100%;
+  background-color: #2B3D5E;
   object-fit: cover; /* Asegura que el video cubra todo el contenedor */
   z-index: -1; /* Envía el video detrás del contenido */
 }
@@ -70,17 +80,24 @@ body{
   text-align: center;
   z-index: 1; /* Asegura que el contenido esté sobre el video */
   padding: 20px;
+  align-content: center;
+  
 }
 
 .content-overlay h1 {
-  font-size: 3rem;
   margin: 0;
+  height: 100%;
+  text-align: center;
+  align-content: center;
+  text-transform: uppercase;
+  letter-spacing: 0.7em;
+  color: #FFFFFF;
+  font-family: Montserrat;
+  font-weight: 100;
+  
 }
 
-.content-overlay p {
-  font-size: 1.2rem;
-  margin-top: 10px;
-}
+
 
 /* Overlay oscuro */
 .video-background-container::before {
@@ -90,7 +107,7 @@ body{
   left: 0;
   width: 100%;
   height: 100%;
-  /*background: rgba(0, 0, 0, 0.5); /* Oscurece el video */
+  background: rgba(60, 64, 89, 0.3); /* Oscurece el video */
   z-index: 0; /* Asegura que esté detrás del contenido pero delante del video */
 }
 

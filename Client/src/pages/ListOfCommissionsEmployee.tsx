@@ -1,22 +1,40 @@
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Container,
-  InputAdornment,
-  Paper,
-  TextField,
-  Typography,
-} from "@mui/material";
-// import TableUI from "../components/TableUI/TableUI";
-import { useSales } from "../hooks/useSales";
-// import { GridColDef } from "@mui/x-data-grid";
-import { format } from "@formkit/tempo";
-import { formatPrice } from "../generalFunctions/formaters";
+/**
+ * @author Carlos Taborda
+ * @description This component is the loader to display the employee's commissions and reserve them per day.
+ * @version 1.0
+ *
+ */
+
 import { useState, ChangeEvent, useEffect } from "react";
+
+/**Libreries */
+import Box from "@mui/material/Box";
+import CircularProgress from "@mui/material/CircularProgress";
+import Container from "@mui/material/Container";
+import InputAdornment from "@mui/material/InputAdornment";
+import Paper from "@mui/material/Paper";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import { Icon } from "@iconify/react";
-import { IGetListSales } from "../interfaces/IUser";
+import { format } from "@formkit/tempo";
+
+/**Hooks */
+import { useSales } from "../hooks/useSales";
+
+/**Functions */
+import { formatPrice } from "../generalFunctions/formaters";
+
+/**Interface */
+import { IAccompanistListSales, IGetListSales } from "../interfaces/IUser";
+
+/**SVG */
 import searchIcon from "../../src/assets/searchIcon.svg";
+
+/**Component */
+import DialogListAccompanist from "../components/Dialogs/DialogListAccompanist";
+
+// import TableUI from "../components/TableUI/TableUI";
+// import { GridColDef } from "@mui/x-data-grid";
 
 const FORMAT_DATE = "YYYY-MM-DD";
 
@@ -32,6 +50,10 @@ const ListOfCommissions = () => {
   });
   const [maxHeight, setMaxHeight] = useState<number>(window.innerHeight);
   const [dataListFilter, setDataListFilter] = useState<IGetListSales[]>([]);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [arrayShowAccompanist, setArrayShowAccompanist] = useState<
+    IAccompanistListSales[]
+  >([]);
 
   const handleOnchange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -43,17 +65,6 @@ const ListOfCommissions = () => {
 
   const updateMaxHeight = () => {
     setMaxHeight(window.innerHeight); // Usamos el alto del viewport
-  };
-
-  const handleFilterCode = () => {
-    const searchInput = document.getElementById(
-      "searchInput"
-    ) as HTMLInputElement;
-    const value = searchInput.value;
-    const filter = dataList.filter((item) =>
-      item.code_reservation.includes(value.toUpperCase())
-    );
-    setDataListFilter(filter);
   };
 
   const handleCountComission = () => {
@@ -127,16 +138,16 @@ const ListOfCommissions = () => {
   //   },
   // ];
 
-  if (loading) {
-    return (
-      <Box sx={{ display: "grid", placeItems: "center", height: "100%" }}>
-        <CircularProgress />
-      </Box>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <Box sx={{ display: "grid", placeItems: "center", height: "100%" }}>
+  //       <CircularProgress />
+  //     </Box>
+  //   );
+  // }
 
   return (
-    <Box>
+    <Box sx={{ paddingTop: 4 }}>
       <Box
         sx={{
           display: "flex",
@@ -168,31 +179,6 @@ const ListOfCommissions = () => {
               onChange={handleOnchange}
             />
             <img src={searchIcon} style={{ paddingInlineEnd: "18px" }} />
-          </Box>
-
-          <Box
-            sx={{
-              backgroundColor: "#2B3D5E",
-              height: 40,
-              width: 100,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: 100,
-              gap: 10,
-            }}
-          >
-            <Button
-              size="small"
-              sx={{
-                textTransform: "none",
-                fontSize: 14,
-                color: "#FFFFFF",
-              }}
-              onClick={handleFilterCode}
-            >
-              Buscar
-            </Button>
           </Box>
         </Box>
 
@@ -347,7 +333,7 @@ const ListOfCommissions = () => {
           sx={{
             display: "flex",
             flexWrap: "wrap",
-            justifyContent: "center",
+            justifyContent: { xs: "center", lg: "flex-start" },
             gap: 2,
           }}
         >
@@ -355,7 +341,7 @@ const ListOfCommissions = () => {
             <Box
               sx={{
                 position: "absolute",
-                letf: "50%",
+                left: "50%",
                 top: "50%",
                 transform: "translate(-50%,-50%)",
               }}
@@ -394,7 +380,11 @@ const ListOfCommissions = () => {
                       color={
                         STATUS[item.status_reservation as keyof typeof STATUS]
                       }
-                      style={{ height: "100%" }}
+                      onClick={() => {
+                        setOpenDialog(true);
+                        setArrayShowAccompanist(item.ACCOMPANIST);
+                      }}
+                      style={{ height: "100%", cursor: "pointer" }}
                     />
                     <Box>
                       <Typography sx={{ fontWeight: 600 }}>
@@ -411,7 +401,11 @@ const ListOfCommissions = () => {
             </>
           )}
         </Box>
-
+        <DialogListAccompanist
+          open={openDialog}
+          setOpen={setOpenDialog}
+          accompanist={arrayShowAccompanist}
+        />
         {/* {dataList.length > 0 && <TableUI data={dataList} columns={columns} />} */}
       </Container>
     </Box>

@@ -1,28 +1,43 @@
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Container,
-  InputAdornment,
-  Menu,
-  MenuItem,
-  Paper,
-  TextField,
-  Typography,
-} from "@mui/material";
-// import TableUI from "../components/TableUI/TableUI";
+/**
+ * @author Carlos Taborda
+ * @description This component is the loader to display the administrator commissions and reserve them per day.
+ * @version 1.0
+ *
+ */
 
-import { useSales } from "../hooks/useSales";
-// import { GridColDef } from "@mui/x-data-grid";
+import { useEffect, useState, ChangeEvent, MouseEvent } from "react";
+
+/**Libreries */
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
+import Container from "@mui/material/Container";
+import InputAdornment from "@mui/material/InputAdornment";
+import Paper from "@mui/material/Paper";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
 import { format } from "@formkit/tempo";
 import { Icon } from "@iconify/react";
 
+/**Hooks */
+import { useSales } from "../hooks/useSales";
+
+/**Component */
+import DialogListAccompanist from "../components/Dialogs/DialogListAccompanist";
+
+/**Functions */
 import { formatPrice } from "../generalFunctions/formaters";
 
+/**Icon */
 import searchIcon from "../../src/assets/searchIcon.svg";
 
-import { IGetListSales } from "../interfaces/IUser";
-import { useEffect, useState, ChangeEvent, MouseEvent } from "react";
+/**Interface */
+import { IGetListSales, IAccompanistListSales } from "../interfaces/IUser";
+
+// import TableUI from "../components/TableUI/TableUI";
+// import { GridColDef } from "@mui/x-data-grid";
 
 const FORMAT_DATE = "YYYY/MM/DD";
 
@@ -101,7 +116,11 @@ const LIstOfCommissionAdmin = () => {
   const [dataListFilter, setDataListFilter] = useState<IGetListSales[]>([]);
   const [maxHeight, setMaxHeight] = useState<number>(window.innerHeight);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [openDialog, setOpenDialog] = useState(false);
 
+  const [arrayShowAccompanist, setArrayShowAccompanist] = useState<
+    IAccompanistListSales[]
+  >([]);
   const open = Boolean(anchorEl);
 
   const [codeRe, setCodeRe] = useState<string>("");
@@ -113,17 +132,6 @@ const LIstOfCommissionAdmin = () => {
 
   const handleClose = () => {
     setAnchorEl(null);
-  };
-
-  const handleFilterCode = () => {
-    const searchInput = document.getElementById(
-      "searchInput"
-    ) as HTMLInputElement;
-    const value = searchInput.value;
-    const filter = dataList.filter((item) =>
-      item.code_reservation.includes(value.toUpperCase())
-    );
-    setDataListFilter(filter);
   };
 
   const handleOnchange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -167,7 +175,7 @@ const LIstOfCommissionAdmin = () => {
   }, []);
 
   return (
-    <Box>
+    <Box sx={{ paddingTop: 4 }}>
       <Box
         sx={{
           display: "flex",
@@ -199,31 +207,6 @@ const LIstOfCommissionAdmin = () => {
               onChange={handleOnchange}
             />
             <img src={searchIcon} style={{ paddingInlineEnd: "18px" }} />
-          </Box>
-
-          <Box
-            sx={{
-              backgroundColor: "#2B3D5E",
-              height: 40,
-              width: 100,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: 100,
-              gap: 10,
-            }}
-          >
-            <Button
-              size="small"
-              sx={{
-                textTransform: "none",
-                fontSize: 14,
-                color: "#FFFFFF",
-              }}
-              onClick={handleFilterCode}
-            >
-              Buscar
-            </Button>
           </Box>
         </Box>
 
@@ -347,7 +330,7 @@ const LIstOfCommissionAdmin = () => {
           sx={{
             display: "flex",
             flexWrap: "wrap",
-            justifyContent: "center",
+            justifyContent: { xs: "center", lg: "flex-start" },
             gap: 2,
           }}
         >
@@ -355,7 +338,7 @@ const LIstOfCommissionAdmin = () => {
             <Box
               sx={{
                 position: "absolute",
-                letf: "50%",
+                left: "50%",
                 top: "50%",
                 transform: "translate(-50%,-50%)",
               }}
@@ -392,7 +375,11 @@ const LIstOfCommissionAdmin = () => {
                       color={
                         STATUS[item.status_reservation as keyof typeof STATUS]
                       }
-                      style={{ height: "100%" }}
+                      onClick={() => {
+                        setOpenDialog(true);
+                        setArrayShowAccompanist(item.ACCOMPANIST);
+                      }}
+                      style={{ height: "100%", cursor: "pointer" }}
                     />
                     <Box>
                       <Typography sx={{ fontWeight: 600 }}>
@@ -466,7 +453,11 @@ const LIstOfCommissionAdmin = () => {
             </>
           )}
         </Box>
-
+        <DialogListAccompanist
+          open={openDialog}
+          setOpen={setOpenDialog}
+          accompanist={arrayShowAccompanist}
+        />
         {/* {dataList.length > 0 && <TableUI data={dataList} columns={columns} />} */}
       </Container>
     </Box>
