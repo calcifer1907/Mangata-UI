@@ -1,3 +1,5 @@
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
 
 const YouTubeEmbed: React.FC = () => {
@@ -10,9 +12,20 @@ const YouTubeEmbed: React.FC = () => {
   return (
     <div>
       <div className={`video-background-container ${isLoaded ? "active" : ""}`}>
-        <div className="content-overlay">
-          <h1>Mangata</h1>
-        </div>
+        <Box
+          className="content-overlay"
+          sx={{ height: { xs: "100%", md: "75%" } }}
+        >
+          <Typography
+            component="h1"
+            sx={{
+              fontSize: { xs: "1.5rem", md: "4.5rem" },
+              paddingBottom: { xs: 0, md: "26px" },
+            }}
+          >
+            Mangata
+          </Typography>
+        </Box>
       </div>
 
       <iframe
