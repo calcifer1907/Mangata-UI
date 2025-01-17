@@ -26,7 +26,7 @@ interface Props {
 }
 
 const navItems = [
-  { title: "Inicio", path: "/home" },
+  { title: "Inicio", path: "/" },
   { title: "Iniciar sesión ", path: "/Login" },
   // { title: "Reservas", path: "/ReservationEmployee" },
 ];

@@ -37,7 +37,7 @@ const Login: FC = () => {
       const response = await login.loginPage(data);
       setUserInfo(response);
       localStorage.setItem("info", JSON.stringify(response));
-      navigation("/home");
+      navigation("/");
     } catch (e) {
       console.log(e);
       navigation("/Login");
