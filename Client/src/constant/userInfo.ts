@@ -5,6 +5,6 @@ export const initialUserInfo = {
 };
 
 export const navItems = [
-  { title: "Reservas", path: "/ReservationEmployee" },
+  { title: "Reservar", path: "/ReservationEmployee" },
   { title: "Iniciar sesión ", path: "/Login" },
 ];

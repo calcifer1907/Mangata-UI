@@ -81,7 +81,8 @@ const Navbar = (props: Props) => {
             sx={{
               flexGrow: 1,
               display: { xs: "none", md: "flex" },
-              justifyContent: userInfo.TOKEN ? "space-around" : "flex-end",
+              paddingInlineEnd: 4,
+              justifyContent: userInfo.TOKEN ? "space-between" : "flex-end",
               alignItems: "center",
             }}
           >
@@ -116,13 +117,6 @@ const Navbar = (props: Props) => {
 
             {userInfo.TOKEN && (
               <Box>
-                <Button
-                  sx={{ color: "#1C1B21" }}
-                  to="/ReservationEmployee"
-                  component={NavLink}
-                >
-                  Reservar
-                </Button>
                 <Tooltip title="Configuraciónes">
                   <IconButton onClick={handleOpenUserMenu}>
                     <Avatar alt={userInfo.USER_INFO.USER_NAME} />
