@@ -25,8 +25,7 @@ api.interceptors.request.use(
 const redirect = (error: any) => {
   console.log(error);
   if (error.response.status === 403) {
-    // Redirecciona al login
-    window.location.href = "/login";
+    window.location.href = "/";
     localStorage.removeItem("info");
   }
   return Promise.reject(error);
