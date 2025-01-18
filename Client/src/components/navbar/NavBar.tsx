@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 /** Libraries */
 import AppBar from "@mui/material/AppBar";
@@ -16,6 +16,8 @@ import NavListDrawer from "./NavListDrawer";
 
 /**Hooks */
 import { useContextUser } from "../../hooks/useContextUser";
+import { navItems } from "../../constant/userInfo";
+import { Avatar, Menu, MenuItem, Tooltip } from "@mui/material";
 
 interface Props {
   /**
@@ -25,11 +27,7 @@ interface Props {
   window?: () => Window;
 }
 
-const navItems = [
-  { title: "Inicio", path: "/" },
-  { title: "Iniciar sesión ", path: "/Login" },
-  // { title: "Reservas", path: "/ReservationEmployee" },
-];
+const settings = ["Cerrar sesión"];
 
 const Navbar = (props: Props) => {
   const { window } = props;
@@ -41,9 +39,21 @@ const Navbar = (props: Props) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const drawerWidth = 240;
 
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+
+  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
+
+  useEffect(() => {}, [userInfo]);
   return (
     <>
       <AppBar
@@ -51,7 +61,7 @@ const Navbar = (props: Props) => {
         sx={{ background: "#FCF8FF", height: 64 }}
         position="sticky"
       >
-        <Toolbar>
+        <Toolbar disableGutters>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -66,36 +76,87 @@ const Navbar = (props: Props) => {
               style={{ color: "#2B3D5E" }}
             />
           </IconButton>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
-          ></Typography>
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            {userInfo.TOKEN ? (
-              userInfo.MENU.map((item) => (
-                <Button
-                  key={item.title}
-                  sx={{ color: "#1C1B21" }}
-                  to={`/${item.path}`}
-                  component={NavLink}
-                >
-                  {item.title}
-                </Button>
-              ))
-            ) : (
-              <>
-                {navItems.map((item) => (
+
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", md: "flex" },
+              justifyContent: "space-around",
+            }}
+          >
+            <div></div>
+            <Box>
+              {userInfo.TOKEN ? (
+                userInfo.MENU.map((item) => (
                   <Button
-                    key={item.path}
+                    key={item.title}
                     sx={{ color: "#1C1B21" }}
-                    to={item.path}
+                    to={`/${item.path}`}
                     component={NavLink}
                   >
                     {item.title}
                   </Button>
-                ))}
-              </>
+                ))
+              ) : (
+                <>
+                  {navItems.map((item) => (
+                    <Button
+                      key={item.path}
+                      sx={{ color: "#1C1B21" }}
+                      to={item.path}
+                      component={NavLink}
+                    >
+                      {item.title}
+                    </Button>
+                  ))}
+                </>
+              )}
+            </Box>
+
+            {userInfo.TOKEN && (
+              <Box>
+                <Button
+                  sx={{ color: "#1C1B21" }}
+                  to="/ReservationEmployee"
+                  component={NavLink}
+                >
+                  Reservar
+                </Button>
+                <Tooltip title="Configuraciónes">
+                  <IconButton onClick={handleOpenUserMenu}>
+                    <Avatar alt={userInfo.USER_INFO.USER_NAME} />
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: "45px" }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  {settings.map((setting) => (
+                    <MenuItem key={setting}>
+                      <Button
+                        key={setting}
+                        sx={{ color: "#1C1B21" }}
+                        to="/logout"
+                        component={NavLink}
+                      >
+                        {setting}
+                      </Button>
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </Box>
             )}
           </Box>
         </Toolbar>

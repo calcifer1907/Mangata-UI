@@ -23,10 +23,10 @@ api.interceptors.request.use(
 );
 
 const redirect = (error: any) => {
-  console.log(error);
   if (error.response.status === 403) {
-    window.location.href = "/";
     localStorage.removeItem("info");
+    window.location.href = "/";
+    window.location.reload();
   }
   return Promise.reject(error);
 };
