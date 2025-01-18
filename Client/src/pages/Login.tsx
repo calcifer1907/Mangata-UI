@@ -44,6 +44,10 @@ const Login: FC = () => {
     }
   };
 
+  const handleBack = () => {
+    window.location.href = "/";
+  };
+
   useEffect(() => {
     window.addEventListener("resize", () => {
       setInnerWidth(window.innerWidth);
@@ -65,6 +69,35 @@ const Login: FC = () => {
         flexDirection: "column",
       }}
     >
+      <Box sx={{ position: "absolute", top: 10, right: 10 }}>
+        <Button
+          type="submit"
+          fullWidth
+          variant="text"
+          color="primary"
+          onClick={handleBack}
+          startIcon={
+            <Icon
+              icon="solar:round-arrow-left-bold-duotone"
+              width="24"
+              height="24"
+              style={{ color: "#2B3D5E" }}
+            />
+          }
+          sx={{
+            mt: 2,
+            width: 157,
+            textTransform: "none",
+            background: "#FFFFFF",
+            borderRadius: 100,
+            fontSize: 14,
+            fontWeight: 500,
+            color: "#2B3D5E",
+          }}
+        >
+          Atras
+        </Button>
+      </Box>
       <Box
         sx={{
           width: { xs: `${innerWidth - 10}px`, sm: "400px", md: "600px" }, // Tamaño dinámico
