@@ -26,14 +26,14 @@ const Home = () => {
         sx={{
           position: "relative",
           background: "var(--blueLigth)",
-          height: { xs: "auto", md: "auto", lg: "400px" },
+          height: { xs: "auto", xl: "400px" },
           marginBottom: 8,
-          paddingBlock: { xs: 2, lg: 0 },
+          paddingBlock: { xs: 2, xl: 0 },
         }}
       >
         <Box
           sx={{
-            position: { xs: "inherit", md: "inherit", lg: "absolute" },
+            position: { xs: "inherit", xl: "absolute" },
             top: { xs: 0, lg: "-200px" },
             width: "100%",
             margin: "0 auto",
