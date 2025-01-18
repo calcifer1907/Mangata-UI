@@ -81,7 +81,8 @@ const Navbar = (props: Props) => {
             sx={{
               flexGrow: 1,
               display: { xs: "none", md: "flex" },
-              justifyContent: "space-around",
+              justifyContent: userInfo.TOKEN ? "space-around" : "flex-end",
+              alignItems: "center",
             }}
           >
             <div></div>
