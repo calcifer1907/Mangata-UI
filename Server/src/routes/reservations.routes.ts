@@ -1,4 +1,4 @@
-import express from "express";
+import { Router } from "express";
 
 import {
   createReservation,
@@ -11,7 +11,7 @@ import {
 
 import { authenticate } from "../handles/authMiddleware";
 
-const router = express.Router();
+const router = Router();
 
 //@ts-ignore
 router.post("/reservations", createReservation);
