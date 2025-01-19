@@ -1,13 +1,22 @@
 import { Router } from "express";
-import { createOrder, reciveWebhook } from "../controllers/payments.controller";
+import {
+  createOrder,
+  reciveWebhook,
+  createPSEPayment,
+  getListBanks,
+} from "../controllers/payments.controller";
 
 const router = Router();
 
 router.post("/createOrder", createOrder);
+router.post("/createPSEPayment", createPSEPayment);
+
+router.post("/webhook", reciveWebhook);
 
 router.get("/success", (req: any, res: any) => res.send("success"));
 router.get("/failure", (req: any, res: any) => res.send("failure"));
 router.get("/pending", (req: any, res: any) => res.send("pending"));
-router.post("/webhook", reciveWebhook);
+
+router.get("/getListBanks", getListBanks);
 
 export default router;
