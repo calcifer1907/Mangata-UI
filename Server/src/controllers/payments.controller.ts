@@ -102,7 +102,6 @@ export const createPSEPayment = (req: any, res: any) => {
     .create({ body })
     .then((response) => {
       const { transaction_details } = response;
-      console.log(transaction_details);
       res
         .status(200)
         .json({ redirectTo: transaction_details?.external_resource_url });
