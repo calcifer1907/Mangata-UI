@@ -16,6 +16,8 @@ import { useSearchParams } from "react-router-dom";
 
 import { useAccompanist } from "../hooks/useAccompanist";
 
+import DialogComponent from "../components/Dialogs/DialogPayMents";
+
 import {
   IFields,
   IErrorFieldAccompanist,
@@ -40,6 +42,7 @@ const NameLunchForm: React.FC = () => {
   const [searchParams] = useSearchParams();
   const { optionsLunches, minmax } = useAccompanist();
   const [dateChange, setDateChange] = useState<string>(today);
+  const [openDialogPayment, setOpenDialogPayment] = useState<boolean>(false);
 
   const CODE_RESERVATION = useMemo(() => {
     return generarCodigoReservaUX();
@@ -138,7 +141,7 @@ const NameLunchForm: React.FC = () => {
         MIN_PRICE: PRICES.PRICE_MIN,
         CREATED_AT: format(new Date(), "YYYY-MM-DD", "en"),
       };
-      handleClose();
+
       const data = await getAccompanist.saveReservation(body);
       if (data.message === "success") {
         enqueueSnackbar("Se guardo correctamente la reserva", {
@@ -148,7 +151,8 @@ const NameLunchForm: React.FC = () => {
             horizontal: "right",
           },
         });
-        // window.location.href = "https://www.instagram.com/mangatacartagena/";
+        handleClose();
+        setOpenDialogPayment(true);
       }
     }
   };
@@ -830,6 +834,10 @@ const NameLunchForm: React.FC = () => {
           </Box>
         </Box>
       </Modal>
+      <DialogComponent
+        open={openDialogPayment}
+        setOpen={setOpenDialogPayment}
+      />
     </Grid2>
   );
 };

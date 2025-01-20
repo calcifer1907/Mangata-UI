@@ -5,7 +5,7 @@
  *
  */
 
-import { useState, ReactNode } from "react";
+import { useState, ReactNode, FC, useEffect } from "react";
 
 /**Libreries */
 import Button from "@mui/material/Button";
@@ -23,18 +23,17 @@ interface IProps {
   tittle: string;
 }
 
-export default function ScrollDialog({
-  children,
-  setOpen,
-  props,
-  open,
-  tittle,
-}: IProps) {
+const ScrollDialog: FC<IProps> = (props) => {
+  const { children, setOpen, open, tittle } = props;
   const [scroll] = useState<DialogProps["scroll"]>();
 
   const handleClose = () => {
     setOpen(false);
   };
+
+  useEffect(() => {
+    console.log(props);
+  }, []);
 
   return (
     <Dialog
@@ -56,4 +55,6 @@ export default function ScrollDialog({
       </DialogActions>
     </Dialog>
   );
-}
+};
+
+export default ScrollDialog;
