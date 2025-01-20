@@ -56,6 +56,6 @@ export const getAdmin = {
 
 export const apisMercadoPago = {
   createOrder: (body: any): Promise<any> =>
-    requestApis.post("/api/createOrder", body),
+    requestApis.post("/PSEPayment", body),
   getListBanks: (): Promise<IBanksList[]> => requestApis.get("/getListBanks"),
 };

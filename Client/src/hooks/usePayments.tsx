@@ -13,7 +13,7 @@ export const usePayments = () => {
 
   const handleCreateOrder = async (body: any) => {
     const data = await apisMercadoPago.createOrder(body);
-    console.log(data);
+    window.location.href = data.redirectTo;
   };
 
   useEffect(() => {

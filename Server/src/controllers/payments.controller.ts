@@ -61,21 +61,32 @@ export const createOrder = (req: any, res: any) => {
 
 export const createPSEPayment = (req: any, res: any) => {
   const payment = new Payment(client);
+  const {
+    first_name,
+    last_name,
+    email,
+    identificationType,
+    identificationNumber,
+    personType,
+    banksList,
+    transaction_amount,
+  } = req.body;
+
   const body = {
-    transaction_amount: 1000,
+    transaction_amount: transaction_amount,
     description: "Pasa día, Mangata Beach Club",
     payment_method_id: "pse",
     transaction_details: {
-      financial_institution: "1007",
+      financial_institution: banksList,
     },
     payer: {
-      email: "tabordac2@gmail.com", // Correo del pagador
-      first_name: "Nombre",
-      last_name: "Apellido",
-      entity_type: "individual", // Persona natural
+      first_name,
+      last_name,
+      email, // Correo del pagador
+      entity_type: personType, // Persona natural
       identification: {
-        type: "CC", // Tipo de documento (CC para cédula de ciudadanía)
-        number: "1035424574", // Número de documento
+        type: identificationType, // Tipo de documento (CC para cédula de ciudadanía)
+        number: identificationNumber, // Número de documento
       },
     },
     callback_url:
@@ -86,12 +97,17 @@ export const createPSEPayment = (req: any, res: any) => {
       ip_address: "127.0.0.1",
     },
   };
+  console.log(body);
   payment
     .create({ body })
-    .then(function (response) {
-      res.status(200).json(response);
+    .then((response) => {
+      const { transaction_details } = response;
+      console.log(transaction_details);
+      res
+        .status(200)
+        .json({ redirectTo: transaction_details?.external_resource_url });
     })
-    .catch(function (error) {
+    .catch((error) => {
       res.status(error.status).send(error);
     });
 };

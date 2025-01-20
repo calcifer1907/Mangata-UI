@@ -9,7 +9,7 @@ import {
 const router = Router();
 
 router.post("/createOrder", createOrder);
-router.post("/createPSEPayment", createPSEPayment);
+router.post("/PSEPayment", createPSEPayment);
 
 router.post("/webhook", reciveWebhook);
 
