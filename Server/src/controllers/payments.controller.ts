@@ -8,7 +8,7 @@ import {
 import { PAYMENT_TOKEN_PROD, PAYMENT_TOKEN_TEST } from "../configDB";
 
 const client = new MercadoPagoConfig({
-  accessToken: PAYMENT_TOKEN_PROD || "",
+  accessToken: PAYMENT_TOKEN_TEST || "",
   options: { timeout: 5000 },
 });
 export const getListBanks = async (req: any, res: any) => {
