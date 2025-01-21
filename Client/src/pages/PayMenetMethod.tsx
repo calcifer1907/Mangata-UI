@@ -12,7 +12,11 @@ import Select from "@mui/material/Select";
 
 import { usePayments } from "../hooks/usePayments";
 
-const PayMenetMethod = () => {
+interface IProps {
+  amount: number;
+}
+
+const PayMenetMethod = ({ amount }: IProps) => {
   const { banks, handleCreateOrder } = usePayments();
 
   interface FormData {
@@ -24,6 +28,7 @@ const PayMenetMethod = () => {
     identificationNumber: string;
     banksList: number;
     transaction_amount?: number;
+    personType?: string;
   }
 
   const [formData, setFormData] = useState<FormData>({
@@ -34,6 +39,7 @@ const PayMenetMethod = () => {
     identificationType: "",
     identificationNumber: "",
     banksList: 0,
+    personType: "",
   });
 
   // Manejar cambios en los inputs
@@ -45,23 +51,36 @@ const PayMenetMethod = () => {
     });
   };
 
+  const handleValidationForm = () => {
+    let flag = true;
+    Object.values(formData).forEach((value) => {
+      if (value === "" || value === 0) {
+        flag = false;
+      }
+    });
+    return flag;
+  };
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    formData.transaction_amount = 5000;
-    handleCreateOrder(formData);
-
-    console.log("Datos enviados:", formData);
-
-    // Aquí puedes agregar lógica para enviar los datos a un servidor
-    // Ejemplo: fetch('/api/endpoint', { method: 'POST', body: JSON.stringify(formData) })
+    formData.transaction_amount = amount;
+    if (handleValidationForm()) {
+      handleCreateOrder(formData);
+    }
   };
 
   return (
     <Container>
-      <form id="form-checkout" method="post" onSubmit={handleSubmit}>
+      <form
+        id="form-checkout"
+        method="post"
+        onSubmit={handleSubmit}
+        action="/PSEPayment"
+      >
         <Box>
           <FormControl fullWidth margin="normal">
             <TextField
+              required
               variant="filled"
               id="form-checkout__city"
               name="first_name"
@@ -79,6 +98,7 @@ const PayMenetMethod = () => {
 
           <FormControl fullWidth margin="normal">
             <TextField
+              required
               variant="filled"
               id="form-checkout__last_name"
               name="last_name"
@@ -90,6 +110,7 @@ const PayMenetMethod = () => {
 
           <FormControl fullWidth margin="normal">
             <TextField
+              required
               variant="filled"
               id="form-checkout__city"
               name="city"
@@ -101,6 +122,7 @@ const PayMenetMethod = () => {
 
           <FormControl fullWidth margin="normal">
             <TextField
+              required
               variant="filled"
               id="form-checkout__email"
               name="email"
@@ -112,6 +134,7 @@ const PayMenetMethod = () => {
           <FormControl fullWidth margin="normal">
             <InputLabel id="personType-label">Tipo de persona</InputLabel>
             <Select
+              required
               labelId="personType-label"
               id="form-checkout__personType"
               name="personType"
@@ -127,6 +150,7 @@ const PayMenetMethod = () => {
               Tipo de documento
             </InputLabel>
             <Select
+              required
               labelId="identificationType-label"
               id="form-checkout__identificationType"
               name="identificationType"
@@ -140,12 +164,14 @@ const PayMenetMethod = () => {
           </FormControl>
           <FormControl fullWidth margin="normal">
             <TextField
+              required
               variant="filled"
               id="form-checkout__identificationNumber"
               name="identificationNumber"
               label="Número de identificación"
               type="text"
               onChange={handleChange}
+              helperText={"Campo obligatorio"}
             />
           </FormControl>
         </Box>
@@ -153,6 +179,7 @@ const PayMenetMethod = () => {
           <FormControl fullWidth margin="normal">
             <InputLabel id="banksList-label">Banco</InputLabel>
             <Select
+              required
               labelId="banksList-label"
               id="banksList"
               name="banksList"
@@ -180,11 +207,7 @@ const PayMenetMethod = () => {
             id="description"
             value="Nome do Produto"
           />
-          <Button
-            type="submit"
-            variant="contained"
-            style={{ background: "#fdb813" }}
-          >
+          <Button type="submit" variant="contained">
             Pagar
           </Button>
         </Box>

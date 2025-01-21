@@ -118,7 +118,12 @@ const NameLunchForm: React.FC = () => {
   };
 
   const calculatePrice = () => {
-    const newPrice = Number(PRICES.PRICE_MAX) * fields.length;
+    const NEW_PRICE = Number(PRICES.PRICE_MAX) * fields.length;
+    return NEW_PRICE;
+  };
+
+  const handleFormatPrice = () => {
+    const newPrice = calculatePrice();
     const FORMAT_PRICE = new Intl.NumberFormat("es-CO", {
       style: "currency",
       currency: "COP",
@@ -491,7 +496,7 @@ const NameLunchForm: React.FC = () => {
                       display: { xs: "block", md: "none" },
                     }}
                   >
-                    Total: <span>{calculatePrice()}</span>
+                    Total: <span>{handleFormatPrice()}</span>
                   </Typography>
                 )}
               </Typography>
@@ -656,7 +661,7 @@ const NameLunchForm: React.FC = () => {
                     fontWeight: 800,
                   }}
                 >
-                  {calculatePrice()}
+                  {handleFormatPrice()}
                 </Typography>
               </Box>
             </Box>
@@ -748,7 +753,7 @@ const NameLunchForm: React.FC = () => {
           >
             <h3>{fields[0].name}</h3>
             <h3>{format(dateChange, FORMAT, "co")}</h3>
-            <h3>{calculatePrice()}</h3>
+            <h3>{handleFormatPrice()}</h3>
           </Box>
 
           <Box
@@ -837,6 +842,7 @@ const NameLunchForm: React.FC = () => {
       <DialogComponent
         open={openDialogPayment}
         setOpen={setOpenDialogPayment}
+        amount={calculatePrice()}
       />
     </Grid2>
   );

@@ -8,7 +8,7 @@ import {
 import { PAYMENT_TOKEN_PROD, PAYMENT_TOKEN_TEST } from "../configDB";
 
 const client = new MercadoPagoConfig({
-  accessToken: PAYMENT_TOKEN_TEST || "",
+  accessToken: PAYMENT_TOKEN_PROD || "",
   options: { timeout: 5000 },
 });
 export const getListBanks = async (req: any, res: any) => {
@@ -90,14 +90,13 @@ export const createPSEPayment = (req: any, res: any) => {
       },
     },
     callback_url:
-      "https://ebb1-2800-484-9781-d300-2b6d-69be-567f-a9b0.ngrok-free.app/", // URL de retorno después del pago
+      "https://98ca-2800-484-9781-d300-2b6d-69be-567f-a9b0.ngrok-free.app/", // URL de retorno después del pago
     notification_url:
-      "https://ebb1-2800-484-9781-d300-2b6d-69be-567f-a9b0.ngrok-free.app/webhook", //pués del pago
+      "https://98ca-2800-484-9781-d300-2b6d-69be-567f-a9b0.ngrok-free.app/webhook", //pués del pago
     additional_info: {
       ip_address: "127.0.0.1",
     },
   };
-  console.log(body);
   payment
     .create({ body })
     .then((response) => {
@@ -107,6 +106,7 @@ export const createPSEPayment = (req: any, res: any) => {
         .json({ redirectTo: transaction_details?.external_resource_url });
     })
     .catch((error) => {
+      console.log(error);
       res.status(error.status).send(error);
     });
 };
