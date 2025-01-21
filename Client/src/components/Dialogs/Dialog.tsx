@@ -5,7 +5,7 @@
  *
  */
 
-import { useState, ReactNode, FC, useEffect } from "react";
+import { useState, ReactNode, FC } from "react";
 
 /**Libreries */
 import Button from "@mui/material/Button";
@@ -21,19 +21,16 @@ interface IProps {
   open: boolean;
   setOpen: (data: boolean) => void;
   tittle: string;
+  showCancelButton?: boolean;
 }
 
 const ScrollDialog: FC<IProps> = (props) => {
-  const { children, setOpen, open, tittle } = props;
+  const { children, setOpen, open, tittle, showCancelButton = true } = props;
   const [scroll] = useState<DialogProps["scroll"]>();
 
   const handleClose = () => {
     setOpen(false);
   };
-
-  useEffect(() => {
-    console.log(props);
-  }, []);
 
   return (
     <Dialog
@@ -50,9 +47,11 @@ const ScrollDialog: FC<IProps> = (props) => {
           {children}
         </DialogContentText>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose}>Cerrar</Button>
-      </DialogActions>
+      {showCancelButton && (
+        <DialogActions>
+          <Button onClick={handleClose}>Cerrar</Button>
+        </DialogActions>
+      )}
     </Dialog>
   );
 };

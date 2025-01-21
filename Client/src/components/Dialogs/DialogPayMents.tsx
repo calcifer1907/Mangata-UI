@@ -6,6 +6,7 @@
  */
 
 /**Component */
+import { Box, Button } from "@mui/material";
 import Dialog from "./Dialog";
 
 interface IProps {
@@ -22,9 +23,14 @@ const DialogPayMents = ({ open, setOpen }: IProps) => {
       setOpen={setOpen}
       tittle="Metodos de pago"
       {...fullScreen}
+      showCancelButton={false}
     >
-      <div>PSE</div>
-      <div>CARD</div>
+      <Box className="d-flex gap-4 justify-content-center">
+        <Button variant="contained" style={{ background: "#fdb813" }}>
+          PSE
+        </Button>
+        <Button variant="contained">CARD</Button>
+      </Box>
     </Dialog>
   );
 };
