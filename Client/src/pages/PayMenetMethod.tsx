@@ -21,8 +21,6 @@ const PayMenetMethod = ({ amount }: IProps) => {
 
   interface FormData {
     first_name: string;
-    last_name: string;
-    city: string;
     email: string;
     identificationType: string;
     identificationNumber: string;
@@ -33,8 +31,6 @@ const PayMenetMethod = ({ amount }: IProps) => {
 
   const [formData, setFormData] = useState<FormData>({
     first_name: "",
-    last_name: "",
-    city: "",
     email: "",
     identificationType: "",
     identificationNumber: "",
@@ -70,56 +66,128 @@ const PayMenetMethod = ({ amount }: IProps) => {
   };
 
   return (
-    <Container>
-      <form
+    <Container style={{ paddingTop: "20px" }}>
+      <Box
+        component="form"
         id="form-checkout"
         method="post"
         onSubmit={handleSubmit}
         action="/PSEPayment"
+        sx={{ maxWidth: { xs: "100%", md: "80%" }, margin: "0 auto" }}
       >
         <Box>
-          <FormControl fullWidth margin="normal">
-            <TextField
-              required
-              variant="filled"
-              id="form-checkout__city"
-              name="first_name"
-              label="Name"
-              type="text"
-              onChange={(event) =>
-                handleChange(
-                  event as React.ChangeEvent<
-                    HTMLInputElement | HTMLTextAreaElement
-                  >
-                )
-              }
-            />
-          </FormControl>
+          <h3
+            style={{
+              color: "var(--blueDarkLigth)",
+              textTransform: "uppercase",
+            }}
+          >
+            Información bancaria
+          </h3>
+          <Box sx={{ display: "flex", gap: 2, flexDirection: "row" }}>
+            <FormControl fullWidth margin="normal">
+              <InputLabel id="banksList-label">Banco</InputLabel>
+              <Select
+                required
+                labelId="banksList-label"
+                id="banksList"
+                name="banksList"
+                variant="filled"
+                onChange={handleChange}
+              >
+                {banks.map((bankItem) => (
+                  <MenuItem key={bankItem.description} value={bankItem.id}>
+                    {bankItem.description}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
 
-          <FormControl fullWidth margin="normal">
-            <TextField
-              required
-              variant="filled"
-              id="form-checkout__last_name"
-              name="last_name"
-              label="Apellido"
-              type="text"
-              onChange={handleChange}
-            />
-          </FormControl>
-
-          <FormControl fullWidth margin="normal">
-            <TextField
-              required
-              variant="filled"
-              id="form-checkout__city"
-              name="city"
-              label="Ciudad"
-              type="text"
-              onChange={handleChange}
-            />
-          </FormControl>
-
+            <FormControl fullWidth margin="normal">
+              <InputLabel id="personType-label">Tipo de persona</InputLabel>
+              <Select
+                required
+                labelId="personType-label"
+                id="form-checkout__personType"
+                name="personType"
+                variant="filled"
+                onChange={handleChange}
+              >
+                <MenuItem value="individual">Natural</MenuItem>
+                <MenuItem value="association">Jurídica</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+          <h3
+            style={{
+              color: "var(--blueDarkLigth)",
+              textTransform: "uppercase",
+            }}
+          >
+            Información del titular
+          </h3>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              gap: 2,
+            }}
+          >
+            <FormControl fullWidth margin="normal">
+              <TextField
+                required
+                variant="filled"
+                id="form-checkout__city"
+                name="first_name"
+                label="Nombre y Apellidos"
+                type="text"
+                onChange={(event) =>
+                  handleChange(
+                    event as React.ChangeEvent<
+                      HTMLInputElement | HTMLTextAreaElement
+                    >
+                  )
+                }
+              />
+            </FormControl>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                width: "100%",
+                gap: 2,
+              }}
+            >
+              <FormControl fullWidth margin="normal">
+                <InputLabel id="identificationType-label">
+                  Tipo de documento
+                </InputLabel>
+                <Select
+                  required
+                  labelId="identificationType-label"
+                  id="form-checkout__identificationType"
+                  name="identificationType"
+                  variant="filled"
+                  onChange={handleChange}
+                >
+                  <MenuItem value="CC">CC</MenuItem>
+                  <MenuItem value="NIT">NIT</MenuItem>
+                  <MenuItem value="pasaporte">Pasaporte</MenuItem>
+                </Select>
+              </FormControl>
+              <FormControl fullWidth margin="normal">
+                <TextField
+                  required
+                  variant="filled"
+                  id="form-checkout__identificationNumber"
+                  name="identificationNumber"
+                  label="Número de identificación"
+                  type="text"
+                  onChange={handleChange}
+                />
+              </FormControl>
+            </Box>
+          </Box>
           <FormControl fullWidth margin="normal">
             <TextField
               required
@@ -131,69 +199,8 @@ const PayMenetMethod = ({ amount }: IProps) => {
               onChange={handleChange}
             />
           </FormControl>
-          <FormControl fullWidth margin="normal">
-            <InputLabel id="personType-label">Tipo de persona</InputLabel>
-            <Select
-              required
-              labelId="personType-label"
-              id="form-checkout__personType"
-              name="personType"
-              variant="filled"
-              onChange={handleChange}
-            >
-              <MenuItem value="individual">Natural</MenuItem>
-              <MenuItem value="association">Jurídica</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl fullWidth margin="normal">
-            <InputLabel id="identificationType-label">
-              Tipo de documento
-            </InputLabel>
-            <Select
-              required
-              labelId="identificationType-label"
-              id="form-checkout__identificationType"
-              name="identificationType"
-              variant="filled"
-              onChange={handleChange}
-            >
-              <MenuItem value="CC">CC</MenuItem>
-              <MenuItem value="NIT">NIT</MenuItem>
-              <MenuItem value="pasaporte">Pasaporte</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl fullWidth margin="normal">
-            <TextField
-              required
-              variant="filled"
-              id="form-checkout__identificationNumber"
-              name="identificationNumber"
-              label="Número de identificación"
-              type="text"
-              onChange={handleChange}
-              helperText={"Campo obligatorio"}
-            />
-          </FormControl>
         </Box>
-        <Box>
-          <FormControl fullWidth margin="normal">
-            <InputLabel id="banksList-label">Banco</InputLabel>
-            <Select
-              required
-              labelId="banksList-label"
-              id="banksList"
-              name="banksList"
-              variant="filled"
-              onChange={handleChange}
-            >
-              {banks.map((bankItem) => (
-                <MenuItem key={bankItem.description} value={bankItem.id}>
-                  {bankItem.description}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Box>
+
         <Box sx={{ textAlign: "end" }}>
           <input
             type="hidden"
@@ -211,7 +218,7 @@ const PayMenetMethod = ({ amount }: IProps) => {
             Pagar
           </Button>
         </Box>
-      </form>
+      </Box>
     </Container>
   );
 };

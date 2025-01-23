@@ -63,7 +63,6 @@ export const createPSEPayment = (req: any, res: any) => {
   const payment = new Payment(client);
   const {
     first_name,
-    last_name,
     email,
     identificationType,
     identificationNumber,
@@ -81,7 +80,6 @@ export const createPSEPayment = (req: any, res: any) => {
     },
     payer: {
       first_name,
-      last_name,
       email, // Correo del pagador
       entity_type: personType, // Persona natural
       identification: {
