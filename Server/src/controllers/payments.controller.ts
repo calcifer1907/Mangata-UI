@@ -5,7 +5,16 @@ import {
   PaymentMethod,
 } from "mercadopago";
 
-import { PAYMENT_TOKEN_PROD, PAYMENT_TOKEN_TEST } from "../configDB";
+import { initMercadoPago } from "@mercadopago/sdk-react";
+
+import {
+  PAYMENT_TOKEN_PROD,
+  PAYMENT_TOKEN_TEST,
+  CALLBACK_URL,
+  BACKEND_URL,
+} from "../configDB";
+
+initMercadoPago(PAYMENT_TOKEN_PROD || "");
 
 const client = new MercadoPagoConfig({
   accessToken: PAYMENT_TOKEN_PROD || "",
@@ -69,17 +78,21 @@ export const createPSEPayment = (req: any, res: any) => {
     personType,
     banksList,
     transaction_amount,
+    payment_id,
   } = req.body;
 
   const body = {
     transaction_amount: transaction_amount,
     description: "Pasa día, Mangata Beach Club",
     payment_method_id: "pse",
+    external_reference: payment_id,
+    statement_descriptor: "Mangata Beach Club,Día de sol",
     transaction_details: {
       financial_institution: banksList,
     },
     payer: {
       first_name,
+      last_name: first_name,
       email, // Correo del pagador
       entity_type: personType, // Persona natural
       identification: {
@@ -87,10 +100,8 @@ export const createPSEPayment = (req: any, res: any) => {
         number: identificationNumber, // Número de documento
       },
     },
-    callback_url:
-      "https://98ca-2800-484-9781-d300-2b6d-69be-567f-a9b0.ngrok-free.app/", // URL de retorno después del pago
-    notification_url:
-      "https://98ca-2800-484-9781-d300-2b6d-69be-567f-a9b0.ngrok-free.app/webhook", //pués del pago
+    callback_url: CALLBACK_URL, // URL de retorno después del pago
+    notification_url: `${BACKEND_URL}/webhook`, // URL de notificación
     additional_info: {
       ip_address: "127.0.0.1",
     },
@@ -109,8 +120,19 @@ export const createPSEPayment = (req: any, res: any) => {
     });
 };
 
-export const reciveWebhook = (req: any, res: any) => {
-  console.log("reciveWebhook", req.query);
+export const reciveWebhook = async (req: any, res: any) => {
+  const payment = req.query;
+  console.log(payment, payment["data.id"]);
+  try {
+    if (payment.type === "payment") {
+      const data = await new Payment(client).get(payment["data.id"]);
+      console.log(data);
+    }
+    return res.sendStatus(204);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "something went wrong" });
+  }
 
   res.sendStatus(204);
 };

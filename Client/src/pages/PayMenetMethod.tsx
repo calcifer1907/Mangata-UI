@@ -14,9 +14,10 @@ import { usePayments } from "../hooks/usePayments";
 
 interface IProps {
   amount: number;
+  payment_id: number;
 }
 
-const PayMenetMethod = ({ amount }: IProps) => {
+const PayMenetMethod = ({ amount, payment_id }: IProps) => {
   const { banks, handleCreateOrder } = usePayments();
 
   interface FormData {
@@ -27,6 +28,7 @@ const PayMenetMethod = ({ amount }: IProps) => {
     banksList: number;
     transaction_amount?: number;
     personType?: string;
+    payment_id?: number;
   }
 
   const [formData, setFormData] = useState<FormData>({
@@ -60,6 +62,7 @@ const PayMenetMethod = ({ amount }: IProps) => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     formData.transaction_amount = amount;
+    formData.payment_id = payment_id ?? 0;
     if (handleValidationForm()) {
       handleCreateOrder(formData);
     }

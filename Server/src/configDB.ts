@@ -9,3 +9,5 @@ export const DB_PASSWORD = process.env.PGPASSWORD;
 export const DB_PORT = process.env.DB_PORT;
 export const PAYMENT_TOKEN_TEST = process.env.PAYMENT_TOKEN_TEST;
 export const PAYMENT_TOKEN_PROD = process.env.PAYMENT_TOKEN_PROD;
+export const CALLBACK_URL = process.env.CALLBACK_URL;
+export const BACKEND_URL = process.env.BACKEND_URL;

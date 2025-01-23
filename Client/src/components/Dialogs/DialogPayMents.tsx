@@ -18,11 +18,12 @@ interface IProps {
   open: boolean;
   setOpen: (data: boolean) => void;
   amount: number;
+  payment_id: number;
 }
 
 const fullScreen = { fullScreen: true };
 
-const DialogPayMents = ({ open, setOpen, amount }: IProps) => {
+const DialogPayMents = ({ open, setOpen, amount, payment_id }: IProps) => {
   const [clickPSE, setClickPSE] = useState<boolean>(false);
 
   return (
@@ -45,7 +46,7 @@ const DialogPayMents = ({ open, setOpen, amount }: IProps) => {
           <Button variant="contained">CARD</Button>
         </Box>
       )}
-      {clickPSE && <PayMenetMethod amount={amount} />}
+      {clickPSE && <PayMenetMethod amount={amount} payment_id={payment_id} />}
     </Dialog>
   );
 };

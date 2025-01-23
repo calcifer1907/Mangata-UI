@@ -25,7 +25,7 @@ import {
 } from "../interfaces/IAccompanist";
 import { getAccompanist, methodUser } from "../utils/api/agent";
 import { enqueueSnackbar } from "notistack";
-import { generarCodigoReservaUX } from "../generalFunctions/generateCodeReservation";
+import { generarCodigoReservaUX2 } from "../generalFunctions/generateCodeReservation";
 import { IGetUserId } from "../interfaces/IUser";
 
 const FORMAT = "DD/MM/YYYY";
@@ -45,7 +45,7 @@ const NameLunchForm: React.FC = () => {
   const [openDialogPayment, setOpenDialogPayment] = useState<boolean>(false);
 
   const CODE_RESERVATION = useMemo(() => {
-    return generarCodigoReservaUX();
+    return generarCodigoReservaUX2();
   }, []);
 
   const PRICES = useMemo(
@@ -843,6 +843,7 @@ const NameLunchForm: React.FC = () => {
         open={openDialogPayment}
         setOpen={setOpenDialogPayment}
         amount={calculatePrice()}
+        payment_id={Number(CODE_RESERVATION)}
       />
     </Grid2>
   );
