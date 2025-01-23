@@ -5,16 +5,20 @@ import {
   PaymentMethod,
 } from "mercadopago";
 
+import { pool } from "../Connection";
+
 import { initMercadoPago } from "@mercadopago/sdk-react";
 
 import {
   PAYMENT_TOKEN_PROD,
   PAYMENT_TOKEN_TEST,
+  PAYMENT_TOKEN_PROD_PUBLIC,
   CALLBACK_URL,
   BACKEND_URL,
+  PAYMENT_TOKEN_TEST_PUBLIC,
 } from "../configDB";
 
-initMercadoPago(PAYMENT_TOKEN_PROD || "");
+initMercadoPago(PAYMENT_TOKEN_PROD_PUBLIC || "");
 
 const client = new MercadoPagoConfig({
   accessToken: PAYMENT_TOKEN_PROD || "",
@@ -106,6 +110,7 @@ export const createPSEPayment = (req: any, res: any) => {
       ip_address: "127.0.0.1",
     },
   };
+
   payment
     .create({ body })
     .then((response) => {
@@ -125,14 +130,30 @@ export const reciveWebhook = async (req: any, res: any) => {
   console.log(payment, payment["data.id"]);
   try {
     if (payment.type === "payment") {
-      const data = await new Payment(client).get(payment["data.id"]);
-      console.log(data);
+      const data = await new Payment(client).get({ id: payment["data.id"] });
+      const { external_reference, id, status } = data;
+      console.log("reciveWebhook: ", external_reference, id, status);
+      await pool.query(
+        "UPDATE reservations SET PAYMENT_ID=$1, STATUS_RESERVATION=$2 WHERE CODE_RESERVATION=$3",
+        [id, status, external_reference]
+      );
     }
     return res.sendStatus(204);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "something went wrong" });
   }
+};
 
-  res.sendStatus(204);
+export const getPayment = async (req: any, res: any) => {
+  const payment = req.query;
+  console.log(payment, payment["data.id"]);
+  try {
+    // const data = await new Payment(client).get({ id: payment["data.id"] });
+    // console.log(data);
+    res.send(204);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send("error");
+  }
 };
