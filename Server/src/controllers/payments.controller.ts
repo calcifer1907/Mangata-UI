@@ -105,7 +105,7 @@ export const createPSEPayment = (req: any, res: any) => {
       },
     },
     callback_url: CALLBACK_URL, // URL de retorno después del pago
-    notification_url: `${BACKEND_URL}/webhook`, // URL de notificación
+    notification_url: BACKEND_URL, // URL de notificación
     additional_info: {
       ip_address: "127.0.0.1",
     },
@@ -127,12 +127,11 @@ export const createPSEPayment = (req: any, res: any) => {
 
 export const reciveWebhook = async (req: any, res: any) => {
   const payment = req.query;
-  console.log(payment, payment["data.id"]);
+  console.log(payment);
   try {
     if (payment.type === "payment") {
       const data = await new Payment(client).get({ id: payment["data.id"] });
       const { external_reference, id, status } = data;
-      console.log("reciveWebhook: ", external_reference, id, status);
       await pool.query(
         "UPDATE reservations SET PAYMENT_ID=$1, STATUS_RESERVATION=$2 WHERE CODE_RESERVATION=$3",
         [id, status, external_reference]
@@ -142,18 +141,5 @@ export const reciveWebhook = async (req: any, res: any) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "something went wrong" });
-  }
-};
-
-export const getPayment = async (req: any, res: any) => {
-  const payment = req.query;
-  console.log(payment, payment["data.id"]);
-  try {
-    // const data = await new Payment(client).get({ id: payment["data.id"] });
-    // console.log(data);
-    res.send(204);
-  } catch (error) {
-    console.log(error);
-    return res.status(500).send("error");
   }
 };

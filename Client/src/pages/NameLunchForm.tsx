@@ -444,9 +444,9 @@ const NameLunchForm: React.FC = () => {
             component="img"
             sx={{
               content: {
-                xs: "url(http://192.168.0.233:5173/images/logoMangataWhite.png)",
-                sm: "url(http://192.168.0.233:5173/images/logoMangataWhite.png)",
-                md: "url(http://localhost:5173/images/logoMangataBlue.png)",
+                xs: "url(/images/logoMangataWhite.png)",
+                sm: "url(/images/logoMangataWhite.png)",
+                md: "url(ges/logoMangataBlue.png)",
               },
               display: { xs: "none", md: "flex" },
               margin: "0 auto",
@@ -507,8 +507,8 @@ const NameLunchForm: React.FC = () => {
               component="img"
               sx={{
                 content: {
-                  xs: "url(http://192.168.0.233:5173/images/logoMangataWhite.png)",
-                  sm: "url(http://192.168.0.233:5173/images/logoMangataWhite.png)",
+                  xs: "url(/images/logoMangataWhite.png)",
+                  sm: "url(/images/logoMangataWhite.png)",
                 },
                 width: "70px",
                 height: "70px",
