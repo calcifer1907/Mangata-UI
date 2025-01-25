@@ -1,5 +1,8 @@
 import axios, { AxiosResponse } from "axios";
+
 import { URL_BACKEND } from "../../constant/URL";
+
+const UI = import.meta.env.VITE_UI;
 
 const responSeBody = (respose: AxiosResponse) => respose.data;
 
@@ -22,12 +25,14 @@ api.interceptors.request.use(
   }
 );
 
-const redirect = (error: any) => {
-  console.log(error);
-  if (error.response.status === 403) {
-    // Redirecciona al login
-    window.location.href = "/login";
+import { AxiosError } from "axios";
+
+const redirect = (error: AxiosError) => {
+  if (error.response && error.response.status === 403) {
     localStorage.removeItem("info");
+    window.location.href = UI;
+
+    window.location.reload();
   }
   return Promise.reject(error);
 };

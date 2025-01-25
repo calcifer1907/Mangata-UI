@@ -10,17 +10,13 @@ import {
 } from "react";
 
 import { IUserInfo } from "../interfaces/ILogin";
+import { initialUserInfo } from "../constant/userInfo";
 
 interface IUserInfoContext {
   userInfo: IUserInfo;
   setUserInfo: (data: IUserInfo) => void;
 }
 
-const initialUserInfo = {
-  TOKEN: "",
-  USER_INFO: { ROLE: "", USER_NAME: "", ID_EMPLOYEE: 0 },
-  MENU: [{ title: "", path: "" }],
-};
 const ContextUser = createContext<IUserInfoContext>({
   userInfo: initialUserInfo,
   setUserInfo: () => {},

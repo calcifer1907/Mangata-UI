@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 /** Libraries */
 import AppBar from "@mui/material/AppBar";
@@ -6,16 +6,17 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Drawer from "@mui/material/Drawer";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import { Icon } from "@iconify/react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 /**Components */
 import NavListDrawer from "./NavListDrawer";
 
 /**Hooks */
 import { useContextUser } from "../../hooks/useContextUser";
+import { itemsNav } from "../../constant/userInfo";
+import { Avatar, Menu, MenuItem, Tooltip } from "@mui/material";
 
 interface Props {
   /**
@@ -25,14 +26,11 @@ interface Props {
   window?: () => Window;
 }
 
-const navItems = [
-  { title: "Inicio", path: "/" },
-  { title: "Iniciar sesión ", path: "/Login" },
-  // { title: "Reservas", path: "/ReservationEmployee" },
-];
+const settings = ["Cerrar sesión"];
 
 const Navbar = (props: Props) => {
   const { window } = props;
+  const location = useLocation();
 
   const { userInfo } = useContextUser();
 
@@ -41,9 +39,28 @@ const Navbar = (props: Props) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const drawerWidth = 240;
 
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+
+  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
+
+  useEffect(() => {
+    const root = document.getElementById("root");
+    root?.style.setProperty(
+      "overflow",
+      location.pathname.includes("ReservationEmployee") ? "hidden" : "auto"
+    );
+  }, [location]);
+
   return (
     <>
       <AppBar
@@ -51,13 +68,13 @@ const Navbar = (props: Props) => {
         sx={{ background: "#FCF8FF", height: 64 }}
         position="sticky"
       >
-        <Toolbar>
+        <Toolbar disableGutters>
           <IconButton
             color="inherit"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { xs: "flex", sm: "none" } }}
+            sx={{ m: 2, display: { xs: "flex", sm: "flex", md: "none" } }}
           >
             <Icon
               icon="solar:hamburger-menu-bold-duotone"
@@ -66,36 +83,82 @@ const Navbar = (props: Props) => {
               style={{ color: "#2B3D5E" }}
             />
           </IconButton>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
-          ></Typography>
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            {userInfo.TOKEN ? (
-              userInfo.MENU.map((item) => (
-                <Button
-                  key={item.title}
-                  sx={{ color: "#1C1B21" }}
-                  to={`/${item.path}`}
-                  component={NavLink}
-                >
-                  {item.title}
-                </Button>
-              ))
-            ) : (
-              <>
-                {navItems.map((item) => (
+
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", md: "flex" },
+              paddingInlineEnd: 4,
+              justifyContent: userInfo.TOKEN ? "space-between" : "flex-end",
+              alignItems: "center",
+            }}
+          >
+            <div></div>
+            <Box>
+              {userInfo.TOKEN ? (
+                userInfo.MENU.map((item) => (
                   <Button
-                    key={item.path}
+                    key={item.title}
                     sx={{ color: "#1C1B21" }}
-                    to={item.path}
+                    to={`/${item.path}`}
                     component={NavLink}
                   >
                     {item.title}
                   </Button>
-                ))}
-              </>
+                ))
+              ) : (
+                <>
+                  {itemsNav.map((item) => (
+                    <Button
+                      key={item.path}
+                      sx={{ color: "#1C1B21" }}
+                      to={item.path}
+                      component={NavLink}
+                    >
+                      {item.title}
+                    </Button>
+                  ))}
+                </>
+              )}
+            </Box>
+
+            {userInfo.TOKEN && (
+              <Box>
+                <Tooltip title="Configuraciónes">
+                  <IconButton onClick={handleOpenUserMenu}>
+                    <Avatar alt={userInfo.USER_INFO.USER_NAME} />
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: "45px" }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  {settings.map((setting) => (
+                    <MenuItem key={setting}>
+                      <Button
+                        key={setting}
+                        sx={{ color: "#1C1B21" }}
+                        to="/logout"
+                        component={NavLink}
+                      >
+                        {setting}
+                      </Button>
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </Box>
             )}
           </Box>
         </Toolbar>
@@ -110,7 +173,7 @@ const Navbar = (props: Props) => {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { xs: "block", sm: "none" },
+            display: { xs: "block", sm: "block", md: "none" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,

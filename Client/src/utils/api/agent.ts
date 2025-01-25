@@ -8,6 +8,7 @@ import {
   IGetListData,
 } from "../../interfaces/IUser";
 import { ILunches, IMinMaxResponse } from "../../interfaces/IAccompanist";
+import { IBanksList } from "../../interfaces/IMercadoPago";
 
 const URI_LOGIN = "/auth/login";
 
@@ -51,4 +52,10 @@ interface IBodyChangeStatus {
 export const getAdmin = {
   changeStatus: (body: IBodyChangeStatus): Promise<any> =>
     requestApis.post(`/api/changeStatusReservation`, body),
+};
+
+export const apisMercadoPago = {
+  createOrder: (body: any): Promise<any> =>
+    requestApis.post("/PSEPayment", body),
+  getListBanks: (): Promise<IBanksList[]> => requestApis.get("/getListBanks"),
 };

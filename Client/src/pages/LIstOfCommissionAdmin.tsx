@@ -35,6 +35,7 @@ import searchIcon from "../../src/assets/searchIcon.svg";
 
 /**Interface */
 import { IGetListSales, IAccompanistListSales } from "../interfaces/IUser";
+import { STATUS } from "../generalFunctions/status";
 
 // import TableUI from "../components/TableUI/TableUI";
 // import { GridColDef } from "@mui/x-data-grid";
@@ -95,12 +96,6 @@ const FORMAT_DATE = "YYYY/MM/DD";
 //     flex: 3,
 //   },
 // ];
-
-const STATUS = {
-  pendiente: "#7D1C80",
-  cancelada: "#A93D3F",
-  confirmada: "#46AE32",
-};
 
 const LIstOfCommissionAdmin = () => {
   const {
@@ -220,7 +215,7 @@ const LIstOfCommissionAdmin = () => {
             alignItems: "center",
             borderRadius: "28px",
             border: "1px solid #454559",
-            maxWidth: 520,
+            maxWidth: 612,
           }}
         >
           <Box
@@ -255,9 +250,27 @@ const LIstOfCommissionAdmin = () => {
               icon="solar:user-bold-duotone"
               width={24}
               height={24}
-              color="#A93D3F"
+              color="#C6A02F"
             />
             <Typography>Cancelada</Typography>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              paddingInline: { xs: "8px", sm: "16px" },
+              gap: 1,
+              borderRight: "1px solid #454559",
+            }}
+          >
+            <Icon
+              icon="solar:user-bold-duotone"
+              width={24}
+              height={24}
+              color="#A93D3F"
+            />
+            <Typography>Rechazada Bank.</Typography>
           </Box>
           <Box
             sx={{
@@ -407,13 +420,13 @@ const LIstOfCommissionAdmin = () => {
                           aria-expanded={open ? "true" : undefined}
                           sx={{ height: "100%" }}
                           onClick={(e) => {
-                            if (item.status_reservation !== "confirmada")
+                            if (item.status_reservation !== "approved")
                               handleClick(e, item.code_reservation);
                           }}
                           startIcon={
                             <Icon
                               icon={
-                                item.status_reservation !== "confirmada"
+                                item.status_reservation !== "approved"
                                   ? "solar:pen-new-round-bold-duotone"
                                   : "solar:unread-bold-duotone"
                               }
@@ -433,13 +446,13 @@ const LIstOfCommissionAdmin = () => {
                           }}
                         >
                           <MenuItem
-                            onClick={() => handleChangeStatus("confirmada")}
+                            onClick={() => handleChangeStatus("approved")}
                           >
                             Confirmar
                           </MenuItem>
                           <MenuItem
                             onClick={() => {
-                              handleChangeStatus("cancelada");
+                              handleChangeStatus("cancel");
                             }}
                           >
                             Cancelar

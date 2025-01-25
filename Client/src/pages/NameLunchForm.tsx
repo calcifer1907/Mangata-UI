@@ -16,6 +16,8 @@ import { useSearchParams } from "react-router-dom";
 
 import { useAccompanist } from "../hooks/useAccompanist";
 
+import DialogComponent from "../components/Dialogs/DialogPayMents";
+
 import {
   IFields,
   IErrorFieldAccompanist,
@@ -23,7 +25,7 @@ import {
 } from "../interfaces/IAccompanist";
 import { getAccompanist, methodUser } from "../utils/api/agent";
 import { enqueueSnackbar } from "notistack";
-import { generarCodigoReservaUX } from "../generalFunctions/generateCodeReservation";
+import { generarCodigoReservaUX2 } from "../generalFunctions/generateCodeReservation";
 import { IGetUserId } from "../interfaces/IUser";
 
 const FORMAT = "DD/MM/YYYY";
@@ -40,9 +42,10 @@ const NameLunchForm: React.FC = () => {
   const [searchParams] = useSearchParams();
   const { optionsLunches, minmax } = useAccompanist();
   const [dateChange, setDateChange] = useState<string>(today);
+  const [openDialogPayment, setOpenDialogPayment] = useState<boolean>(false);
 
   const CODE_RESERVATION = useMemo(() => {
-    return generarCodigoReservaUX();
+    return generarCodigoReservaUX2();
   }, []);
 
   const PRICES = useMemo(
@@ -64,6 +67,8 @@ const NameLunchForm: React.FC = () => {
   }, [ID_EMPLO_PARAM]);
 
   useEffect(() => {
+    const body = document.getElementById("root");
+    body?.style.setProperty("overflow-y", "hidden");
     getuserId();
   }, [getuserId]);
   // Maneja los cambios en los campos
@@ -115,7 +120,12 @@ const NameLunchForm: React.FC = () => {
   };
 
   const calculatePrice = () => {
-    const newPrice = Number(PRICES.PRICE_MAX) * fields.length;
+    const NEW_PRICE = Number(PRICES.PRICE_MAX) * fields.length;
+    return NEW_PRICE;
+  };
+
+  const handleFormatPrice = () => {
+    const newPrice = calculatePrice();
     const FORMAT_PRICE = new Intl.NumberFormat("es-CO", {
       style: "currency",
       currency: "COP",
@@ -138,7 +148,7 @@ const NameLunchForm: React.FC = () => {
         MIN_PRICE: PRICES.PRICE_MIN,
         CREATED_AT: format(new Date(), "YYYY-MM-DD", "en"),
       };
-      handleClose();
+
       const data = await getAccompanist.saveReservation(body);
       if (data.message === "success") {
         enqueueSnackbar("Se guardo correctamente la reserva", {
@@ -148,7 +158,8 @@ const NameLunchForm: React.FC = () => {
             horizontal: "right",
           },
         });
-        // window.location.href = "https://www.instagram.com/mangatacartagena/";
+        handleClose();
+        setOpenDialogPayment(true);
       }
     }
   };
@@ -487,7 +498,7 @@ const NameLunchForm: React.FC = () => {
                       display: { xs: "block", md: "none" },
                     }}
                   >
-                    Total: <span>{calculatePrice()}</span>
+                    Total: <span>{handleFormatPrice()}</span>
                   </Typography>
                 )}
               </Typography>
@@ -652,7 +663,7 @@ const NameLunchForm: React.FC = () => {
                     fontWeight: 800,
                   }}
                 >
-                  {calculatePrice()}
+                  {handleFormatPrice()}
                 </Typography>
               </Box>
             </Box>
@@ -744,7 +755,7 @@ const NameLunchForm: React.FC = () => {
           >
             <h3>{fields[0].name}</h3>
             <h3>{format(dateChange, FORMAT, "co")}</h3>
-            <h3>{calculatePrice()}</h3>
+            <h3>{handleFormatPrice()}</h3>
           </Box>
 
           <Box
@@ -830,6 +841,12 @@ const NameLunchForm: React.FC = () => {
           </Box>
         </Box>
       </Modal>
+      <DialogComponent
+        open={openDialogPayment}
+        setOpen={setOpenDialogPayment}
+        amount={calculatePrice()}
+        payment_id={Number(CODE_RESERVATION)}
+      />
     </Grid2>
   );
 };

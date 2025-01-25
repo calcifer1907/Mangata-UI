@@ -6,14 +6,15 @@ const Logout = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("info");
-    navigate("/Login");
+    navigate("/");
+    window.location.reload();
   };
 
   useEffect(() => {
     handleLogout();
   });
 
-  return <div>Logout</div>;
+  return <div>Cerrando sesion...</div>;
 };
 
 export default Logout;
