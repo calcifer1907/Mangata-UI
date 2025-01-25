@@ -8,14 +8,14 @@ import Drawer from "@mui/material/Drawer";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import { Icon } from "@iconify/react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 /**Components */
 import NavListDrawer from "./NavListDrawer";
 
 /**Hooks */
 import { useContextUser } from "../../hooks/useContextUser";
-import { navItems } from "../../constant/userInfo";
+import { itemsNav } from "../../constant/userInfo";
 import { Avatar, Menu, MenuItem, Tooltip } from "@mui/material";
 
 interface Props {
@@ -30,6 +30,7 @@ const settings = ["Cerrar sesión"];
 
 const Navbar = (props: Props) => {
   const { window } = props;
+  const location = useLocation();
 
   const { userInfo } = useContextUser();
 
@@ -52,7 +53,15 @@ const Navbar = (props: Props) => {
     setMobileOpen((prevState) => !prevState);
   };
 
-  useEffect(() => {}, [userInfo]);
+  useEffect(() => {
+    const root = document.getElementById("root");
+    if (location.pathname.includes("ReservationEmployee")) {
+      root?.style.setProperty("overflow", "hidden");
+    } else {
+      root?.style.setProperty("overflow", "auto");
+    }
+  }, [location]);
+
   return (
     <>
       <AppBar
@@ -66,7 +75,7 @@ const Navbar = (props: Props) => {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ m: 2, display: { xs: "flex", sm: "none" } }}
+            sx={{ m: 2, display: { xs: "flex", sm: "flex", md: "none" } }}
           >
             <Icon
               icon="solar:hamburger-menu-bold-duotone"
@@ -100,7 +109,7 @@ const Navbar = (props: Props) => {
                 ))
               ) : (
                 <>
-                  {navItems.map((item) => (
+                  {itemsNav.map((item) => (
                     <Button
                       key={item.path}
                       sx={{ color: "#1C1B21" }}
@@ -165,7 +174,7 @@ const Navbar = (props: Props) => {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { xs: "block", sm: "none" },
+            display: { xs: "block", sm: "block", md: "none" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,

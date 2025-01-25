@@ -6,18 +6,13 @@ import ListItemText from "@mui/material/ListItemText";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { NavLink } from "react-router-dom";
+import { itemsNav } from "../../constant/userInfo";
 
 interface IProps {
   handleDrawerToggle: () => void;
   navItems: { title: string; path: string }[];
   token: string;
 }
-
-const navItem = [
-  { title: "Inicio", path: "/home" },
-  { title: "Iniciar sesión ", path: "/Login" },
-  // { title: "Reservas", path: "/ReservationEmployee" },
-];
 
 const NavListDrawer = ({ handleDrawerToggle, navItems, token }: IProps) => {
   return (
@@ -41,7 +36,7 @@ const NavListDrawer = ({ handleDrawerToggle, navItems, token }: IProps) => {
           ))
         ) : (
           <>
-            {navItem.map((item) => (
+            {itemsNav.map((item) => (
               <ListItem key={item.title} disablePadding>
                 <ListItemButton
                   sx={{ textAlign: "center" }}

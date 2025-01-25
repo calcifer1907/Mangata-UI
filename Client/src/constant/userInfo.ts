@@ -4,7 +4,8 @@ export const initialUserInfo = {
   MENU: [{ title: "", path: "" }],
 };
 
-export const navItems = [
+export const itemsNav = [
+  { title: "Inicio", path: "/" },
   { title: "Reservar", path: "/ReservationEmployee" },
   { title: "Iniciar sesión ", path: "/Login" },
 ];

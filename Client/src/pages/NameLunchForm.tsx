@@ -67,6 +67,8 @@ const NameLunchForm: React.FC = () => {
   }, [ID_EMPLO_PARAM]);
 
   useEffect(() => {
+    const body = document.getElementById("root");
+    body?.style.setProperty("overflow-y", "hidden");
     getuserId();
   }, [getuserId]);
   // Maneja los cambios en los campos

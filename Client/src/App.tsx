@@ -1,4 +1,3 @@
-import React from "react";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import ContextUser from "./hooks/useContextUser";
 import Home from "./pages/Home";
@@ -9,15 +8,12 @@ import ListOfCommissionsEmployee from "./pages/ListOfCommissionsEmployee";
 import LIstOFCommissionAdmin from "./pages/LIstOfCommissionAdmin";
 import Logout from "./pages/Logout";
 
-// import About from './pages/About';
-// import Services from './pages/Services';
 import MyNavbar from "./components/navbar/NavBar";
 import GenerateReservation from "./pages/GenerateReservation";
 import Box from "@mui/material/Box";
 import NotFound from "./pages/NotFound";
-import PayMenetMethod from "./pages/PayMenetMethod";
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <Router>
       <ContextUser>
@@ -41,7 +37,6 @@ const App: React.FC = () => {
             <Route path="/Reservations" element={<LIstOFCommissionAdmin />} />
             <Route path="/Login" element={<Login />} />
             <Route path="/Logout" element={<Logout />} />
-            <Route path="/PayMenetMethod" element={<PayMenetMethod />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Box>
