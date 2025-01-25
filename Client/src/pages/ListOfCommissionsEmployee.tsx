@@ -32,17 +32,12 @@ import searchIcon from "../../src/assets/searchIcon.svg";
 
 /**Component */
 import DialogListAccompanist from "../components/Dialogs/DialogListAccompanist";
+import { STATUS } from "../generalFunctions/status";
 
 // import TableUI from "../components/TableUI/TableUI";
 // import { GridColDef } from "@mui/x-data-grid";
 
 const FORMAT_DATE = "YYYY-MM-DD";
-
-const STATUS = {
-  pendiente: "#7D1C80",
-  cancelada: "#A93D3F",
-  confirmada: "#46AE32",
-};
 
 const ListOfCommissions = () => {
   const { dataList, loading, dateChange, setDateChange } = useSales({
@@ -192,7 +187,7 @@ const ListOfCommissions = () => {
             alignItems: "center",
             borderRadius: "28px",
             border: "1px solid #454559",
-            maxWidth: 520,
+            maxWidth: 612,
           }}
         >
           <Box
@@ -227,9 +222,27 @@ const ListOfCommissions = () => {
               icon="solar:user-bold-duotone"
               width={24}
               height={24}
-              color="#A93D3F"
+              color="#C6A02F"
             />
             <Typography>Cancelada</Typography>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              paddingInline: { xs: "8px", sm: "16px" },
+              gap: 1,
+              borderRight: "1px solid #454559",
+            }}
+          >
+            <Icon
+              icon="solar:user-bold-duotone"
+              width={24}
+              height={24}
+              color="#A93D3F"
+            />
+            <Typography>Rechazada Bank.</Typography>
           </Box>
           <Box
             sx={{

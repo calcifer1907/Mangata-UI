@@ -22,8 +22,10 @@ api.interceptors.request.use(
   }
 );
 
-const redirect = (error: any) => {
-  if (error.response.status === 403) {
+import { AxiosError } from "axios";
+
+const redirect = (error: AxiosError) => {
+  if (error.response && error.response.status === 403) {
     localStorage.removeItem("info");
     window.location.href = "/";
     window.location.reload();
