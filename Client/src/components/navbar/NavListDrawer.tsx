@@ -23,17 +23,28 @@ const NavListDrawer = ({ handleDrawerToggle, navItems, token }: IProps) => {
       <Divider />
       <List>
         {token ? (
-          navItems.map((item) => (
-            <ListItem key={item.title} disablePadding>
+          <>
+            {navItems.map((item) => (
+              <ListItem key={item.title} disablePadding>
+                <ListItemButton
+                  sx={{ textAlign: "center" }}
+                  component={NavLink}
+                  to={item.path}
+                >
+                  <ListItemText primary={item.title} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+            <ListItem disablePadding>
               <ListItemButton
                 sx={{ textAlign: "center" }}
                 component={NavLink}
-                to={item.path}
+                to="/Logout"
               >
-                <ListItemText primary={item.title} />
+                <ListItemText primary="Cerrar sesión" />
               </ListItemButton>
             </ListItem>
-          ))
+          </>
         ) : (
           <>
             {itemsNav.map((item) => (

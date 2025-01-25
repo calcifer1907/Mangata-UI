@@ -55,11 +55,10 @@ const Navbar = (props: Props) => {
 
   useEffect(() => {
     const root = document.getElementById("root");
-    if (location.pathname.includes("ReservationEmployee")) {
-      root?.style.setProperty("overflow", "hidden");
-    } else {
-      root?.style.setProperty("overflow", "auto");
-    }
+    root?.style.setProperty(
+      "overflow",
+      location.pathname.includes("ReservationEmployee") ? "hidden" : "auto"
+    );
   }, [location]);
 
   return (
