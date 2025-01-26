@@ -27,7 +27,6 @@ import { getAccompanist, methodUser } from "../utils/api/agent";
 import { enqueueSnackbar } from "notistack";
 import { generarCodigoReservaUX2 } from "../generalFunctions/generateCodeReservation";
 import { IGetUserId } from "../interfaces/IUser";
-import { set } from "react-hook-form";
 
 const FORMAT = "DD/MM/YYYY";
 
