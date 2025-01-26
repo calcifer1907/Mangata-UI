@@ -11,6 +11,8 @@ import { getMinMax } from "../utils/api/agent";
 
 import { IMinMax } from "../interfaces/IAccompanist";
 
+const VITE_URL_UI = import.meta.env.VITE_URL_UI;
+
 const GenerateReservation = () => {
   const [valueSlider, setValueSlider] = useState<number | number[]>(0);
   const [minmax, setMinMax] = useState<IMinMax>({ MIN: 0, MAX: 0 });
@@ -75,9 +77,9 @@ const GenerateReservation = () => {
         }}
       >
         <Box
+          className="wd-100"
           sx={{
             maxWidth: 300,
-            width: "100%",
             display: "flex",
             alignSelf: "center",
             flexDirection: "column",
@@ -91,7 +93,7 @@ const GenerateReservation = () => {
             valueLabelDisplay="auto"
             shiftStep={30}
             min={minmax.MIN}
-            max={390000}
+            max={minmax.MAX}
             onChange={handleOnChangeSlider}
           />
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -124,9 +126,9 @@ const GenerateReservation = () => {
         >
           <QRCode
             size={256}
-            style={{ width: "100%", height: "100%" }}
+            className="wd-100 hg-100"
             viewBox={`0 0 250 250`}
-            value={`https:/mangata-ui-client.vercel.app/#/ReservationEmployee?id=${USER_INFO.ID_EMPLOYEE}&price=${valueSlider}&minPrice=${minmax.MIN}`}
+            value={`${VITE_URL_UI}ReservationEmployee?id=${USER_INFO.ID_EMPLOYEE}&price=${valueSlider}&minPrice=${minmax.MIN}`}
           />
         </Box>
       </Container>

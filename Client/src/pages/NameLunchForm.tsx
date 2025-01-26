@@ -44,6 +44,8 @@ const NameLunchForm: React.FC = () => {
   const [dateChange, setDateChange] = useState<string>(today);
   const [openDialogPayment, setOpenDialogPayment] = useState<boolean>(false);
 
+  const [maxHeight, setMaxHeight] = useState<number>(0);
+
   const CODE_RESERVATION = useMemo(() => {
     return generarCodigoReservaUX2();
   }, []);
@@ -68,6 +70,9 @@ const NameLunchForm: React.FC = () => {
 
   useEffect(() => {
     const body = document.getElementById("root");
+    const heightContainer =
+      document.getElementById("contentPrimary")?.offsetHeight;
+    setMaxHeight(heightContainer || 0);
     body?.style.setProperty("overflow-y", "hidden");
     getuserId();
   }, [getuserId]);
@@ -207,75 +212,85 @@ const NameLunchForm: React.FC = () => {
   };
 
   return (
-    <Grid2 spacing={2} container>
+    <Grid2
+      spacing={2}
+      container
+      sx={{
+        maxHeight: maxHeight - 100,
+        overflowY: "auto",
+      }}
+    >
       <Grid2 size={{ xs: 12, sm: 12, md: 12, lg: 6 }}>
         <Box
           sx={{
             paddingInline: 4,
+            paddingBottom: 2,
             position: "relative",
           }}
         >
-          <Box style={{ marginBottom: 20 }}>
-            <Typography
-              sx={{ fontSize: "25px", color: "#2B3D5E", fontWeight: 800 }}
-            >
-              Reserva tu día {CODE_RESERVATION}
-            </Typography>
+          <Box>
+            <Box style={{ marginBottom: 20 }}>
+              <Typography
+                sx={{ fontSize: "25px", color: "#2B3D5E", fontWeight: 800 }}
+              >
+                Reserva tu día {CODE_RESERVATION}
+              </Typography>
+              <Box
+                style={{
+                  backgroundColor: "#2B3D5E",
+                  height: 6,
+                  position: "absolute",
+                  top: 36,
+                  width: "90%",
+                  left: 0,
+                }}
+              />
+              {ID_EMPLO_PARAM && (
+                <h5
+                  style={{
+                    fontSize: 24,
+                    fontWeight: 300,
+                    color: "#2B3D5E",
+                    marginTop: 5,
+                  }}
+                >
+                  {getUserId && (
+                    <>
+                      Asesor: <span>{getUserId?.user_name}</span>
+                    </>
+                  )}
+                </h5>
+              )}
+            </Box>
             <Box
               style={{
                 backgroundColor: "#2B3D5E",
-                height: 6,
-                position: "absolute",
-                top: 36,
-                width: "90%",
-                left: 0,
+                height: 40,
+                width: 178,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: 100,
+                gap: 8,
+                marginBottom: 20,
               }}
-            />
-            {ID_EMPLO_PARAM && (
-              <h5
-                style={{
-                  fontSize: 24,
-                  fontWeight: 300,
-                  color: "#2B3D5E",
-                  marginTop: 5,
-                }}
-              >
-                {getUserId && (
-                  <>
-                    Asesor: <span>{getUserId?.user_name}</span>
-                  </>
-                )}
-              </h5>
-            )}
-          </Box>
-          <Box
-            style={{
-              backgroundColor: "#2B3D5E",
-              height: 40,
-              width: 178,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: 100,
-              gap: 8,
-              marginBottom: 20,
-            }}
-          >
-            <Button
-              size="small"
-              sx={{ textTransform: "none", fontSize: 14, color: "#FFFFFF" }}
-              onClick={addField}
-              startIcon={
-                <Icon
-                  icon="solar:user-plus-bold-duotone"
-                  width="24"
-                  height="24"
-                  style={{ color: "#FFFFFF" }}
-                />
-              }
             >
-              Agregar persona
-            </Button>
+              <Button
+                size="small"
+                sx={{ textTransform: "none", fontSize: 14, color: "#FFFFFF" }}
+                onClick={addField}
+                startIcon={
+                  <Icon
+                    icon="solar:user-plus-bold-duotone"
+                    width="24"
+                    height="24"
+                    style={{ color: "#FFFFFF" }}
+                  />
+                }
+              >
+                Agregar persona
+              </Button>
+            </Box>
           </Box>
           <Box
             sx={{
@@ -349,14 +364,7 @@ const NameLunchForm: React.FC = () => {
               }}
             />
           </Box>
-          <Box
-            sx={{
-              maxHeight: { xs: 350, sm: 330, md: 500 },
-              overflowY: "auto",
-              overflowX: "hidden",
-              height: "100%",
-            }}
-          >
+          <Box>
             {fields.map((field, index) => (
               <FieldRows
                 icon={index !== 0}
@@ -394,11 +402,12 @@ const NameLunchForm: React.FC = () => {
         size={{ xs: 12, sm: 12, md: 12, lg: 5 }}
         sx={{
           position: {
-            xs: "absolute",
-            sm: "absolute",
-            md: "inherit",
+            xs: "fixed",
+            sm: "fixed",
+            md: "sticky",
           },
           bottom: { xs: 0, sm: 0, md: "inherit" },
+          top: { xs: "inherit", sm: "inherit", md: 0 },
           borderRadius: "16px 16px 0px 0px",
           backgroundColor: {
             xs: "#2B3D5E",
@@ -408,7 +417,7 @@ const NameLunchForm: React.FC = () => {
           },
           zIndex: 1,
           transform: {
-            xs: `translateY(${!isVisibleGrid ? "0" : "calc(100% - 6rem"}))`,
+            xs: `translateY(${!isVisibleGrid ? 0 : "calc(100% - 6rem"}))`,
             md: "translateY(0)",
           },
           maxHeight: { xs: 550, sm: 550 },
@@ -423,8 +432,9 @@ const NameLunchForm: React.FC = () => {
         <Box
           sx={{
             backgroundColor: "#D9D9D947",
-            width: "60%",
+            width: "35%",
             height: "3px",
+            borderRadius: "100px",
             margin: "0 auto",
             marginTop: 1,
             display: { xs: "block", md: "none" },
@@ -451,7 +461,7 @@ const NameLunchForm: React.FC = () => {
               display: { xs: "none", md: "flex" },
               margin: "0 auto",
             }}
-            alt="Logo Mangata"
+            alt="Logo Mangatas"
           />
           <Box
             sx={{

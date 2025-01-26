@@ -18,7 +18,7 @@ const App = () => {
     <Router>
       <ContextUser>
         <MyNavbar />
-        <Box sx={{ flex: 1, position: "relative" }}>
+        <Box sx={{ flex: 1, position: "relative" }} id="contentPrimary">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/CreateUser" element={<CreateUser />} />
