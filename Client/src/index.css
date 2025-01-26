@@ -145,3 +145,11 @@ body{
 .gap-8{
   gap:8px;
 }
+
+.wd-100{
+  width: 100%;
+}
+
+.hg-100{
+  height: 100%;
+}

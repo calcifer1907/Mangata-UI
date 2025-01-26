@@ -77,9 +77,9 @@ const GenerateReservation = () => {
         }}
       >
         <Box
+          className="wd-100"
           sx={{
             maxWidth: 300,
-            width: "100%",
             display: "flex",
             alignSelf: "center",
             flexDirection: "column",
@@ -126,7 +126,7 @@ const GenerateReservation = () => {
         >
           <QRCode
             size={256}
-            style={{ width: "100%", height: "100%" }}
+            className="wd-100 hg-100"
             viewBox={`0 0 250 250`}
             value={`${VITE_URL_UI}ReservationEmployee?id=${USER_INFO.ID_EMPLOYEE}&price=${valueSlider}&minPrice=${minmax.MIN}`}
           />
