@@ -118,12 +118,11 @@ const Home = () => {
           <Typography
             sx={{
               color: "#FFFFFF",
-              fontSize: 20,
-              textTransform: "uppercase",
+              fontSize: 14,
               marginBottom: 2,
             }}
           >
-            Mangata Beach Club
+            Islas del Rosario- Isla Grande sector Zaragoza, Colombia
           </Typography>
           <Typography
             sx={{
@@ -132,7 +131,7 @@ const Home = () => {
               marginBottom: 2,
             }}
           >
-            Islas del Rosario- Isla Grande sector Zaragoza, Colombia
+            CopyRigth © {new Date().getFullYear()} Mangata Beach Club
           </Typography>
         </Box>
         <Box>
