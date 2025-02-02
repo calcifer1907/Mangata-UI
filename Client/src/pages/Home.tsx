@@ -73,7 +73,10 @@ const Home = () => {
               title="Restaurante con aire acondicionado o al aire libre"
               img="/images/MangataEat.jpg"
             />
-            <Card title="Deportes acuáticos" img="/images/MangataKayak.png" />
+            <Card
+              title="Deportes acuáticos: Snorkelling, Kayak, Paddle Board"
+              img="/images/MangataKayak.png"
+            />
           </Box>
         </Box>
       </Box>
