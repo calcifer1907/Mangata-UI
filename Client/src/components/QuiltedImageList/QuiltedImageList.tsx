@@ -43,7 +43,7 @@ const itemData = [
     img: "/images/lunche/filete de pescado apanado.jpg",
     title: "Filete de pescado apanado",
     titleEN: "Breadded fish fillet",
-    rows: 4,
+    rows: 2,
     cols: 2,
   },
   {
@@ -51,7 +51,7 @@ const itemData = [
     title: "Nuggets de pollo",
     titleEN: "Chicken nuggets",
     cols: 2,
-    rows: 7,
+    rows: 4,
   },
   {
     img: "/images/lunche/pasta boloñesa.jpg",
@@ -79,6 +79,13 @@ const itemData = [
     img: "/images/lunche/risoto.jpg",
     title: "Risoto",
     titleEN: "Risoto",
+    rows: 3,
+    cols: 2,
+  },
+  {
+    img: "/images/lunche/pechuga a la plancha.jpg",
+    title: "pechuga a la plancha",
+    titleEN: "Grilled chicken breast",
     rows: 3,
     cols: 2,
   },

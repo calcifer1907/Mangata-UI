@@ -47,7 +47,8 @@ const LazyImage = (props: ILazyImageProps) => {
           bottom: 0,
           left: 0,
           width: "100%",
-          height: 60,
+          height: "auto",
+          paddingBlock: "8px",
           background: "rgba(0,0,0, 0.5 )",
         }}
       >

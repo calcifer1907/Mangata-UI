@@ -80,7 +80,13 @@ const Home = () => {
           </Box>
         </Box>
       </Box>
-      <Box sx={{ maxWidth: "90%", margin: "0 auto", marginBottom: 8 }}>
+      <Box
+        sx={{
+          maxWidth: { xs: "96%", md: "65%" },
+          margin: "0 auto",
+          marginBottom: 8,
+        }}
+      >
         <Typography
           sx={{
             color: "var(--blueDarkLigth)",
@@ -91,7 +97,7 @@ const Home = () => {
             textAlign: "center",
           }}
         >
-          Te acompañamos al paraíso
+          Almuerzo a la carta
         </Typography>
         <Typography
           sx={{
@@ -103,7 +109,8 @@ const Home = () => {
             textAlign: "center",
           }}
         >
-          con un solo bocado
+          Disfruta de tu almuerzo cerca al mar{" "}
+          <b>con 8 opciones de platos disponibles:</b>
         </Typography>
         <QuiltedImageList />
       </Box>
@@ -124,19 +131,26 @@ const Home = () => {
         <Box
           sx={{
             display: "flex",
+            flexWrap: "wrap",
             gap: 4,
-            marginBlock: 8,
+            marginBlock: 6,
             minHeight: 400,
           }}
         >
-          <Box sx={{ width: "50%" }}>
+          <Box sx={{ width: { xs: "100%", md: "50%" } }}>
             <Box
               component="img"
               src="/images/MangataPlaces.jpg"
               sx={{ width: "100%", height: "400px", objectFit: "cover" }}
             />
           </Box>
-          <Box sx={{ width: "50%", alignContent: "center" }}>
+          <Box
+            sx={{
+              width: { xs: "100%", md: "45%" },
+              alignContent: "center",
+              padding: 3,
+            }}
+          >
             <Typography
               sx={{
                 color: "var(--blueDarkLigth)",
@@ -168,17 +182,23 @@ const Home = () => {
           color: "var(--blueDarkLigth)",
           padding: 4,
           textAlign: "center",
-          height: "150px",
+          height: "auto",
           alignContent: "center",
-          marginTop: 16,
+          marginTop: 8,
         }}
       >
         <Typography
-          style={{ fontWeight: 600, paddingBottom: 14, fontSize: "1.5rem" }}
+          sx={{
+            fontWeight: 600,
+            paddingBottom: 2,
+            fontSize: { xs: "1.2rem", md: "1.5rem" },
+          }}
         >
           Hora de llegada al muelle: 7:30 a.m.
         </Typography>
-        <Typography style={{ fontWeight: 600, fontSize: "1.5rem" }}>
+        <Typography
+          sx={{ fontWeight: 600, fontSize: { xs: "1.2rem", md: "1.5rem" } }}
+        >
           Hora de regreso al muelle: aproximadamente 4:00 p.m.
         </Typography>
       </Box>
