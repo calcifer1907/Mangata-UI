@@ -4,6 +4,8 @@ import CircularProgress from "@mui/material/CircularProgress";
 interface ILazyImageProps {
   src: string;
   srcSet: string;
+  title: string;
+  titleEN: string;
 }
 
 const LazyImage = (props: ILazyImageProps) => {
@@ -39,6 +41,28 @@ const LazyImage = (props: ILazyImageProps) => {
           display: isLoaded ? "block" : "none", // Oculta hasta que cargue
         }}
       />
+      <div
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          width: "100%",
+          height: "auto",
+          paddingBlock: "8px",
+          background: "rgba(0,0,0, 0.5 )",
+        }}
+      >
+        <p
+          style={{
+            color: "#fff",
+            marginInline: "12%",
+            borderBottom: "1px solid #FFF",
+          }}
+        >
+          {props.title}
+        </p>
+        <p style={{ color: "#fff", marginInline: "12%" }}>{props.titleEN}</p>
+      </div>
     </>
   );
 };

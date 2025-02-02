@@ -73,11 +73,20 @@ const Home = () => {
               title="Restaurante con aire acondicionado o al aire libre"
               img="/images/MangataEat.jpg"
             />
-            <Card title="Deportes acuáticos" img="/images/MangataKayak.png" />
+            <Card
+              title="Deportes acuáticos: Snorkelling, Kayak, Paddle Board"
+              img="/images/MangataKayak.png"
+            />
           </Box>
         </Box>
       </Box>
-      <Box sx={{ maxWidth: "90%", margin: "0 auto" }}>
+      <Box
+        sx={{
+          maxWidth: { xs: "96%", md: "65%" },
+          margin: "0 auto",
+          marginBottom: 8,
+        }}
+      >
         <Typography
           sx={{
             color: "var(--blueDarkLigth)",
@@ -88,7 +97,7 @@ const Home = () => {
             textAlign: "center",
           }}
         >
-          Te acompañamos al paraíso
+          Almuerzo a la carta
         </Typography>
         <Typography
           sx={{
@@ -100,9 +109,118 @@ const Home = () => {
             textAlign: "center",
           }}
         >
-          con un solo bocado
+          Disfruta de tu almuerzo cerca al mar{" "}
+          <b>con 8 opciones de platos disponibles:</b>
         </Typography>
         <QuiltedImageList />
+      </Box>
+      <Box>
+        <Typography
+          component="h2"
+          sx={{
+            color: "var(--blueDarkLigth)",
+            fontWeight: 600,
+            marginBlock: 2,
+            fontSize: 22,
+            textTransform: "uppercase",
+            textAlign: "center",
+          }}
+        >
+          Uso de instalaciones
+        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 4,
+            marginBlock: 6,
+            minHeight: 400,
+          }}
+        >
+          <Box sx={{ width: { xs: "100%", md: "50%" } }}>
+            <Box
+              component="img"
+              src="/images/MangataPlaces.jpg"
+              sx={{ width: "100%", height: "400px", objectFit: "cover" }}
+            />
+          </Box>
+          <Box
+            sx={{
+              width: { xs: "100%", md: "45%" },
+              alignContent: "center",
+              padding: 3,
+            }}
+          >
+            <Typography
+              sx={{
+                color: "var(--blueDarkLigth)",
+                fontWeight: "normal",
+                marginBlock: 2,
+              }}
+            >
+              En nuestro club podrás disfrutar de instalaciones amplias y
+              cómodas, tiempo de descanso y experiencias inigualables. Tendrás
+              acceso a:{" "}
+            </Typography>
+
+            <Box sx={{ color: "var(--blueDarkLigth)", paddingInlineStart: 4 }}>
+              <ul>
+                <li>Sillas asoleadoras</li>
+                <li>Hamacas</li>
+                <li>Camas balinesas</li>
+                <li>Ducha de agua dulce</li>
+                <li>Servicio de toalla</li>
+              </ul>
+            </Box>
+          </Box>
+        </Box>
+      </Box>
+
+      <Box
+        sx={{
+          background: "var(--lightSand)",
+          color: "var(--blueDarkLigth)",
+          padding: 4,
+          textAlign: "center",
+          height: "auto",
+          alignContent: "center",
+          marginTop: 8,
+        }}
+      >
+        <Typography
+          sx={{
+            fontWeight: 600,
+            paddingBottom: 2,
+            fontSize: { xs: "1.2rem", md: "1.5rem" },
+          }}
+        >
+          Hora de llegada al muelle: 7:30 a.m.
+        </Typography>
+        <Typography
+          sx={{ fontWeight: 600, fontSize: { xs: "1.2rem", md: "1.5rem" } }}
+        >
+          Hora de regreso al muelle: aproximadamente 4:00 p.m.
+        </Typography>
+      </Box>
+
+      <Box
+        sx={{
+          color: "var(--blueDarkLigth)",
+          padding: 4,
+          textAlign: "center",
+          height: "150px",
+          alignContent: "center",
+          marginTop: 8,
+        }}
+      >
+        <Typography
+          style={{ fontWeight: 600, paddingBottom: 14, fontSize: "1.5rem" }}
+        >
+          No Incluye
+        </Typography>
+        <Typography>
+          Actividades adicionales no mencionadas anteriormente
+        </Typography>
       </Box>
       <Box
         component="footer"
@@ -134,7 +252,11 @@ const Home = () => {
             CopyRigth © {new Date().getFullYear()} Mangata Beach Club
           </Typography>
         </Box>
-        <Box>
+        <Box
+          component="a"
+          href="https://www.instagram.com/mangatabeachclub/"
+          target="_blank"
+        >
           <img width={32} src="/images/instagram.png" />
         </Box>
       </Box>
