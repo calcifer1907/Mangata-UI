@@ -50,12 +50,14 @@ interface IBodyChangeStatus {
 }
 
 export const getAdmin = {
-  changeStatus: (body: IBodyChangeStatus): Promise<any> =>
+  changeStatus: (body: IBodyChangeStatus): Promise<unknown> =>
     requestApis.post(`/api/changeStatusReservation`, body),
 };
 
 export const apisMercadoPago = {
-  createOrder: (body: any): Promise<any> =>
+  createOrderPSE: (body: object): Promise<unknown> =>
     requestApis.post("/PSEPayment", body),
+  createOrderCreditCard: (body: object): Promise<any> =>
+    requestApis.post("/mercadoPagoCreditCard", body),
   getListBanks: (): Promise<IBanksList[]> => requestApis.get("/getListBanks"),
 };

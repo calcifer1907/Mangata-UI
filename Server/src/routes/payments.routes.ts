@@ -8,14 +8,23 @@ import {
 
 const router = Router();
 
-router.post("/createOrder", createOrder);
+router.post("/mercadoPagoCreditCard", createOrder);
 router.post("/PSEPayment", createPSEPayment);
 
 router.post("/webhook", reciveWebhook);
 
-router.get("/success", (req: any, res: any) => res.send("success"));
-router.get("/failure", (req: any, res: any) => res.send("failure"));
-router.get("/pending", (req: any, res: any) => res.send("pending"));
+router.get("/success", (req: any, res: any) => {
+  console.log(req);
+  res.send("success");
+});
+router.get("/failure", (req: any, res: any) => {
+  console.log(req);
+  res.send("failure");
+});
+router.get("/pending", (req: any, res: any) => {
+  console.log(req);
+  res.send("pending");
+});
 
 router.get("/getListBanks", getListBanks);
 

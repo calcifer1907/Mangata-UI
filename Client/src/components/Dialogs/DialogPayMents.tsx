@@ -6,7 +6,7 @@
  */
 
 /**Libreries */
-import { Box, Button, Paper } from "@mui/material";
+import { Box, Paper } from "@mui/material";
 // import {NavLink} from "react-router-dom"
 
 /**Component */
@@ -14,6 +14,8 @@ import Dialog from "./Dialog";
 import PayMenetMethod from "../../pages/PayMenetMethod";
 import { useState } from "react";
 import { Icon } from "@iconify/react";
+
+import { apisMercadoPago } from "../../utils/api/agent";
 
 interface IProps {
   open: boolean;
@@ -37,6 +39,18 @@ const stytlePaper = {
 
 const DialogPayMents = ({ open, setOpen, amount, payment_id }: IProps) => {
   const [clickPSE, setClickPSE] = useState<boolean>(false);
+
+  const handlePaymentCreditCard = async () => {
+    const response = await apisMercadoPago.createOrderCreditCard({
+      amount,
+      payment_id,
+    });
+    const { init_point } = response;
+    // if (init_point) {
+    //   window.location.href = init_point;
+    // }
+    console.log(response);
+  };
 
   return (
     <Dialog
@@ -77,7 +91,7 @@ const DialogPayMents = ({ open, setOpen, amount, payment_id }: IProps) => {
           <Paper
             component="button"
             variant="outlined"
-            onClick={() => setClickPSE(true)}
+            onClick={handlePaymentCreditCard}
             sx={stytlePaper}
           >
             <Icon

@@ -18,7 +18,7 @@ interface IProps {
 }
 
 const PayMenetMethod = ({ amount, payment_id }: IProps) => {
-  const { banks, handleCreateOrder } = usePayments();
+  const { banks, handleCreateOrderPSE } = usePayments();
 
   interface FormData {
     first_name: string;
@@ -64,7 +64,7 @@ const PayMenetMethod = ({ amount, payment_id }: IProps) => {
     formData.transaction_amount = amount;
     formData.payment_id = payment_id ?? 0;
     if (handleValidationForm()) {
-      handleCreateOrder(formData);
+      handleCreateOrderPSE(formData);
     }
   };
 
