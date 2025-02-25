@@ -54,7 +54,7 @@ const DialogPayMents = ({ open, setOpen, amount, payment_id }: IProps) => {
 
   return (
     <Dialog
-      open={!open}
+      open={open}
       setOpen={setOpen}
       tittle="Métodos de pago"
       showCancelButton={false}
