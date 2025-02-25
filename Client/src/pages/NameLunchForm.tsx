@@ -456,7 +456,7 @@ const NameLunchForm: React.FC = () => {
               content: {
                 xs: "url(/images/logoMangataWhite.png)",
                 sm: "url(/images/logoMangataWhite.png)",
-                md: "url(ges/logoMangataBlue.png)",
+                md: "url(/images/logoMangataBlue.png)",
               },
               display: { xs: "none", md: "flex" },
               margin: "0 auto",

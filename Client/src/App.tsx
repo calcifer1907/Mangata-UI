@@ -1,5 +1,8 @@
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import Box from "@mui/material/Box";
+
 import ContextUser from "./hooks/useContextUser";
+
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import CreateUser from "./pages/CreateUser";
@@ -7,10 +10,9 @@ import ReservationEmployee from "./pages/ContainerContextReservation";
 import ListOfCommissionsEmployee from "./pages/ListOfCommissionsEmployee";
 import LIstOFCommissionAdmin from "./pages/LIstOfCommissionAdmin";
 import Logout from "./pages/Logout";
-
 import MyNavbar from "./components/navbar/NavBar";
 import GenerateReservation from "./pages/GenerateReservation";
-import Box from "@mui/material/Box";
+import PayMenetMethod from "./pages/PayMenetMethod";
 import NotFound from "./pages/NotFound";
 
 const App = () => {
@@ -37,6 +39,10 @@ const App = () => {
             <Route path="/Reservations" element={<LIstOFCommissionAdmin />} />
             <Route path="/Login" element={<Login />} />
             <Route path="/Logout" element={<Logout />} />
+            <Route
+              path="/PayMenetMethod"
+              element={<PayMenetMethod amount={10} payment_id={12} />}
+            />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Box>

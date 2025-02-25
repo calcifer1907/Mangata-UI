@@ -48,20 +48,22 @@ export const createOrder = (req: any, res: any) => {
             id: "1",
             quantity: 1,
             unit_price: 1000,
+            category_id: "Pasadia1",
             title: "pasadia",
             currency_id: "COP",
+            description: "Pasa día, Mangata Beach Club",
           },
         ],
         back_urls: {
           success:
-            "https://ebb1-2800-484-9781-d300-2b6d-69be-567f-a9b0.ngrok-free.app/success",
+            "https://965f-2800-484-9781-d300-2b6d-69be-567f-a9b0.ngrok-free.app/success",
           failure:
-            "https://ebb1-2800-484-9781-d300-2b6d-69be-567f-a9b0.ngrok-free.app/failure",
+            "https://965f-2800-484-9781-d300-2b6d-69be-567f-a9b0.ngrok-free.app/failure",
           pending:
-            "https://ebb1-2800-484-9781-d300-2b6d-69be-567f-a9b0.ngrok-free.app/pending",
+            "https://965f-2800-484-9781-d300-2b6d-69be-567f-a9b0.ngrok-free.app/pending",
         },
         notification_url:
-          "https://ebb1-2800-484-9781-d300-2b6d-69be-567f-a9b0.ngrok-free.app/webhook", //pués del pago
+          "https://965f-2800-484-9781-d300-2b6d-69be-567f-a9b0.ngrok-free.app/webhook", //pués del pago
       },
     })
     .then(function (response) {

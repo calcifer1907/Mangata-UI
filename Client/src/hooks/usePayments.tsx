@@ -11,8 +11,10 @@ export const usePayments = () => {
     setBanks(data);
   }, []);
 
-  const handleCreateOrder = async (body: any) => {
-    const data = await apisMercadoPago.createOrder(body);
+  const handleCreateOrderPSE = async (body: object) => {
+    const data = (await apisMercadoPago.createOrderPSE(body)) as {
+      redirectTo: string;
+    };
     window.location.href = data.redirectTo;
   };
 
@@ -20,5 +22,5 @@ export const usePayments = () => {
     handleBank();
   }, [handleBank]);
 
-  return { banks, handleCreateOrder };
+  return { banks, handleCreateOrderPSE };
 };
