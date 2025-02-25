@@ -45,7 +45,7 @@ const DialogPayMents = ({ open, setOpen, amount, payment_id }: IProps) => {
       amount,
       payment_id,
     });
-    const { init_point } = response;
+    // const { init_point } = response;
     // if (init_point) {
     //   window.location.href = init_point;
     // }

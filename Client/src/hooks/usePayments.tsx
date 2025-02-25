@@ -12,7 +12,9 @@ export const usePayments = () => {
   }, []);
 
   const handleCreateOrderPSE = async (body: object) => {
-    const data = await apisMercadoPago.createOrderPSE(body);
+    const data = (await apisMercadoPago.createOrderPSE(body)) as {
+      redirectTo: string;
+    };
     window.location.href = data.redirectTo;
   };
 
