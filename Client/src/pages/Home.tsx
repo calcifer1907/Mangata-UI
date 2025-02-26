@@ -63,7 +63,7 @@ const Home = () => {
           >
             <Card
               title="Transporte marítimo ida y regreso."
-              img="/images/MangataBed.jpg"
+              img="/images/MangataBoat.jpeg"
             />
             <Card
               title="Copa de champaña de bienvenida o jugo"

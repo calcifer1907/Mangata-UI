@@ -39,15 +39,15 @@ export const getListBanks = async (req: any, res: any) => {
 
 export const createOrder = (req: any, res: any) => {
   const payment = new Preference(client);
-
+  const { amount, payment_id } = req.body;
   payment
     .create({
       body: {
         items: [
           {
-            id: "1",
+            id: payment_id,
             quantity: 1,
-            unit_price: 1000,
+            unit_price: amount,
             category_id: "Pasadia1",
             title: "pasadia",
             currency_id: "COP",
@@ -56,14 +56,14 @@ export const createOrder = (req: any, res: any) => {
         ],
         back_urls: {
           success:
-            "https://965f-2800-484-9781-d300-2b6d-69be-567f-a9b0.ngrok-free.app/success",
+            "https://8c35-2800-484-9781-d300-2b6d-69be-567f-a9b0.ngrok-free.app/success",
           failure:
-            "https://965f-2800-484-9781-d300-2b6d-69be-567f-a9b0.ngrok-free.app/failure",
+            "https://8c35-2800-484-9781-d300-2b6d-69be-567f-a9b0.ngrok-free.app/failure",
           pending:
-            "https://965f-2800-484-9781-d300-2b6d-69be-567f-a9b0.ngrok-free.app/pending",
+            "https://8c35-2800-484-9781-d300-2b6d-69be-567f-a9b0.ngrok-free.app/pending",
         },
         notification_url:
-          "https://965f-2800-484-9781-d300-2b6d-69be-567f-a9b0.ngrok-free.app/webhook", //pués del pago
+          "https://8c35-2800-484-9781-d300-2b6d-69be-567f-a9b0.ngrok-free.app/webhook", //pués del pago
       },
     })
     .then(function (response) {

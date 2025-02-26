@@ -16,7 +16,7 @@ import { useSearchParams } from "react-router-dom";
 
 import { useAccompanist } from "../hooks/useAccompanist";
 
-import DialogComponent from "../components/Dialogs/DialogPayMents";
+import DialogPayMents from "../components/Dialogs/DialogPayMents";
 
 import {
   IFields,
@@ -105,7 +105,10 @@ const NameLunchForm: React.FC = () => {
       lunch: field.lunch.value === 0,
     }));
     setErrors(validationErrors);
-    return !validationErrors.some((error) => error.name || error.lunch);
+    return (
+      !validationErrors.some((error) => error.name || error.lunch) &&
+      valueCel !== ""
+    );
   };
 
   // Agrega una nueva fila si la validación es exitosa
@@ -850,7 +853,7 @@ const NameLunchForm: React.FC = () => {
           </Box>
         </Box>
       </Modal>
-      <DialogComponent
+      <DialogPayMents
         open={openDialogPayment}
         setOpen={setOpenDialogPayment}
         amount={calculatePrice()}
