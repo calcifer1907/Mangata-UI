@@ -13,7 +13,7 @@ import { Icon } from "@iconify/react";
 import DialogSelectLunch from "./DialogSelectLunch";
 
 /**Interfaces */
-import { IOptions, IPropsAccompanist } from "../../interfaces/IAccompanist";
+import { IPropsAccompanist } from "../../interfaces/IAccompanist";
 
 const KEY_NAME = "name";
 const KEY_LUNCH = "lunch";
