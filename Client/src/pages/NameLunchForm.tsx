@@ -8,7 +8,7 @@ import {
   TextField,
   InputAdornment,
 } from "@mui/material";
-import FieldRows from "../components/Accompanist/Accompanist";
+import Accompanist from "../components/Accompanist/Accompanist";
 import { format } from "@formkit/tempo";
 import { Icon } from "@iconify/react";
 import { formatPrice } from "../generalFunctions/formaters";
@@ -178,7 +178,6 @@ const NameLunchForm: React.FC = () => {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 400,
     bgcolor: "background.paper",
     boxShadow: 24,
     borderRadius: "16px",
@@ -366,7 +365,7 @@ const NameLunchForm: React.FC = () => {
           </Box>
           <Box>
             {fields.map((field, index) => (
-              <FieldRows
+              <Accompanist
                 icon={index !== 0}
                 title={
                   index === 0 ? "Datos Personales" : `Acompañande ${index}`
@@ -734,7 +733,7 @@ const NameLunchForm: React.FC = () => {
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
-        <Box sx={{ ...style, width: 400 }}>
+        <Box sx={{ ...style, width: { xs: 300, lg: 400 } }}>
           <Box
             sx={{
               display: "flex",

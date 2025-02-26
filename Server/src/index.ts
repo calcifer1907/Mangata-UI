@@ -1,6 +1,7 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
+import helmet from "helmet";
 
 import usersRouters from "./routes/users.routes";
 import loginRouters from "./routes/login.routes";
@@ -9,6 +10,8 @@ import payments from "./routes/payments.routes";
 import { handleError } from "./handles/handleEror";
 
 const app = express();
+
+app.use(helmet());
 
 const corsOptions = {
   origin: [
