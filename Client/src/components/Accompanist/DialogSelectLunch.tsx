@@ -44,8 +44,8 @@ const DialogSelectLunch = ({
       <Box
         sx={{
           ...style,
-          width: { xs: 320, lg: 400 },
-          height: 500,
+          width: { xs: 320, lg: 500 },
+          height: 600,
         }}
       >
         <Box
