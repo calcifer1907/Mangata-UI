@@ -27,11 +27,32 @@ export default function QuiltedImageList() {
           cols={item.cols || 1}
           rows={item.rows || 1}
         >
-          <LazyImage
-            {...srcset(item.img, 121, item.rows, item.cols)}
-            title={item.title}
-            titleEN={item.titleEN}
-          />
+          <LazyImage {...srcset(item.img, 121, item.rows, item.cols)}>
+            <div
+              style={{
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                width: "100%",
+                height: "auto",
+                paddingBlock: "8px",
+                background: "rgba(0,0,0, 0.5 )",
+              }}
+            >
+              <p
+                style={{
+                  color: "#fff",
+                  marginInline: "12%",
+                  borderBottom: "1px solid #FFF",
+                }}
+              >
+                {item.title}
+              </p>
+              <p style={{ color: "#fff", marginInline: "12%" }}>
+                {item.titleEN}
+              </p>
+            </div>
+          </LazyImage>
         </ImageListItem>
       ))}
     </ImageList>
