@@ -1,13 +1,13 @@
 import { useEffect, FC, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { Icon } from "@iconify/react";
-
 import { InputAdornment } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Icon } from "@iconify/react";
 
 /**Hooks */
 import { useContextUser } from "../hooks/useContextUser";
@@ -31,14 +31,20 @@ const Login: FC = () => {
   const navigation = useNavigate();
   const { setUserInfo } = useContextUser();
   const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+  const [loading, setLoading] = useState(false);
 
   const onSubmit: SubmitHandler<LoginFormInputs> = async (data) => {
     try {
-      const response = await login.loginPage(data);
-      setUserInfo(response);
-      localStorage.setItem("info", JSON.stringify(response));
-      navigation("/");
+      if (!loading) {
+        setLoading(true);
+        const response = await login.loginPage(data);
+        localStorage.setItem("info", JSON.stringify(response));
+        setUserInfo(response);
+        navigation("/");
+        setLoading(false);
+      }
     } catch (e) {
+      setLoading(false);
       console.log(e);
       navigation("/Login");
     }
@@ -234,7 +240,7 @@ const Login: FC = () => {
                   color: "#2B3D5E",
                 }}
               >
-                Iniciar Sesión
+                {loading ? "Cargando..." : "Iniciar Sesión"}
               </Button>
             </Box>
           </Box>
