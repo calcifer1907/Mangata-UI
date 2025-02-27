@@ -100,20 +100,19 @@ const Login: FC = () => {
       </Box>
       <Box
         sx={{
-          width: { xs: `${innerWidth - 14}px`, sm: "400px", md: "600px" }, // Tamaño dinámico
-          height: { xs: `${innerWidth - 14}px`, sm: "400px", md: "600px" }, // Tamaño dinámico
-          backgroundColor: "#2B3D5E", // Color del círculo
-          borderRadius: "50%", // Hacerlo circular
-          display: "flex", // Centrar contenido dentro del círculo
-          flexDirection: "column", // Organizar en columna
-          justifyContent: { xs: "flex-start", sm: "center" }, // Centrar contenido
+          width: { xs: `${innerWidth - 14}px`, sm: "400px", md: "600px" },
+          height: { xs: `${innerWidth - 14}px`, sm: "400px", md: "600px" },
+          backgroundColor: "#2B3D5E",
+          borderRadius: "50%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: { xs: "flex-start", sm: "center" },
           alignItems: "center",
-          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", // Sombra
+          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
           paddingTop: { xs: 2, sm: 0 },
         }}
       >
         <Box display="flex" justifyContent="center">
-          {/* <img src={LogoMangata} alt="Mangata" /> */}
           <Box
             component="img"
             src={LogoMangata}
