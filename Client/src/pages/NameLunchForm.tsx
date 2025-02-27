@@ -220,6 +220,7 @@ const NameLunchForm: React.FC = () => {
       sx={{
         maxHeight: maxHeight - 100,
         overflowY: "auto",
+        marginTop: 2,
       }}
     >
       <Grid2 size={{ xs: 12, sm: 12, md: 12, lg: 6 }}>
@@ -773,15 +774,17 @@ const NameLunchForm: React.FC = () => {
           <Box
             style={{
               display: "flex",
-              justifyContent: "space-between",
+              justifyContent: "center",
+              flexWrap: "wrap",
               marginTop: 2,
+              gap: 8,
             }}
           >
             <Box
               sx={{
                 backgroundColor: "#B99734",
                 height: 40,
-                width: 178,
+                width: 150,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -819,7 +822,7 @@ const NameLunchForm: React.FC = () => {
               sx={{
                 backgroundColor: "#2B3D5E",
                 height: 40,
-                width: 178,
+                width: 150,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",

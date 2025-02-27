@@ -56,10 +56,10 @@ const Accompanist: FC<IPropsAccompanist> = ({
       </Box>
       <Stack
         direction={{ xs: "column", md: "row" }}
-        spacing={{ xs: 2, sm: 2, md: 2 }}
-        sx={{ flexWrap: "wrap" }}
+        spacing={0}
+        sx={{ flexWrap: "wrap", display: "flex", gap: 2 }}
       >
-        <Box sx={{ marginBottom: { xs: 12, sm: 12, md: 0 } }}>
+        <Box>
           <TextField
             label="Nombre Completo"
             variant="filled"
