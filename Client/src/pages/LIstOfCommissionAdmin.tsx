@@ -207,89 +207,95 @@ const LIstOfCommissionAdmin = () => {
           </Box>
         </Box>
 
-        <Box
-          sx={{
-            height: 48,
-            backgroundColor: "#EAE7EF",
-            width: "auto",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            borderRadius: "28px",
-            border: "1px solid #454559",
-            maxWidth: 612,
-          }}
-        >
+        <Box sx={{ height: "auto", width: "auto" }}>
           <Box
             sx={{
+              backgroundColor: "#EAE7EF",
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              paddingInline: { xs: "8px", sm: "16px" },
-              gap: 1,
-              borderRight: "1px solid #454559",
+              borderRadius: "28px",
+              border: "1px solid #454559",
+              flexWrap: "wrap",
+              maxWidth: 612,
             }}
           >
-            <Icon
-              icon="solar:user-bold-duotone"
-              width={24}
-              height={24}
-              color="#7D1C80"
-            />
-            <Typography>Sin pago</Typography>
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              paddingInline: { xs: "8px", sm: "16px" },
-              gap: 1,
-              borderRight: "1px solid #454559",
-            }}
-          >
-            <Icon
-              icon="solar:user-bold-duotone"
-              width={24}
-              height={24}
-              color="#C6A02F"
-            />
-            <Typography>Cancelada</Typography>
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              paddingInline: { xs: "8px", sm: "16px" },
-              gap: 1,
-              borderRight: "1px solid #454559",
-            }}
-          >
-            <Icon
-              icon="solar:user-bold-duotone"
-              width={24}
-              height={24}
-              color="#A93D3F"
-            />
-            <Typography>Rechazada Bank.</Typography>
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              paddingInline: { xs: "6px", sm: "16px" },
-              gap: 1,
-            }}
-          >
-            <Icon
-              icon="solar:user-bold-duotone"
-              width={24}
-              height={24}
-              color="#46AE32"
-            />
-            <Typography>Confirmada</Typography>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                paddingInline: { xs: "8px", sm: "16px" },
+                gap: 1,
+                height: "100%",
+                minHeight: 48,
+              }}
+            >
+              <Icon
+                icon="solar:user-bold-duotone"
+                width={24}
+                height={24}
+                color="#7D1C80"
+              />
+              <Typography>Sin pago</Typography>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                paddingInline: { xs: "8px", sm: "16px" },
+                gap: 1,
+                height: "100%",
+                minHeight: 48,
+              }}
+            >
+              <Icon
+                icon="solar:user-bold-duotone"
+                width={24}
+                height={24}
+                color="#C6A02F"
+              />
+              <Typography>Cancelada</Typography>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                paddingInline: { xs: "8px", sm: "16px" },
+                gap: 1,
+                height: "100%",
+                minHeight: 48,
+              }}
+            >
+              <Icon
+                icon="solar:user-bold-duotone"
+                width={24}
+                height={24}
+                color="#A93D3F"
+              />
+              <Typography>Rechazada Bank.</Typography>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                paddingInline: { xs: "6px", sm: "16px" },
+                gap: 1,
+                height: "100%",
+                minHeight: 48,
+              }}
+            >
+              <Icon
+                icon="solar:user-bold-duotone"
+                width={24}
+                height={24}
+                color="#46AE32"
+              />
+              <Typography>Confirmada</Typography>
+            </Box>
           </Box>
         </Box>
       </Box>
