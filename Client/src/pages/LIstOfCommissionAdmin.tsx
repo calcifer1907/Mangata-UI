@@ -131,10 +131,12 @@ const LIstOfCommissionAdmin = () => {
 
   const handleOnchange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    const filter = dataList.filter((item) =>
-      item.code_reservation.includes(value.toUpperCase())
-    );
-    setDataListFilter(filter.length > 0 ? filter : dataList);
+    const filter = dataList.filter((item) => {
+      return `${item.code_reservation}${item.ACCOMPANIST[0].name_accompanist}`
+        .toLowerCase()
+        .includes(value.toLowerCase());
+    });
+    setDataListFilter(value ? filter : dataList);
   };
 
   const handleChangeStatus = (status: string) => {

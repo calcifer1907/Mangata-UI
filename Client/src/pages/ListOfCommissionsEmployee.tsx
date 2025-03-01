@@ -53,9 +53,11 @@ const ListOfCommissions = () => {
   const handleOnchange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const filter = dataList.filter((item) =>
-      item.code_reservation.includes(value.toUpperCase())
+      `${item.code_reservation}${item.ACCOMPANIST[0].name_accompanist}`
+        .toLowerCase()
+        .includes(value.toLowerCase())
     );
-    setDataListFilter(filter);
+    setDataListFilter(value ? filter : dataList);
   };
 
   const updateMaxHeight = () => {
