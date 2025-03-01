@@ -1,13 +1,13 @@
 import { useEffect, FC, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { Icon } from "@iconify/react";
-
 import { InputAdornment } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Icon } from "@iconify/react";
 
 /**Hooks */
 import { useContextUser } from "../hooks/useContextUser";
@@ -31,14 +31,20 @@ const Login: FC = () => {
   const navigation = useNavigate();
   const { setUserInfo } = useContextUser();
   const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+  const [loading, setLoading] = useState(false);
 
   const onSubmit: SubmitHandler<LoginFormInputs> = async (data) => {
     try {
-      const response = await login.loginPage(data);
-      setUserInfo(response);
-      localStorage.setItem("info", JSON.stringify(response));
-      navigation("/");
+      if (!loading) {
+        setLoading(true);
+        const response = await login.loginPage(data);
+        localStorage.setItem("info", JSON.stringify(response));
+        setUserInfo(response);
+        navigation("/");
+        setLoading(false);
+      }
     } catch (e) {
+      setLoading(false);
       console.log(e);
       navigation("/Login");
     }
@@ -63,7 +69,7 @@ const Login: FC = () => {
     <Container
       sx={{
         display: "flex",
-        justifyContent: { xs: "initial", md: "center" }, // Centrar contenido
+        justifyContent: "center", // Centrar contenido
         alignItems: "center", // Centrar contenido
         minHeight: "100vh", // Altura completa de la pantalla
         flexDirection: "column",
@@ -81,18 +87,18 @@ const Login: FC = () => {
               icon="solar:round-arrow-left-bold-duotone"
               width="24"
               height="24"
-              style={{ color: "#2B3D5E" }}
+              style={{ color: "#FFFFFF" }}
             />
           }
           sx={{
             mt: 2,
             width: 157,
             textTransform: "none",
-            background: "#FFFFFF",
+            background: "var(--blueDark)",
             borderRadius: 100,
             fontSize: 14,
             fontWeight: 500,
-            color: "#2B3D5E",
+            color: "#FFFFFF",
           }}
         >
           Atras
@@ -100,19 +106,19 @@ const Login: FC = () => {
       </Box>
       <Box
         sx={{
-          width: { xs: `${innerWidth - 10}px`, sm: "400px", md: "600px" }, // Tamaño dinámico
-          height: { xs: `${innerWidth - 10}px`, sm: "400px", md: "600px" }, // Tamaño dinámico
-          backgroundColor: "#2B3D5E", // Color del círculo
-          borderRadius: "50%", // Hacerlo circular
-          display: "flex", // Centrar contenido dentro del círculo
-          flexDirection: "column", // Organizar en columna
-          justifyContent: "center",
+          width: { xs: `${innerWidth - 14}px`, sm: "400px", md: "600px" },
+          height: { xs: `${innerWidth - 14}px`, sm: "400px", md: "600px" },
+          backgroundColor: "#2B3D5E",
+          borderRadius: "50%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: { xs: "flex-start", sm: "center" },
           alignItems: "center",
-          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", // Sombra
+          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+          paddingTop: { xs: 2, sm: 0 },
         }}
       >
         <Box display="flex" justifyContent="center">
-          {/* <img src={LogoMangata} alt="Mangata" /> */}
           <Box
             component="img"
             src={LogoMangata}
@@ -131,7 +137,7 @@ const Login: FC = () => {
             onSubmit={handleSubmit(onSubmit)}
             noValidate
             sx={{
-              mt: { xs: 0, sm: 2, md: 4 },
+              mt: { xs: 0, sm: 2, md: 2 },
               width: "22rem",
             }}
           >
@@ -157,8 +163,7 @@ const Login: FC = () => {
               sx={{
                 background: "#FFFFFF",
                 borderRadius: "8px 8px 0 0",
-                marginBottom: { xs: 1, sm: 2, md: 2 },
-                marginTop: { xs: 0, sm: 1, md: 1 },
+                marginBottom: { xs: 0, sm: 0, md: 2 },
               }}
               {...register("email", {
                 required: "El correo es obligatorio",
@@ -194,7 +199,7 @@ const Login: FC = () => {
                 background: "#FFFFFF",
                 borderRadius: "8px 8px 0 0",
                 marginTop: { xs: 1, sm: 1, md: 1 },
-                marginBottom: { xs: 0, sm: 2, md: 2 },
+                marginBottom: { xs: 2, sm: 2, md: 2 },
               }}
               {...register("password", {
                 required: "La contraseña es obligatoria",
@@ -226,8 +231,7 @@ const Login: FC = () => {
                   />
                 }
                 sx={{
-                  mt: 2,
-                  width: 157,
+                  width: 145,
                   textTransform: "none",
                   background: "#FFFFFF",
                   borderRadius: 100,
@@ -236,7 +240,7 @@ const Login: FC = () => {
                   color: "#2B3D5E",
                 }}
               >
-                Iniciar Sesión
+                {loading ? "Cargando..." : "Iniciar Sesión"}
               </Button>
             </Box>
           </Box>

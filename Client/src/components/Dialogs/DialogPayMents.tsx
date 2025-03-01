@@ -6,7 +6,7 @@
  */
 
 /**Libreries */
-import { Box, Paper } from "@mui/material";
+import { Box, Paper, Typography } from "@mui/material";
 // import {NavLink} from "react-router-dom"
 
 /**Component */
@@ -41,14 +41,15 @@ const DialogPayMents = ({ open, setOpen, amount, payment_id }: IProps) => {
   const [clickPSE, setClickPSE] = useState<boolean>(false);
 
   const handlePaymentCreditCard = async () => {
+    console.log(amount);
     const response = await apisMercadoPago.createOrderCreditCard({
       amount,
       payment_id,
     });
-    // const { init_point } = response;
-    // if (init_point) {
-    //   window.location.href = init_point;
-    // }
+    const { init_point } = response;
+    if (init_point) {
+      window.location.href = init_point;
+    }
     console.log(response);
   };
 
@@ -81,6 +82,7 @@ const DialogPayMents = ({ open, setOpen, amount, payment_id }: IProps) => {
               alt="PSE"
               style={{ width: "100px" }}
             />
+            <Typography variant="h6">Pagó PSE</Typography>
             <Icon
               icon="solar:alt-arrow-right-outline"
               width="42"
@@ -101,6 +103,7 @@ const DialogPayMents = ({ open, setOpen, amount, payment_id }: IProps) => {
               height="64"
               color="#2B3D5E"
             />
+            <Typography variant="h6">Tarjeta débito y crédito</Typography>
             <Icon
               icon="solar:alt-arrow-right-outline"
               width="42"

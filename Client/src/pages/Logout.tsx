@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Loading from "../components/Loading/Loading";
 
 const Logout = () => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const Logout = () => {
     handleLogout();
   });
 
-  return <div>Cerrando sesion...</div>;
+  return <Loading />;
 };
 
 export default Logout;
