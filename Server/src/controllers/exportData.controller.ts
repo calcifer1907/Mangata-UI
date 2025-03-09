@@ -45,6 +45,7 @@ const calculatingDate = async (startDate: string, enddate: string) => {
         ),
       };
     });
+    console.log(diff);
     return diff;
   } catch (error) {
     return new Error("sometghin gos wrong");
@@ -64,12 +65,21 @@ export const downloadExcel = async (request: Request, response: Response) => {
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Reservations");
 
-    // Escribir el archivo Excel
-    XLSX.writeFile(workbook, "reservations.xlsx");
-
-    console.log(`Archivo reservations.xlsx creado exitosamente.`);
-    return response.json({
-      message: "Archivo reservations.xlsx creado exitosamente.",
+    // Generar el archivo Excel en un buffer
+    const excelBuffer = XLSX.write(workbook, {
+      type: "buffer",
+      bookType: "xlsx",
     });
+
+    // Configurar la respuesta para descargar el archivo
+    response.setHeader(
+      "Content-Disposition",
+      'attachment; filename="reservations.xlsx"'
+    );
+    response.setHeader(
+      "Content-Type",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
+    response.send(excelBuffer);
   });
 };

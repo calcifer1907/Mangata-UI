@@ -480,7 +480,7 @@ const LIstOfCommissionAdmin = () => {
             </>
           )}
         </Box>
-        <TableUI data={dataList} columns={columns} />
+        <TableUI data={dataList} columns={columns} dateChange={dateChange} />
         <DialogListAccompanist
           open={openDialog}
           setOpen={setOpenDialog}
