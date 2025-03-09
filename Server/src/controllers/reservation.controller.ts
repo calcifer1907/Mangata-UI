@@ -91,8 +91,10 @@ export const getListSalesEmployee = async (
   }
 };
 
-const findEmployee = (users: any, idEmployee: string) => {
-  return users.find((user: any) => user.ID === idEmployee);
+const findEmployeeById = (users: any, idEmployee: string) => {
+  const user = users.find((user: any) => user.id === idEmployee);
+  console.log(user, idEmployee);
+  return user;
 };
 
 export const getListSalesAdmin = async (
@@ -115,18 +117,25 @@ export const getListSalesAdmin = async (
     );
 
     const dataUser = await pool.query(
-      "SELECT ID,CONCAT(FIRST_NAME,' ',LAST_NAME) AS USER_NAME FROM users WHERE ROLE_ID=2 OR ROLE_ID=3;"
+      "SELECT ID,CONCAT(FIRST_NAME,' ',LAST_NAME) AS USER_NAME,BANK_ACCOUNT FROM users WHERE ROLE_ID=2 OR ROLE_ID=3;"
     );
-    const diff = resultReservations.rows.map((values, index) => ({
-      ...values,
-      id: index + 1,
-      DIFF: values.COMMISSION_EMPLOYEE - values.CURRENT_COMMISSION,
-      EMPLOYEE:
-        findEmployee(dataUser.rows, values.ID_EMPLOYEE)?.USER_NAME ?? "",
-      ACCOMPANIST: resultAccompanist.rows.filter(
-        (item) => item.id_reservation === values.code_reservation
-      ),
-    }));
+
+    console.log(dataUser.rows);
+    const diff = resultReservations.rows.map((values, index) => {
+      const employee = findEmployeeById(dataUser.rows, values.id_employee);
+      const BANK_ACCOUNT = employee?.bank_account ?? "";
+      const EMPLOYEE = employee?.user_name ?? "";
+      return {
+        ...values,
+        id: index + 1,
+        DIFF: values.COMMISSION_EMPLOYEE - values.CURRENT_COMMISSION,
+        EMPLOYEE,
+        BANK_ACCOUNT,
+        ACCOMPANIST: resultAccompanist.rows.filter(
+          (item) => item.id_reservation === values.code_reservation
+        ),
+      };
+    });
     response.json(diff);
   } catch (error) {
     return response.status(500).json({ message: "sometghin gos wrong" });
