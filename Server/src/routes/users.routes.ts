@@ -7,6 +7,7 @@ import {
   createUser,
   getSearchUser,
   getListUSers,
+  validExistEmail,
 } from "../controllers/user.controller";
 
 //@ts-ignore
@@ -15,5 +16,7 @@ router.post("/createUser", createUser);
 router.post("/getuserid", getSearchUser);
 //@ts-ignore
 router.post("/getusers", getListUSers);
+//@ts-ignore
+router.post("/validEmail", validExistEmail);
 
 export default router;

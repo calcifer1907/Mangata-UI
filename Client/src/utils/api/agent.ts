@@ -61,3 +61,8 @@ export const apisMercadoPago = {
     requestApis.post("/mercadoPagoCreditCard", body),
   getListBanks: (): Promise<IBanksList[]> => requestApis.get("/getListBanks"),
 };
+
+export const requestExportData = {
+  exportDataSales: (body: object): Promise<unknown> =>
+    requestApis.post(`/api/download-excel`, body),
+};

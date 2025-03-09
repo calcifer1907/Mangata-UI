@@ -154,7 +154,7 @@ const NameLunchForm: React.FC = () => {
         AGREED_PRICE,
         ACCOMPANIST,
         MIN_PRICE: PRICES.PRICE_MIN,
-        CREATED_AT: format(new Date(), "YYYY-MM-DD", "en"),
+        CREATED_AT: format(dateChange, "YYYY-MM-DD", "en"),
       };
 
       const data = await getAccompanist.saveReservation(body);

@@ -7,6 +7,7 @@ import usersRouters from "./routes/users.routes";
 import loginRouters from "./routes/login.routes";
 import reservations from "./routes/reservations.routes";
 import payments from "./routes/payments.routes";
+import exportData from "./routes/exportData.routes";
 import { handleError } from "./handles/handleEror";
 
 const app = express();
@@ -35,6 +36,7 @@ app.use(cors(corsOptions));
 app.use("/auth", loginRouters);
 app.use("/api", usersRouters);
 app.use("/api", reservations);
+app.use("/api", exportData);
 app.use(payments);
 //@ts-ignore
 app.use(handleError);

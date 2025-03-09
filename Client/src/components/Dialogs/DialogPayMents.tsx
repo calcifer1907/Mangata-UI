@@ -15,6 +15,10 @@ import PayMenetMethod from "../../pages/PayMenetMethod";
 import { useState } from "react";
 import { Icon } from "@iconify/react";
 
+import { VITE_PUBLIC_KEY } from "../../constant/URL.ts";
+
+import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
+
 import { apisMercadoPago } from "../../utils/api/agent";
 
 interface IProps {
@@ -39,20 +43,26 @@ const stytlePaper = {
 
 const DialogPayMents = ({ open, setOpen, amount, payment_id }: IProps) => {
   const [clickPSE, setClickPSE] = useState<boolean>(false);
+  const [preferenceId, setPreferenceId] = useState<string | null>(null);
+  initMercadoPago(VITE_PUBLIC_KEY);
 
   const handlePaymentCreditCard = async () => {
-    console.log(amount);
-    const response = await apisMercadoPago.createOrderCreditCard({
-      amount,
-      payment_id,
-    });
-    const { init_point } = response;
-    if (init_point) {
-      window.location.href = init_point;
+    try {
+      console.log(amount);
+      const response = await apisMercadoPago.createOrderCreditCard({
+        amount,
+        payment_id,
+      });
+      // const { init_point } = response;
+      // if (init_point) {
+      //   window.location.href = init_point;
+      // }
+      setPreferenceId(response.id);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
     }
-    console.log(response);
   };
-
   return (
     <Dialog
       open={open}
@@ -134,6 +144,7 @@ const DialogPayMents = ({ open, setOpen, amount, payment_id }: IProps) => {
         </Box>
       )}
       {clickPSE && <PayMenetMethod amount={amount} payment_id={payment_id} />}
+      {preferenceId && <Wallet initialization={{ preferenceId }} />}
     </Dialog>
   );
 };

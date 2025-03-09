@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 
 import { pool } from "../Connection";
-import { throws } from "assert";
 
 export const getListUSers = async (
   _request: Request,
@@ -72,6 +71,26 @@ export const createUser = async (request: Request, response: Response) => {
         .status(409)
         .json({ message: "Error: El correo electrónico ya está registrado." });
 
+    return response.status(500).json({ message: "sometghin gos wrong" });
+  }
+};
+
+export const validExistEmail = async (
+  request: Request,
+  response: Response
+): Promise<Response> => {
+  const { email } = request.body;
+  try {
+    const result = await pool.query("SELECT EMAIL FROM users WHERE EMAIL=$1;", [
+      email,
+    ]);
+    if (result.rows.length > 0)
+      return response.json({
+        message: "El correo ya está registrado",
+        status: 409,
+      });
+    return response.json({ message: "Correo disponible", status: 201 });
+  } catch (error) {
     return response.status(500).json({ message: "sometghin gos wrong" });
   }
 };
