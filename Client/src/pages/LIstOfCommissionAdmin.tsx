@@ -37,65 +37,65 @@ import searchIcon from "../../src/assets/searchIcon.svg";
 import { IGetListSales, IAccompanistListSales } from "../interfaces/IUser";
 import { STATUS } from "../generalFunctions/status";
 
-// import TableUI from "../components/TableUI/TableUI";
-// import { GridColDef } from "@mui/x-data-grid";
+import TableUI from "../components/TableUI/TableUI";
+import { GridColDef } from "@mui/x-data-grid";
 
 const FORMAT_DATE = "YYYY/MM/DD";
 
-// const columns: GridColDef[] = [
-//   {
-//     field: "id",
-//     headerName: "Id",
-//     sortable: false,
-//     flex: 1,
-//   },
-//   {
-//     field: "code_reservation",
-//     headerName: "Id Reserva",
-//     sortable: false,
-//     flex: 3,
-//   },
-//   {
-//     field: "EMPLOYEE",
-//     headerName: "Empleado",
-//     sortable: false,
-//     flex: 3,
-//   },
-//   {
-//     field: "status_reservation",
-//     headerName: "Estado reserva",
-//     sortable: false,
-//     flex: 3,
-//   },
-//   {
-//     field: "CURRENT_COMMISSION",
-//     headerName: "Precio Min",
-//     sortable: false,
-//     valueGetter: (value) => formatPrice(value as number),
-//     flex: 3,
-//   },
-//   {
-//     field: "commission_employee",
-//     headerName: "Se Vendio en",
-//     sortable: false,
-//     valueGetter: (value) => formatPrice(value as number),
-//     flex: 3,
-//   },
-//   {
-//     field: "DIFF",
-//     headerName: "Comision",
-//     sortable: false,
-//     valueGetter: (value) => formatPrice(value as number),
-//     flex: 3,
-//   },
-//   {
-//     field: "created_at",
-//     headerName: "Fecha Creación",
-//     sortable: false,
-//     valueGetter: (value) => format(value, FORMAT_DATE),
-//     flex: 3,
-//   },
-// ];
+const columns: GridColDef[] = [
+  {
+    field: "id",
+    headerName: "Id",
+    sortable: false,
+    flex: 1,
+  },
+  {
+    field: "code_reservation",
+    headerName: "Id Reserva",
+    sortable: false,
+    flex: 3,
+  },
+  {
+    field: "EMPLOYEE",
+    headerName: "Empleado",
+    sortable: false,
+    flex: 3,
+  },
+  {
+    field: "status_reservation",
+    headerName: "Estado reserva",
+    sortable: false,
+    flex: 3,
+  },
+  {
+    field: "current_commission",
+    headerName: "Precio Min",
+    sortable: false,
+    valueGetter: (value) => formatPrice(value as number),
+    flex: 3,
+  },
+  {
+    field: "commission_employee",
+    headerName: "Se Vendio en",
+    sortable: false,
+    valueGetter: (value) => formatPrice(value as number),
+    flex: 3,
+  },
+  {
+    field: "DIFF",
+    headerName: "Comision",
+    sortable: false,
+    valueGetter: (value) => formatPrice(value as number),
+    flex: 3,
+  },
+  {
+    field: "created_at",
+    headerName: "Fecha Creación",
+    sortable: false,
+    valueGetter: (value) => format(value, FORMAT_DATE),
+    flex: 3,
+  },
+];
 
 const LIstOfCommissionAdmin = () => {
   const {
@@ -474,12 +474,12 @@ const LIstOfCommissionAdmin = () => {
             </>
           )}
         </Box>
+        <TableUI data={dataList} columns={columns} />
         <DialogListAccompanist
           open={openDialog}
           setOpen={setOpenDialog}
           accompanist={arrayShowAccompanist}
         />
-        {/* {dataList.length > 0 && <TableUI data={dataList} columns={columns} />} */}
       </Container>
     </Box>
   );

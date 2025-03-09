@@ -12,7 +12,14 @@ interface IProps {
 
 const TableUI: FC<IProps> = ({ data, columns }) => {
   return (
-    <Box sx={{ width: "100%", margin: "0 auto" }}>
+    <Box
+      sx={{
+        width: "100%",
+        margin: "0 auto",
+        marginTop: 2,
+        display: { xs: "none", sm: "block" },
+      }}
+    >
       <Paper sx={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={data}
