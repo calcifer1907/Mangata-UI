@@ -1,4 +1,4 @@
-import { Box, Button, Paper } from "@mui/material";
+import { Box, Paper } from "@mui/material";
 
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { FC } from "react";
