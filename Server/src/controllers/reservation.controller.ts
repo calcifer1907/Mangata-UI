@@ -120,7 +120,6 @@ export const getListSalesAdmin = async (
       "SELECT ID,CONCAT(FIRST_NAME,' ',LAST_NAME) AS USER_NAME,BANK_ACCOUNT FROM users WHERE ROLE_ID=2 OR ROLE_ID=3;"
     );
 
-    console.log(dataUser.rows);
     const diff = resultReservations.rows.map((values, index) => {
       const employee = findEmployeeById(dataUser.rows, values.id_employee);
       const BANK_ACCOUNT = employee?.bank_account ?? "";
@@ -128,7 +127,7 @@ export const getListSalesAdmin = async (
       return {
         ...values,
         id: index + 1,
-        DIFF: values.COMMISSION_EMPLOYEE - values.CURRENT_COMMISSION,
+        DIFF: values.commission_employee - values.current_commission,
         EMPLOYEE,
         BANK_ACCOUNT,
         ACCOMPANIST: resultAccompanist.rows.filter(

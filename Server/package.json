@@ -23,7 +23,8 @@
     "mysql2": "^3.11.5",
     "pg": "^8.13.1",
     "tsconfig-paths": "^4.2.0",
-    "uuid": "^11.0.5"
+    "uuid": "^11.0.5",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",

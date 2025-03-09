@@ -1,4 +1,4 @@
-import { Box, Paper } from "@mui/material";
+import { Box, Button, Paper } from "@mui/material";
 
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { FC } from "react";
@@ -11,6 +11,8 @@ interface IProps {
 }
 
 const TableUI: FC<IProps> = ({ data, columns }) => {
+  const exportToExcel = (data: any, fileName: string) => {};
+
   return (
     <Box
       sx={{
@@ -20,6 +22,12 @@ const TableUI: FC<IProps> = ({ data, columns }) => {
         display: { xs: "none", sm: "block" },
       }}
     >
+      <Button
+        onClick={() => exportToExcel(data, "test.xlsx")}
+        variant="contained"
+      >
+        Exportar.xls
+      </Button>
       <Paper sx={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={data}

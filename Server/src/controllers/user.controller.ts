@@ -1,8 +1,6 @@
 import { Request, Response } from "express";
 
 import { pool } from "../Connection";
-import { throws } from "assert";
-import { stat } from "fs";
 
 export const getListUSers = async (
   _request: Request,
