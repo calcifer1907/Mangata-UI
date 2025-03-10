@@ -31,8 +31,9 @@ const redirect = (error: AxiosError) => {
   if (error.response && error.response.status === 403) {
     localStorage.removeItem("info");
     window.location.href = UI;
-
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
   }
   return Promise.reject(error);
 };
