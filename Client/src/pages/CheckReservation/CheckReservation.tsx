@@ -11,9 +11,51 @@ import {
   Button,
 } from "@mui/material";
 
+import { STATUS_COLOR } from "../../generalFunctions/status";
+
+import { checkReservation } from "../../utils/api/agent";
+import { useSearchParams } from "react-router-dom";
+
 import "./CheckReservation.css";
+import { useCallback, useEffect, useState } from "react";
+import { StatusReservationType } from "../../interfaces/IStatusColor";
+import { formatDate } from "../../generalFunctions/formatDate";
+import { formatPrice } from "../../generalFunctions/formaters";
 
 const CheckReservation = () => {
+  const [searchParams] = useSearchParams();
+  const [infoCheckReservation, setInfoCheckReservation] = useState({
+    code_reservation: "",
+    status_reservation: "",
+    commission_employee: "",
+    created_at: "",
+    total_payment: 0,
+  });
+  const payment_id = searchParams.get("payment_id");
+
+  const statusReservation = async () => {
+    try {
+      const response = await checkReservation.statusReservation({ payment_id });
+      setInfoCheckReservation(response.length > 0 ? response[0] : undefined);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    statusReservation();
+  }, []);
+
+  const handleLabelStatus = useCallback((status: string) => {
+    const statusReservation = {
+      approved: "Aprobado",
+      pending: "Pendiente",
+      in_process: "En proceso",
+      rejected: "Rechazado",
+    };
+    return statusReservation[status as keyof typeof statusReservation];
+  }, []);
+
   return (
     <Box
       sx={{
@@ -32,22 +74,27 @@ const CheckReservation = () => {
       >
         <Typography
           variant="h4"
-          align="center"
-          color="success.main"
+          textAlign="center"
+          color={
+            STATUS_COLOR[
+              infoCheckReservation.status_reservation as StatusReservationType
+            ]
+          }
           gutterBottom
         >
-          Transacción Aprobada
+          Transacción{" "}
+          {handleLabelStatus(infoCheckReservation.status_reservation)}
         </Typography>
 
         {/* Método de pago */}
-        <Box sx={{ marginBottom: 3 }}>
+        {/* <Box sx={{ marginBottom: 3 }}>
           <Typography variant="h6" color="text.primary" gutterBottom>
             Método de pago
           </Typography>
           <Typography variant="body1" color="text.secondary">
             Cuentas débito ahorro y corriente (PSE)
           </Typography>
-        </Box>
+        </Box> */}
 
         {/* Detalles de pago */}
         <TableContainer component={Paper} sx={{ marginBottom: 3 }}>
@@ -55,13 +102,15 @@ const CheckReservation = () => {
             <TableHead>
               <TableRow>
                 <TableCell>Total pagado</TableCell>
-                <TableCell>identificación de pago</TableCell>
+                <TableCell>Identificación de pago</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               <TableRow>
-                <TableCell>$102.400,00</TableCell>
-                <TableCell>104758783784</TableCell>
+                <TableCell>
+                  {formatPrice(infoCheckReservation.total_payment)}
+                </TableCell>
+                <TableCell>{payment_id}</TableCell>
               </TableRow>
             </TableBody>
           </Table>
@@ -73,14 +122,16 @@ const CheckReservation = () => {
               <TableRow>
                 <TableCell>Pago realizado a</TableCell>
                 <TableCell>
-                  Fecha de creació<nav></nav>
+                  Fecha de creación<nav></nav>
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               <TableRow>
                 <TableCell>Mangata Beach Club</TableCell>
-                <TableCell>2024-06-13 16:19:07</TableCell>
+                <TableCell>
+                  {formatDate(infoCheckReservation.created_at)}
+                </TableCell>
               </TableRow>
             </TableBody>
           </Table>
@@ -92,7 +143,7 @@ const CheckReservation = () => {
             Código De Reserva
           </Typography>
           <Typography variant="body1" color="success.main">
-            00
+            {infoCheckReservation.code_reservation}
           </Typography>
         </Box>
 
