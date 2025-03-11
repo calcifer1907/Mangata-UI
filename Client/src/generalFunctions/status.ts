@@ -1,4 +1,4 @@
-export const STATUS = {
+export const STATUS_COLOR = {
   pending: "#7D1C80",
   cancel: "#C6A02F",
   approved: "#46AE32",
