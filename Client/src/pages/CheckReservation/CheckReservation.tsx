@@ -24,8 +24,9 @@ const CheckReservation = () => {
       <Box
         sx={{
           padding: 3,
-          border: "1px solid #ccc",
-          borderRadius: 2,
+          marginTop: "16px",
+          border: "1px solid #e5e7eb",
+          borderRadius: "8px 8px 0 0",
           backgroundColor: "#f9f9f9",
         }}
       >
@@ -54,13 +55,13 @@ const CheckReservation = () => {
             <TableHead>
               <TableRow>
                 <TableCell>Total pagado</TableCell>
-                <TableCell>Banco</TableCell>
+                <TableCell>identificación de pago</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               <TableRow>
                 <TableCell>$102.400,00</TableCell>
-                <TableCell>BANCOLOMBIA</TableCell>
+                <TableCell>104758783784</TableCell>
               </TableRow>
             </TableBody>
           </Table>
@@ -70,31 +71,16 @@ const CheckReservation = () => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Autorización / CUS</TableCell>
-                <TableCell>Fecha de transacción</TableCell>
+                <TableCell>Pago realizado a</TableCell>
+                <TableCell>
+                  Fecha de creació<nav></nav>
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               <TableRow>
-                <TableCell>702349048</TableCell>
+                <TableCell>Mangata Beach Club</TableCell>
                 <TableCell>2024-06-13 16:19:07</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
-
-        <TableContainer component={Paper} sx={{ marginBottom: 3 }}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Recibo</TableCell>
-                <TableCell>Dirección IP</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <TableRow>
-                <TableCell>1624586914</TableCell>
-                <TableCell>181.51.32.29</TableCell>
               </TableRow>
             </TableBody>
           </Table>
@@ -103,7 +89,7 @@ const CheckReservation = () => {
         {/* Código de respuesta */}
         <Box sx={{ marginBottom: 3, textAlign: "center" }}>
           <Typography variant="h6" color="text.primary" gutterBottom>
-            Código Respuesta
+            Código De Reserva
           </Typography>
           <Typography variant="body1" color="success.main">
             00
