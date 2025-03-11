@@ -129,7 +129,6 @@ export const createPSEPayment = (req: any, res: any) => {
 
 export const reciveWebhook = async (req: any, res: any) => {
   const payment = req.query;
-  console.log(payment);
   try {
     if (payment.type === "payment") {
       const data = await new Payment(client).get({ id: payment["data.id"] });
