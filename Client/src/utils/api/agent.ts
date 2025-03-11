@@ -70,7 +70,7 @@ export const requestExportData = {
 interface IBodyChangeStatus {
   code_reservation: string;
   status_reservation: string;
-  commission_employee: string;
+  email: string;
   created_at: string;
   total_payment: number;
 }

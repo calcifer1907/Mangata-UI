@@ -13,14 +13,16 @@ export const createReservation = async (
     ACCOMPANIST,
     MIN_PRICE,
     CREATED_AT,
+    EMAIL,
   } = request.body;
   try {
     const result = await pool.query(
-      "INSERT INTO reservations(CODE_RESERVATION,ID_EMPLOYEE,TELEPHONE,CURRENT_COMMISSION,COMMISSION_EMPLOYEE,CREATED_AT) VALUES($1,$2,$3,$4,$5,$6);",
+      "INSERT INTO reservations(CODE_RESERVATION,ID_EMPLOYEE,TELEPHONE,EMAIL,CURRENT_COMMISSION,COMMISSION_EMPLOYEE,CREATED_AT) VALUES($1,$2,$3,$4,$5,$6,$7);",
       [
         CODE_RESERVATION,
         ID_EMPLOYEE,
         TELEPHONE,
+        EMAIL,
         MIN_PRICE,
         AGREED_PRICE,
         CREATED_AT,
@@ -181,8 +183,12 @@ export const checkReservation = async (
       if (resultReservations.rowCount === 0) {
         res.status(404).json({ message: "Reservation not found" });
       } else {
-        const { code_reservation, commission_employee,created_at,status_reservation } =
-          resultReservations.rows[0];
+        const {
+          code_reservation,
+          commission_employee,
+          created_at,
+          status_reservation,
+        } = resultReservations.rows[0];
 
         const resultAccompanist = await pool.query(
           `SELECT COUNT(ID_RESERVATION) AS TOTAL_PERSONS  FROM accompanist  WHERE ID_RESERVATION = $1`,

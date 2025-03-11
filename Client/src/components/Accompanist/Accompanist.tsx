@@ -39,7 +39,14 @@ const Accompanist: FC<IPropsAccompanist> = ({
           marginBottom: 1,
         }}
       >
-        <Typography sx={{ fontSize: 20, fontWeight: 500, color: "#2B3D5E" }}>
+        <Typography
+          sx={{
+            fontSize: 20,
+            fontWeight: 500,
+            color: "#2B3D5E",
+            marginBlock: 2,
+          }}
+        >
           {title}
         </Typography>
         {icon && (

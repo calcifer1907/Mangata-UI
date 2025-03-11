@@ -36,6 +36,7 @@ const NameLunchForm: React.FC = () => {
     { name: "", lunch: { label: "", value: 0 } },
   ]);
   const [valueCel, setValueCel] = useState<string>("");
+  const [valueEmail, setValueEmail] = useState<string>("");
   const [errors, setErrors] = useState<IErrorFieldAccompanist[]>([]);
   const [isVisibleGrid, setIsVisibleGrid] = useState(false);
   const [getUserId, setGetUserId] = useState<IGetUserId | null>(null);
@@ -144,6 +145,7 @@ const NameLunchForm: React.FC = () => {
   const handleReservation = async () => {
     const ID_EMPLOYEE = getUserId?.id;
     const TELEPHONE = valueCel;
+    const EMAIL = valueEmail;
     const AGREED_PRICE = PRICES.PRICE_MAX;
     const ACCOMPANIST = fields;
     if (validateFields()) {
@@ -153,6 +155,7 @@ const NameLunchForm: React.FC = () => {
         TELEPHONE,
         AGREED_PRICE,
         ACCOMPANIST,
+        EMAIL,
         MIN_PRICE: PRICES.PRICE_MIN,
         CREATED_AT: format(dateChange, "YYYY-MM-DD", "en"),
       };
@@ -334,6 +337,25 @@ const NameLunchForm: React.FC = () => {
                 maxWidth: "328px",
               }}
             />
+          </Box>
+          <Typography
+            sx={{
+              fontSize: 20,
+              fontWeight: 500,
+              color: "#2B3D5E",
+              marginBlock: 2,
+            }}
+          >
+            Datos De Contacto
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              gap: 2,
+              flexWrap: "wrap",
+            }}
+          >
             <TextField
               label="Celular"
               variant="filled"
@@ -357,6 +379,38 @@ const NameLunchForm: React.FC = () => {
                     <InputAdornment position="start">
                       <Icon
                         icon="solar:phone-calling-rounded-bold-duotone"
+                        width="24"
+                        height="24"
+                        style={{ color: "#2B3D5E" }}
+                      />
+                    </InputAdornment>
+                  ),
+                },
+              }}
+            />
+            <TextField
+              label="Email"
+              variant="filled"
+              type="email"
+              placeholder="Ingresa tu correo electrónico"
+              fullWidth
+              value={valueEmail}
+              error={valueEmail === ""}
+              onChange={(e) => {
+                setValueEmail(e.target.value);
+              }}
+              sx={{
+                background: "#FFFFFF",
+                borderRadius: "8px 8px 0 0",
+                maxWidth: "328px",
+              }}
+              helperText={valueEmail === "" ? "Este campo es obligatorio" : ""}
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Icon
+                        icon="solar:letter-opened-bold-duotone"
                         width="24"
                         height="24"
                         style={{ color: "#2B3D5E" }}

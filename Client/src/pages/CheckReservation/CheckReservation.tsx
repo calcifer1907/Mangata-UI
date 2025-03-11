@@ -30,7 +30,7 @@ const CheckReservation = () => {
   const [infoCheckReservation, setInfoCheckReservation] = useState({
     code_reservation: "",
     status_reservation: "",
-    commission_employee: "",
+    email: "",
     created_at: "",
     total_payment: 0,
   });
@@ -158,7 +158,8 @@ const CheckReservation = () => {
         {/* Volver al comercio */}
         <Box sx={{ textAlign: "center" }}>
           <Typography variant="body1" color="text.secondary" gutterBottom>
-            El comprobante será enviado a <strong>tabordac2@gmail.com</strong>
+            El comprobante será enviado a{" "}
+            <strong>{infoCheckReservation.email}</strong>
           </Typography>
           <Button variant="contained" color="primary">
             Volver al comercio
