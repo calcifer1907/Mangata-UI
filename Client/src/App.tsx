@@ -13,6 +13,7 @@ import Logout from "./pages/Logout";
 import MyNavbar from "./components/navbar/NavBar";
 import GenerateReservation from "./pages/GenerateReservation";
 import PayMenetMethod from "./pages/PayMenetMethod";
+import CheckReservation from "./pages/CheckReservation/CheckReservation";
 import NotFound from "./pages/NotFound";
 
 const App = () => {
@@ -37,6 +38,7 @@ const App = () => {
               element={<ListOfCommissionsEmployee />}
             />
             <Route path="/Reservations" element={<LIstOFCommissionAdmin />} />
+            <Route path="/check-reservation" element={<CheckReservation />} />
             <Route path="/Login" element={<Login />} />
             <Route path="/Logout" element={<Logout />} />
             <Route
