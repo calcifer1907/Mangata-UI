@@ -66,3 +66,8 @@ export const requestExportData = {
   exportDataSales: (body: object): Promise<unknown> =>
     requestApis.post(`/api/download-excel`, body),
 };
+
+export const checkReservation = {
+  statusReservation: (body: object): Promise<unknown> =>
+    requestApis.post(`/api/check-reservation`, body),
+};
