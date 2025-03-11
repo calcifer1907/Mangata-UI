@@ -22,8 +22,11 @@ import { StatusReservationType } from "../../interfaces/IStatusColor";
 import { formatDate } from "../../generalFunctions/formatDate";
 import { formatPrice } from "../../generalFunctions/formaters";
 
+import Loading from "../../components/Loading/Loading";
+
 const CheckReservation = () => {
   const [searchParams] = useSearchParams();
+  const [loading, setLoading] = useState(true);
   const [infoCheckReservation, setInfoCheckReservation] = useState({
     code_reservation: "",
     status_reservation: "",
@@ -35,9 +38,12 @@ const CheckReservation = () => {
 
   const statusReservation = async () => {
     try {
+      setLoading(true);
       const response = await checkReservation.statusReservation({ payment_id });
-      setInfoCheckReservation(response.length > 0 ? response[0] : undefined);
+      setInfoCheckReservation(response);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.error(error);
     }
   };
@@ -55,6 +61,8 @@ const CheckReservation = () => {
     };
     return statusReservation[status as keyof typeof statusReservation];
   }, []);
+
+  if (loading) return <Loading />;
 
   return (
     <Box
