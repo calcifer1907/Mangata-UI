@@ -181,7 +181,7 @@ export const checkReservation = async (
       if (resultReservations.rowCount === 0) {
         res.status(404).json({ message: "Reservation not found" });
       } else {
-        const { code_reservation, commission_employee } =
+        const { code_reservation, commission_employee,created_at,status_reservation } =
           resultReservations.rows[0];
 
         const resultAccompanist = await pool.query(
@@ -193,13 +193,12 @@ export const checkReservation = async (
           res.status(404).json({ message: "Accompanist not found" });
         } else {
           const { total_persons } = resultAccompanist.rows[0];
-          const diff = resultReservations.rows.map((values, index) => {
-            return {
-              ...values,
-              total_payment: Number(commission_employee) * total_persons || 0,
-            };
+          res.json({
+            created_at,
+            code_reservation,
+            status_reservation,
+            total_payment: Number(commission_employee) * total_persons || 0,
           });
-          res.json(diff);
         }
       }
     }

@@ -67,7 +67,15 @@ export const requestExportData = {
     requestApis.post(`/api/download-excel`, body),
 };
 
+interface IBodyChangeStatus {
+  code_reservation: string;
+  status_reservation: string;
+  commission_employee: string;
+  created_at: string;
+  total_payment: number;
+}
+
 export const checkReservation = {
-  statusReservation: (body: object): Promise<unknown> =>
+  statusReservation: (body: object): Promise<IBodyChangeStatus> =>
     requestApis.post(`/api/check-reservation`, body),
 };
