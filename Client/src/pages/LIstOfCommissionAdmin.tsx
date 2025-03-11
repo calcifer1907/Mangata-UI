@@ -35,7 +35,7 @@ import searchIcon from "../../src/assets/searchIcon.svg";
 
 /**Interface */
 import { IGetListSales, IAccompanistListSales } from "../interfaces/IUser";
-import { STATUS } from "../generalFunctions/status";
+import { STATUS_COLOR } from "../generalFunctions/status";
 
 import TableUI from "../components/TableUI/TableUI";
 import { GridColDef } from "@mui/x-data-grid";
@@ -400,7 +400,9 @@ const LIstOfCommissionAdmin = () => {
                       width={32}
                       height={32}
                       color={
-                        STATUS[item.status_reservation as keyof typeof STATUS]
+                        STATUS_COLOR[
+                          item.status_reservation as keyof typeof STATUS_COLOR
+                        ]
                       }
                       onClick={() => {
                         setOpenDialog(true);
