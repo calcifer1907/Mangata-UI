@@ -12,7 +12,7 @@ import LIstOFCommissionAdmin from "./pages/LIstOfCommissionAdmin";
 import Logout from "./pages/Logout";
 import MyNavbar from "./components/navbar/NavBar";
 import GenerateReservation from "./pages/GenerateReservation";
-import PayMenetMethod from "./pages/PayMenetMethod";
+// import PayMenetMethod from "./pages/PayMenetMethod";
 import CheckReservation from "./pages/CheckReservation/CheckReservation";
 import NotFound from "./pages/NotFound";
 
@@ -41,10 +41,10 @@ const App = () => {
             <Route path="/check-reservation" element={<CheckReservation />} />
             <Route path="/Login" element={<Login />} />
             <Route path="/Logout" element={<Logout />} />
-            <Route
+            {/* <Route
               path="/PayMenetMethod"
               element={<PayMenetMethod amount={10} payment_id={12} />}
-            />
+            /> */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Box>
