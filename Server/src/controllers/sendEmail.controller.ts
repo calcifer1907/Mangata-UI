@@ -26,7 +26,7 @@ export const sendEmail = async (code_reservation: string) => {
       email = resultQuery.rows[0].email;
       date = resultQuery.rows[0].create_at;
     }
-
+    console.log("resultQuery", resultQuery.rows);
     const mailOptions = {
       from: "app.mangata.beach.club@gmail.com",
       to: email,
