@@ -7,7 +7,7 @@ import {
 
 import { pool } from "../Connection";
 
-import { sendEmail } from "./sendEmail.controller";
+// import { sendEmail } from "./sendEmail.controller";
 
 import { initMercadoPago } from "@mercadopago/sdk-react";
 
@@ -139,8 +139,7 @@ export const reciveWebhook = async (req: any, res: any) => {
         "UPDATE reservations SET PAYMENT_ID=$1, STATUS_RESERVATION=$2 WHERE CODE_RESERVATION=$3",
         [id, status, external_reference]
       );
-      console.log("external_reference", external_reference);
-      await sendEmail(external_reference || "");
+      // await sendEmail(external_reference || "");
     }
     return res.sendStatus(204);
   } catch (_error) {

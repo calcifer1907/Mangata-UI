@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
@@ -15,9 +15,11 @@ import { usePayments } from "../hooks/usePayments";
 interface IProps {
   amount: number;
   payment_id: number;
+  name: string;
+  email: string;
 }
 
-const PayMenetMethod = ({ amount, payment_id }: IProps) => {
+const PayMenetMethod = ({ amount, payment_id, name, email }: IProps) => {
   const { banks, handleCreateOrderPSE } = usePayments();
 
   interface FormData {
@@ -67,6 +69,14 @@ const PayMenetMethod = ({ amount, payment_id }: IProps) => {
       handleCreateOrderPSE(formData);
     }
   };
+
+  useEffect(() => {
+    setFormData({
+      ...formData,
+      first_name: name,
+      email: email,
+    });
+  }, []);
 
   return (
     <Container style={{ paddingTop: "20px" }}>
@@ -144,6 +154,7 @@ const PayMenetMethod = ({ amount, payment_id }: IProps) => {
                 name="first_name"
                 label="Nombre y Apellidos"
                 type="text"
+                value={formData.first_name}
                 onChange={(event) =>
                   handleChange(
                     event as React.ChangeEvent<
@@ -199,6 +210,7 @@ const PayMenetMethod = ({ amount, payment_id }: IProps) => {
               name="email"
               label="E-mail"
               type="text"
+              value={formData.email}
               onChange={handleChange}
             />
           </FormControl>
@@ -215,7 +227,7 @@ const PayMenetMethod = ({ amount, payment_id }: IProps) => {
             type="hidden"
             name="description"
             id="description"
-            value="Nome do Produto"
+            value="Nombre del Produto"
           />
           <Button type="submit" variant="contained">
             Pagar

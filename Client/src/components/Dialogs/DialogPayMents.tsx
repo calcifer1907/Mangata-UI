@@ -26,6 +26,8 @@ interface IProps {
   setOpen: (data: boolean) => void;
   amount: number;
   payment_id: number;
+  name: string;
+  email: string;
 }
 
 const fullScreen = { fullScreen: true };
@@ -41,7 +43,14 @@ const stytlePaper = {
   cursor: "pointer",
 };
 
-const DialogPayMents = ({ open, setOpen, amount, payment_id }: IProps) => {
+const DialogPayMents = ({
+  open,
+  setOpen,
+  amount,
+  payment_id,
+  name,
+  email,
+}: IProps) => {
   const [clickPSE, setClickPSE] = useState<boolean>(false);
   const [preferenceId, setPreferenceId] = useState<string | null>(null);
   initMercadoPago(VITE_PUBLIC_KEY);
@@ -143,7 +152,14 @@ const DialogPayMents = ({ open, setOpen, amount, payment_id }: IProps) => {
           </Paper> */}
         </Box>
       )}
-      {clickPSE && <PayMenetMethod amount={amount} payment_id={payment_id} />}
+      {clickPSE && (
+        <PayMenetMethod
+          amount={amount}
+          payment_id={payment_id}
+          name={name}
+          email={email}
+        />
+      )}
       {preferenceId && <Wallet initialization={{ preferenceId }} />}
     </Dialog>
   );

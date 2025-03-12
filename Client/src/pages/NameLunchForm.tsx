@@ -157,7 +157,7 @@ const NameLunchForm: React.FC = () => {
         ACCOMPANIST,
         EMAIL,
         MIN_PRICE: PRICES.PRICE_MIN,
-        CREATED_AT: format(dateChange, "YYYY-MM-DD", "en"),
+        CREATED_AT: format(dateChange, "YYYY-MM-DD HH:mm:ss", "en"),
       };
 
       const data = await getAccompanist.saveReservation(body);
@@ -365,7 +365,7 @@ const NameLunchForm: React.FC = () => {
               value={valueCel}
               error={valueCel === ""}
               onChange={(e) => {
-                setValueCel(e.target.value);
+                if (valueCel.length <= 10) setValueCel(e.target.value);
               }}
               sx={{
                 background: "#FFFFFF",
@@ -397,7 +397,7 @@ const NameLunchForm: React.FC = () => {
               value={valueEmail}
               error={valueEmail === ""}
               onChange={(e) => {
-                setValueEmail(e.target.value);
+                if (valueEmail.length <= 50) setValueEmail(e.target.value);
               }}
               sx={{
                 background: "#FFFFFF",
@@ -915,6 +915,8 @@ const NameLunchForm: React.FC = () => {
         setOpen={setOpenDialogPayment}
         amount={calculatePrice()}
         payment_id={Number(CODE_RESERVATION)}
+        name={fields[0].name}
+        email={valueEmail}
       />
     </Grid2>
   );
