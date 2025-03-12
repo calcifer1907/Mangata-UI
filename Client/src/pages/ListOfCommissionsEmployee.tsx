@@ -32,7 +32,7 @@ import searchIcon from "../../src/assets/searchIcon.svg";
 
 /**Component */
 import DialogListAccompanist from "../components/Dialogs/DialogListAccompanist";
-import { STATUS } from "../generalFunctions/status";
+import { STATUS_COLOR } from "../generalFunctions/status";
 
 // import TableUI from "../components/TableUI/TableUI";
 // import { GridColDef } from "@mui/x-data-grid";
@@ -399,7 +399,9 @@ const ListOfCommissions = () => {
                       width={32}
                       height={32}
                       color={
-                        STATUS[item.status_reservation as keyof typeof STATUS]
+                        STATUS_COLOR[
+                          item.status_reservation as keyof typeof STATUS_COLOR
+                        ]
                       }
                       onClick={() => {
                         setOpenDialog(true);

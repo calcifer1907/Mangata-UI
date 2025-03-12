@@ -7,24 +7,25 @@ import {
   getListSalesEmployee,
   getMinMax,
   changeStatusReservation,
+  checkReservation,
 } from "../controllers/reservation.controller";
 
 import { authenticate } from "../handles/authMiddleware";
 
 const router = Router();
 
-//@ts-ignore
 router.post("/reservations", createReservation);
-//@ts-ignore
+
 router.post("/mycommissions", authenticate, getListSalesEmployee);
-//@ts-ignore
+
 router.post("/mySales", authenticate, getListSalesAdmin);
-//@ts-ignore
+
 router.post("/changeStatusReservation", authenticate, changeStatusReservation);
 
-//@ts-ignore
+router.post("/check-reservation", checkReservation);
+
 router.get("/lunches", getLunches);
-//@ts-ignore
+
 router.get("/MimMax", getMinMax);
 
 export default router;

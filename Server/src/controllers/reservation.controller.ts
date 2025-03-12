@@ -1,5 +1,7 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { pool } from "../Connection";
+
+import { sendEmail } from "./sendEmail.controller";
 
 export const createReservation = async (
   request: Request,
@@ -13,14 +15,16 @@ export const createReservation = async (
     ACCOMPANIST,
     MIN_PRICE,
     CREATED_AT,
+    EMAIL,
   } = request.body;
   try {
     const result = await pool.query(
-      "INSERT INTO reservations(CODE_RESERVATION,ID_EMPLOYEE,TELEPHONE,CURRENT_COMMISSION,COMMISSION_EMPLOYEE,CREATED_AT) VALUES($1,$2,$3,$4,$5,$6);",
+      "INSERT INTO reservations(CODE_RESERVATION,ID_EMPLOYEE,TELEPHONE,EMAIL,CURRENT_COMMISSION,COMMISSION_EMPLOYEE,CREATED_AT) VALUES($1,$2,$3,$4,$5,$6,$7);",
       [
         CODE_RESERVATION,
         ID_EMPLOYEE,
         TELEPHONE,
+        EMAIL,
         MIN_PRICE,
         AGREED_PRICE,
         CREATED_AT,
@@ -38,8 +42,9 @@ export const createReservation = async (
       [idsReservation, namesAccompanist, idsLunches]
     );
     response.status(201).json({ id: result.rowCount, message: "success" });
+    // sendEmail(CODE_RESERVATION);
   } catch (_error) {
-    return response.status(500).json({ message: "sometghin gos wrong" });
+    response.status(500).json({ message: "sometghin gos wrong" });
   }
 };
 
@@ -49,7 +54,7 @@ export const getLunches = async (_request: Request, response: Response) => {
     response.send(result.rows);
   } catch (error) {
     console.log(error);
-    return response.status(500).json({ message: "sometghin gos wrong" });
+    response.status(500).json({ message: "sometghin gos wrong" });
   }
 };
 
@@ -87,13 +92,12 @@ export const getListSalesEmployee = async (
     response.json(diff);
   } catch (_error) {
     console.log(_error);
-    return response.status(500).json({ message: "sometghin gos wrong" });
+    response.status(500).json({ message: "sometghin gos wrong" });
   }
 };
 
 const findEmployeeById = (users: any, idEmployee: string) => {
   const user = users.find((user: any) => user.id === idEmployee);
-  console.log(user, idEmployee);
   return user;
 };
 
@@ -137,7 +141,7 @@ export const getListSalesAdmin = async (
     });
     response.json(diff);
   } catch (error) {
-    return response.status(500).json({ message: "sometghin gos wrong" });
+    response.status(500).json({ message: "sometghin gos wrong" });
   }
 };
 
@@ -146,7 +150,7 @@ export const getMinMax = async (_request: Request, response: Response) => {
     const result = await pool.query("SELECT MIN,MAX FROM min_max;");
     response.json(result.rows[0]);
   } catch (error) {
-    return response.status(500).json({ message: "sometghin gos wrong" });
+    response.status(500).json({ message: "sometghin gos wrong" });
   }
 };
 
@@ -163,6 +167,52 @@ export const changeStatusReservation = async (
 
     response.json(result.rows[0]);
   } catch (error) {
-    return response.status(500).json({ message: "sometghin gos wrong" });
+    response.status(500).json({ message: "sometghin gos wrong" });
+  }
+};
+
+export const checkReservation = async (
+  req: any,
+  res: any,
+  next: NextFunction
+): Promise<void> => {
+  const { payment_id } = req.body;
+  try {
+    if (payment_id) {
+      const resultReservations = await pool.query(
+        `SELECT CODE_RESERVATION, STATUS_RESERVATION, COMMISSION_EMPLOYEE , CREATED_AT FROM reservations  WHERE PAYMENT_ID = $1`,
+        [payment_id]
+      );
+      if (resultReservations.rowCount === 0) {
+        res.status(404).json({ message: "Reservation not found" });
+      } else {
+        const {
+          code_reservation,
+          commission_employee,
+          created_at,
+          status_reservation,
+        } = resultReservations.rows[0];
+
+        const resultAccompanist = await pool.query(
+          `SELECT COUNT(ID_RESERVATION) AS TOTAL_PERSONS  FROM accompanist  WHERE ID_RESERVATION = $1`,
+          [code_reservation]
+        );
+
+        if (resultAccompanist.rowCount === 0) {
+          res.status(404).json({ message: "Accompanist not found" });
+        } else {
+          const { total_persons } = resultAccompanist.rows[0];
+          res.json({
+            created_at,
+            code_reservation,
+            status_reservation,
+            total_payment: Number(commission_employee) * total_persons || 0,
+          });
+        }
+      }
+    }
+  } catch (error) {
+    next(error);
+    res.status(500).json({ message: "something went wrong" });
   }
 };

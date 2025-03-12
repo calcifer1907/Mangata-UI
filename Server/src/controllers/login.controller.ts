@@ -2,8 +2,6 @@ import { pool } from "../Connection";
 import { Request, Response } from "express";
 import { comparePassword, createToken } from "../auth";
 
-import { upperCaseKeys } from "../generalFuncionts/generalFunctions";
-
 const SQL_FIND_USER = `SELECT us.ID,us.EMAIL,us.PASSWORD,CONCAT(us.FIRST_NAME,' ',us.LAST_NAME) AS USER_NAME,rl.DESCRIPTION,us.ROLE_ID
   FROM Users us INNER JOIN roles rl ON rl.ID = us.ROLE_ID;`;
 

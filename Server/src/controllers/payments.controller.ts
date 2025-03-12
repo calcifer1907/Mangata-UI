@@ -7,6 +7,8 @@ import {
 
 import { pool } from "../Connection";
 
+import { sendEmail } from "./sendEmail.controller";
+
 import { initMercadoPago } from "@mercadopago/sdk-react";
 
 import {
@@ -129,7 +131,6 @@ export const createPSEPayment = (req: any, res: any) => {
 
 export const reciveWebhook = async (req: any, res: any) => {
   const payment = req.query;
-  console.log(payment);
   try {
     if (payment.type === "payment") {
       const data = await new Payment(client).get({ id: payment["data.id"] });
@@ -138,10 +139,10 @@ export const reciveWebhook = async (req: any, res: any) => {
         "UPDATE reservations SET PAYMENT_ID=$1, STATUS_RESERVATION=$2 WHERE CODE_RESERVATION=$3",
         [id, status, external_reference]
       );
+      await sendEmail(external_reference || "");
     }
     return res.sendStatus(204);
-  } catch (error) {
-    console.log(error);
+  } catch (_error) {
     return res.status(500).json({ message: "something went wrong" });
   }
 };
