@@ -9,6 +9,10 @@ import {
 } from "../../interfaces/IUser";
 import { ILunches, IMinMaxResponse } from "../../interfaces/IAccompanist";
 import { IBanksList } from "../../interfaces/IMercadoPago";
+import {
+  IBodyChangeStatus,
+  IBodyStatusReservation,
+} from "../../interfaces/IReservation";
 
 const URI_LOGIN = "/auth/login";
 
@@ -43,12 +47,6 @@ export const getMinMax = {
   getListData: (): Promise<IMinMaxResponse> => requestApis.get(`/api/MimMax`),
 };
 
-interface IBodyChangeStatus {
-  id: string;
-  status: string;
-  updated: string;
-}
-
 export const getAdmin = {
   changeStatus: (body: IBodyChangeStatus): Promise<unknown> =>
     requestApis.post(`/api/changeStatusReservation`, body),
@@ -67,15 +65,7 @@ export const requestExportData = {
     requestApis.post(`/api/download-excel`, body),
 };
 
-interface IBodyChangeStatus {
-  code_reservation: string;
-  status_reservation: string;
-  email: string;
-  created_at: string;
-  total_payment: number;
-}
-
 export const checkReservation = {
-  statusReservation: (body: object): Promise<IBodyChangeStatus> =>
+  statusReservation: (body: object): Promise<IBodyStatusReservation> =>
     requestApis.post(`/api/check-reservation`, body),
 };

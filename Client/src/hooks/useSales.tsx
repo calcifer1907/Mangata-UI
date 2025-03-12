@@ -46,7 +46,8 @@ export const useSales = ({ page }: IProps) => {
     status: string,
     updated: string
   ) => {
-    const data = await getAdmin.changeStatus({ id, status, updated });
+    const body = { id, status, updated };
+    const data = await getAdmin.changeStatus(body);
     return data;
   };
 
