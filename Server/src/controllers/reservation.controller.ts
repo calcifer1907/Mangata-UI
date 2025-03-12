@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { pool } from "../Connection";
 
+import { sendEmail } from "./sendEmail.controller";
+
 export const createReservation = async (
   request: Request,
   response: Response
@@ -40,6 +42,7 @@ export const createReservation = async (
       [idsReservation, namesAccompanist, idsLunches]
     );
     response.status(201).json({ id: result.rowCount, message: "success" });
+    // sendEmail(CODE_RESERVATION);
   } catch (_error) {
     response.status(500).json({ message: "sometghin gos wrong" });
   }

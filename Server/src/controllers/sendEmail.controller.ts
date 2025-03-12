@@ -1,33 +1,50 @@
 import nodemailer from "nodemailer";
 
-// Configuración de Nodemailer
+import { pool } from "../Connection";
+import { htmlContent } from "../functions/functionHtml";
+
 const transporter = nodemailer.createTransport({
-  service: "gmail", // Puedes usar otro servicio como 'yahoo', 'outlook', etc.
+  service: "gmail",
   auth: {
-    user: "mangata.beach.club.app@gmail.com", // Tu correo electrónico
-    pass: "Mangata1103*", // Tu contraseña
+    user: "app.mangata.beach.club@gmail.com",
+    pass: "vhkr alqu degu rijk",
   },
 });
 
-export const sendEmail = (to: string) => {
-  const subject = "Bienvenido a Mangata Beach";
-  const text =
-    "Gracias por registrarte en Mangata Beach, esperamos que disfrutes de tu estancia en nuestro hotel.";
-  const mailOptions = {
-    from: "mangata.beach.club.app@gmail.com",
-    to,
-    subject,
-    text,
-  };
+export const sendEmail = async (code_reservation: string) => {
+  try {
+    const subject = "Bienvenido a Mangata Beach";
+    const resultQuery = await pool.query(
+      "SELECT CREATE_AT,EMAIL reservations WHERE CODE_RESERVATION=$1",
+      [code_reservation]
+    );
 
-  transporter.sendMail(
-    mailOptions,
-    (error: Error | null, info: nodemailer.SentMessageInfo) => {
-      if (error) {
-        console.error(error);
-        return;
-      }
-      console.log("Correo enviado: " + info.response);
+    let date = new Date().toDateString();
+
+    let email = null;
+    if (resultQuery && resultQuery.rowCount) {
+      email = resultQuery.rows[0].email;
+      date = resultQuery.rows[0].create_at;
     }
-  );
+
+    const mailOptions = {
+      from: "app.mangata.beach.club@gmail.com",
+      to: email,
+      subject,
+      html: htmlContent(date),
+    };
+
+    transporter.sendMail(
+      mailOptions,
+      (error: Error | null, info: nodemailer.SentMessageInfo) => {
+        if (error) {
+          console.error(error);
+          return;
+        }
+        console.log("Correo enviado: " + info.response);
+      }
+    );
+  } catch (error) {
+    console.error(error);
+  }
 };

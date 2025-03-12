@@ -10,19 +10,20 @@ export const authenticate = (
   const token = req.headers["authorization"];
 
   if (!token) {
-    return res.status(403).json({ message: "Token no proporcionado" });
+    res.status(403).json({ message: "Token no proporcionado" });
+  } else {
+    // Eliminar "Bearer " del token
+    const bearerToken = token.split(" ")[1];
+
+    const decoded = verifyToken(bearerToken);
+    if (!decoded) {
+      res.status(403).json({ message: "Token no válido" });
+    } else {
+      // Si el token es válido, adjuntamos la información del usuario al request
+      //@ts-ignore
+      req.user = decoded;
+    }
   }
 
-  // Eliminar "Bearer " del token
-  const bearerToken = token.split(" ")[1];
-
-  const decoded = verifyToken(bearerToken);
-  if (!decoded) {
-    return res.status(403).json({ message: "Token no válido" });
-  }
-
-  // Si el token es válido, adjuntamos la información del usuario al request
-  //@ts-ignore
-  req.user = decoded;
   next();
 };
