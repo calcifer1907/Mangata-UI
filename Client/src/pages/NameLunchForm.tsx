@@ -426,7 +426,7 @@ const NameLunchForm: React.FC = () => {
               <Accompanist
                 icon={index !== 0}
                 title={
-                  index === 0 ? "Datos Personales" : `Acompañande ${index}`
+                  index === 0 ? "Datos Personales" : `Acompañante ${index}`
                 }
                 key={index}
                 index={index}
