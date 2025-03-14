@@ -77,7 +77,13 @@ export const paymentBold = (body: object): Promise<unknown> => {
     Authorization: `x-api-key ${BOLD_KEY}`,
     "Content-Type": "application/json",
   };
-  console.log(headers);
   const link = "https://integrations.api.bold.co/online/link/v1";
   return requestApis.post(link, body, headers);
 };
+
+interface ICommission {
+  sum_commission: number;
+}
+
+export const getSumCommission = (id_employee: number): Promise<ICommission> =>
+  requestApis.get(`/api/commission/${id_employee}`);

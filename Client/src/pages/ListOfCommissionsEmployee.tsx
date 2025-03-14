@@ -40,9 +40,10 @@ import { STATUS_COLOR } from "../generalFunctions/status";
 const FORMAT_DATE = "YYYY-MM-DD";
 
 const ListOfCommissions = () => {
-  const { dataList, loading, dateChange, setDateChange } = useSales({
-    page: "employee",
-  });
+  const { dataList, loading, dateChange, setDateChange, sumCommissionState } =
+    useSales({
+      page: "employee",
+    });
   const [maxHeight, setMaxHeight] = useState<number>(window.innerHeight);
   const [dataListFilter, setDataListFilter] = useState<IGetListSales[]>([]);
   const [openDialog, setOpenDialog] = useState(false);
@@ -62,11 +63,6 @@ const ListOfCommissions = () => {
 
   const updateMaxHeight = () => {
     setMaxHeight(window.innerHeight); // Usamos el alto del viewport
-  };
-
-  const handleCountComission = () => {
-    const count = dataList.reduce((acc, item) => (acc += Number(item.DIFF)), 0);
-    return formatPrice(count);
   };
 
   useEffect(() => {
@@ -339,7 +335,7 @@ const ListOfCommissions = () => {
             marginBottom: 2,
           }}
         >
-          {handleCountComission()}
+          {formatPrice(sumCommissionState)}
         </Typography>
       </Box>
       <Container
