@@ -911,7 +911,7 @@ const NameLunchForm: React.FC = () => {
         </Box>
       </Modal>
       <DialogPayMents
-        open={openDialogPayment}
+        open={!openDialogPayment}
         setOpen={setOpenDialogPayment}
         amount={calculatePrice()}
         payment_id={Number(CODE_RESERVATION)}
