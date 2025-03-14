@@ -19,7 +19,7 @@ import { VITE_PUBLIC_KEY } from "../../constant/URL.ts";
 
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 
-import { apisMercadoPago, paymentBold } from "../../utils/api/agent";
+import { paymentBold } from "../../utils/api/agent";
 
 interface IProps {
   open: boolean;
@@ -52,26 +52,26 @@ const DialogPayMents = ({
   email,
 }: IProps) => {
   const [clickPSE, setClickPSE] = useState<boolean>(false);
-  const [preferenceId, setPreferenceId] = useState<string | null>(null);
+  const [preferenceId] = useState<string | null>(null);
   initMercadoPago(VITE_PUBLIC_KEY);
 
-  const handlePaymentCreditCard = async () => {
-    try {
-      console.log(amount);
-      const response = await apisMercadoPago.createOrderCreditCard({
-        amount,
-        payment_id,
-      });
-      // const { init_point } = response;
-      // if (init_point) {
-      //   window.location.href = init_point;
-      // }
-      setPreferenceId(response.id);
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const handlePaymentCreditCard = async () => {
+  //   try {
+  //     console.log(amount);
+  //     const response = await apisMercadoPago.createOrderCreditCard({
+  //       amount,
+  //       payment_id,
+  //     });
+  //     // const { init_point } = response;
+  //     // if (init_point) {
+  //     //   window.location.href = init_point;
+  //     // }
+  //     setPreferenceId(response.id);
+  //     console.log(response);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const handleBoldPayment = async () => {
     const body = {
