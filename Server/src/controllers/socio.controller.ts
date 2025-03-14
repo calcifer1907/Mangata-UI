@@ -12,7 +12,7 @@ class SocioController {
       if (error instanceof AppError) {
         res.status(error.statusCode).json({ message: error.message });
       } else {
-        res.status(500).json({ message: "Error interno del servidor" });
+        res.status(500).json({ message: "Something wrong error!" });
       }
     }
   }

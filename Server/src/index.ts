@@ -8,6 +8,7 @@ import loginRouters from "./routes/login.routes";
 import reservations from "./routes/reservations.routes";
 import payments from "./routes/payments.routes";
 import exportData from "./routes/exportData.routes";
+import socio from "./routes/socio.routes";
 
 import errorHandler from "./middlewares/handleError";
 
@@ -38,6 +39,7 @@ app.use("/auth", loginRouters);
 app.use("/api", usersRouters);
 app.use("/api", reservations);
 app.use("/api", exportData);
+app.use("/api", socio);
 app.use(payments);
 app.use(errorHandler);
 
