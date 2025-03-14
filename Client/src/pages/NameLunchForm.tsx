@@ -144,19 +144,15 @@ const NameLunchForm: React.FC = () => {
 
   const handleReservation = async () => {
     const ID_EMPLOYEE = getUserId?.id;
-    const TELEPHONE = valueCel;
-    const EMAIL = valueEmail;
-    const AGREED_PRICE = PRICES.PRICE_MAX;
-    const ACCOMPANIST = fields;
     if (validateFields()) {
       const body = {
         CODE_RESERVATION,
         ID_EMPLOYEE,
-        TELEPHONE,
-        AGREED_PRICE,
-        ACCOMPANIST,
-        EMAIL,
-        MIN_PRICE: PRICES.PRICE_MIN,
+        TELEPHONE: valueCel,
+        ACCOMPANIST: fields,
+        EMAIL: valueEmail,
+        AGREED_PRICE: Number(PRICES.PRICE_MAX),
+        MIN_PRICE: Number(PRICES.PRICE_MIN),
         CREATED_AT: format(dateChange, "YYYY-MM-DD HH:mm:ss", "en"),
       };
 
@@ -426,7 +422,7 @@ const NameLunchForm: React.FC = () => {
               <Accompanist
                 icon={index !== 0}
                 title={
-                  index === 0 ? "Datos Personales" : `Acompañande ${index}`
+                  index === 0 ? "Datos Personales" : `Acompañante ${index}`
                 }
                 key={index}
                 index={index}

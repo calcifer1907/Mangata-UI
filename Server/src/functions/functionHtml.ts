@@ -156,7 +156,7 @@ export const htmlContent = (create_at: string) => {
   <div class="MuiBox-root css-11sb5cn">
     <div class="MuiBox-root css-17p2rj5">
       <div class="mangata-title">
-        <img src="http://localhost:5173/images/svgMangataWhite.svg" alt="Mangata Beach Club" style="width: 200px;">
+        <img src="https://mangata-ui-client.vercel.app/images/svgMangataWhite.svg" alt="Mangata Beach Club" style="width: 200px;">
         <!-- <h1>Mangata Beach Club</h3> -->
       </div>
       <div

@@ -40,8 +40,8 @@ const redirect = (error: AxiosError) => {
 
 export const requestApis = {
   get: (uri: string) => api.get(uri).then(responSeBody).catch(redirect),
-  post: (uri: string, body: object) =>
-    api.post(uri, body).then(responSeBody).catch(redirect),
+  post: (uri: string, body: object, headers?: object) =>
+    api.post(uri, body, headers).then(responSeBody).catch(redirect),
   put: (uri: string, body: object) =>
     api.put(uri, body).then(responSeBody).catch(redirect),
   del: (uri: string) => api.delete(uri).then(responSeBody).catch(redirect),

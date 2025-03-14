@@ -8,7 +8,9 @@ import loginRouters from "./routes/login.routes";
 import reservations from "./routes/reservations.routes";
 import payments from "./routes/payments.routes";
 import exportData from "./routes/exportData.routes";
-import { handleError } from "./handles/handleEror";
+import socio from "./routes/socio.routes";
+
+import errorHandler from "./middlewares/handleError";
 
 const app = express();
 
@@ -37,9 +39,9 @@ app.use("/auth", loginRouters);
 app.use("/api", usersRouters);
 app.use("/api", reservations);
 app.use("/api", exportData);
+app.use("/api", socio);
 app.use(payments);
-//@ts-ignore
-app.use(handleError);
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);

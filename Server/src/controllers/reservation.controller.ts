@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { pool } from "../Connection";
 
-import { sendEmail } from "./sendEmail.controller";
+// import { sendEmail } from "./sendEmail.controller";
 
 export const createReservation = async (
   request: Request,

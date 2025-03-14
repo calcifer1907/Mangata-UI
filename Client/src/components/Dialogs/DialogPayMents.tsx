@@ -19,7 +19,7 @@ import { VITE_PUBLIC_KEY } from "../../constant/URL.ts";
 
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 
-import { apisMercadoPago } from "../../utils/api/agent";
+import { paymentBold } from "../../utils/api/agent";
 
 interface IProps {
   open: boolean;
@@ -52,26 +52,44 @@ const DialogPayMents = ({
   email,
 }: IProps) => {
   const [clickPSE, setClickPSE] = useState<boolean>(false);
-  const [preferenceId, setPreferenceId] = useState<string | null>(null);
+  const [preferenceId] = useState<string | null>(null);
   initMercadoPago(VITE_PUBLIC_KEY);
 
-  const handlePaymentCreditCard = async () => {
-    try {
-      console.log(amount);
-      const response = await apisMercadoPago.createOrderCreditCard({
-        amount,
-        payment_id,
-      });
-      // const { init_point } = response;
-      // if (init_point) {
-      //   window.location.href = init_point;
-      // }
-      setPreferenceId(response.id);
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
+  // const handlePaymentCreditCard = async () => {
+  //   try {
+  //     console.log(amount);
+  //     const response = await apisMercadoPago.createOrderCreditCard({
+  //       amount,
+  //       payment_id,
+  //     });
+  //     // const { init_point } = response;
+  //     // if (init_point) {
+  //     //   window.location.href = init_point;
+  //     // }
+  //     setPreferenceId(response.id);
+  //     console.log(response);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  const handleBoldPayment = async () => {
+    const body = {
+      amount_type: "CLOSE",
+      description: "Mangata Pasa día",
+      callback_url: "https://mangata-ui-client.vercel.app/#/check-reservation",
+      payer_email: "tabordac2@gmail.com",
+      amount: {
+        currency: "COP",
+        total_amount: 5000,
+      },
+    };
+
+    const respose = await paymentBold(body);
+
+    console.log(respose);
   };
+
   return (
     <Dialog
       open={open}
@@ -111,6 +129,25 @@ const DialogPayMents = ({
           </Paper>
           <Paper
             component="button"
+            onClick={handleBoldPayment}
+            variant="outlined"
+            sx={stytlePaper}
+          >
+            <img
+              src="https://developers.bold.co/_next/static/media/logo.ac02f303.png"
+              alt="BOLD"
+              style={{ width: "100px" }}
+            />
+            <Typography variant="h6">Bold</Typography>
+            <Icon
+              icon="solar:alt-arrow-right-outline"
+              width="42"
+              height="64"
+              color="#2B3D5E"
+            />
+          </Paper>
+          {/* <Paper
+            component="button"
             variant="outlined"
             onClick={handlePaymentCreditCard}
             sx={stytlePaper}
@@ -129,7 +166,7 @@ const DialogPayMents = ({
               height="64"
               color="#2B3D5E"
             />
-          </Paper>
+          </Paper> */}
           {/* <Paper
             component="button"
             variant="outlined"
