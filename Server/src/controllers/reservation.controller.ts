@@ -66,7 +66,7 @@ export const getListSalesEmployee = async (
     const { date, id_employee } = request.body;
 
     const resultReservations = await pool.query(
-      `SELECT CODE_RESERVATION, ID_EMPLOYEE, STATUS_RESERVATION, COMMISSION_EMPLOYEE, CURRENT_COMMISSION, CREATED_AT FROM reservations  
+      `SELECT CODE_RESERVATION, ID_EMPLOYEE, STATUS_RESERVATION, CREATED_AT FROM reservations  
       WHERE CREATED_AT = $1 AND ID_EMPLOYEE = $2`,
       [date, id_employee]
     );
@@ -84,7 +84,6 @@ export const getListSalesEmployee = async (
     const diff = resultReservations.rows.map((values: any, index: number) => ({
       ...values,
       id: index + 1,
-      DIFF: values.commission_employee - values.current_commission,
       ACCOMPANIST: resultAccompanist.rows.filter(
         (item) => item.id_reservation === values.code_reservation
       ),
