@@ -16,8 +16,6 @@ import {
 
 const URI_LOGIN = "/auth/login";
 
-import { BOLD_KEY } from "../../constant/URL";
-
 export const login = {
   loginPage: (body: ILogin): Promise<IUserInfo> =>
     requestApis.post(URI_LOGIN, body),
@@ -72,13 +70,19 @@ export const checkReservation = {
     requestApis.post(`/api/check-reservation`, body),
 };
 
-export const paymentBold = (body: object): Promise<unknown> => {
-  const headers = {
-    Authorization: `x-api-key ${BOLD_KEY}`,
-    "Content-Type": "application/json",
+interface IPaymentBold {
+  message: string;
+  data: {
+    error: any;
+    payload: {
+      payload: string;
+      url: string;
+    };
   };
-  const link = "https://integrations.api.bold.co/online/link/v1";
-  return requestApis.post(link, body, headers);
+}
+
+export const paymentBold = (body: object): Promise<IPaymentBold> => {
+  return requestApis.post("/paymentsBold", body);
 };
 
 interface ICommission {

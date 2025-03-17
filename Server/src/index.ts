@@ -22,6 +22,7 @@ const corsOptions = {
     "http://192.168.0.233:5173",
     "http://172.20.10.3:5173",
     "https://mangata-ui-client.vercel.app",
+    "https://integrations.api.bold.co",
   ],
 };
 

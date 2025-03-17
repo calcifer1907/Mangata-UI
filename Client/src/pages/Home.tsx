@@ -21,7 +21,6 @@ const Home = () => {
       >
         <YouTubeEmbed />
       </Box>
-
       <Box
         sx={{
           position: "relative",

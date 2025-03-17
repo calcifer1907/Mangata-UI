@@ -15,6 +15,8 @@ import PayMenetMethod from "../../pages/PayMenetMethod";
 import { useState } from "react";
 import { Icon } from "@iconify/react";
 
+import { enqueueSnackbar } from "notistack";
+
 import { VITE_PUBLIC_KEY } from "../../constant/URL.ts";
 
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
@@ -23,14 +25,12 @@ import { paymentBold } from "../../utils/api/agent";
 
 interface IProps {
   open: boolean;
-  setOpen: (data: boolean) => void;
+  setopen: (data: boolean) => void;
   amount: number;
   payment_id: number;
   name: string;
   email: string;
 }
-
-const fullScreen = { fullScreen: true };
 
 const stytlePaper = {
   maxHeight: "100px",
@@ -45,7 +45,7 @@ const stytlePaper = {
 
 const DialogPayMents = ({
   open,
-  setOpen,
+  setopen,
   amount,
   payment_id,
   name,
@@ -74,29 +74,34 @@ const DialogPayMents = ({
   // };
 
   const handleBoldPayment = async () => {
-    const body = {
-      amount_type: "CLOSE",
-      description: "Mangata Pasa día",
-      callback_url: "https://mangata-ui-client.vercel.app/#/check-reservation",
-      payer_email: "tabordac2@gmail.com",
-      amount: {
+    try {
+      const body = {
+        email: "tabordac2@gmail.com",
         currency: "COP",
         total_amount: 5000,
-      },
-    };
-
-    const respose = await paymentBold(body);
-
-    console.log(respose);
+      };
+      const { data } = await paymentBold(body);
+      if (data.payload) {
+        window.location.href = data.payload.url;
+      }
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar("Algo salio mal", {
+        variant: "error",
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "right",
+        },
+      });
+    }
   };
 
   return (
     <Dialog
       open={open}
-      setOpen={setOpen}
+      setOpenDialog={setopen}
       tittle="Métodos de pago"
-      showCancelButton={false}
-      {...fullScreen}
+      fullScreen
     >
       {!clickPSE && (
         <Box
@@ -133,12 +138,12 @@ const DialogPayMents = ({
             variant="outlined"
             sx={stytlePaper}
           >
-            <img
+            {/* <img
               src="https://developers.bold.co/_next/static/media/logo.ac02f303.png"
               alt="BOLD"
               style={{ width: "100px" }}
-            />
-            <Typography variant="h6">Bold</Typography>
+            /> */}
+            <div id="bold-pagos"></div>
             <Icon
               icon="solar:alt-arrow-right-outline"
               width="42"

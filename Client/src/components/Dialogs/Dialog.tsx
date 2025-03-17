@@ -19,22 +19,28 @@ interface IProps {
   children: ReactNode;
   props?: DialogProps;
   open: boolean;
-  setOpen: (data: boolean) => void;
+  setOpenDialog: (data: boolean) => void;
   tittle: string;
   showCancelButton?: boolean;
+  fullScreen?: boolean;
 }
 
-const ScrollDialog: FC<IProps> = (props) => {
-  const { children, setOpen, open, tittle, showCancelButton = true } = props;
+const ScrollDialog: FC<IProps> = ({
+  children,
+  setOpenDialog,
+  open,
+  tittle,
+  showCancelButton = true,
+  fullScreen = false,
+}) => {
   const [scroll] = useState<DialogProps["scroll"]>();
-
   const handleClose = () => {
-    setOpen(false);
+    setOpenDialog(false);
   };
 
   return (
     <Dialog
-      {...props}
+      fullScreen={fullScreen}
       open={open}
       onClose={handleClose}
       scroll={scroll}

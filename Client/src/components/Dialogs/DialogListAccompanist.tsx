@@ -22,7 +22,7 @@ interface IProps {
 
 export default function ScrollDialog({ accompanist, open, setOpen }: IProps) {
   return (
-    <Dialog open={open} setOpen={setOpen} tittle={"Personas"}>
+    <Dialog open={open} setOpenDialog={setOpen} tittle={"Personas"}>
       {accompanist.map((values) => (
         <Paper key={values.name_accompanist} sx={{ marginBottom: 2 }}>
           <Box sx={{ display: "flex", flexDirection: "column" }}>
