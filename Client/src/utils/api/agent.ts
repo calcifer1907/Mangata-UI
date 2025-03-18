@@ -50,12 +50,14 @@ export const getMinMax = {
 export const getAdmin = {
   changeStatus: (body: IBodyChangeStatus): Promise<unknown> =>
     requestApis.post(`/api/changeStatusReservation`, body),
+  paymentUpdate: (body: object): Promise<unknown> =>
+    requestApis.put(`/api/updatePaymentEmployee`, body),
 };
 
 export const apisMercadoPago = {
   createOrderPSE: (body: object): Promise<unknown> =>
     requestApis.post("/PSEPayment", body),
-  createOrderCreditCard: (body: object): Promise<any> =>
+  createOrderCreditCard: (body: object): Promise<object> =>
     requestApis.post("/mercadoPagoCreditCard", body),
   getListBanks: (): Promise<IBanksList[]> => requestApis.get("/getListBanks"),
 };
@@ -73,7 +75,7 @@ export const checkReservation = {
 interface IPaymentBold {
   message: string;
   data: {
-    error: any;
+    error: unknown;
     payload: {
       payload: string;
       url: string;

@@ -59,6 +59,12 @@ export const useSales = ({ page }: IProps) => {
     return data;
   };
 
+  const updatePaymentEmployee = async (id: string, pay: boolean) => {
+    const body = { id, pay };
+    const data = await getAdmin.paymentUpdate(body);
+    console.log(data);
+  };
+
   const fetchSumCommission = useCallback(async () => {
     const idEmployee = userInfo.USER_INFO.ID_EMPLOYEE;
     if (idEmployee) {
@@ -77,10 +83,12 @@ export const useSales = ({ page }: IProps) => {
 
   return {
     dataList,
+    setDataList,
     loading,
     sumCommissionState,
     changeStatusReservation,
     setDateChange,
+    updatePaymentEmployee,
     dateChange,
   };
 };

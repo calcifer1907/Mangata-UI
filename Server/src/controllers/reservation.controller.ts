@@ -107,7 +107,7 @@ export const getListSalesAdmin = async (
   try {
     const { date } = request.body;
     const resultReservations = await pool.query(
-      `SELECT CODE_RESERVATION, ID_EMPLOYEE, STATUS_RESERVATION, COMMISSION_EMPLOYEE, CURRENT_COMMISSION, CREATED_AT FROM reservations  WHERE CREATED_AT = $1`,
+      `SELECT CODE_RESERVATION, ID_EMPLOYEE, STATUS_RESERVATION, COMMISSION_EMPLOYEE, CURRENT_COMMISSION,PAY, CREATED_AT FROM reservations  WHERE CREATED_AT = $1`,
       [date]
     );
     const codeReservations = resultReservations.rows.map(
@@ -165,6 +165,23 @@ export const changeStatusReservation = async (
     );
 
     response.json(result.rows[0]);
+  } catch (error) {
+    response.status(500).json({ message: "sometghin gos wrong" });
+  }
+};
+
+export const updatePaymentEmployee = async (
+  request: Request,
+  response: Response
+) => {
+  try {
+    const { id, pay } = request.body;
+    const result = await pool.query(
+      "UPDATE reservations SET PAY=$1 WHERE CODE_RESERVATION=$2;",
+      [pay, id]
+    );
+    if (result.rows)
+      response.json({ messagge: "Se modifico Correctamente", status: 201 });
   } catch (error) {
     response.status(500).json({ message: "sometghin gos wrong" });
   }

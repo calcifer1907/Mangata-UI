@@ -8,6 +8,7 @@ import {
   getMinMax,
   changeStatusReservation,
   checkReservation,
+  updatePaymentEmployee,
 } from "../controllers/reservation.controller";
 
 import { authenticate } from "../handles/authMiddleware";
@@ -21,6 +22,8 @@ router.post("/mycommissions", authenticate, getListSalesEmployee);
 router.post("/mySales", authenticate, getListSalesAdmin);
 
 router.post("/changeStatusReservation", authenticate, changeStatusReservation);
+
+router.put("/updatePaymentEmployee", authenticate, updatePaymentEmployee);
 
 router.post("/check-reservation", checkReservation);
 

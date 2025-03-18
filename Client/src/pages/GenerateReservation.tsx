@@ -11,7 +11,7 @@ import { getMinMax } from "../utils/api/agent";
 
 import { IMinMax } from "../interfaces/IAccompanist";
 
-const VITE_URL_UI = import.meta.env.VITE_URL_UI;
+import { VITE_URL_UI } from "../constant/URL";
 
 const GenerateReservation = () => {
   const [valueSlider, setValueSlider] = useState<number | number[]>(0);
