@@ -364,14 +364,15 @@ const LIstOfCommissionAdmin = () => {
       </Box>
       <Container
         sx={{
-          height: "auto",
-          overflowY: "auto",
-          maxHeight: maxHeight - 250,
+          height: "100%",
           paddingBottom: 1,
         }}
       >
         <Box
           sx={{
+            height: "100%",
+            overflowY: "auto",
+            maxHeight: maxHeight - 250,
             display: "flex",
             flexWrap: "wrap",
             justifyContent: { xs: "center", lg: "flex-start" },
