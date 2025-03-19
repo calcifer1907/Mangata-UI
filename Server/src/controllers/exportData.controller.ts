@@ -4,9 +4,10 @@ import { pool } from "../Connection";
 
 import * as XLSX from "xlsx";
 
+import fs from "fs";
+
 const findEmployeeById = (users: any, idEmployee: string) => {
   const user = users.find((user: any) => user.id === idEmployee);
-  console.log(user, idEmployee);
   return user;
 };
 
@@ -45,7 +46,6 @@ const calculatingDate = async (startDate: string, enddate: string) => {
         ),
       };
     });
-    console.log(diff);
     return diff;
   } catch (error) {
     return new Error("sometghin gos wrong");
@@ -54,6 +54,7 @@ const calculatingDate = async (startDate: string, enddate: string) => {
 
 export const downloadExcel = async (request: Request, response: Response) => {
   const { startDate, endDate } = request.body;
+
   calculatingDate(startDate, endDate).then((data) => {
     if (data instanceof Error) {
       return response.status(500).json({ message: data.message });
@@ -70,6 +71,9 @@ export const downloadExcel = async (request: Request, response: Response) => {
       type: "buffer",
       bookType: "xlsx",
     });
+
+    // Guardar el archivo temporalmente para verificar su integridad
+    fs.writeFileSync("temp.xlsx", excelBuffer);
 
     // Configurar la respuesta para descargar el archivo
     response.setHeader(

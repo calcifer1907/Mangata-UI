@@ -64,7 +64,9 @@ export const apisMercadoPago = {
 
 export const requestExportData = {
   exportDataSales: (body: object): Promise<unknown> =>
-    requestApis.post(`/api/download-excel`, body),
+    requestApis.post(`/api/download-excel`, body, {
+      responseType: "arraybuffer",
+    }),
 };
 
 export const checkReservation = {

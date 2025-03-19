@@ -19,20 +19,27 @@ const TableUI: FC<IProps> = ({ data, columns, dateChange }) => {
       startDate: dateChange,
       endDate: dateChange,
     });
-    const url = window.URL.createObjectURL(new Blob([dataBlob as BlobPart]));
+    if (dataBlob instanceof ArrayBuffer) {
+      const blob = new Blob([dataBlob], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+      const url = window.URL.createObjectURL(blob);
 
-    // Crear un enlace temporal
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", "reservations.xlsx"); // Nombre del archivo a descargar
-    document.body.appendChild(link);
+      // Crear un enlace temporal
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "reservations.xlsx"); // Nombre del archivo a descargar
+      document.body.appendChild(link);
 
-    // Simular un clic en el enlace para iniciar la descarga
-    link.click();
+      // Simular un clic en el enlace para iniciar la descarga
+      link.click();
 
-    // Eliminar el enlace y liberar la URL del blob
-    document.body.removeChild(link);
-    window.URL.revokeObjectURL(url);
+      // Eliminar el enlace y liberar la URL del blob
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } else {
+      console.error("Error: dataBlob no es un ArrayBuffer");
+    }
   };
 
   return (

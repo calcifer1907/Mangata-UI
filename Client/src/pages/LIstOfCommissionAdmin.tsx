@@ -96,13 +96,6 @@ const LIstOfCommissionAdmin = () => {
       flex: 3,
     },
     {
-      field: "DIFF",
-      headerName: "Comision",
-      sortable: true,
-      valueGetter: (value) => formatPrice(value as number),
-      flex: 3,
-    },
-    {
       field: "BANK_ACCOUNT",
       headerName: "Cuneta Bancaria",
       sortable: false,
@@ -117,7 +110,7 @@ const LIstOfCommissionAdmin = () => {
     },
     {
       field: "pay",
-      headerName: "Pago Empl",
+      headerName: "Pago Empleado",
       flex: 3,
       renderCell: (params) =>
         params.row.EMPLOYEE !== "Mangata system" && (
