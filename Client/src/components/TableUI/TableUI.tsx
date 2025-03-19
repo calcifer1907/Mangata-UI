@@ -48,13 +48,45 @@ const TableUI: FC<IProps> = ({ data, columns, dateChange }) => {
         width: "100%",
         margin: "0 auto",
         marginTop: 2,
-        display: { xs: "none", sm: "block" },
       }}
     >
-      <Box onClick={() => exportToExcel()} component="a" download>
-        Exportar.xls
+      <Box
+        style={{
+          width: "100%",
+          textAlign: "end",
+          color: "#FFFFFF",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "end",
+          gap: 8,
+          marginBottom: "10px",
+        }}
+      >
+        <Box
+          onClick={() => exportToExcel()}
+          component="a"
+          download
+          style={{
+            height: 40,
+            borderRadius: 100,
+            backgroundColor: "#2B3D5E",
+            width: 178,
+            alignItems: "center",
+            justifyContent: "center",
+            display: "flex",
+            cursor: "pointer",
+          }}
+        >
+          Exportar.xls
+        </Box>
       </Box>
-      <Paper sx={{ height: 400, width: "100%" }}>
+      <Paper
+        sx={{
+          height: 400,
+          width: "100%",
+          display: { xs: "none", sm: "block" },
+        }}
+      >
         <DataGrid
           rows={data}
           columns={columns}

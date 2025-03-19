@@ -65,7 +65,6 @@ export const downloadExcel = async (request: Request, response: Response) => {
     // Crear un libro de trabajo y agregar la hoja de trabajo
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Reservations");
-
     // Generar el archivo Excel en un buffer
     const excelBuffer = XLSX.write(workbook, {
       type: "buffer",

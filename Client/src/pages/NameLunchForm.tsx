@@ -780,7 +780,6 @@ const NameLunchForm: React.FC = () => {
           </Box>
         </Box>
       </Grid2>
-
       <Modal
         open={openModal}
         onClose={handleClose}
