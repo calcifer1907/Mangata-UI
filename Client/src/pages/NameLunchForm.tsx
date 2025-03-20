@@ -217,7 +217,7 @@ const NameLunchForm: React.FC = () => {
       spacing={2}
       container
       sx={{
-        maxHeight: maxHeight - 100,
+        maxHeight: maxHeight - 150,
         overflowY: "auto",
         marginTop: 2,
       }}
@@ -235,7 +235,7 @@ const NameLunchForm: React.FC = () => {
               <Typography
                 sx={{ fontSize: "25px", color: "#2B3D5E", fontWeight: 800 }}
               >
-                Reserva tu día {CODE_RESERVATION}
+                Reserva tu día {CODE_RESERVATION} {maxHeight}
               </Typography>
               <Box
                 style={{
@@ -422,7 +422,7 @@ const NameLunchForm: React.FC = () => {
               <Accompanist
                 icon={index !== 0}
                 title={
-                  index === 0 ? "Datos Personales" : `Acompañante ${index}`
+                  index === 0 ? "Datos De Reserva" : `Acompañante ${index}`
                 }
                 key={index}
                 index={index}
@@ -470,7 +470,7 @@ const NameLunchForm: React.FC = () => {
           },
           zIndex: 1,
           transform: {
-            xs: `translateY(${!isVisibleGrid ? 0 : "calc(100% - 6rem"}))`,
+            xs: `translateY(${!isVisibleGrid ? 0 : "calc(100% - 7rem"}))`,
             md: "translateY(0)",
           },
           maxHeight: { xs: 550, sm: 550 },
@@ -489,10 +489,21 @@ const NameLunchForm: React.FC = () => {
             height: "3px",
             borderRadius: "100px",
             margin: "0 auto",
-            marginTop: 1,
+            marginTop: "6px",
             display: { xs: "block", md: "none" },
           }}
         />
+
+        <Box style={{ width: "100%", textAlign: "center", height: "24px" }}>
+          <Icon
+            icon={`solar:alt-arrow-${
+              isVisibleGrid ? "down" : "up"
+            }-bold-duotone`}
+            width="24"
+            height="24"
+            style={{ color: "#FFFFFF" }}
+          />
+        </Box>
         <Box
           sx={{
             width: {
@@ -529,7 +540,7 @@ const NameLunchForm: React.FC = () => {
                 alignItems: "center",
                 justifyContent: "center",
                 marginBottom: 4,
-                marginTop: 4,
+                marginTop: 1,
                 gap: 2,
               }}
             >
@@ -615,20 +626,6 @@ const NameLunchForm: React.FC = () => {
                   <Typography sx={{ color: { xs: "#FFFFFF", md: "#000" } }}>
                     Paquete Estandar
                   </Typography>
-
-                  <Box
-                    component={Icon}
-                    icon="solar:info-circle-bold-duotone"
-                    sx={{
-                      width: "24px",
-                      height: "24px",
-                      color: {
-                        xs: "#FFFFFF",
-                        sm: "#FFFFFF",
-                        md: "#2B3D5E",
-                      },
-                    }}
-                  />
                 </Box>
                 <Typography sx={{ color: { xs: "#FFFFFF", md: "#000" } }}>
                   {formatPrice(Number(PRICES.PRICE_MAX))}
