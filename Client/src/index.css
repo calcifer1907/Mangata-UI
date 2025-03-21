@@ -110,9 +110,10 @@ body{
   color: white;
   text-align: center;
   z-index: 1; /* Asegura que el contenido esté sobre el video */
-  padding: 20px;
-  align-content: center;
-  
+  /* padding: 20px; */
+  display: flex;
+ align-items: center;
+ justify-content: center;
 }
 
 .content-overlay h1 {
@@ -183,4 +184,11 @@ body{
 
 .hg-100{
   height: 100%;
+}
+
+
+@media (max-width: 768px) {
+  .video-background-container.active {
+    background-color: #2B3D5E;
+  }
 }

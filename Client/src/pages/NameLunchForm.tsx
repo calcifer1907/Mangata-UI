@@ -539,7 +539,6 @@ const NameLunchForm: React.FC = () => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                marginBottom: 4,
                 marginTop: 1,
                 gap: 2,
               }}
