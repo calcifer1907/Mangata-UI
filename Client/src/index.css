@@ -14,17 +14,19 @@
 
 
 body{
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-
+  -webkit-font-smoothing: antialiased; /* Mejora la renderización de fuentes en navegadores WebKit */
+  -moz-osx-font-smoothing: grayscale; /* Mejora la renderización de fuentes en Firefox */
+  background-color: #ffffff; /* Fondo blanco por defecto */
+  color: #000000; /* Color de texto predeterminado */
+  line-height: 1.5; /* Espaciado entre líneas */
+  overflow-x: hidden; /* Evita el desplazamiento horizontal no deseado */
 }
 
 
 #root{
+  min-height: 100vh; /* Asegura que el contenedor ocupe al menos el 100% del viewport */
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Diseño en columna para facilitar la estructura de la página */
   flex: 1;
   overflow-x: hidden;
 }
