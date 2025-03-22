@@ -85,17 +85,19 @@ const GenerateReservation = () => {
             flexDirection: "column",
           }}
         >
-          <Slider
-            aria-label="Always visible"
-            marks
-            value={valueSlider}
-            step={5000}
-            valueLabelDisplay="auto"
-            shiftStep={30}
-            min={minmax.MIN}
-            max={minmax.MAX}
-            onChange={handleOnChangeSlider}
-          />
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Slider
+              aria-label="Always visible"
+              marks
+              value={valueSlider}
+              step={5000}
+              valueLabelDisplay="auto"
+              shiftStep={30}
+              min={minmax.MIN}
+              max={minmax.MAX}
+              onChange={handleOnChangeSlider}
+            />
+          </Box>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Typography
               variant="body2"
