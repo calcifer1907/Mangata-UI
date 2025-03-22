@@ -22,9 +22,9 @@ const Home = () => {
         <YouTubeEmbed />
       </Box>
       <Box
+        className="background-ligth-blue"
         sx={{
           position: "relative",
-          background: "var(--blueLigth)",
           height: { xs: "auto", xl: "400px" },
           marginBottom: 8,
           paddingBlock: { xs: 2, xl: 0 },
@@ -87,8 +87,8 @@ const Home = () => {
         }}
       >
         <Typography
+          className="color-blue-dark"
           sx={{
-            color: "var(--color-theme-dark-blue)",
             fontSize: 22,
             fontWeight: 600,
             marginBlock: 2,
@@ -99,8 +99,8 @@ const Home = () => {
           Almuerzo a la carta
         </Typography>
         <Typography
+          className="color-blue-dark"
           sx={{
-            color: "var(--color-theme-dark-blue)",
             fontSize: 18,
             fontWeight: 400,
             marginBlock: 2,
@@ -116,8 +116,8 @@ const Home = () => {
       <Box>
         <Typography
           component="h2"
+          className="color-blue-dark"
           sx={{
-            color: "var(--color-theme-dark-blue)",
             fontWeight: 600,
             marginBlock: 2,
             fontSize: 22,

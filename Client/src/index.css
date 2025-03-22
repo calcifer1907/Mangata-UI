@@ -36,6 +36,18 @@ body{
   color: var(--color-theme-dark-blue)
 }
 
+.background-ligth-blue{
+  background-color: var( --color-theme-ligth-blue)
+}
+
+.background-blue-blueLigth{
+  background-color: var( --color-theme-dark-blueLigth)
+}
+
+.background-blue-dark{
+  background-color: var(--color-theme-dark-blue)
+}
+
 .background-blue-dark{
   background-color: var(--color-theme-dark-blue)
 }
