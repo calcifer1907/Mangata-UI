@@ -31,6 +31,17 @@ body{
   overflow-x: hidden;
 }
 
+.color-blue-dark{
+  color: var(--blueDark)
+}
+
+.background-blue-dark{
+  background-color: var(--blueDark)
+}
+
+.color-blue-ligth{
+  color: var(--blueLigth)
+}
 
 #searchInput:focus{
   outline: none;
@@ -164,6 +175,14 @@ body{
 
 .align-items-center{
   align-items: center;
+}
+
+.p-relative{
+  position:relative;
+}
+
+.p-absolute{
+  position:absolute
 }
 
 .gap-2{

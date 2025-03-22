@@ -70,15 +70,15 @@ const NameLunchForm: React.FC = () => {
     [minmax, searchParams]
   );
 
-  const ID_EMPLO_PARAM = searchParams.get("id");
+  const ID_EMPLOYEE_PARAM = searchParams.get("id");
 
   const getuserId = useCallback(async () => {
     const body = {
-      id: Number(ID_EMPLO_PARAM) || -1,
+      id: Number(ID_EMPLOYEE_PARAM) || -1,
     };
     const data = await methodUser.getUserId(body);
     setGetUserId(data);
-  }, [ID_EMPLO_PARAM]);
+  }, [ID_EMPLOYEE_PARAM]);
 
   useEffect(() => {
     const body = document.getElementById("root");
@@ -227,52 +227,27 @@ const NameLunchForm: React.FC = () => {
     <Grid2
       spacing={2}
       container
+      className="principalGrid"
       sx={{
         maxHeight: maxHeight - 150,
-        overflowY: "auto",
-        marginTop: 2,
       }}
     >
       <Grid2 size={{ xs: 12, sm: 12, md: 12, lg: 6 }}>
-        <Box
-          sx={{
-            paddingInline: 4,
-            paddingBottom: 2,
-            position: "relative",
-          }}
-        >
+        <Box className="BoxContainer p-relative">
           <Box>
             <Box style={{ marginBottom: 20 }}>
-              <Typography
-                sx={{ fontSize: "25px", color: "#2B3D5E", fontWeight: 800 }}
-              >
-                Reserva tu día {CODE_RESERVATION} {maxHeight}
+              <Typography className="color-blue-dark title-reservation">
+                Reserva tu día {CODE_RESERVATION}
               </Typography>
-              <Box
-                style={{
-                  backgroundColor: "#2B3D5E",
-                  height: 6,
-                  position: "absolute",
-                  top: 36,
-                  width: "90%",
-                  left: 0,
-                }}
-              />
-              {ID_EMPLO_PARAM && (
-                <h5
-                  style={{
-                    fontSize: 24,
-                    fontWeight: 300,
-                    color: "#2B3D5E",
-                    marginTop: 5,
-                  }}
-                >
+              <Box className="background-blue-dark containerAsesor p-absolute" />
+              {ID_EMPLOYEE_PARAM && (
+                <Typography className="color-blue-dark titleAsesor">
                   {getUserId && (
                     <>
                       Asesor: <span>{getUserId?.user_name}</span>
                     </>
                   )}
-                </h5>
+                </Typography>
               )}
             </Box>
             <Box
