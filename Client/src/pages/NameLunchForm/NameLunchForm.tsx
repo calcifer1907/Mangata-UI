@@ -498,6 +498,7 @@ const NameLunchForm: React.FC = () => {
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
+              marginBottom: 3,
             }}
           >
             <Box
@@ -505,7 +506,6 @@ const NameLunchForm: React.FC = () => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                marginBottom: 3,
                 marginTop: 1,
                 gap: 2,
               }}
