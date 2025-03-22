@@ -162,6 +162,14 @@ body{
   display: flex;
 }
 
+.flex-dirrection-row{
+  flex-direction: row;
+}
+
+.flex-direction-column{
+  flex-direction: column;
+}
+
 .justify-content-between{
   justify-content: space-between ;
 }
@@ -176,6 +184,10 @@ body{
 
 .justify-content-center{
   justify-content: center ;
+}
+
+.flex-wrap{
+  flex-wrap: wrap;
 }
 
 .align-items-center{

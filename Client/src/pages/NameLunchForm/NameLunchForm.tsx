@@ -267,14 +267,7 @@ const NameLunchForm: React.FC = () => {
               </Button>
             </Box>
           </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              gap: 2,
-              flexWrap: "wrap",
-            }}
-          >
+          <Box className="d-flex flex-wrap gap-2 flex-direction-row">
             <TextField
               fullWidth
               label="Fecha"
