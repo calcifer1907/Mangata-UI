@@ -35,7 +35,7 @@ export default function ScrollDialog({ accompanist, open, setOpen }: IProps) {
 
             <Typography
               sx={{
-                color: "var(--blueDarkLigth)",
+                color: "var(--color-theme-dark-blue)",
                 fontWeight: 600,
                 fontSize: 22,
                 margin: 2,

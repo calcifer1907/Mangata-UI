@@ -8,7 +8,7 @@ import Grid2 from "@mui/material/Grid2";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 
-import "./NameLunchForm.sass";
+import "./NameLunchForm.scss";
 
 /**Libreries */
 import { format } from "@formkit/tempo";
@@ -250,29 +250,16 @@ const NameLunchForm: React.FC = () => {
                 </Typography>
               )}
             </Box>
-            <Box
-              style={{
-                backgroundColor: "#2B3D5E",
-                height: 40,
-                width: 178,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: 100,
-                gap: 8,
-                marginBottom: 20,
-              }}
-            >
+            <Box className="background-blue-dark addPersonButton">
               <Button
+                className="button color-theme-white"
                 size="small"
-                sx={{ textTransform: "none", fontSize: 14, color: "#FFFFFF" }}
                 onClick={addField}
                 startIcon={
                   <Icon
                     icon="solar:user-plus-bold-duotone"
                     width="24"
                     height="24"
-                    style={{ color: "#FFFFFF" }}
                   />
                 }
               >

@@ -40,7 +40,7 @@ const Home = () => {
         >
           <Typography
             sx={{
-              color: { xs: "#FFFFFF", md: "var(--blueDarkLigth)" },
+              color: { xs: "#FFFFFF", md: "var(--color-theme-dark-blue)" },
               fontSize: 22,
               fontWeight: 600,
               marginBlock: 4,
@@ -88,7 +88,7 @@ const Home = () => {
       >
         <Typography
           sx={{
-            color: "var(--blueDarkLigth)",
+            color: "var(--color-theme-dark-blue)",
             fontSize: 22,
             fontWeight: 600,
             marginBlock: 2,
@@ -100,7 +100,7 @@ const Home = () => {
         </Typography>
         <Typography
           sx={{
-            color: "var(--blueDarkLigth)",
+            color: "var(--color-theme-dark-blue)",
             fontSize: 18,
             fontWeight: 400,
             marginBlock: 2,
@@ -117,7 +117,7 @@ const Home = () => {
         <Typography
           component="h2"
           sx={{
-            color: "var(--blueDarkLigth)",
+            color: "var(--color-theme-dark-blue)",
             fontWeight: 600,
             marginBlock: 2,
             fontSize: 22,
@@ -152,7 +152,7 @@ const Home = () => {
           >
             <Typography
               sx={{
-                color: "var(--blueDarkLigth)",
+                color: "var(--color-theme-dark-blue)",
                 fontWeight: "normal",
                 marginBlock: 2,
               }}
@@ -162,7 +162,12 @@ const Home = () => {
               acceso a:{" "}
             </Typography>
 
-            <Box sx={{ color: "var(--blueDarkLigth)", paddingInlineStart: 4 }}>
+            <Box
+              sx={{
+                color: "var(--color-theme-dark-blue)",
+                paddingInlineStart: 4,
+              }}
+            >
               <ul>
                 <li>Sillas asoleadoras</li>
                 <li>Hamacas</li>
@@ -177,8 +182,8 @@ const Home = () => {
 
       <Box
         sx={{
-          background: "var(--lightSand)",
-          color: "var(--blueDarkLigth)",
+          background: "var(--color-theme-sand-light)",
+          color: "var(--color-theme-dark-blue)",
           padding: 4,
           textAlign: "center",
           height: "auto",
@@ -204,7 +209,7 @@ const Home = () => {
 
       <Box
         sx={{
-          color: "var(--blueDarkLigth)",
+          color: "var(--color-theme-dark-blue)",
           padding: 4,
           textAlign: "center",
           height: "150px",

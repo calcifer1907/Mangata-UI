@@ -6,10 +6,11 @@
 
 :root{
   --backgrounInput :#E8E8E8;
-  --blueDark: #2B3D5E;
-  --blueLigth:#6490c7;
-  --blueDarkLigth:#4672a5;  
-  --lightSand:#f8eac9;
+  --color-theme-dark-blue: #2B3D5E;
+  --color-theme-ligth-blue:#6490c7;
+  --color-theme-dark-blueLigth:#4672a5;  
+  --color-theme-sand-light:#f8eac9;
+  --color-theme-white:#FFFFFF
 }
 
 
@@ -32,15 +33,19 @@ body{
 }
 
 .color-blue-dark{
-  color: var(--blueDark)
+  color: var(--color-theme-dark-blue)
 }
 
 .background-blue-dark{
-  background-color: var(--blueDark)
+  background-color: var(--color-theme-dark-blue)
 }
 
 .color-blue-ligth{
-  color: var(--blueLigth)
+  color: var(--color-theme-dark-blueLigth)
+}
+
+.color-theme-white{
+  color: var(--color-theme-white)
 }
 
 #searchInput:focus{

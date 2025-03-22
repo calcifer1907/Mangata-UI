@@ -91,7 +91,7 @@ const PayMenetMethod = ({ amount, payment_id, name, email }: IProps) => {
         <Box>
           <h3
             style={{
-              color: "var(--blueDarkLigth)",
+              color: "var(--color-theme-dark-blue)",
               textTransform: "uppercase",
             }}
           >
@@ -133,7 +133,7 @@ const PayMenetMethod = ({ amount, payment_id, name, email }: IProps) => {
           </Box>
           <h3
             style={{
-              color: "var(--blueDarkLigth)",
+              color: "var(--color-theme-dark-blue)",
               textTransform: "uppercase",
             }}
           >
