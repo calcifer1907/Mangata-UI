@@ -2,7 +2,7 @@
 import ContextAccompanist from "../hooks/useAccompanist";
 
 /**Papages */
-import Reservations from "./NameLunchForm";
+import Reservations from "./NameLunchForm/NameLunchForm";
 
 const ContainerContextReservation = () => {
   return (

@@ -1,36 +1,47 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import {
-  Button,
-  Box,
-  Typography,
-  Grid2,
-  Modal,
-  TextField,
-  InputAdornment,
-} from "@mui/material";
-import Accompanist from "../components/Accompanist/Accompanist";
+
+import InputAdornment from "@mui/material/InputAdornment";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Grid2 from "@mui/material/Grid2";
+import Modal from "@mui/material/Modal";
+import TextField from "@mui/material/TextField";
+
+import "./NameLunchForm.sass";
+
+/**Libreries */
 import { format } from "@formkit/tempo";
 import { Icon } from "@iconify/react";
-import { formatPrice } from "../generalFunctions/formaters";
 import { useSearchParams } from "react-router-dom";
+import { enqueueSnackbar } from "notistack";
 
-import { useAccompanist } from "../hooks/useAccompanist";
+/**Components */
+import Accompanist from "../../components/Accompanist/Accompanist";
+import DialogPayMents from "../../components/Dialogs/DialogPayMents";
 
-import DialogPayMents from "../components/Dialogs/DialogPayMents";
+/**Functions */
+import { formatPrice } from "../../generalFunctions/formaters";
+import { generarCodigoReservaUX2 } from "../../generalFunctions/generateCodeReservation";
 
+/**Hooks */
+import { useAccompanist } from "../../hooks/useAccompanist";
+
+/**APis */
+import { getAccompanist, methodUser } from "../../utils/api/agent";
+
+/**Interfaces */
 import {
   IFields,
   IErrorFieldAccompanist,
   IOptions,
-} from "../interfaces/IAccompanist";
-import { getAccompanist, methodUser } from "../utils/api/agent";
-import { enqueueSnackbar } from "notistack";
-import { generarCodigoReservaUX2 } from "../generalFunctions/generateCodeReservation";
-import { IGetUserId } from "../interfaces/IUser";
+} from "../../interfaces/IAccompanist";
+import { IGetUserId } from "../../interfaces/IUser";
 
 const FORMAT = "DD/MM/YYYY";
 
 const today = format(new Date(), "YYYY-MM-DD", "co");
+
 const NameLunchForm: React.FC = () => {
   const [fields, setFields] = useState<IFields[]>([
     { name: "", lunch: { label: "", value: 0 } },
