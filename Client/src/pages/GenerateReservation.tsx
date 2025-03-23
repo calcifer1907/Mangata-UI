@@ -13,6 +13,9 @@ import { IMinMax } from "../interfaces/IAccompanist";
 
 import { VITE_URL_UI } from "../constant/URL";
 
+/**Component */
+import ButtonComponent from "../components/Buttons/ButtonComponent";
+
 const GenerateReservation = () => {
   const [valueSlider, setValueSlider] = useState<number | number[]>(0);
   const [minmax, setMinMax] = useState<IMinMax>({ MIN: 0, MAX: 0 });
@@ -32,6 +35,8 @@ const GenerateReservation = () => {
   const handleOnChangeSlider = (_event: Event, newValue: number | number[]) => {
     setValueSlider(newValue);
   };
+
+  const onClickButton = () => {};
 
   return (
     <Box style={{ position: "relative", top: 64 }}>
@@ -76,6 +81,14 @@ const GenerateReservation = () => {
           gap: 30,
         }}
       >
+        <Box className="justify-item-end">
+          <ButtonComponent
+            title="Generar QR"
+            background="background-color-button-dark-blue"
+            iconName="solar:qr-code-bold-duotone"
+            onClick={onClickButton}
+          />
+        </Box>
         <Box
           className="wd-100"
           sx={{
@@ -85,19 +98,17 @@ const GenerateReservation = () => {
             flexDirection: "column",
           }}
         >
-          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Slider
-              aria-label="Always visible"
-              marks
-              value={valueSlider}
-              step={5000}
-              valueLabelDisplay="auto"
-              shiftStep={30}
-              min={minmax.MIN}
-              max={minmax.MAX}
-              onChange={handleOnChangeSlider}
-            />
-          </Box>
+          <Slider
+            aria-label="Always visible"
+            marks
+            value={valueSlider}
+            step={5000}
+            valueLabelDisplay="auto"
+            shiftStep={30}
+            min={minmax.MIN}
+            max={minmax.MAX}
+            onChange={handleOnChangeSlider}
+          />
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Typography
               variant="body2"
@@ -123,7 +134,7 @@ const GenerateReservation = () => {
           sx={{
             margin: "0 auto",
             height: "50%",
-            width: { sm: "50%", xs: "65%" },
+            width: { xs: "100%", sm: "45%" },
           }}
         >
           <QRCode

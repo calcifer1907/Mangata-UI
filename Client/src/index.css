@@ -198,6 +198,10 @@ body{
   justify-content: center ;
 }
 
+.justify-item-end{
+  justify-items: end ;
+}
+
 .flex-wrap{
   flex-wrap: wrap;
 }
