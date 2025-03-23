@@ -81,3 +81,14 @@ export const paymentBold = (body: object): Promise<IPaymentBold> => {
 
 export const getSumCommission = (id_employee: number): Promise<ICommission> =>
   requestApis.get(`/api/commission/${id_employee}`);
+
+interface ISaveCodeGenerate {
+  id: number;
+  code: string;
+  status: number;
+}
+
+export const saveGenerateCode = (
+  body: ISaveCodeGenerate
+): Promise<ISaveCodeGenerate> =>
+  requestApis.post("/api/saveGenerateCode", body);

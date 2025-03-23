@@ -1,24 +1,32 @@
 import { Box, Slider, Typography, Container } from "@mui/material";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
+/**Context */
 import { useContextUser } from "../hooks/useContextUser";
 
+/**Libreries */
 import QRCode from "react-qr-code";
 
+/**Functions */
 import { formatPrice } from "../generalFunctions/formaters";
 
-import { getMinMax } from "../utils/api/agent";
+/**Rest Apis */
+import { getMinMax, saveGenerateCode } from "../utils/api/agent";
 
+/**Interfaces */
 import { IMinMax } from "../interfaces/IAccompanist";
 
+/*Constant**/
 import { VITE_URL_UI } from "../constant/URL";
 
 /**Component */
 import ButtonComponent from "../components/Buttons/ButtonComponent";
+import { generarCodigoReservaUX2 } from "../generalFunctions/generateCodeReservation";
 
 const GenerateReservation = () => {
   const [valueSlider, setValueSlider] = useState<number | number[]>(0);
   const [minmax, setMinMax] = useState<IMinMax>({ MIN: 0, MAX: 0 });
+  const [saveCodeReservation, setSaveCodeReservation] = useState<string>("");
   const { userInfo } = useContextUser();
   const { USER_INFO } = userInfo;
 
@@ -36,7 +44,22 @@ const GenerateReservation = () => {
     setValueSlider(newValue);
   };
 
-  const onClickButton = () => {};
+  const CODE_RESERVATION = useMemo(() => {
+    return generarCodigoReservaUX2();
+  }, []);
+
+  const onClickButton = async () => {
+    const body = {
+      id: userInfo.USER_INFO.ID_EMPLOYEE,
+      code: CODE_RESERVATION,
+      status: 0,
+    };
+    const data = await saveGenerateCode(body);
+    if (data.status === 201) {
+      setSaveCodeReservation(data.code);
+      console.log(data);
+    }
+  };
 
   return (
     <Box style={{ position: "relative", top: 64 }}>
@@ -130,20 +153,22 @@ const GenerateReservation = () => {
             </Typography>
           </Box>
         </Box>
-        <Box
-          sx={{
-            margin: "0 auto",
-            height: "50%",
-            width: { xs: "100%", sm: "45%" },
-          }}
-        >
-          <QRCode
-            size={256}
-            className="wd-100 hg-100"
-            viewBox={`0 0 250 250`}
-            value={`${VITE_URL_UI}ReservationEmployee?id=${USER_INFO.ID_EMPLOYEE}&price=${valueSlider}&minPrice=${minmax.MIN}`}
-          />
-        </Box>
+        {saveCodeReservation && (
+          <Box
+            sx={{
+              margin: "0 auto",
+              height: "50%",
+              width: { xs: "100%", sm: "45%" },
+            }}
+          >
+            <QRCode
+              size={256}
+              className="wd-100 hg-100"
+              viewBox={`0 0 250 250`}
+              value={`${VITE_URL_UI}ReservationEmployee?id=${USER_INFO.ID_EMPLOYEE}&price=${valueSlider}&minPrice=${minmax.MIN}`}
+            />
+          </Box>
+        )}
       </Container>
     </Box>
   );
