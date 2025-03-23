@@ -13,6 +13,7 @@ import {
   IBodyChangeStatus,
   IBodyStatusReservation,
 } from "../../interfaces/IReservation";
+import { ICommission, IPaymentBold } from "../../interfaces/IAgent";
 
 const URI_LOGIN = "/auth/login";
 
@@ -74,24 +75,9 @@ export const checkReservation = {
     requestApis.post(`/api/check-reservation`, body),
 };
 
-interface IPaymentBold {
-  message: string;
-  data: {
-    error: unknown;
-    payload: {
-      payload: string;
-      url: string;
-    };
-  };
-}
-
 export const paymentBold = (body: object): Promise<IPaymentBold> => {
   return requestApis.post("/paymentsBold", body);
 };
-
-interface ICommission {
-  sum_commission: number;
-}
 
 export const getSumCommission = (id_employee: number): Promise<ICommission> =>
   requestApis.get(`/api/commission/${id_employee}`);
