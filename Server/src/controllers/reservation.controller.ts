@@ -1,5 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { pool } from "../Connection";
+import AppError from "../errors/appError";
+
+import reservationRepository from "../repository/reservationRepository";
 
 // import { sendEmail } from "./sendEmail.controller";
 
@@ -44,16 +47,6 @@ export const createReservation = async (
     response.status(201).json({ id: result.rowCount, message: "success" });
     // sendEmail(CODE_RESERVATION);
   } catch (_error) {
-    response.status(500).json({ message: "sometghin gos wrong" });
-  }
-};
-
-export const getLunches = async (_request: Request, response: Response) => {
-  try {
-    const result = await pool.query("SELECT ID,DESCRIPTION FROM lunches;");
-    response.send(result.rows);
-  } catch (error) {
-    console.log(error);
     response.status(500).json({ message: "sometghin gos wrong" });
   }
 };
@@ -232,3 +225,41 @@ export const checkReservation = async (
     res.status(500).json({ message: "something went wrong" });
   }
 };
+
+class ReservationController {
+  async saveCodeReservation(
+    request: Request,
+    response: Response
+  ): Promise<void> {
+    try {
+      const { id, code } = request.body;
+      const code_saved = await reservationRepository.saveCodeReservation(
+        id,
+        code
+      );
+      if (code_saved) {
+        const res = { status: 201, code, id: null };
+        response.json(res);
+      } else {
+        response.status(500).json({ message: "Something went wrong" });
+      }
+    } catch (error) {
+      if (error instanceof AppError) {
+        response.status(error.statusCode).json({ message: error.message });
+      } else {
+        response.status(500).json({ message: "Something wrong error!" });
+      }
+    }
+  }
+
+  async getLunches(_request: Request, response: Response) {
+    try {
+      const result = await reservationRepository.getLunches();
+      response.send(result);
+    } catch (error) {
+      response.status(500).json({ message: "sometghin gos wrong" });
+    }
+  }
+}
+
+export default new ReservationController();
