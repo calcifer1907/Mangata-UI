@@ -11,6 +11,8 @@ import {
   updatePaymentEmployee,
 } from "../controllers/reservation.controller";
 
+import ReservationController from "../controllers/reservation.controller";
+
 import { authenticate } from "../handles/authMiddleware";
 
 const router = Router();
@@ -22,6 +24,8 @@ router.post("/mycommissions", authenticate, getListSalesEmployee);
 router.post("/mySales", authenticate, getListSalesAdmin);
 
 router.post("/changeStatusReservation", authenticate, changeStatusReservation);
+
+router.post("/saveGenerateCode", ReservationController.saveCodeReservation);
 
 router.put("/updatePaymentEmployee", authenticate, updatePaymentEmployee);
 
