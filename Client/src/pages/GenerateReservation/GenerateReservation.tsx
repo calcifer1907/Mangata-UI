@@ -55,9 +55,12 @@ const GenerateReservation = () => {
 
   const onClickButton = async () => {
     const body = {
-      id: userInfo.USER_INFO.ID_EMPLOYEE,
+      id: USER_INFO.ID_EMPLOYEE,
       code: CODE_RESERVATION,
       status: 0,
+      min_price: minmax.MIN,
+      agreedPrice: valueSlider as number,
+      created_at: new Date().toISOString(),
     };
     const data = await saveGenerateCode(body);
     if (data.status === 201) {
@@ -138,7 +141,7 @@ const GenerateReservation = () => {
               size={256}
               className="wd-100 hg-100"
               viewBox={`0 0 250 250`}
-              value={`${VITE_URL_UI}ReservationEmployee?id=${USER_INFO.ID_EMPLOYEE}&price=${valueSlider}&minPrice=${minmax.MIN}`}
+              value={`${VITE_URL_UI}ReservationEmployee?id=${saveCodeReservation.code}`}
             />
           </Box>
         )}
