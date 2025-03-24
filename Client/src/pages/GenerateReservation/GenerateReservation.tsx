@@ -1,23 +1,14 @@
 import { Box, Slider, Typography, Container } from "@mui/material";
-import { useCallback, useEffect, useMemo, useState } from "react";
-
-/**Context */
-import { useContextUser } from "../../hooks/useContextUser";
+import { useEffect } from "react";
 
 /**Libreries */
 import QRCode from "react-qr-code";
 
 /**Functions */
 import { formatPrice } from "../../generalFunctions/formaters";
-import { generarCodigoReservaUX2 } from "../../generalFunctions/generateCodeReservation";
-import { formatDate } from "../../generalFunctions/formatDate";
 
-/**Rest Apis */
-import { getMinMax, saveGenerateCode } from "../../utils/api/agent";
-
-/**Interfaces */
-import { IMinMax } from "../../interfaces/IAccompanist";
-import { ICodeAgreedPrice } from "../../interfaces/IReservation";
+/**Hooks */
+import useGenerateReservation from "../../hooks/useGenerateReservation";
 
 /*Constant**/
 import { VITE_URL_UI } from "../../constant/URL";
@@ -29,47 +20,17 @@ import ButtonComponent from "../../components/Buttons/ButtonComponent";
 import "./GenerateReservation.scss";
 
 const GenerateReservation = () => {
-  const [valueSlider, setValueSlider] = useState<number | number[]>(0);
-  const [minmax, setMinMax] = useState<IMinMax>({ MIN: 0, MAX: 0 });
-  const [saveCodeReservation, setSaveCodeReservation] =
-    useState<ICodeAgreedPrice>({ code: "", agreedPrice: 0 });
-  const { userInfo } = useContextUser();
-  const { USER_INFO } = userInfo;
-
-  const funcMinMax = useCallback(async () => {
-    const { min, max } = await getMinMax.getListData();
-    setMinMax({ MIN: Number(min), MAX: Number(max) });
-    setValueSlider(Number(max));
-  }, []);
-
-  useEffect(() => {
-    funcMinMax();
-  }, [funcMinMax]);
+  const {
+    saveCodeReservation,
+    setSaveCodeReservation,
+    setValueSlider,
+    valueSlider,
+    minmax,
+    onClickSaveButton,
+  } = useGenerateReservation();
 
   const handleOnChangeSlider = (_event: Event, newValue: number | number[]) => {
     setValueSlider(newValue);
-  };
-
-  const CODE_RESERVATION = useMemo(() => {
-    return generarCodigoReservaUX2();
-  }, []);
-
-  const onClickButton = async () => {
-    const body = {
-      id: USER_INFO.ID_EMPLOYEE,
-      code: CODE_RESERVATION,
-      status: 200,
-      min_price: minmax.MIN,
-      agreed_price: valueSlider as number,
-      created_at: formatDate(new Date()),
-    };
-    const data = await saveGenerateCode(body);
-    if (data.status === 201) {
-      setSaveCodeReservation({
-        code: data.code,
-        agreedPrice: valueSlider as number,
-      });
-    }
   };
 
   useEffect(() => {
@@ -95,7 +56,7 @@ const GenerateReservation = () => {
             title="Generar QR"
             background="background-color-button-dark-blue"
             iconName="solar:qr-code-bold-duotone"
-            onClick={onClickButton}
+            onClick={onClickSaveButton}
           />
         </Box>
         <Box className="wd-100 d-flex  content-value-slider">
