@@ -106,7 +106,7 @@ const GenerateReservation = () => {
             max={minmax.MAX}
             onChange={handleOnChangeSlider}
           />
-          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Box className="d-flex justify-content-between ">
             <Typography
               variant="body2"
               onClick={() => {
@@ -114,7 +114,7 @@ const GenerateReservation = () => {
               }}
               sx={{ cursor: "pointer" }}
             >
-              {formatPrice(minmax.MIN)} min
+              {formatPrice(minmax.MIN)} Min
             </Typography>
             <Typography
               variant="body2"
@@ -123,15 +123,14 @@ const GenerateReservation = () => {
               }}
               sx={{ cursor: "pointer" }}
             >
-              {formatPrice(minmax.MAX)} max
+              {formatPrice(minmax.MAX)} Max
             </Typography>
           </Box>
         </Box>
         {saveCodeReservation.code && (
           <Box
+            className="content-qr"
             sx={{
-              margin: "0 auto",
-              height: "50%",
               width: { xs: "100%", sm: "45%" },
             }}
           >
