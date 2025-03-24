@@ -214,7 +214,7 @@ const NameLunchForm: React.FC = () => {
         <Box className="background-blue-dark line-vertical" />
       </Grid2>
       <Grid2
-        className="purchase-summary w-100"
+        className="purchase-summary wd-100"
         component="div"
         size={{ xs: 12, sm: 12, md: 12, lg: 5 }}
         sx={{
@@ -267,10 +267,9 @@ const NameLunchForm: React.FC = () => {
             <Box className="d-flex justify-content-center align-items-center gap-16 margin-top-8">
               <Box
                 component={Icon}
+                className="wd-24 hg-24"
                 icon="solar:bill-check-bold-duotone"
                 sx={{
-                  width: "24px",
-                  height: "24px",
                   color: {
                     xs: "var(--color-theme-white)",
                     sm: "var(--color-theme-white)",
@@ -280,26 +279,24 @@ const NameLunchForm: React.FC = () => {
               />
 
               <Typography
+                className="title-sale"
                 sx={{
                   color: {
                     xs: "var(--color-theme-white)",
                     md: "#var(--color-theme-dark-blue)",
                   },
-                  fontSize: 20,
-                  fontWeight: 800,
                 }}
               >
                 Resumen de compra
                 {isVisibleGrid && (
                   <Typography
+                    className="title-total"
                     component="span"
                     sx={{
                       color: {
                         xs: "var(--color-theme-white)",
                         md: "#var(--color-theme-dark-blue)",
                       },
-                      fontSize: 14,
-                      fontWeight: 800,
                       display: { xs: "block", md: "none" },
                     }}
                   >
@@ -310,15 +307,14 @@ const NameLunchForm: React.FC = () => {
             </Box>
             <Box
               component="img"
+              className="wd-70 hg-70"
               sx={{
                 content: {
                   xs: "url(/images/svgMangataWhite.svg)",
                   sm: "url(/images/svgMangataWhite.svg)",
                 },
-                width: "70px",
-                height: "70px",
-                objectFit: "cover",
                 display: { xs: "block", sm: "block", md: "flex" },
+                objectFit: "cover",
               }}
               alt="Logo Mangata"
             />
@@ -326,17 +322,15 @@ const NameLunchForm: React.FC = () => {
           <Box>
             <Box position="relative">
               <Box
+                className="wd-24 hg-24 p-absolute"
                 component={Icon}
                 icon="solar:suitcase-tag-bold-duotone"
                 sx={{
-                  width: "24px",
-                  height: "24px",
                   color: {
                     xs: "var(--color-theme-white)",
                     sm: "var(--color-theme-white)",
                     md: "#var(--color-theme-dark-blue)",
                   },
-                  position: "absolute",
                 }}
               />
 
