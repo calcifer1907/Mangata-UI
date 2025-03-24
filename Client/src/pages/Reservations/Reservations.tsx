@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import InputAdornment from "@mui/material/InputAdornment";
 import Button from "@mui/material/Button";
@@ -23,46 +23,48 @@ import ButtonComponent from "../../components/Buttons/ButtonComponent";
 
 /**Functions */
 import { formatPrice } from "../../generalFunctions/formaters";
-import { generarCodigoReservaUX2 } from "../../generalFunctions/generateCodeReservation";
 
 /**Hooks */
 import { useAccompanist } from "../../hooks/useReservationContext";
 import useLogicReservations from "../../hooks/useLogicReservations";
 
-/**APis */
-import { getAccompanist } from "../../utils/api/agent";
-
-/**Interfaces */
-import {
-  IFields,
-  IErrorFieldAccompanist,
-  IOptions,
-} from "../../interfaces/IAccompanist";
-
 const FORMAT = "DD/MM/YYYY";
 
-const today = format(new Date(), "YYYY-MM-DD", "co");
-
 const NameLunchForm: React.FC = () => {
-  const [fields, setFields] = useState<IFields[]>([
-    { name: "", lunch: { label: "", value: 0 } },
-  ]);
-  const [valueCel, setValueCel] = useState<string>("");
-  const [valueEmail, setValueEmail] = useState<string>("");
-  const [errors, setErrors] = useState<IErrorFieldAccompanist[]>([]);
   const [isVisibleGrid, setIsVisibleGrid] = useState(false);
 
-  const { optionsLunches } = useAccompanist();
-  const [dateChange, setDateChange] = useState<string>(today);
-  const [openDialogPayment, setOpenDialogPayment] = useState<boolean>(false);
+  const {
+    optionsLunches,
+    dateChange,
+
+    errors,
+    valueCel,
+    valueEmail,
+    setValueEmail,
+    setValueCel,
+    fields,
+    setOpenModal,
+    openModal,
+    openDialogPayment,
+    setOpenDialogPayment,
+    dataCodeReservation,
+  } = useAccompanist();
 
   const [maxHeight, setMaxHeight] = useState<number>(0);
 
-  const CODE_RESERVATION = useMemo(() => {
-    return generarCodigoReservaUX2();
-  }, []);
-
-  const { dataCodeReservation, PRICES } = useLogicReservations();
+  const {
+    handleReservation,
+    PRICES,
+    addField,
+    CODE_RESERVATION,
+    removeField,
+    calculatePrice,
+    handleFormatPrice,
+    handleChange,
+    validateFields,
+    handleClose,
+    handleChangeDate,
+  } = useLogicReservations();
 
   useEffect(() => {
     const body = document.getElementById("root");
@@ -71,103 +73,6 @@ const NameLunchForm: React.FC = () => {
     setMaxHeight(heightContainer || 0);
     body?.style.setProperty("overflow-y", "hidden");
   }, []);
-  // Maneja los cambios en los campos
-  const handleChange = (
-    index: number,
-    fieldName: string,
-    value: string | IOptions
-  ) => {
-    const updatedFields = [...fields];
-    updatedFields[index] = { ...updatedFields[index], [fieldName]: value };
-    setFields(updatedFields);
-    const errorValue =
-      fieldName === "name"
-        ? (value as string).trim() === ""
-        : (value as IOptions).label === "";
-    // Limpiar errores al cambiar algo
-    const updatedErrors = [...errors];
-    updatedErrors[index] = {
-      ...updatedErrors[index],
-      [fieldName]: errorValue,
-    };
-    setErrors(updatedErrors);
-  };
-
-  // Valida que todos los campos estén llenos
-  const validateFields = (): boolean => {
-    const validationErrors = fields.map((field) => ({
-      name: field.name.trim() === "",
-      lunch: field.lunch.value === 0,
-    }));
-    setErrors(validationErrors);
-    return (
-      !validationErrors.some((error) => error.name || error.lunch) &&
-      valueCel !== ""
-    );
-  };
-
-  // Agrega una nueva fila si la validación es exitosa
-  const addField = () => {
-    if (validateFields()) {
-      setFields([...fields, { name: "", lunch: { label: "", value: 0 } }]);
-      setErrors([...errors, { name: false, lunch: false }]);
-    }
-  };
-
-  // Elimina una fila específica
-  const removeField = (index: number) => {
-    const updatedFields = fields.filter((_, i) => i !== index);
-    const updatedErrors = errors.filter((_, i) => i !== index);
-    setFields(updatedFields);
-    setErrors(updatedErrors);
-  };
-
-  const calculatePrice = () => {
-    const NEW_PRICE = Number(PRICES.PRICE_MAX) * fields.length;
-    return NEW_PRICE;
-  };
-
-  const handleFormatPrice = () => {
-    const newPrice = calculatePrice();
-    const FORMAT_PRICE = new Intl.NumberFormat("es-CO", {
-      style: "currency",
-      currency: "COP",
-    }).format(newPrice);
-    return FORMAT_PRICE;
-  };
-
-  const handleReservation = async () => {
-    const ID_EMPLOYEE = dataCodeReservation?.id;
-    if (validateFields()) {
-      const body = {
-        CODE_RESERVATION,
-        ID_EMPLOYEE,
-        TELEPHONE: valueCel,
-        ACCOMPANIST: fields,
-        EMAIL: valueEmail,
-        AGREED_PRICE: Number(PRICES.PRICE_MAX),
-        MIN_PRICE: Number(PRICES.PRICE_MIN),
-        CREATED_AT: format(dateChange, "YYYY-MM-DD HH:mm:ss", "en"),
-      };
-
-      const data = await getAccompanist.saveReservation(body);
-      if (data.message === "success") {
-        enqueueSnackbar("Se guardo correctamente la reserva", {
-          variant: "success",
-          anchorOrigin: {
-            vertical: "top",
-            horizontal: "right",
-          },
-        });
-        handleClose();
-        setOpenDialogPayment(true);
-      }
-    }
-  };
-
-  const [openModal, setOpenModal] = useState(false);
-
-  const handleClose = () => setOpenModal(!openModal);
 
   const style = {
     position: "absolute",
@@ -223,7 +128,7 @@ const NameLunchForm: React.FC = () => {
                 Reserva tu día {CODE_RESERVATION}
               </Typography>
               <Box className="background-blue-dark containerAsesor p-absolute" />
-              {dataCodeReservation?.user_name && (
+              {dataCodeReservation && (
                 <Typography className="color-blue-dark titleAsesor">
                   Asesor: <span>{dataCodeReservation?.user_name}</span>
                 </Typography>
@@ -244,7 +149,7 @@ const NameLunchForm: React.FC = () => {
               margin="none"
               type="date"
               value={dateChange}
-              onChange={(e) => setDateChange(e.target.value)}
+              onChange={(e) => handleChangeDate(e.target.value)}
               slotProps={{
                 input: {
                   startAdornment: (

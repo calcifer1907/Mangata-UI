@@ -12,12 +12,46 @@ import {
 
 import { getAccompanist, getMinMax } from "../utils/api/agent";
 
-import { IMinMax, IOptions } from "../interfaces/IAccompanist";
-import { ISaveCodeGenerate } from "../interfaces/IReservation";
+import {
+  IErrorFieldAccompanist,
+  IFields,
+  IMinMax,
+  IOptions,
+} from "../interfaces/IAccompanist";
+import {
+  IAccompanistContext,
+  ISaveCodeGenerate,
+} from "../interfaces/IReservation";
 import { IGetUserId } from "../interfaces/IUser";
+import { format } from "@formkit/tempo";
 
-const CreateContext = createContext<any>(true);
+const initialState: IAccompanistContext = {
+  optionsLunches: [],
+  setOptionsLunches: () => {},
+  minmax: { MIN: 0, MAX: 0 },
+  dataCodeReservation: null,
+  setDataCodeReservation: () => {},
+  getUserId: null,
+  setGetUserId: () => {},
+  fields: [{ name: "", lunch: { label: "", value: 0 } }],
+  setFields: () => {},
+  errors: [],
+  setErrors: () => {},
+  valueCel: "",
+  setValueCel: () => {},
+  valueEmail: "",
+  setValueEmail: () => {},
+  dateChange: "",
+  setDateChange: () => {},
+  openModal: false,
+  setOpenModal: () => {},
+  openDialogPayment: false,
+  setOpenDialogPayment: () => {},
+};
 
+const CreateContext = createContext<IAccompanistContext>(initialState);
+
+const today = format(new Date(), "YYYY-MM-DD", "co");
 const AccompanistContext: FC<any> = (props) => {
   const childrenWithProps = cloneElement(props.children, {
     ...props,
@@ -26,9 +60,22 @@ const AccompanistContext: FC<any> = (props) => {
   const [optionsLunches, setOptionsLunches] = useState<IOptions[]>([]);
   const [minmax, setMinMax] = useState<IMinMax>({ MIN: 0, MAX: 0 });
   const [getUserId, setGetUserId] = useState<IGetUserId | null>(null);
+  const [valueCel, setValueCel] = useState<string>("");
+  const [valueEmail, setValueEmail] = useState<string>("");
+  const [errors, setErrors] = useState<IErrorFieldAccompanist[]>([]);
+
+  const [openModal, setOpenModal] = useState(false);
+
+  const [openDialogPayment, setOpenDialogPayment] = useState<boolean>(false);
+
+  const [dateChange, setDateChange] = useState<string>(today);
 
   const [dataCodeReservation, setDataCodeReservation] =
     useState<ISaveCodeGenerate | null>(null);
+
+  const [fields, setFields] = useState<IFields[]>([
+    { name: "", lunch: { label: "", value: 0 } },
+  ]);
 
   const getLunches = useCallback(async () => {
     const data = await getAccompanist.getLunches();
@@ -61,8 +108,34 @@ const AccompanistContext: FC<any> = (props) => {
       setDataCodeReservation,
       getUserId,
       setGetUserId,
+      fields,
+      setFields,
+      errors,
+      setErrors,
+      valueCel,
+      setValueCel,
+      valueEmail,
+      setValueEmail,
+      dateChange,
+      setDateChange,
+      openModal,
+      setOpenModal,
+      openDialogPayment,
+      setOpenDialogPayment,
     }),
-    [optionsLunches, minmax, dataCodeReservation, getUserId]
+    [
+      optionsLunches,
+      minmax,
+      dataCodeReservation,
+      getUserId,
+      fields,
+      errors,
+      valueCel,
+      valueEmail,
+      dateChange,
+      openModal,
+      openDialogPayment,
+    ]
   );
 
   return (
