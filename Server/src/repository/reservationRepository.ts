@@ -28,17 +28,12 @@ class ReservationRepository {
   }
 
   async getCodeReservation(code: string): Promise<ISaveCodeReservation> {
-    try {
-      const { rows, rowCount } = await pool.query(
-        "SELECT * FROM save_generate_codes_reservation WHERE CODE_GENERATE=$1;",
-        [code]
-      );
-      if (rowCount === 0)
-        throw new Error("Error: No se encontró el código de reserva");
-      return rows[0] as ISaveCodeReservation;
-    } catch (error) {
-      throw new Error(`Error: ${error}`);
-    }
+    const { rows, rowCount } = await pool.query(
+      "SELECT * FROM save_generate_codes_reservation WHERE CODE_GENERATE=$1;",
+      [code]
+    );
+    if (rowCount === 0) throw new Error("No se encontró el código de reserva");
+    return rows[0] as ISaveCodeReservation;
   }
 }
 

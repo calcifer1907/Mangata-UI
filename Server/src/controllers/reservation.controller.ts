@@ -5,6 +5,7 @@ import AppError from "../errors/appError";
 import reservationRepository from "../repository/reservationRepository";
 
 import userRepository from "../repository/userRepository";
+import { type } from "node:os";
 
 // import { sendEmail } from "./sendEmail.controller";
 
@@ -261,23 +262,22 @@ class ReservationController {
     }
   }
 
-  async getCodeReservation(request: Request, response: Response) {
+  async getCodeReservation(
+    request: Request,
+    response: Response,
+    next: NextFunction
+  ): Promise<void> {
     try {
       const { code } = request.body;
-
       const result = await reservationRepository.getCodeReservation(code);
-
       if (result) {
         const user = await userRepository.getUserName(result.id);
         result.user_name = user.user_name;
       }
-
       response.json(result);
     } catch (error) {
-      if (error instanceof AppError) {
-        response.status(error.statusCode).json({ message: error.message });
-      } else {
-        response.status(500).json({ message: "Something wrong error!" });
+      if (error instanceof Error) {
+        response.status(404).json({ message: error.message });
       }
     }
   }

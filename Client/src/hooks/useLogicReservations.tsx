@@ -4,10 +4,11 @@ import { getCodeReservation } from "../utils/api/agent";
 
 import { useAccompanist } from "./useReservationContext";
 
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
 const useLogicReservations = () => {
   const [searchParams] = useSearchParams();
+  const navigator = useNavigate();
 
   const ID_PARAM = searchParams.get("id");
 
@@ -20,10 +21,12 @@ const useLogicReservations = () => {
         const response = await getCodeReservation({ code: ID_PARAM });
         setDataCodeReservation(response);
       }
-    } catch (error) {
-      return error;
+    } catch (error: any) {
+      if (error.response?.status === 404) {
+        navigator("/404");
+      }
     }
-  }, [ID_PARAM, setDataCodeReservation]);
+  }, [ID_PARAM, setDataCodeReservation, navigator]);
 
   const PRICES = useMemo(
     () => ({
