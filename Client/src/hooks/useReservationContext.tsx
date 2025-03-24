@@ -13,6 +13,8 @@ import {
 import { getAccompanist, getMinMax } from "../utils/api/agent";
 
 import { IMinMax, IOptions } from "../interfaces/IAccompanist";
+import { ISaveCodeGenerate } from "../interfaces/IReservation";
+import { IGetUserId } from "../interfaces/IUser";
 
 const CreateContext = createContext<any>(true);
 
@@ -23,6 +25,10 @@ const AccompanistContext: FC<any> = (props) => {
   });
   const [optionsLunches, setOptionsLunches] = useState<IOptions[]>([]);
   const [minmax, setMinMax] = useState<IMinMax>({ MIN: 0, MAX: 0 });
+  const [getUserId, setGetUserId] = useState<IGetUserId | null>(null);
+
+  const [dataCodeReservation, setDataCodeReservation] =
+    useState<ISaveCodeGenerate | null>(null);
 
   const getLunches = useCallback(async () => {
     const data = await getAccompanist.getLunches();
@@ -51,8 +57,12 @@ const AccompanistContext: FC<any> = (props) => {
       optionsLunches,
       setOptionsLunches,
       minmax,
+      dataCodeReservation,
+      setDataCodeReservation,
+      getUserId,
+      setGetUserId,
     }),
-    [optionsLunches, minmax]
+    [optionsLunches, minmax, dataCodeReservation, getUserId]
   );
 
   return (

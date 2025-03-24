@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import InputAdornment from "@mui/material/InputAdornment";
 import Button from "@mui/material/Button";
@@ -26,9 +26,10 @@ import { generarCodigoReservaUX2 } from "../../generalFunctions/generateCodeRese
 
 /**Hooks */
 import { useAccompanist } from "../../hooks/useReservationContext";
+import useLogicReservations from "../../hooks/useLogicReservations";
 
 /**APis */
-import { getAccompanist, methodUser } from "../../utils/api/agent";
+import { getAccompanist } from "../../utils/api/agent";
 
 /**Interfaces */
 import {
@@ -36,7 +37,6 @@ import {
   IErrorFieldAccompanist,
   IOptions,
 } from "../../interfaces/IAccompanist";
-import { IGetUserId } from "../../interfaces/IUser";
 
 const FORMAT = "DD/MM/YYYY";
 
@@ -50,9 +50,10 @@ const NameLunchForm: React.FC = () => {
   const [valueEmail, setValueEmail] = useState<string>("");
   const [errors, setErrors] = useState<IErrorFieldAccompanist[]>([]);
   const [isVisibleGrid, setIsVisibleGrid] = useState(false);
-  const [getUserId, setGetUserId] = useState<IGetUserId | null>(null);
+
   const [searchParams] = useSearchParams();
-  const { optionsLunches, minmax } = useAccompanist();
+
+  const { optionsLunches } = useAccompanist();
   const [dateChange, setDateChange] = useState<string>(today);
   const [openDialogPayment, setOpenDialogPayment] = useState<boolean>(false);
 
@@ -62,23 +63,11 @@ const NameLunchForm: React.FC = () => {
     return generarCodigoReservaUX2();
   }, []);
 
-  const PRICES = useMemo(
-    () => ({
-      PRICE_MAX: searchParams.get("price") ?? minmax.MAX,
-      PRICE_MIN: searchParams.get("minPrice") ?? minmax.MIN,
-    }),
-    [minmax, searchParams]
-  );
-
   const ID_EMPLOYEE_PARAM = searchParams.get("id");
 
-  const getuserId = useCallback(async () => {
-    const body = {
-      id: Number(ID_EMPLOYEE_PARAM) || -1,
-    };
-    const data = await methodUser.getUserId(body);
-    setGetUserId(data);
-  }, [ID_EMPLOYEE_PARAM]);
+  const { dataCodeReservation, PRICES } = useLogicReservations({
+    code: CODE_RESERVATION,
+  });
 
   useEffect(() => {
     const body = document.getElementById("root");
@@ -86,8 +75,7 @@ const NameLunchForm: React.FC = () => {
       document.getElementById("contentPrimary")?.offsetHeight;
     setMaxHeight(heightContainer || 0);
     body?.style.setProperty("overflow-y", "hidden");
-    getuserId();
-  }, [getuserId]);
+  }, []);
   // Maneja los cambios en los campos
   const handleChange = (
     index: number,
@@ -154,7 +142,7 @@ const NameLunchForm: React.FC = () => {
   };
 
   const handleReservation = async () => {
-    const ID_EMPLOYEE = getUserId?.id;
+    const ID_EMPLOYEE = dataCodeReservation?.id;
     if (validateFields()) {
       const body = {
         CODE_RESERVATION,
@@ -242,9 +230,9 @@ const NameLunchForm: React.FC = () => {
               <Box className="background-blue-dark containerAsesor p-absolute" />
               {ID_EMPLOYEE_PARAM && (
                 <Typography className="color-blue-dark titleAsesor">
-                  {getUserId && (
+                  {dataCodeReservation?.user_name && (
                     <>
-                      Asesor: <span>{getUserId?.user_name}</span>
+                      Asesor: <span>{dataCodeReservation?.user_name}</span>
                     </>
                   )}
                 </Typography>

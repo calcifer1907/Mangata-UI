@@ -1,29 +1,38 @@
-import React, { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 
 import { getCodeReservation } from "../utils/api/agent";
-import { ISaveCodeGenerate } from "../interfaces/IReservation";
 
-const useLogicReservations = () => {
-  const [dataCodeReservation, setDataCodeReservation] =
-    React.useState<ISaveCodeGenerate | null>(null);
+import { useAccompanist } from "./useReservationContext";
 
-  const requestGetCodeReservation = useCallback(
-    async (body: { code: string }) => {
-      try {
-        const response = await getCodeReservation(body);
-        setDataCodeReservation(response);
-      } catch (error) {
-        return error;
-      }
-    },
-    []
+interface IProps {
+  code: string;
+}
+const useLogicReservations = ({ code }: IProps) => {
+  const { dataCodeReservation, setDataCodeReservation, minmax } =
+    useAccompanist();
+
+  const requestGetCodeReservation = useCallback(async () => {
+    try {
+      const response = await getCodeReservation({ code });
+      setDataCodeReservation(response);
+    } catch (error) {
+      return error;
+    }
+  }, [code]);
+
+  const PRICES = useMemo(
+    () => ({
+      PRICE_MAX: dataCodeReservation?.agreed_price ?? minmax.MAX,
+      PRICE_MIN: dataCodeReservation?.min_price ?? minmax.MIN,
+    }),
+    [minmax, dataCodeReservation]
   );
 
   useEffect(() => {
     requestGetCodeReservation();
   }, [requestGetCodeReservation]);
 
-  return {};
+  return { dataCodeReservation, PRICES };
 };
 
 export default useLogicReservations;

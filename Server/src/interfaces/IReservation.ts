@@ -4,4 +4,5 @@ export interface ISaveCodeReservation {
   min_price: number;
   agreed_price: number;
   created_at: string;
+  user_name?: string;
 }

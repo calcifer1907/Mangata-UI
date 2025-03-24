@@ -4,6 +4,8 @@ import AppError from "../errors/appError";
 
 import reservationRepository from "../repository/reservationRepository";
 
+import userRepository from "../repository/userRepository";
+
 // import { sendEmail } from "./sendEmail.controller";
 
 export const createReservation = async (
@@ -263,6 +265,12 @@ class ReservationController {
     try {
       const { code } = request.body;
       const result = await reservationRepository.getCodeReservation(code);
+
+      if (result) {
+        const user = await userRepository.getUserName(result.id);
+        result.user_name = user.user_name;
+      }
+
       response.json(result);
     } catch (error) {
       if (error instanceof AppError) {
