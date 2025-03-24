@@ -4,21 +4,27 @@ import { getCodeReservation } from "../utils/api/agent";
 
 import { useAccompanist } from "./useReservationContext";
 
-interface IProps {
-  code: string;
-}
-const useLogicReservations = ({ code }: IProps) => {
+import { useSearchParams } from "react-router-dom";
+
+const useLogicReservations = () => {
+  const [searchParams] = useSearchParams();
+
+  const ID_PARAM = searchParams.get("id");
+
   const { dataCodeReservation, setDataCodeReservation, minmax } =
     useAccompanist();
 
   const requestGetCodeReservation = useCallback(async () => {
     try {
-      const response = await getCodeReservation({ code });
-      setDataCodeReservation(response);
+      console.log(ID_PARAM);
+      if (ID_PARAM) {
+        const response = await getCodeReservation({ code: ID_PARAM });
+        setDataCodeReservation(response);
+      }
     } catch (error) {
       return error;
     }
-  }, [code]);
+  }, [ID_PARAM]);
 
   const PRICES = useMemo(
     () => ({

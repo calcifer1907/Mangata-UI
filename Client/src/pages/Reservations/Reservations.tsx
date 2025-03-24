@@ -13,7 +13,7 @@ import "./Reservations.scss";
 /**Libreries */
 import { format } from "@formkit/tempo";
 import { Icon } from "@iconify/react";
-import { useSearchParams } from "react-router-dom";
+
 import { enqueueSnackbar } from "notistack";
 
 /**Components */
@@ -51,8 +51,6 @@ const NameLunchForm: React.FC = () => {
   const [errors, setErrors] = useState<IErrorFieldAccompanist[]>([]);
   const [isVisibleGrid, setIsVisibleGrid] = useState(false);
 
-  const [searchParams] = useSearchParams();
-
   const { optionsLunches } = useAccompanist();
   const [dateChange, setDateChange] = useState<string>(today);
   const [openDialogPayment, setOpenDialogPayment] = useState<boolean>(false);
@@ -63,11 +61,7 @@ const NameLunchForm: React.FC = () => {
     return generarCodigoReservaUX2();
   }, []);
 
-  const ID_EMPLOYEE_PARAM = searchParams.get("id");
-
-  const { dataCodeReservation, PRICES } = useLogicReservations({
-    code: CODE_RESERVATION,
-  });
+  const { dataCodeReservation, PRICES } = useLogicReservations();
 
   useEffect(() => {
     const body = document.getElementById("root");
@@ -228,13 +222,9 @@ const NameLunchForm: React.FC = () => {
                 Reserva tu día {CODE_RESERVATION}
               </Typography>
               <Box className="background-blue-dark containerAsesor p-absolute" />
-              {ID_EMPLOYEE_PARAM && (
+              {dataCodeReservation?.user_name && (
                 <Typography className="color-blue-dark titleAsesor">
-                  {dataCodeReservation?.user_name && (
-                    <>
-                      Asesor: <span>{dataCodeReservation?.user_name}</span>
-                    </>
-                  )}
+                  Asesor: <span>{dataCodeReservation?.user_name}</span>
                 </Typography>
               )}
             </Box>

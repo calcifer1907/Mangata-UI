@@ -264,6 +264,7 @@ class ReservationController {
   async getCodeReservation(request: Request, response: Response) {
     try {
       const { code } = request.body;
+
       const result = await reservationRepository.getCodeReservation(code);
 
       if (result) {
