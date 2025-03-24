@@ -19,6 +19,7 @@ import { enqueueSnackbar } from "notistack";
 /**Components */
 import Accompanist from "../../components/Accompanist/Accompanist";
 import DialogPayMents from "../../components/Dialogs/DialogPayMents";
+import ButtonComponent from "../../components/Buttons/ButtonComponent";
 
 /**Functions */
 import { formatPrice } from "../../generalFunctions/formaters";
@@ -216,8 +217,8 @@ const NameLunchForm: React.FC = () => {
     >
       <Grid2 size={{ xs: 12, sm: 12, md: 12, lg: 6 }}>
         <Box className="BoxContainer p-relative">
-          <Box>
-            <Box style={{ marginBottom: 20 }}>
+          <Box style={{ marginBottom: 20 }}>
+            <Box style={{ marginBottom: 15 }}>
               <Typography className="color-blue-dark title-reservation">
                 Reserva tu día {CODE_RESERVATION}
               </Typography>
@@ -228,22 +229,12 @@ const NameLunchForm: React.FC = () => {
                 </Typography>
               )}
             </Box>
-            <Box className="background-blue-dark addPersonButton">
-              <Button
-                className="button color-theme-white"
-                size="small"
-                onClick={addField}
-                startIcon={
-                  <Icon
-                    icon="solar:user-plus-bold-duotone"
-                    width="24"
-                    height="24"
-                  />
-                }
-              >
-                Agregar persona
-              </Button>
-            </Box>
+            <ButtonComponent
+              title="Agregar persona"
+              onClick={addField}
+              iconName="solar:user-plus-bold-duotone"
+              background="background-color-button-dark-blue"
+            />
           </Box>
           <Box className="d-flex flex-wrap gap-2 flex-direction-row">
             <TextField

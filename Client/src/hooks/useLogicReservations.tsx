@@ -5,6 +5,7 @@ import { getCodeReservation } from "../utils/api/agent";
 import { useAccompanist } from "./useReservationContext";
 
 import { useSearchParams, useNavigate } from "react-router-dom";
+import { handleDiffHours } from "../generalFunctions/formatDate";
 
 const useLogicReservations = () => {
   const [searchParams] = useSearchParams();
@@ -18,7 +19,14 @@ const useLogicReservations = () => {
   const requestGetCodeReservation = useCallback(async () => {
     try {
       if (ID_PARAM) {
+        const currentDate = new Date();
         const response = await getCodeReservation({ code: ID_PARAM });
+        const diff = new Date(response.created_at);
+        const diffHours = handleDiffHours(currentDate, diff);
+
+        // if (diffHours > 1) {
+        //   navigator("/404");
+        // }
         setDataCodeReservation(response);
       }
     } catch (error: any) {
