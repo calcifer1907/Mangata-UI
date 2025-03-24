@@ -5,11 +5,12 @@
 }
 
 :root{
-  --backgrounInput :#E8E8E8;
+  --color-theme-soft-silver :#E8E8E8;
   --color-theme-dark-blue: #2B3D5E;
   --color-theme-ligth-blue:#6490c7;
   --color-theme-dark-blueLigth:#4672a5;  
   --color-theme-sand-light:#f8eac9;
+  --color-theme-gray: #D9D9D947;
   --color-theme-white:#FFFFFF
 }
 
@@ -48,9 +49,6 @@ body{
   background-color: var(--color-theme-dark-blue)
 }
 
-.background-blue-dark{
-  background-color: var(--color-theme-dark-blue)
-}
 
 .color-blue-ligth{
   color: var(--color-theme-dark-blueLigth)

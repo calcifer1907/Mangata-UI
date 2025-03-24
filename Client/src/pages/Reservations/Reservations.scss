@@ -36,3 +36,28 @@
   margin-block: 16px
 }
         
+
+.line-vertical{
+        height: 70%;
+        width: 6px;
+        position: relative;
+        top:100px;
+}
+
+.purchase-summary{
+        border-radius: 16px 16px 0px 0px;
+        z-index: 1;
+        transition: transform 0.2s;
+        overflow: hidden;
+        cursor: pointer;
+        padding-bottom: 2px;
+}
+
+.purchase-summary-line-top{
+        width:35%;
+        height: 3px;
+        border-radius: 100px;
+        margin: 0 auto;
+        margin-top: 6px;
+        background-color: var(--color-theme-gray);
+}

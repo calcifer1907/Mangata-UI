@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-import InputAdornment from "@mui/material/InputAdornment";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Grid2 from "@mui/material/Grid2";
 import Modal from "@mui/material/Modal";
-import TextField from "@mui/material/TextField";
 
 import "./Reservations.scss";
 
@@ -212,17 +210,10 @@ const NameLunchForm: React.FC = () => {
         size={{ xs: 1, sm: 1 }}
         sx={{ display: { xs: "none", sm: "none", md: "block" } }}
       >
-        <Box
-          style={{
-            backgroundColor: "#2B3D5E",
-            height: "70%",
-            position: "relative",
-            top: 100,
-            width: 6,
-          }}
-        />
+        <Box className="background-blue-dark line-vertical" />
       </Grid2>
       <Grid2
+        className="purchase-summary w-100"
         component="div"
         size={{ xs: 12, sm: 12, md: 12, lg: 5 }}
         sx={{
@@ -233,35 +224,23 @@ const NameLunchForm: React.FC = () => {
           },
           bottom: { xs: 0, sm: 0, md: "inherit" },
           top: { xs: "inherit", sm: "inherit", md: 0 },
-          borderRadius: "16px 16px 0px 0px",
           backgroundColor: {
-            xs: "#2B3D5E",
-            sm: "#2B3D5E",
-            md: "#FFFFFF",
-            lg: "#FFFFFF",
+            xs: "var(--color-theme-dark-blue)",
+            sm: "var(--color-theme-dark-blue)",
+            md: "var(--color-theme-white)",
+            lg: "var(--color-theme-white)",
           },
-          zIndex: 1,
           transform: {
             xs: `translateY(${!isVisibleGrid ? 0 : "calc(100% - 7rem"}))`,
             md: "translateY(0)",
           },
           maxHeight: { xs: 550, sm: 550 },
-          transition: "transform 0.2s",
-          overflow: "hidden",
-          cursor: "pointer",
-          width: "100%",
-          paddingBottom: 2,
         }}
         onClick={() => setIsVisibleGrid((prev) => !prev)}
       >
         <Box
+          className="purchase-summary-line-top"
           sx={{
-            backgroundColor: "#D9D9D947",
-            width: "35%",
-            height: "3px",
-            borderRadius: "100px",
-            margin: "0 auto",
-            marginTop: "6px",
             display: { xs: "block", md: "none" },
           }}
         />

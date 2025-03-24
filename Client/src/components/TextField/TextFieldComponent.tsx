@@ -4,8 +4,8 @@ import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 
 interface IProps {
-  value: string;
   onChange: (date: string) => void;
+  value: string;
   label: string;
   placeholder: string;
   type?: string;
