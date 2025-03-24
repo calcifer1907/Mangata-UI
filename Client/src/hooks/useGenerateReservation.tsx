@@ -5,7 +5,6 @@ import { getMinMax, saveGenerateCode } from "../utils/api/agent";
 
 /**Interface */
 import { IMinMax } from "../interfaces/IAccompanist";
-import { ICodeAgreedPrice } from "../interfaces/IReservation";
 
 /**Context */
 import { useContextUser } from "./useContextUser";
@@ -18,8 +17,7 @@ const useGenerateReservation = () => {
   const [valueSlider, setValueSlider] = useState<number | number[]>(0);
 
   const [minmax, setMinMax] = useState<IMinMax>({ MIN: 0, MAX: 0 });
-  const [saveCodeReservation, setSaveCodeReservation] =
-    useState<ICodeAgreedPrice>({ code: "", agreedPrice: 0 });
+  const [saveCodeReservation, setSaveCodeReservation] = useState<string>("");
 
   const { userInfo } = useContextUser();
   const { USER_INFO } = userInfo;
@@ -49,10 +47,7 @@ const useGenerateReservation = () => {
     };
     const data = await saveGenerateCode(body);
     if (data.status === 201) {
-      setSaveCodeReservation({
-        code: data.code,
-        agreedPrice: valueSlider as number,
-      });
+      setSaveCodeReservation(data.code);
     }
   };
 

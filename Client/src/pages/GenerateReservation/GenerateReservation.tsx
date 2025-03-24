@@ -35,7 +35,7 @@ const GenerateReservation = () => {
 
   useEffect(() => {
     const timeClosed = setTimeout(() => {
-      setSaveCodeReservation({ code: "", agreedPrice: 0 });
+      setSaveCodeReservation("");
     }, 60000);
     if (timeClosed) return () => clearTimeout(timeClosed);
   }, []);
@@ -92,7 +92,7 @@ const GenerateReservation = () => {
             </Typography>
           </Box>
         </Box>
-        {saveCodeReservation.code && (
+        {saveCodeReservation && (
           <Box
             className="content-qr"
             sx={{
@@ -103,7 +103,7 @@ const GenerateReservation = () => {
               size={256}
               className="wd-100 hg-100"
               viewBox={`0 0 250 250`}
-              value={`${VITE_URL_UI}ReservationEmployee?id=${saveCodeReservation.code}`}
+              value={`${VITE_URL_UI}ReservationEmployee?id=${saveCodeReservation}`}
             />
           </Box>
         )}
