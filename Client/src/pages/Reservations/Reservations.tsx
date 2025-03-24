@@ -241,16 +241,17 @@ const NameLunchForm: React.FC = () => {
       >
         <LineTopIcon isVisibleGrid={isVisibleGrid} />
         <Box
+          className="margin-0-auto"
           sx={{
             width: {
               xs: "calc(100% - 30px)",
               sm: "calc(100% - 30px)",
               md: 550,
             },
-            margin: "0 auto",
           }}
         >
           <Box
+            className="margin-0-auto"
             component="img"
             sx={{
               content: {
@@ -259,40 +260,31 @@ const NameLunchForm: React.FC = () => {
                 md: "url(/images/logoMangataBlue.png)",
               },
               display: { xs: "none", md: "flex" },
-              margin: "0 auto",
             }}
             alt="Logo Mangatas"
           />
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              marginBottom: 3,
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                marginTop: 1,
-                gap: 2,
-              }}
-            >
+          <Box className="d-flex justify-content-between align-items-center margin-bottom">
+            <Box className="d-flex justify-content-center align-items-center gap-16 margin-top-8">
               <Box
                 component={Icon}
                 icon="solar:bill-check-bold-duotone"
                 sx={{
                   width: "24px",
                   height: "24px",
-                  color: { xs: "#FFFFFF", sm: "#FFFFFF", md: "#2B3D5E" },
+                  color: {
+                    xs: "var(--color-theme-white)",
+                    sm: "var(--color-theme-white)",
+                    md: "#var(--color-theme-dark-blue)",
+                  },
                 }}
               />
 
               <Typography
                 sx={{
-                  color: { xs: "#FFFFFF", md: "#2B3D5E" },
+                  color: {
+                    xs: "var(--color-theme-white)",
+                    md: "#var(--color-theme-dark-blue)",
+                  },
                   fontSize: 20,
                   fontWeight: 800,
                 }}
@@ -302,7 +294,10 @@ const NameLunchForm: React.FC = () => {
                   <Typography
                     component="span"
                     sx={{
-                      color: { xs: "#FFFFFF", md: "#2B3D5E" },
+                      color: {
+                        xs: "var(--color-theme-white)",
+                        md: "#var(--color-theme-dark-blue)",
+                      },
                       fontSize: 14,
                       fontWeight: 800,
                       display: { xs: "block", md: "none" },
@@ -336,7 +331,11 @@ const NameLunchForm: React.FC = () => {
                 sx={{
                   width: "24px",
                   height: "24px",
-                  color: { xs: "#FFFFFF", sm: "#FFFFFF", md: "#2B3D5E" },
+                  color: {
+                    xs: "var(--color-theme-white)",
+                    sm: "var(--color-theme-white)",
+                    md: "#var(--color-theme-dark-blue)",
+                  },
                   position: "absolute",
                 }}
               />
@@ -359,11 +358,17 @@ const NameLunchForm: React.FC = () => {
                     alignItems: "center",
                   }}
                 >
-                  <Typography sx={{ color: { xs: "#FFFFFF", md: "#000" } }}>
+                  <Typography
+                    sx={{
+                      color: { xs: "var(--color-theme-white)", md: "#000" },
+                    }}
+                  >
                     Paquete Estandar
                   </Typography>
                 </Box>
-                <Typography sx={{ color: { xs: "#FFFFFF", md: "#000" } }}>
+                <Typography
+                  sx={{ color: { xs: "var(--color-theme-white)", md: "#000" } }}
+                >
                   {formatPrice(Number(PRICES.PRICE_MAX))}
                 </Typography>
               </Box>
@@ -375,7 +380,11 @@ const NameLunchForm: React.FC = () => {
                 sx={{
                   width: "24px",
                   height: "24px",
-                  color: { xs: "#FFFFFF", sm: "#FFFFFF", md: "#2B3D5E" },
+                  color: {
+                    xs: "var(--color-theme-white)",
+                    sm: "var(--color-theme-white)",
+                    md: "#var(--color-theme-dark-blue)",
+                  },
                   position: "absolute",
                 }}
               />
@@ -389,10 +398,14 @@ const NameLunchForm: React.FC = () => {
                   marginInlineStart: 5,
                 }}
               >
-                <Typography sx={{ color: { xs: "#FFFFFF", md: "#000" } }}>
+                <Typography
+                  sx={{ color: { xs: "var(--color-theme-white)", md: "#000" } }}
+                >
                   Fecha
                 </Typography>
-                <Typography sx={{ color: { xs: "#FFFFFF", md: "#000" } }}>
+                <Typography
+                  sx={{ color: { xs: "var(--color-theme-white)", md: "#000" } }}
+                >
                   {format(dateChange, FORMAT, "co")}
                 </Typography>
               </Box>
@@ -404,7 +417,11 @@ const NameLunchForm: React.FC = () => {
                 sx={{
                   width: "24px",
                   height: "24px",
-                  color: { xs: "#FFFFFF", sm: "#FFFFFF", md: "#2B3D5E" },
+                  color: {
+                    xs: "var(--color-theme-white)",
+                    sm: "var(--color-theme-white)",
+                    md: "#var(--color-theme-dark-blue)",
+                  },
                   position: "absolute",
                 }}
               />
@@ -419,10 +436,14 @@ const NameLunchForm: React.FC = () => {
                   marginInlineStart: 5,
                 }}
               >
-                <Typography sx={{ color: { xs: "#FFFFFF", md: "#000" } }}>
+                <Typography
+                  sx={{ color: { xs: "var(--color-theme-white)", md: "#000" } }}
+                >
                   Personas
                 </Typography>
-                <Typography sx={{ color: { xs: "#FFFFFF", md: "#000" } }}>
+                <Typography
+                  sx={{ color: { xs: "var(--color-theme-white)", md: "#000" } }}
+                >
                   {fields.length}
                 </Typography>
               </Box>
@@ -432,7 +453,10 @@ const NameLunchForm: React.FC = () => {
                 icon="solar:cart-large-4-bold-duotone"
                 width="24"
                 height="24"
-                style={{ color: "#2B3D5E", position: "absolute" }}
+                style={{
+                  color: "#var(--color-theme-dark-blue)",
+                  position: "absolute",
+                }}
               />
               <Box
                 style={{
@@ -445,7 +469,10 @@ const NameLunchForm: React.FC = () => {
               >
                 <Typography
                   sx={{
-                    color: { xs: "#FFFFFF", md: "#2B3D5E" },
+                    color: {
+                      xs: "var(--color-theme-white)",
+                      md: "#var(--color-theme-dark-blue)",
+                    },
                     fontSize: 20,
                     fontWeight: 800,
                   }}
@@ -454,7 +481,10 @@ const NameLunchForm: React.FC = () => {
                 </Typography>
                 <Typography
                   sx={{
-                    color: { xs: "#FFFFFF", md: "#2B3D5E" },
+                    color: {
+                      xs: "var(--color-theme-white)",
+                      md: "#var(--color-theme-dark-blue)",
+                    },
                     fontSize: 20,
                     fontWeight: 800,
                   }}
@@ -468,9 +498,9 @@ const NameLunchForm: React.FC = () => {
             <Box
               sx={{
                 backgroundColor: {
-                  xs: "#FFFFFF",
-                  sm: "#FFFFFF",
-                  md: "#2B3D5E",
+                  xs: "var(--color-theme-white)",
+                  sm: "var(--color-theme-white)",
+                  md: "#var(--color-theme-dark-blue)",
                 },
                 height: 40,
                 width: 178,
@@ -486,7 +516,11 @@ const NameLunchForm: React.FC = () => {
                 sx={{
                   textTransform: "none",
                   fontSize: 14,
-                  color: { xs: "#2B3D5E", sm: "#2B3D5E", md: "#FFFFFF" },
+                  color: {
+                    xs: "#var(--color-theme-dark-blue)",
+                    sm: "#var(--color-theme-dark-blue)",
+                    md: "var(--color-theme-white)",
+                  },
                 }}
                 onClick={() => {
                   if (validateFields()) setOpenModal(true);
@@ -499,9 +533,9 @@ const NameLunchForm: React.FC = () => {
                       width: "24px",
                       height: "24px",
                       color: {
-                        xs: "#2B3D5E",
-                        sm: "#2B3D5E",
-                        md: "#FFFFFF",
+                        xs: "#var(--color-theme-dark-blue)",
+                        sm: "#var(--color-theme-dark-blue)",
+                        md: "var(--color-theme-white)",
                       },
                     }}
                   />
@@ -536,7 +570,7 @@ const NameLunchForm: React.FC = () => {
                 icon="solar:copy-bold-duotone"
                 width="24"
                 height="24"
-                style={{ color: "#2B3D5E" }}
+                style={{ color: "#var(--color-theme-dark-blue)" }}
               />
             </Box>
           </Box>
@@ -602,7 +636,7 @@ const NameLunchForm: React.FC = () => {
             </Box>
             <Box
               sx={{
-                backgroundColor: "#2B3D5E",
+                backgroundColor: "#var(--color-theme-dark-blue)",
                 height: 40,
                 width: 150,
                 display: "flex",
@@ -617,7 +651,7 @@ const NameLunchForm: React.FC = () => {
                 sx={{
                   textTransform: "none",
                   fontSize: 14,
-                  color: "#FFFFFF",
+                  color: "var(--color-theme-white)",
                 }}
                 onClick={() => setOpenModal(false)}
                 startIcon={
@@ -627,7 +661,7 @@ const NameLunchForm: React.FC = () => {
                     sx={{
                       width: "24px",
                       height: "24px",
-                      color: "#FFFFFF",
+                      color: "var(--color-theme-white)",
                     }}
                   />
                 }
