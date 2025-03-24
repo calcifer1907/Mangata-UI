@@ -1,32 +1,37 @@
 import { Box, Slider, Typography, Container } from "@mui/material";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 /**Context */
-import { useContextUser } from "../hooks/useContextUser";
+import { useContextUser } from "../../hooks/useContextUser";
 
 /**Libreries */
 import QRCode from "react-qr-code";
 
 /**Functions */
-import { formatPrice } from "../generalFunctions/formaters";
+import { formatPrice } from "../../generalFunctions/formaters";
+import { generarCodigoReservaUX2 } from "../../generalFunctions/generateCodeReservation";
 
 /**Rest Apis */
-import { getMinMax, saveGenerateCode } from "../utils/api/agent";
+import { getMinMax, saveGenerateCode } from "../../utils/api/agent";
 
 /**Interfaces */
-import { IMinMax } from "../interfaces/IAccompanist";
+import { IMinMax } from "../../interfaces/IAccompanist";
+import { ICodeAgreedPrice } from "../../interfaces/IReservation";
 
 /*Constant**/
-import { VITE_URL_UI } from "../constant/URL";
+import { VITE_URL_UI } from "../../constant/URL";
 
 /**Component */
-import ButtonComponent from "../components/Buttons/ButtonComponent";
-import { generarCodigoReservaUX2 } from "../generalFunctions/generateCodeReservation";
+import ButtonComponent from "../../components/Buttons/ButtonComponent";
+
+/**Styles */
+import "./GenerateReservation.scss";
 
 const GenerateReservation = () => {
   const [valueSlider, setValueSlider] = useState<number | number[]>(0);
   const [minmax, setMinMax] = useState<IMinMax>({ MIN: 0, MAX: 0 });
-  const [saveCodeReservation, setSaveCodeReservation] = useState<string>("");
+  const [saveCodeReservation, setSaveCodeReservation] =
+    useState<ICodeAgreedPrice>({ code: "", agreedPrice: 0 });
   const { userInfo } = useContextUser();
   const { USER_INFO } = userInfo;
 
@@ -56,54 +61,31 @@ const GenerateReservation = () => {
     };
     const data = await saveGenerateCode(body);
     if (data.status === 201) {
-      setSaveCodeReservation(data.code);
-      console.log(data);
+      setSaveCodeReservation({
+        code: data.code,
+        agreedPrice: valueSlider as number,
+      });
     }
   };
 
+  useEffect(() => {
+    const timeClosed = setTimeout(() => {
+      setSaveCodeReservation({ code: "", agreedPrice: 0 });
+    }, 15000);
+    if (timeClosed) return () => clearTimeout(timeClosed);
+  }, []);
+
   return (
-    <Box style={{ position: "relative", top: 64 }}>
+    <Box className="container-generate-reservation">
       <Box>
-        <h2
-          style={{
-            fontSize: 36,
-            color: "#2B3D5E",
-            fontWeight: 800,
-            marginInlineStart: 24,
-          }}
-        >
-          Generar Reserva
-        </h2>
-        <Box
-          style={{
-            backgroundColor: "#2B3D5E",
-            height: 6,
-            position: "absolute",
-            top: 50,
-            width: "85%",
-            left: 0,
-          }}
-        />
-        <h5
-          style={{
-            fontSize: 24,
-            fontWeight: 300,
-            color: "#2B3D5E",
-            marginTop: 5,
-            marginInlineStart: 24,
-          }}
-        >
+        <h2 className="generate-reservation-title">Generar Reserva</h2>
+        {/** Esto puede ser un componente */}
+        <Box className="background-blue-dark lineHorizontal " />
+        <h5 className="color-blue-dark title-generate-sale-price">
           Precio de venta <span>{formatPrice(valueSlider as number)}</span>
         </h5>
       </Box>
-      <Container
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          gap: 30,
-        }}
-      >
+      <Container className="d-flex container-qr justify-content-center">
         <Box className="justify-item-end">
           <ButtonComponent
             title="Generar QR"
@@ -112,15 +94,7 @@ const GenerateReservation = () => {
             onClick={onClickButton}
           />
         </Box>
-        <Box
-          className="wd-100"
-          sx={{
-            maxWidth: 300,
-            display: "flex",
-            alignSelf: "center",
-            flexDirection: "column",
-          }}
-        >
+        <Box className="wd-100 d-flex  content-value-slider">
           <Slider
             aria-label="Always visible"
             marks
@@ -153,7 +127,7 @@ const GenerateReservation = () => {
             </Typography>
           </Box>
         </Box>
-        {saveCodeReservation && (
+        {saveCodeReservation.code && (
           <Box
             sx={{
               margin: "0 auto",

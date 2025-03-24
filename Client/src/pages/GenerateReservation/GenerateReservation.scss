@@ -1,0 +1,37 @@
+.container-generate-reservation {
+       margin-top:16px;
+}
+
+.generate-reservation-title {
+        font-size: 36px;
+        font-weight: 800;
+        margin-left: 24px;
+        color: var(--color-theme-dark-blue);
+
+}
+
+.lineHorizontal {
+        height: 6px;
+        width: 85%;
+        position: absolute;
+        top: 68px;
+        left: 0;
+}
+
+.title-generate-sale-price {
+        font-size: 24px;
+        font-weight: 300;
+        margin-top: 5px;
+        margin-left: 24px;    
+}
+
+.container-qr{
+        flex-direction: column;
+        gap: 30px, 
+}
+
+.content-value-slider{
+        max-width: 300px;
+        flex-direction: column;
+        align-self: center;
+}
