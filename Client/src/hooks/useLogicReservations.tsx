@@ -16,7 +16,6 @@ const useLogicReservations = () => {
 
   const requestGetCodeReservation = useCallback(async () => {
     try {
-      console.log(ID_PARAM);
       if (ID_PARAM) {
         const response = await getCodeReservation({ code: ID_PARAM });
         setDataCodeReservation(response);
@@ -24,7 +23,7 @@ const useLogicReservations = () => {
     } catch (error) {
       return error;
     }
-  }, [ID_PARAM]);
+  }, [ID_PARAM, setDataCodeReservation]);
 
   const PRICES = useMemo(
     () => ({
