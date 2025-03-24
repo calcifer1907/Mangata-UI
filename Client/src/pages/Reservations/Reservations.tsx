@@ -8,7 +8,7 @@ import Grid2 from "@mui/material/Grid2";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 
-import "./NameLunchForm.scss";
+import "./Reservations.scss";
 
 /**Libreries */
 import { format } from "@formkit/tempo";
