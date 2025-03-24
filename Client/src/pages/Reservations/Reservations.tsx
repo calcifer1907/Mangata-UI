@@ -20,6 +20,7 @@ import { enqueueSnackbar } from "notistack";
 import Accompanist from "../../components/Accompanist/Accompanist";
 import DialogPayMents from "../../components/Dialogs/DialogPayMents";
 import ButtonComponent from "../../components/Buttons/ButtonComponent";
+import TextFieldComponent from "../../components/TextField/TextFieldComponent";
 
 /**Functions */
 import { formatPrice } from "../../generalFunctions/formaters";
@@ -141,39 +142,15 @@ const NameLunchForm: React.FC = () => {
               background="background-color-button-dark-blue"
             />
           </Box>
-          <Box className="d-flex flex-wrap gap-2 flex-direction-row">
-            <TextField
-              fullWidth
-              label="Fecha"
-              variant="filled"
-              margin="none"
-              type="date"
-              value={dateChange}
-              onChange={(e) => handleChangeDate(e.target.value)}
-              slotProps={{
-                input: {
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <Icon
-                        icon="solar:calendar-bold-duotone"
-                        width="24"
-                        height="24"
-                        style={{ color: "#2B3D5E" }}
-                      />
-                    </InputAdornment>
-                  ),
-                },
-              }}
-              InputLabelProps={{
-                shrink: true, // Asegura que la etiqueta permanezca arriba
-              }}
-              sx={{
-                background: "#FFFFFF",
-                borderRadius: "8px 8px 0 0",
-                maxWidth: "328px",
-              }}
-            />
-          </Box>
+
+          <TextFieldComponent
+            dateChange={dateChange}
+            onChange={handleChangeDate}
+            placeholder="Fecha"
+            type="date"
+            iconName="solar:calendar-bold-duotone"
+            iconColor="color-blue-dark"
+          />
           <Typography
             sx={{
               fontSize: 20,
