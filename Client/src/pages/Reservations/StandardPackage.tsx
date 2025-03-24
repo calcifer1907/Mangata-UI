@@ -31,12 +31,15 @@ const StandardPackage = ({
         }}
       />
       <Box
-        className="d-flex justify-content-between align-items-center standard-package"
+        className={`d-flex justify-content-between align-items-center standard-package ${
+          title1 === "Total" ? "padding-inline" : ""
+        } `}
         sx={{
-          borderBlockEndColor: {
-            xs: title1 === "Total" ? "none" : "var(--color-theme-white)",
-            md: title1 === "Total" ? "none" : "var(--color-theme-black)",
+          borderColor: {
+            xs: title1 !== "Total" ? "var(--color-theme-white)" : "transparent",
+            md: title1 !== "Total" ? "var(--color-theme-black)" : "transparent",
           },
+          borderBottom: "1px solid",
         }}
       >
         <Box className="d-flex align-items-center">
