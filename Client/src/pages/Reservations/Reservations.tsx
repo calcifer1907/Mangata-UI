@@ -19,6 +19,7 @@ import Accompanist from "../../components/Accompanist/Accompanist";
 import DialogPayMents from "../../components/Dialogs/DialogPayMents";
 import ButtonComponent from "../../components/Buttons/ButtonComponent";
 import TextFieldComponent from "../../components/TextField/TextFieldComponent";
+import LineTopIcon from "./LineTopIcon";
 
 /**Functions */
 import { formatPrice } from "../../generalFunctions/formaters";
@@ -238,23 +239,7 @@ const NameLunchForm: React.FC = () => {
         }}
         onClick={() => setIsVisibleGrid((prev) => !prev)}
       >
-        <Box
-          className="purchase-summary-line-top"
-          sx={{
-            display: { xs: "block", md: "none" },
-          }}
-        />
-
-        <Box style={{ width: "100%", textAlign: "center", height: "24px" }}>
-          <Icon
-            icon={`solar:alt-arrow-${
-              isVisibleGrid ? "down" : "up"
-            }-bold-duotone`}
-            width="24"
-            height="24"
-            style={{ color: "#FFFFFF" }}
-          />
-        </Box>
+        <LineTopIcon isVisibleGrid={isVisibleGrid} />
         <Box
           sx={{
             width: {

@@ -37,6 +37,15 @@ body{
   color: var(--color-theme-dark-blue)
 }
 
+.color-blue-ligth{
+  color: var(--color-theme-dark-blueLigth)
+}
+
+.color-theme-white{
+  color: var(--color-theme-white)
+}
+
+
 .background-ligth-blue{
   background-color: var( --color-theme-ligth-blue)
 }
@@ -50,13 +59,6 @@ body{
 }
 
 
-.color-blue-ligth{
-  color: var(--color-theme-dark-blueLigth)
-}
-
-.color-theme-white{
-  color: var(--color-theme-white)
-}
 
 #searchInput:focus{
   outline: none;
