@@ -11,7 +11,8 @@
   --color-theme-dark-blueLigth:#4672a5;  
   --color-theme-sand-light:#f8eac9;
   --color-theme-gray: #D9D9D947;
-  --color-theme-white:#FFFFFF
+  --color-theme-white:#FFFFFF;
+  --color-theme-black:#000000;
 }
 
 
@@ -263,6 +264,10 @@ body{
 
 .margin-top-8{
   margin-top: 8px;
+}
+
+.margin-buttom-16{
+  margin-bottom: 16px;
 }
 
 @media (max-width: 768px) {

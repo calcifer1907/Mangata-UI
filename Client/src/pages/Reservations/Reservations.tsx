@@ -20,6 +20,7 @@ import DialogPayMents from "../../components/Dialogs/DialogPayMents";
 import ButtonComponent from "../../components/Buttons/ButtonComponent";
 import TextFieldComponent from "../../components/TextField/TextFieldComponent";
 import LineTopIcon from "./LineTopIcon";
+import StandardPackage from "./StandardPackage";
 
 /**Functions */
 import { formatPrice } from "../../generalFunctions/formaters";
@@ -320,199 +321,53 @@ const NameLunchForm: React.FC = () => {
             />
           </Box>
           <Box>
-            <Box position="relative">
-              <Box
-                className="wd-24 hg-24 p-absolute"
-                component={Icon}
-                icon="solar:suitcase-tag-bold-duotone"
-                sx={{
-                  color: {
-                    xs: "var(--color-theme-white)",
-                    sm: "var(--color-theme-white)",
-                    md: "#var(--color-theme-dark-blue)",
-                  },
-                }}
-              />
+            <StandardPackage
+              title1="Paquete Estandar"
+              title2={formatPrice(Number(PRICES.PRICE_MAX))}
+              iconName="suitcase-tag"
+            />
 
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  flexDirection: "row",
-                  borderBottom: "1px solid",
-                  borderColor: { xs: "#ffff", md: "#000000" },
-                  marginInlineStart: 5,
-                  marginBottom: 2,
-                }}
-              >
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                >
-                  <Typography
-                    sx={{
-                      color: { xs: "var(--color-theme-white)", md: "#000" },
-                    }}
-                  >
-                    Paquete Estandar
-                  </Typography>
-                </Box>
-                <Typography
-                  sx={{ color: { xs: "var(--color-theme-white)", md: "#000" } }}
-                >
-                  {formatPrice(Number(PRICES.PRICE_MAX))}
-                </Typography>
-              </Box>
-            </Box>
-            <Box position="relative" sx={{ marginBottom: 2 }}>
-              <Box
-                component={Icon}
-                icon="solar:calendar-bold-duotone"
-                sx={{
-                  width: "24px",
-                  height: "24px",
-                  color: {
-                    xs: "var(--color-theme-white)",
-                    sm: "var(--color-theme-white)",
-                    md: "#var(--color-theme-dark-blue)",
-                  },
-                  position: "absolute",
-                }}
-              />
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  borderBottom: "1px solid",
-                  borderColor: { xs: "#ffff", md: "#000000" },
-                  marginInlineStart: 5,
-                }}
-              >
-                <Typography
-                  sx={{ color: { xs: "var(--color-theme-white)", md: "#000" } }}
-                >
-                  Fecha
-                </Typography>
-                <Typography
-                  sx={{ color: { xs: "var(--color-theme-white)", md: "#000" } }}
-                >
-                  {format(dateChange, FORMAT, "co")}
-                </Typography>
-              </Box>
-            </Box>
-            <Box position="relative" style={{ marginBottom: 16 }}>
-              <Box
-                component={Icon}
-                icon="solar:users-group-rounded-bold-duotone"
-                sx={{
-                  width: "24px",
-                  height: "24px",
-                  color: {
-                    xs: "var(--color-theme-white)",
-                    sm: "var(--color-theme-white)",
-                    md: "#var(--color-theme-dark-blue)",
-                  },
-                  position: "absolute",
-                }}
-              />
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  flexDirection: "row",
-                  borderBottom: "1px solid",
-                  borderColor: { xs: "#ffff", md: "#000000" },
-                  marginInlineStart: 5,
-                }}
-              >
-                <Typography
-                  sx={{ color: { xs: "var(--color-theme-white)", md: "#000" } }}
-                >
-                  Personas
-                </Typography>
-                <Typography
-                  sx={{ color: { xs: "var(--color-theme-white)", md: "#000" } }}
-                >
-                  {fields.length}
-                </Typography>
-              </Box>
-            </Box>
-            <Box position="relative" style={{ marginBottom: 16 }}>
-              <Icon
-                icon="solar:cart-large-4-bold-duotone"
-                width="24"
-                height="24"
-                style={{
-                  color: "#var(--color-theme-dark-blue)",
-                  position: "absolute",
-                }}
-              />
-              <Box
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  flexDirection: "row",
-                  marginInlineStart: 48,
-                }}
-              >
-                <Typography
-                  sx={{
-                    color: {
-                      xs: "var(--color-theme-white)",
-                      md: "#var(--color-theme-dark-blue)",
-                    },
-                    fontSize: 20,
-                    fontWeight: 800,
-                  }}
-                >
-                  Total
-                </Typography>
-                <Typography
-                  sx={{
-                    color: {
-                      xs: "var(--color-theme-white)",
-                      md: "#var(--color-theme-dark-blue)",
-                    },
-                    fontSize: 20,
-                    fontWeight: 800,
-                  }}
-                >
-                  {handleFormatPrice()}
-                </Typography>
-              </Box>
-            </Box>
+            <StandardPackage
+              title1="Fecha"
+              title2={format(dateChange, FORMAT, "co")}
+              iconName="calendar"
+              marginBottom={2}
+            />
+
+            <StandardPackage
+              title1="Personas"
+              title2={fields.length.toString()}
+              iconName="users-group-rounded"
+              marginBottom={2}
+            />
+
+            <StandardPackage
+              title1="Total"
+              title2={handleFormatPrice()}
+              iconName="cart-large-4"
+              marginBottom={2}
+            />
           </Box>
-          <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <Box className="d-flex justify-content-end">
             <Box
+              className="container-button margin-buttom-16"
               sx={{
                 backgroundColor: {
                   xs: "var(--color-theme-white)",
                   sm: "var(--color-theme-white)",
                   md: "#var(--color-theme-dark-blue)",
                 },
-                height: 40,
-                width: 178,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: 100,
-                gap: 8,
               }}
             >
               <Button
+                className=""
                 size="small"
                 sx={{
                   textTransform: "none",
                   fontSize: 14,
                   color: {
-                    xs: "#var(--color-theme-dark-blue)",
-                    sm: "#var(--color-theme-dark-blue)",
+                    xs: "var(--color-theme-dark-blue)",
+                    sm: "var(--color-theme-dark-blue)",
                     md: "var(--color-theme-white)",
                   },
                 }}
@@ -556,7 +411,12 @@ const NameLunchForm: React.FC = () => {
               flexDirection: "row",
             }}
           >
-            <h2 style={{ textAlign: "center", color: "#000000DE" }}>
+            <h2
+              style={{
+                textAlign: "center",
+                color: "var(--color-theme-black)000DE",
+              }}
+            >
               Reserva <span id="code_reserva">{CODE_RESERVATION}</span>
             </h2>
             <Box onClick={handleCopy}>
@@ -571,7 +431,7 @@ const NameLunchForm: React.FC = () => {
           <Box
             sx={{
               display: "block",
-              color: "#00000099",
+              color: "var(--color-theme-black)00099",
               fontSize: "14px",
               px: 2,
             }}
