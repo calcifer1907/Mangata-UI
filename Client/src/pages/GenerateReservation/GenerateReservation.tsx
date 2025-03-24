@@ -59,7 +59,7 @@ const GenerateReservation = () => {
       code: CODE_RESERVATION,
       status: 0,
       min_price: minmax.MIN,
-      agreedPrice: valueSlider as number,
+      agreed_price: valueSlider as number,
       created_at: new Date().toISOString(),
     };
     const data = await saveGenerateCode(body);
@@ -74,7 +74,7 @@ const GenerateReservation = () => {
   useEffect(() => {
     const timeClosed = setTimeout(() => {
       setSaveCodeReservation({ code: "", agreedPrice: 0 });
-    }, 15000);
+    }, 60000);
     if (timeClosed) return () => clearTimeout(timeClosed);
   }, []);
 

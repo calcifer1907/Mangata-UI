@@ -232,10 +232,13 @@ class ReservationController {
     response: Response
   ): Promise<void> {
     try {
-      const { id, code } = request.body;
+      const { id, code, min_price, agreed_price, created_at } = request.body;
       const code_saved = await reservationRepository.saveCodeReservation(
         id,
-        code
+        code,
+        min_price,
+        agreed_price,
+        created_at
       );
       if (code_saved) {
         const res = { status: 201, code, id: null };
