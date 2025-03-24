@@ -103,7 +103,7 @@ const GenerateReservation = () => {
               size={256}
               className="wd-100 hg-100"
               viewBox={`0 0 250 250`}
-              value={`${VITE_URL_UI}ReservationEmployee?id=${saveCodeReservation}`}
+              value={`${VITE_URL_UI}MangataReservation?id=${saveCodeReservation}`}
             />
           </Box>
         )}

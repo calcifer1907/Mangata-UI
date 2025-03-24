@@ -216,7 +216,7 @@ const NameLunchForm: React.FC = () => {
         <Box className="background-blue-dark line-vertical" />
       </Grid2>
       <Grid2
-        className="purchase-summary wd-100"
+        className="purchase-summary "
         component="div"
         size={{ xs: 12, sm: 12, md: 12, lg: 5 }}
         sx={{
@@ -243,7 +243,7 @@ const NameLunchForm: React.FC = () => {
       >
         <LineTopIcon isVisibleGrid={isVisibleGrid} />
         <Box
-          className="margin-0-auto"
+          className="margin-0-auto "
           sx={{
             width: {
               xs: "calc(100% - 30px)",

@@ -6,7 +6,7 @@ import ContextUser from "./hooks/useContextUser";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import CreateUser from "./pages/CreateUser";
-import ReservationEmployee from "./pages/Reservations/ContainerContextReservation";
+import Reservation from "./pages/Reservations/ContainerContextReservation";
 import ListOfCommissionsEmployee from "./pages/ListOfCommissionsEmployee";
 import LIstOFCommissionAdmin from "./pages/LIstOfCommissionAdmin";
 import Logout from "./pages/Logout";
@@ -29,10 +29,7 @@ const App = () => {
               path="/GenerateReservation"
               element={<GenerateReservation />}
             />
-            <Route
-              path="/ReservationEmployee"
-              element={<ReservationEmployee />}
-            />
+            <Route path="/MangataReservation" element={<Reservation />} />
             <Route
               path="/MyCommissions"
               element={<ListOfCommissionsEmployee />}
