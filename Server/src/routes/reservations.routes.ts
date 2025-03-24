@@ -30,6 +30,8 @@ router.post(
   ReservationController.saveCodeReservation
 );
 
+router.post("/getCodeReservation", ReservationController.getCodeReservation);
+
 router.put("/updatePaymentEmployee", authenticate, updatePaymentEmployee);
 
 router.post("/check-reservation", checkReservation);

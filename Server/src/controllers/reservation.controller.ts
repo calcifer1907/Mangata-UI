@@ -232,19 +232,14 @@ class ReservationController {
     response: Response
   ): Promise<void> {
     try {
-      const { id, code, min_price, agreed_price, created_at } = request.body;
+      const { code } = request.body;
+      const values = [request.body];
       const code_saved = await reservationRepository.saveCodeReservation(
-        id,
-        code,
-        min_price,
-        agreed_price,
-        created_at
+        values
       );
       if (code_saved) {
         const res = { status: 201, code, id: null };
         response.json(res);
-      } else {
-        response.status(500).json({ message: "Something went wrong" });
       }
     } catch (error) {
       if (error instanceof AppError) {
@@ -261,6 +256,20 @@ class ReservationController {
       response.send(result);
     } catch (error) {
       response.status(500).json({ message: "sometghin gos wrong" });
+    }
+  }
+
+  async getCodeReservation(request: Request, response: Response) {
+    try {
+      const { code } = request.body;
+      const result = await reservationRepository.getCodeReservation(code);
+      response.json(result);
+    } catch (error) {
+      if (error instanceof AppError) {
+        response.status(error.statusCode).json({ message: error.message });
+      } else {
+        response.status(500).json({ message: "Something wrong error!" });
+      }
     }
   }
 }
