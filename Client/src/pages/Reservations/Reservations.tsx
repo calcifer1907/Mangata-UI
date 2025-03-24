@@ -21,6 +21,7 @@ import ButtonComponent from "../../components/Buttons/ButtonComponent";
 import TextFieldComponent from "../../components/TextField/TextFieldComponent";
 import LineTopIcon from "./LineTopIcon";
 import StandardPackage from "./StandardPackage";
+import PurchaseSummary from "./PurchaseSummary";
 
 /**Functions */
 import { formatPrice } from "../../generalFunctions/formaters";
@@ -265,47 +266,11 @@ const NameLunchForm: React.FC = () => {
             alt="Logo Mangatas"
           />
           <Box className="d-flex justify-content-between align-items-center margin-bottom">
-            <Box className="d-flex justify-content-center align-items-center gap-16 margin-top-8">
-              <Box
-                component={Icon}
-                className="wd-24 hg-24"
-                icon="solar:bill-check-bold-duotone"
-                sx={{
-                  color: {
-                    xs: "var(--color-theme-white)",
-                    sm: "var(--color-theme-white)",
-                    md: "#var(--color-theme-dark-blue)",
-                  },
-                }}
-              />
+            <PurchaseSummary
+              price={handleFormatPrice()}
+              isVisibleGrid={isVisibleGrid}
+            />
 
-              <Typography
-                className="title-sale"
-                sx={{
-                  color: {
-                    xs: "var(--color-theme-white)",
-                    md: "#var(--color-theme-dark-blue)",
-                  },
-                }}
-              >
-                Resumen de compra
-                {isVisibleGrid && (
-                  <Typography
-                    className="title-total"
-                    component="span"
-                    sx={{
-                      color: {
-                        xs: "var(--color-theme-white)",
-                        md: "#var(--color-theme-dark-blue)",
-                      },
-                      display: { xs: "block", md: "none" },
-                    }}
-                  >
-                    Total: <span>{handleFormatPrice()}</span>
-                  </Typography>
-                )}
-              </Typography>
-            </Box>
             <Box
               component="img"
               className="wd-70 hg-70"
