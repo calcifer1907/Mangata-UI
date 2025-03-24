@@ -343,9 +343,8 @@ const NameLunchForm: React.FC = () => {
                   <Box
                     component={Icon}
                     icon="solar:user-plus-bold-duotone"
+                    className="wd-24 hg-24"
                     sx={{
-                      width: "24px",
-                      height: "24px",
                       color: {
                         xs: "#var(--color-theme-dark-blue)",
                         sm: "#var(--color-theme-dark-blue)",
@@ -368,126 +367,41 @@ const NameLunchForm: React.FC = () => {
         aria-describedby="parent-modal-description"
       >
         <Box sx={{ ...style, width: { xs: 300, lg: 400 } }}>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              flexDirection: "row",
-            }}
-          >
-            <h2
-              style={{
-                textAlign: "center",
-                color: "var(--color-theme-black)000DE",
-              }}
+          <Box className="d-flex justify-content-center align-items-center flex-dirrection-row">
+            <Typography
+              variant="h5"
+              className="text-align-center color-theme-black"
             >
               Reserva <span id="code_reserva">{CODE_RESERVATION}</span>
-            </h2>
+            </Typography>
             <Box onClick={handleCopy}>
               <Icon
+                className="color-blue-dark"
                 icon="solar:copy-bold-duotone"
                 width="24"
                 height="24"
-                style={{ color: "#var(--color-theme-dark-blue)" }}
               />
             </Box>
           </Box>
-          <Box
-            sx={{
-              display: "block",
-              color: "var(--color-theme-black)00099",
-              fontSize: "14px",
-              px: 2,
-            }}
-          >
+          <Box className="d-block color-black-opacity margin-inline">
             <h3>{fields[0].name}</h3>
             <h3>{format(dateChange, FORMAT, "co")}</h3>
             <h3>{handleFormatPrice()}</h3>
           </Box>
 
-          <Box
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              flexWrap: "wrap",
-              marginTop: 2,
-              gap: 8,
-            }}
-          >
-            <Box
-              sx={{
-                backgroundColor: "#B99734",
-                height: 40,
-                width: 150,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: 100,
-                gap: 8,
-              }}
-            >
-              <Button
-                size="small"
-                sx={{
-                  textTransform: "none",
-                  fontSize: 14,
-                  color: "#333333",
-                }}
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (valueCel) handleReservation();
-                }}
-                startIcon={
-                  <Box
-                    component={Icon}
-                    icon="solar:dollar-bold-duotone"
-                    sx={{
-                      width: "24px",
-                      height: "24px",
-                      color: "#333333",
-                    }}
-                  />
-                }
-              >
-                Confirmar
-              </Button>
-            </Box>
-            <Box
-              sx={{
-                backgroundColor: "#var(--color-theme-dark-blue)",
-                height: 40,
-                width: 150,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: 100,
-                gap: 8,
-              }}
-            >
-              <Button
-                size="small"
-                sx={{
-                  textTransform: "none",
-                  fontSize: 14,
-                  color: "var(--color-theme-white)",
-                }}
-                onClick={() => setOpenModal(false)}
-                startIcon={
-                  <Box
-                    component={Icon}
-                    icon="solar:close-circle-bold-duotone"
-                    sx={{
-                      width: "24px",
-                      height: "24px",
-                      color: "var(--color-theme-white)",
-                    }}
-                  />
-                }
-              >
-                Cancelar
-              </Button>
-            </Box>
+          <Box className="d-flex justify-content-center align-items-center flex-wrap gap-8">
+            <ButtonComponent
+              background="background-harvest-gold"
+              iconName="solar:dollar-bold-duotone"
+              onClick={handleReservation}
+              title="Confirmar"
+            />
+            <ButtonComponent
+              background="background-blue-dark"
+              iconName="solar:close-circle-bold-duotone"
+              onClick={() => setOpenModal(false)}
+              title="Cancelar"
+            />
           </Box>
         </Box>
       </Modal>

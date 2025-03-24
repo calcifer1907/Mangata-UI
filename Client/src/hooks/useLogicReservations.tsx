@@ -93,7 +93,7 @@ const useLogicReservations = () => {
 
   const handleReservation = async () => {
     const ID_EMPLOYEE = dataCodeReservation?.id;
-    if (validateFields()) {
+    if (validateFields() && valueCel !== "" && valueEmail !== "") {
       const body = {
         CODE_RESERVATION,
         ID_EMPLOYEE,

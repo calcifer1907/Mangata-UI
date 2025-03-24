@@ -8,8 +8,9 @@
         gap: 8px;
         .button{
                 text-transform: none;
-                font-size: 10;
-                color: vars(--color-theme-white);
+                font-size: 14px;
+                color: var(--color-theme-white);
+                font-weight: 400;
         }
                 
 }
