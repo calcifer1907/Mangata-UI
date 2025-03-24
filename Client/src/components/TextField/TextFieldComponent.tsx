@@ -4,20 +4,24 @@ import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 
 interface IProps {
-  dateChange: string;
+  value: string;
   onChange: (date: string) => void;
+  label: string;
   placeholder: string;
-  type: string;
-  iconColor: string;
+  type?: string;
+  iconColor?: string;
   iconName: string;
+  helperText?: string;
 }
 
 const TextFieldComponent = ({
-  dateChange,
+  value,
   onChange,
+  label,
   placeholder,
-  type,
-  iconColor,
+  type = "text",
+  iconColor = "color-blue-dark",
+  helperText,
   iconName,
 }: IProps) => {
   return (
@@ -25,19 +29,22 @@ const TextFieldComponent = ({
       variant="filled"
       margin="none"
       fullWidth
-      label={placeholder}
+      placeholder={placeholder}
+      label={label}
       type={type}
-      value={dateChange}
+      value={value}
+      error={value === ""}
       onChange={(e) => onChange(e.target.value)}
+      helperText={value === "" ? helperText : ""}
       slotProps={{
         input: {
           startAdornment: (
             <InputAdornment position="start">
               <Icon
-                icon={iconName}
+                icon={`solar:${iconName}-bold-duotone`}
+                className={iconColor}
                 width="24"
                 height="24"
-                className={iconColor}
               />
             </InputAdornment>
           ),

@@ -1,10 +1,10 @@
-.principalGrid{
+.principal-grid{
         overflow-y: auto;
         margin-top: 16px;
 }
         
 
-.BoxContainer{
+.box-container{
         padding-inline: 32px;
         padding-bottom: 16px;
 }
@@ -16,7 +16,7 @@
 }
         
 
-.containerAsesor {
+.container-asesor {
         top: 36px;
         left: 0;
         height: 6px;
@@ -24,12 +24,15 @@
 }
         
 
-.titleAsesor{
+.title-asesor{
         font-size: 24px;
         font: weight 300px;
         margin-top: 5px;
 }
        
-
-
+.title-data-contact{
+  font-size:20px;
+  font-weight: 500;
+  margin-block: 16px
+}
         

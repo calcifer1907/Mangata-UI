@@ -112,25 +112,33 @@ const NameLunchForm: React.FC = () => {
     }
   };
 
+  const handleOnchangeCel = (value: string) => {
+    if (valueCel.length <= 10) setValueCel(value);
+  };
+
+  const handleOnChangeEmail = (value: string) => {
+    if (valueEmail.length <= 50) setValueEmail(value);
+  };
+
   return (
     <Grid2
       spacing={2}
       container
-      className="principalGrid"
+      className="principal-grid"
       sx={{
         maxHeight: maxHeight - 150,
       }}
     >
       <Grid2 size={{ xs: 12, sm: 12, md: 12, lg: 6 }}>
-        <Box className="BoxContainer p-relative">
+        <Box className="box-container p-relative">
           <Box style={{ marginBottom: 20 }}>
             <Box style={{ marginBottom: 15 }}>
               <Typography className="color-blue-dark title-reservation">
                 Reserva tu día {CODE_RESERVATION}
               </Typography>
-              <Box className="background-blue-dark containerAsesor p-absolute" />
+              <Box className="background-blue-dark container-asesor p-absolute" />
               {dataCodeReservation && (
-                <Typography className="color-blue-dark titleAsesor">
+                <Typography className="color-blue-dark title-asesor">
                   Asesor: <span>{dataCodeReservation?.user_name}</span>
                 </Typography>
               )}
@@ -144,21 +152,14 @@ const NameLunchForm: React.FC = () => {
           </Box>
 
           <TextFieldComponent
-            dateChange={dateChange}
+            value={dateChange}
             onChange={handleChangeDate}
+            label="Fecha"
             placeholder="Fecha"
             type="date"
-            iconName="solar:calendar-bold-duotone"
-            iconColor="color-blue-dark"
+            iconName="calendar"
           />
-          <Typography
-            sx={{
-              fontSize: 20,
-              fontWeight: 500,
-              color: "#2B3D5E",
-              marginBlock: 2,
-            }}
-          >
+          <Typography className="color-blue-dark title-data-contact">
             Datos De Contacto
           </Typography>
           <Box
@@ -169,69 +170,23 @@ const NameLunchForm: React.FC = () => {
               flexWrap: "wrap",
             }}
           >
-            <TextField
-              label="Celular"
-              variant="filled"
-              type="number"
-              placeholder="Ingresa tu número de celular"
-              fullWidth
+            <TextFieldComponent
               value={valueCel}
-              error={valueCel === ""}
-              onChange={(e) => {
-                if (valueCel.length <= 10) setValueCel(e.target.value);
-              }}
-              sx={{
-                background: "#FFFFFF",
-                borderRadius: "8px 8px 0 0",
-                maxWidth: "328px",
-              }}
-              helperText={valueCel === "" ? "Este campo es obligatorio" : ""}
-              slotProps={{
-                input: {
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <Icon
-                        icon="solar:phone-calling-rounded-bold-duotone"
-                        width="24"
-                        height="24"
-                        style={{ color: "#2B3D5E" }}
-                      />
-                    </InputAdornment>
-                  ),
-                },
-              }}
+              onChange={handleOnchangeCel}
+              label="Celular"
+              placeholder="Ingrese tú Celular"
+              type="number"
+              iconName="phone-calling-rounded"
+              helperText="Este campo es obligatorio"
             />
-            <TextField
-              label="Email"
-              variant="filled"
-              type="email"
-              placeholder="Ingresa tu correo electrónico"
-              fullWidth
+
+            <TextFieldComponent
               value={valueEmail}
-              error={valueEmail === ""}
-              onChange={(e) => {
-                if (valueEmail.length <= 50) setValueEmail(e.target.value);
-              }}
-              sx={{
-                background: "#FFFFFF",
-                borderRadius: "8px 8px 0 0",
-                maxWidth: "328px",
-              }}
-              helperText={valueEmail === "" ? "Este campo es obligatorio" : ""}
-              slotProps={{
-                input: {
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <Icon
-                        icon="solar:letter-opened-bold-duotone"
-                        width="24"
-                        height="24"
-                        style={{ color: "#2B3D5E" }}
-                      />
-                    </InputAdornment>
-                  ),
-                },
-              }}
+              onChange={handleOnChangeEmail}
+              label="Correo"
+              placeholder="Ingrese tú Correo"
+              iconName="letter-opened"
+              helperText="Este campo es obligatorio"
             />
           </Box>
           <Box>
