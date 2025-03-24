@@ -11,7 +11,7 @@ import ListOfCommissionsEmployee from "./pages/ListOfCommissionsEmployee";
 import LIstOFCommissionAdmin from "./pages/LIstOfCommissionAdmin";
 import Logout from "./pages/Logout";
 import MyNavbar from "./components/navbar/NavBar";
-import GenerateReservation from "./pages/GenerateReservation";
+import GenerateReservation from "./pages/GenerateReservation/GenerateReservation";
 // import PayMenetMethod from "./pages/PayMenetMethod";
 import CheckReservation from "./pages/CheckReservation/CheckReservation";
 import NotFound from "./pages/NotFound";

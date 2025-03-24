@@ -11,3 +11,8 @@ export interface IBodyStatusReservation {
   created_at: string;
   total_payment: number;
 }
+
+export interface ICodeAgreedPrice {
+  code: string;
+  agreedPrice: number;
+}
