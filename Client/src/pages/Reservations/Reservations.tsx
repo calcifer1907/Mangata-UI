@@ -25,7 +25,7 @@ import { formatPrice } from "../../generalFunctions/formaters";
 import { generarCodigoReservaUX2 } from "../../generalFunctions/generateCodeReservation";
 
 /**Hooks */
-import { useAccompanist } from "../../hooks/useAccompanist";
+import { useAccompanist } from "../../hooks/useReservationContext";
 
 /**APis */
 import { getAccompanist, methodUser } from "../../utils/api/agent";

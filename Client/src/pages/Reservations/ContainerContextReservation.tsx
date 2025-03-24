@@ -1,5 +1,5 @@
 /**Hooks */
-import ContextAccompanist from "../../hooks/useAccompanist";
+import ContextAccompanist from "../../hooks/useReservationContext";
 
 /**Pages */
 import Reservations from "./Reservations";
