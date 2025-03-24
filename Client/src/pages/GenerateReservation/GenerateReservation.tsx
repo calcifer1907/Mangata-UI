@@ -10,6 +10,7 @@ import QRCode from "react-qr-code";
 /**Functions */
 import { formatPrice } from "../../generalFunctions/formaters";
 import { generarCodigoReservaUX2 } from "../../generalFunctions/generateCodeReservation";
+import { formatDate } from "../../generalFunctions/formatDate";
 
 /**Rest Apis */
 import { getMinMax, saveGenerateCode } from "../../utils/api/agent";
@@ -60,7 +61,7 @@ const GenerateReservation = () => {
       status: 0,
       min_price: minmax.MIN,
       agreed_price: valueSlider as number,
-      created_at: new Date().toISOString(),
+      created_at: formatDate(new Date().toDateString()),
     };
     const data = await saveGenerateCode(body);
     if (data.status === 201) {
