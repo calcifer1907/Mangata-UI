@@ -236,7 +236,7 @@ class ReservationController {
   ): Promise<void> {
     try {
       const { code } = request.body;
-      const values = [request.body];
+      const values = request.body;
       const code_saved = await reservationRepository.saveCodeReservation(
         values
       );
@@ -245,10 +245,9 @@ class ReservationController {
         response.json(res);
       }
     } catch (error) {
-      if (error instanceof AppError) {
-        response.status(error.statusCode).json({ message: error.message });
-      } else {
-        response.status(500).json({ message: "Something wrong error!" });
+      console.log(error);
+      if (error instanceof Error) {
+        response.status(404).json({ message: error.message });
       }
     }
   }
@@ -264,8 +263,7 @@ class ReservationController {
 
   async getCodeReservation(
     request: Request,
-    response: Response,
-    next: NextFunction
+    response: Response
   ): Promise<void> {
     try {
       const { code } = request.body;
