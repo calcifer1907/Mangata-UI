@@ -47,9 +47,9 @@ const useLogicReservations = () => {
         const response = await getCodeReservation({ code: Number(ID_PARAM) });
         const diff = new Date(response.created_at);
         const diffHours = handleDiffHours(currentDate, diff);
-        // if (diffHours > 1) {
-        //   navigator("/404");
-        // }
+        if (diffHours > 24) {
+          navigator("/404");
+        }
         setDataCodeReservation(response);
       } else {
         const resultUserSystem = await methodUser.getUserId({ id: -1 });
