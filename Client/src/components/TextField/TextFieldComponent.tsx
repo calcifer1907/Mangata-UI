@@ -50,14 +50,10 @@ const TextFieldComponent = ({
           ),
         },
       }}
-      InputLabelProps={{
-        shrink: true, // Asegura que la etiqueta permanezca arriba
-      }}
       sx={{
         background: "#FFFFFF",
-        borderRadius: "8px 8px 0 0",
         maxWidth: 328,
-        width: "100%",
+        minWidth: 300,
       }}
     />
   );
