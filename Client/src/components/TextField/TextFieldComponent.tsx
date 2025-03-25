@@ -56,7 +56,8 @@ const TextFieldComponent = ({
       sx={{
         background: "#FFFFFF",
         borderRadius: "8px 8px 0 0",
-        maxWidth: "328px",
+        maxWidth: 328,
+        width: "100%",
       }}
     />
   );

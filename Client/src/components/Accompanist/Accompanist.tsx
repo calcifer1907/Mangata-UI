@@ -72,7 +72,7 @@ const Accompanist: FC<IPropsAccompanist> = ({
             variant="filled"
             name="name"
             fullWidth
-            sx={{ width: "100%", maxWidth: 328, minWidth: 328 }}
+            sx={{ width: "100%", maxWidth: 328, minWidth: 280 }}
             value={field.name}
             onChange={(e) => onChange(index, KEY_NAME, e.target.value)}
             error={errors.name}
@@ -98,7 +98,7 @@ const Accompanist: FC<IPropsAccompanist> = ({
             options={lunchOptions}
             value={field.lunch}
             getOptionLabel={(option) => option.label}
-            sx={{ width: "100%", maxWidth: 328, minWidth: 328, margin: 0 }}
+            sx={{ width: "100%", maxWidth: 328, minWidth: 280, margin: 0 }}
             renderInput={(params) => (
               <TextField
                 {...params}

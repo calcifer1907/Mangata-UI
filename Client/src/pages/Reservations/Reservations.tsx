@@ -234,7 +234,7 @@ const NameLunchForm: React.FC = () => {
             lg: "var(--color-theme-white)",
           },
           transform: {
-            xs: `translateY(${!isVisibleGrid ? 0 : "calc(100% - 7rem"}))`,
+            xs: `translateY(${!isVisibleGrid ? 0 : "calc(100% - 6.5rem"}))`,
             md: "translateY(0)",
           },
           maxHeight: { xs: 550, sm: 550 },
