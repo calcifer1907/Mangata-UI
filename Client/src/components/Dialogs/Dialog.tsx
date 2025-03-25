@@ -49,7 +49,7 @@ const ScrollDialog: FC<IProps> = ({
     >
       <DialogTitle id="scroll-dialog-title">{tittle}</DialogTitle>
       <DialogContent dividers>
-        <DialogContentText id="scroll-dialog-description" tabIndex={-1}>
+        <DialogContentText id="scroll-dialog-description">
           {children}
         </DialogContentText>
       </DialogContent>

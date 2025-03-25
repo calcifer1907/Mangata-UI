@@ -12,7 +12,7 @@ import { Box, Paper, Typography } from "@mui/material";
 /**Component */
 import Dialog from "./Dialog";
 import PayMenetMethod from "../../pages/PayMenetMethod";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 
 import { enqueueSnackbar } from "notistack";
@@ -96,12 +96,40 @@ const DialogPayMents = ({
     }
   };
 
+  useEffect(() => {
+    // Verificar si el script ya existe
+    if (
+      !document.querySelector(
+        'script[src="https://bold.co/library/ui-kit.js?target=bold-pagos&layout=horizontal&type=slider"]'
+      ) &&
+      open
+    ) {
+      const script = document.createElement("script");
+      script.src =
+        "https://bold.co/library/ui-kit.js?target=bold-pagos&layout=horizontal&type=slider";
+
+      // Agregar al head
+      document.head.appendChild(script);
+    }
+
+    return () => {
+      // Opcional: remover el script al desmontar si es necesario
+      const script = document.querySelector(
+        'script[src="https://bold.co/library/ui-kit.js?target=bold-pagos&layout=horizontal&type=slider"]'
+      );
+      if (script) {
+        document.head.removeChild(script);
+      }
+    };
+  }, [open]);
+
   return (
     <Dialog
       open={open}
       setOpenDialog={setopen}
       tittle="Métodos de pago"
       fullScreen
+      showCancelButton={false}
     >
       {!clickPSE && (
         <Box
@@ -133,7 +161,7 @@ const DialogPayMents = ({
             />
           </Paper>
           <Paper
-            component="button"
+            component="div"
             onClick={handleBoldPayment}
             variant="outlined"
             sx={stytlePaper}
@@ -143,7 +171,7 @@ const DialogPayMents = ({
               alt="BOLD"
               style={{ width: "100px" }}
             /> */}
-            <div id="bold-pagos"></div>
+            <div id="bold-pagos" key={String(open)} />
             <Icon
               icon="solar:alt-arrow-right-outline"
               width="42"

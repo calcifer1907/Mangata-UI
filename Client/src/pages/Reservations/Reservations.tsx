@@ -320,7 +320,7 @@ const NameLunchForm: React.FC = () => {
                 backgroundColor: {
                   xs: "var(--color-theme-white)",
                   sm: "var(--color-theme-white)",
-                  md: "#var(--color-theme-dark-blue)",
+                  md: "var(--color-theme-dark-blue)",
                 },
               }}
             >
@@ -346,8 +346,8 @@ const NameLunchForm: React.FC = () => {
                     className="wd-24 hg-24"
                     sx={{
                       color: {
-                        xs: "#var(--color-theme-dark-blue)",
-                        sm: "#var(--color-theme-dark-blue)",
+                        xs: "var(--color-theme-dark-blue)",
+                        sm: "var(--color-theme-dark-blue)",
                         md: "var(--color-theme-white)",
                       },
                     }}

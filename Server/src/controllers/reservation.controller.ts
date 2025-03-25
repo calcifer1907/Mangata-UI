@@ -5,7 +5,6 @@ import AppError from "../errors/appError";
 import reservationRepository from "../repository/reservationRepository";
 
 import userRepository from "../repository/userRepository";
-import { type } from "node:os";
 
 // import { sendEmail } from "./sendEmail.controller";
 
@@ -50,6 +49,7 @@ export const createReservation = async (
     response.status(201).json({ id: result.rowCount, message: "success" });
     // sendEmail(CODE_RESERVATION);
   } catch (_error) {
+    console.log(_error);
     response.status(500).json({ message: "sometghin gos wrong" });
   }
 };

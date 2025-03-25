@@ -1,6 +1,10 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 
-import { getCodeReservation, getAccompanist } from "../utils/api/agent";
+import {
+  getCodeReservation,
+  getAccompanist,
+  methodUser,
+} from "../utils/api/agent";
 
 import { useAccompanist } from "./useReservationContext";
 
@@ -17,7 +21,7 @@ import { formatPrice } from "../generalFunctions/formaters";
 const useLogicReservations = () => {
   const [searchParams] = useSearchParams();
   const navigator = useNavigate();
-
+  const refSystem = useRef<number>(0);
   const ID_PARAM = searchParams.get("id");
 
   const {
@@ -40,14 +44,16 @@ const useLogicReservations = () => {
     try {
       if (ID_PARAM) {
         const currentDate = new Date();
-        const response = await getCodeReservation({ code: ID_PARAM });
+        const response = await getCodeReservation({ code: Number(ID_PARAM) });
         const diff = new Date(response.created_at);
         const diffHours = handleDiffHours(currentDate, diff);
-
         // if (diffHours > 1) {
         //   navigator("/404");
         // }
         setDataCodeReservation(response);
+      } else {
+        const resultUserSystem = await methodUser.getUserId({ id: -1 });
+        refSystem.current = resultUserSystem.id;
       }
     } catch (error: any) {
       if (error.response?.status === 404) {
@@ -92,7 +98,7 @@ const useLogicReservations = () => {
   const handleClose = () => setOpenModal((prev) => !prev);
 
   const handleReservation = async () => {
-    const ID_EMPLOYEE = dataCodeReservation?.id;
+    const ID_EMPLOYEE = dataCodeReservation?.id || refSystem.current;
     if (validateFields() && valueCel !== "" && valueEmail !== "") {
       const body = {
         CODE_RESERVATION,

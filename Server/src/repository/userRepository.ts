@@ -13,7 +13,7 @@ class UserRepository {
   }
 
   async getUserNameSystem(): Promise<IUserName> {
-    const SQL_QUERY = `SELECT CONCAT(FIRST_NAME,' ',LAST_NAME) AS USER_NAME,ID FROM users WHERE CONCAT(FIRST_NAME,LAST_NAME) LIKE '%system%';`;
+    const SQL_QUERY = `SELECT CONCAT(FIRST_NAME,' ',LAST_NAME) AS USER_NAME,ID FROM users WHERE CONCAT(FIRST_NAME,LAST_NAME) LIKE '%Mangata%';`;
     try {
       const { rows } = await pool.query(SQL_QUERY);
       return rows[0] || null;

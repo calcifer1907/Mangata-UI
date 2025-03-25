@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
 
-import { pool } from "../Connection";
-
 import UserRepository from "../repository/userRepository";
 import AppError from "../errors/appError";
 

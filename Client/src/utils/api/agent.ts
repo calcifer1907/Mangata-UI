@@ -89,6 +89,6 @@ export const saveGenerateCode = (
   requestApis.post("/api/saveGenerateCode", body);
 
 export const getCodeReservation = (body: {
-  code: string;
+  code: number;
 }): Promise<ISaveCodeGenerate> =>
   requestApis.post("/api/getCodeReservation", body);
