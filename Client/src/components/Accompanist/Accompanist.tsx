@@ -97,13 +97,6 @@ const Accompanist: FC<IPropsAccompanist> = ({
           <Autocomplete
             options={lunchOptions}
             value={field.lunch}
-            // onChange={(_, newValue: IOptions | null) =>
-            //   onChange(
-            //     index,
-            //     KEY_LUNCH,
-            //     newValue ? newValue : { label: "", value: 0 }
-            //   )
-            // }
             getOptionLabel={(option) => option.label}
             sx={{ width: "100%", maxWidth: 328, minWidth: 328, margin: 0 }}
             renderInput={(params) => (

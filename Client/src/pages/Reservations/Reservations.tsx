@@ -114,11 +114,11 @@ const NameLunchForm: React.FC = () => {
   };
 
   const handleOnchangeCel = (value: string) => {
-    if (valueCel.length <= 10) setValueCel(value);
+    if (value.length <= 10) setValueCel(value);
   };
 
   const handleOnChangeEmail = (value: string) => {
-    if (valueEmail.length <= 50) setValueEmail(value);
+    if (value.length < 40) setValueEmail(value);
   };
 
   return (
@@ -216,7 +216,7 @@ const NameLunchForm: React.FC = () => {
         <Box className="background-blue-dark line-vertical" />
       </Grid2>
       <Grid2
-        className="purchase-summary "
+        className="purchase-summary"
         component="div"
         size={{ xs: 12, sm: 12, md: 12, lg: 5 }}
         sx={{
@@ -238,6 +238,7 @@ const NameLunchForm: React.FC = () => {
             md: "translateY(0)",
           },
           maxHeight: { xs: 550, sm: 550 },
+          cursor: { xs: "pointer", lg: "inherit" },
         }}
         onClick={() => setIsVisibleGrid((prev) => !prev)}
       >
