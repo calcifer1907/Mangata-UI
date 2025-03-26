@@ -147,7 +147,7 @@ const NameLunchForm: React.FC = () => {
           <Box style={{ marginBottom: 20 }}>
             <Box style={{ marginBottom: 15 }}>
               <Typography className="color-blue-dark title-reservation">
-                Reserva tu día {CODE_RESERVATION} {maxHeight}
+                Reserva tu día {CODE_RESERVATION}
               </Typography>
               <Box className="background-blue-dark container-asesor p-absolute" />
               {dataCodeReservation && (
