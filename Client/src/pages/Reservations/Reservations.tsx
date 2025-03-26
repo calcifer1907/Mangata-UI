@@ -78,13 +78,6 @@ const NameLunchForm: React.FC = () => {
     const body = document.getElementById("body");
     body?.style.setProperty("overflow-y", "hidden");
     handleCalculateHeight();
-
-    // window.addEventListener("resize", () => {
-    //   handleCalculateHeight();
-    // });
-    // return () => {
-    //   handleCalculateHeight();
-    // };
   }, [handleCalculateHeight]);
 
   const style = {
