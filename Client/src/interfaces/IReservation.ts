@@ -27,7 +27,7 @@ export interface ISaveCodeGenerate {
   min_price: number;
   agreed_price: number;
   created_at: string;
-  user_name: string;
+  user_name?: string;
 }
 
 export interface IAccompanistContext {

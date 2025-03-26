@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -68,13 +68,24 @@ const NameLunchForm: React.FC = () => {
     handleChangeDate,
   } = useLogicReservations();
 
-  useEffect(() => {
-    const body = document.getElementById("root");
+  const handleCalculateHeight = useCallback(() => {
     const heightContainer =
       document.getElementById("contentPrimary")?.offsetHeight;
     setMaxHeight(heightContainer || 0);
-    body?.style.setProperty("overflow-y", "hidden");
   }, []);
+
+  useEffect(() => {
+    const body = document.getElementById("body");
+    body?.style.setProperty("overflow-y", "hidden");
+    handleCalculateHeight();
+
+    window.addEventListener("resize", () => {
+      handleCalculateHeight();
+    });
+    return () => {
+      handleCalculateHeight();
+    };
+  }, [handleCalculateHeight]);
 
   const style = {
     position: "absolute",
@@ -126,8 +137,9 @@ const NameLunchForm: React.FC = () => {
       spacing={2}
       container
       className="principal-grid"
-      sx={{
-        maxHeight: maxHeight - 150,
+      key={maxHeight}
+      style={{
+        maxHeight: maxHeight - 190,
       }}
     >
       <Grid2 size={{ xs: 12, sm: 12, md: 12, lg: 6 }}>
@@ -135,7 +147,7 @@ const NameLunchForm: React.FC = () => {
           <Box style={{ marginBottom: 20 }}>
             <Box style={{ marginBottom: 15 }}>
               <Typography className="color-blue-dark title-reservation">
-                Reserva tu día {CODE_RESERVATION}
+                Reserva tu día {CODE_RESERVATION} {maxHeight}
               </Typography>
               <Box className="background-blue-dark container-asesor p-absolute" />
               {dataCodeReservation && (
@@ -217,6 +229,7 @@ const NameLunchForm: React.FC = () => {
       </Grid2>
       <Grid2
         className="purchase-summary"
+        id="purchase-summary"
         component="div"
         size={{ xs: 12, sm: 12, md: 12, lg: 5 }}
         sx={{
