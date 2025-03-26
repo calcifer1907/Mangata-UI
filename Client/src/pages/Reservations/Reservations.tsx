@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -68,17 +68,13 @@ const NameLunchForm: React.FC = () => {
     handleChangeDate,
   } = useLogicReservations();
 
-  const handleCalculateHeight = useCallback(() => {
+  useEffect(() => {
+    const body = document.getElementById("body");
+    body?.style.setProperty("overflow-y", "hidden");
     const heightContainer =
       document.getElementById("contentPrimary")?.offsetHeight;
     setMaxHeight(heightContainer || 0);
   }, []);
-
-  useEffect(() => {
-    const body = document.getElementById("body");
-    body?.style.setProperty("overflow-y", "hidden");
-    handleCalculateHeight();
-  }, [handleCalculateHeight]);
 
   const style = {
     position: "absolute",
