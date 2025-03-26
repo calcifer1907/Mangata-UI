@@ -78,13 +78,6 @@ const NameLunchForm: React.FC = () => {
     const body = document.getElementById("body");
     body?.style.setProperty("overflow-y", "hidden");
     handleCalculateHeight();
-
-    window.addEventListener("resize", () => {
-      handleCalculateHeight();
-    });
-    return () => {
-      handleCalculateHeight();
-    };
   }, [handleCalculateHeight]);
 
   const style = {
@@ -147,7 +140,7 @@ const NameLunchForm: React.FC = () => {
           <Box style={{ marginBottom: 20 }}>
             <Box style={{ marginBottom: 15 }}>
               <Typography className="color-blue-dark title-reservation">
-                Reserva tu día {CODE_RESERVATION} {maxHeight}
+                Reserva tu día {CODE_RESERVATION}
               </Typography>
               <Box className="background-blue-dark container-asesor p-absolute" />
               {dataCodeReservation && (
@@ -163,7 +156,6 @@ const NameLunchForm: React.FC = () => {
               background="background-color-button-dark-blue"
             />
           </Box>
-
           <TextFieldComponent
             value={dateChange}
             onChange={handleChangeDate}
@@ -192,7 +184,6 @@ const NameLunchForm: React.FC = () => {
               iconName="phone-calling-rounded"
               helperText="Este campo es obligatorio"
             />
-
             <TextFieldComponent
               value={valueEmail}
               onChange={handleOnChangeEmail}
