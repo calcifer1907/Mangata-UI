@@ -156,7 +156,6 @@ const NameLunchForm: React.FC = () => {
               background="background-color-button-dark-blue"
             />
           </Box>
-
           <TextFieldComponent
             value={dateChange}
             onChange={handleChangeDate}
@@ -185,7 +184,6 @@ const NameLunchForm: React.FC = () => {
               iconName="phone-calling-rounded"
               helperText="Este campo es obligatorio"
             />
-
             <TextFieldComponent
               value={valueEmail}
               onChange={handleOnChangeEmail}
