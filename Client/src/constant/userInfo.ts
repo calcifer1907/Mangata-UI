@@ -6,6 +6,6 @@ export const initialUserInfo = {
 
 export const itemsNav = [
   { title: "Inicio", path: "/" },
-  { title: "Reservar", path: "/ReservationEmployee" },
+  { title: "Reservar", path: "/MangataReservation" },
   { title: "Iniciar sesión ", path: "/Login" },
 ];

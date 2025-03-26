@@ -1,5 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import { pool } from "../Connection";
+import AppError from "../errors/appError";
+
+import reservationRepository from "../repository/reservationRepository";
+
+import userRepository from "../repository/userRepository";
 
 // import { sendEmail } from "./sendEmail.controller";
 
@@ -44,16 +49,7 @@ export const createReservation = async (
     response.status(201).json({ id: result.rowCount, message: "success" });
     // sendEmail(CODE_RESERVATION);
   } catch (_error) {
-    response.status(500).json({ message: "sometghin gos wrong" });
-  }
-};
-
-export const getLunches = async (_request: Request, response: Response) => {
-  try {
-    const result = await pool.query("SELECT ID,DESCRIPTION FROM lunches;");
-    response.send(result.rows);
-  } catch (error) {
-    console.log(error);
+    console.log(_error);
     response.status(500).json({ message: "sometghin gos wrong" });
   }
 };
@@ -66,7 +62,7 @@ export const getListSalesEmployee = async (
     const { date, id_employee } = request.body;
 
     const resultReservations = await pool.query(
-      `SELECT CODE_RESERVATION, ID_EMPLOYEE, STATUS_RESERVATION, COMMISSION_EMPLOYEE, CURRENT_COMMISSION, CREATED_AT FROM reservations  
+      `SELECT CODE_RESERVATION, ID_EMPLOYEE, STATUS_RESERVATION, CREATED_AT FROM reservations  
       WHERE CREATED_AT = $1 AND ID_EMPLOYEE = $2`,
       [date, id_employee]
     );
@@ -84,7 +80,6 @@ export const getListSalesEmployee = async (
     const diff = resultReservations.rows.map((values: any, index: number) => ({
       ...values,
       id: index + 1,
-      DIFF: values.commission_employee - values.current_commission,
       ACCOMPANIST: resultAccompanist.rows.filter(
         (item) => item.id_reservation === values.code_reservation
       ),
@@ -108,7 +103,7 @@ export const getListSalesAdmin = async (
   try {
     const { date } = request.body;
     const resultReservations = await pool.query(
-      `SELECT CODE_RESERVATION, ID_EMPLOYEE, STATUS_RESERVATION, COMMISSION_EMPLOYEE, CURRENT_COMMISSION, CREATED_AT FROM reservations  WHERE CREATED_AT = $1`,
+      `SELECT CODE_RESERVATION, ID_EMPLOYEE, STATUS_RESERVATION, COMMISSION_EMPLOYEE, CURRENT_COMMISSION,PAY, CREATED_AT FROM reservations  WHERE CREATED_AT = $1`,
       [date]
     );
     const codeReservations = resultReservations.rows.map(
@@ -171,6 +166,23 @@ export const changeStatusReservation = async (
   }
 };
 
+export const updatePaymentEmployee = async (
+  request: Request,
+  response: Response
+) => {
+  try {
+    const { id, pay } = request.body;
+    const result = await pool.query(
+      "UPDATE reservations SET PAY=$1 WHERE CODE_RESERVATION=$2;",
+      [pay, id]
+    );
+    if (result.rows)
+      response.json({ messagge: "Se modifico Correctamente", status: 201 });
+  } catch (error) {
+    response.status(500).json({ message: "sometghin gos wrong" });
+  }
+};
+
 export const checkReservation = async (
   req: any,
   res: any,
@@ -216,3 +228,57 @@ export const checkReservation = async (
     res.status(500).json({ message: "something went wrong" });
   }
 };
+
+class ReservationController {
+  async saveCodeReservation(
+    request: Request,
+    response: Response
+  ): Promise<void> {
+    try {
+      const { code } = request.body;
+      const values = request.body;
+      const code_saved = await reservationRepository.saveCodeReservation(
+        values
+      );
+      if (code_saved) {
+        const res = { status: 201, code, id: null };
+        response.json(res);
+      }
+    } catch (error) {
+      console.log(error);
+      if (error instanceof Error) {
+        response.status(404).json({ message: error.message });
+      }
+    }
+  }
+
+  async getLunches(_request: Request, response: Response) {
+    try {
+      const result = await reservationRepository.getLunches();
+      response.send(result);
+    } catch (error) {
+      response.status(500).json({ message: "sometghin gos wrong" });
+    }
+  }
+
+  async getCodeReservation(
+    request: Request,
+    response: Response
+  ): Promise<void> {
+    try {
+      const { code } = request.body;
+      const result = await reservationRepository.getCodeReservation(code);
+      if (result) {
+        const user = await userRepository.getUserName(result.id);
+        result.user_name = user.user_name;
+      }
+      response.json(result);
+    } catch (error) {
+      if (error instanceof Error) {
+        response.status(404).json({ message: error.message });
+      }
+    }
+  }
+}
+
+export default new ReservationController();

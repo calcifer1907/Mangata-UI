@@ -2,13 +2,15 @@ import { Router } from "express";
 
 import {
   createReservation,
-  getLunches,
   getListSalesAdmin,
   getListSalesEmployee,
   getMinMax,
   changeStatusReservation,
   checkReservation,
+  updatePaymentEmployee,
 } from "../controllers/reservation.controller";
+
+import ReservationController from "../controllers/reservation.controller";
 
 import { authenticate } from "../handles/authMiddleware";
 
@@ -22,9 +24,19 @@ router.post("/mySales", authenticate, getListSalesAdmin);
 
 router.post("/changeStatusReservation", authenticate, changeStatusReservation);
 
+router.post(
+  "/saveGenerateCode",
+  authenticate,
+  ReservationController.saveCodeReservation
+);
+
+router.post("/getCodeReservation", ReservationController.getCodeReservation);
+
+router.put("/updatePaymentEmployee", authenticate, updatePaymentEmployee);
+
 router.post("/check-reservation", checkReservation);
 
-router.get("/lunches", getLunches);
+router.get("/lunches", ReservationController.getLunches);
 
 router.get("/MimMax", getMinMax);
 

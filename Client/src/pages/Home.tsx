@@ -21,11 +21,10 @@ const Home = () => {
       >
         <YouTubeEmbed />
       </Box>
-
       <Box
+        className="background-ligth-blue"
         sx={{
           position: "relative",
-          background: "var(--blueLigth)",
           height: { xs: "auto", xl: "400px" },
           marginBottom: 8,
           paddingBlock: { xs: 2, xl: 0 },
@@ -41,7 +40,7 @@ const Home = () => {
         >
           <Typography
             sx={{
-              color: { xs: "#FFFFFF", md: "var(--blueDarkLigth)" },
+              color: { xs: "#FFFFFF", md: "var(--color-theme-dark-blue)" },
               fontSize: 22,
               fontWeight: 600,
               marginBlock: 4,
@@ -88,8 +87,8 @@ const Home = () => {
         }}
       >
         <Typography
+          className="color-blue-dark"
           sx={{
-            color: "var(--blueDarkLigth)",
             fontSize: 22,
             fontWeight: 600,
             marginBlock: 2,
@@ -100,8 +99,8 @@ const Home = () => {
           Almuerzo a la carta
         </Typography>
         <Typography
+          className="color-blue-dark"
           sx={{
-            color: "var(--blueDarkLigth)",
             fontSize: 18,
             fontWeight: 400,
             marginBlock: 2,
@@ -117,8 +116,8 @@ const Home = () => {
       <Box>
         <Typography
           component="h2"
+          className="color-blue-dark"
           sx={{
-            color: "var(--blueDarkLigth)",
             fontWeight: 600,
             marginBlock: 2,
             fontSize: 22,
@@ -153,7 +152,7 @@ const Home = () => {
           >
             <Typography
               sx={{
-                color: "var(--blueDarkLigth)",
+                color: "var(--color-theme-dark-blue)",
                 fontWeight: "normal",
                 marginBlock: 2,
               }}
@@ -163,7 +162,12 @@ const Home = () => {
               acceso a:{" "}
             </Typography>
 
-            <Box sx={{ color: "var(--blueDarkLigth)", paddingInlineStart: 4 }}>
+            <Box
+              sx={{
+                color: "var(--color-theme-dark-blue)",
+                paddingInlineStart: 4,
+              }}
+            >
               <ul>
                 <li>Sillas asoleadoras</li>
                 <li>Hamacas</li>
@@ -178,8 +182,8 @@ const Home = () => {
 
       <Box
         sx={{
-          background: "var(--lightSand)",
-          color: "var(--blueDarkLigth)",
+          background: "var(--color-theme-sand-light)",
+          color: "var(--color-theme-dark-blue)",
           padding: 4,
           textAlign: "center",
           height: "auto",
@@ -205,7 +209,7 @@ const Home = () => {
 
       <Box
         sx={{
-          color: "var(--blueDarkLigth)",
+          color: "var(--color-theme-dark-blue)",
           padding: 4,
           textAlign: "center",
           height: "150px",

@@ -14,17 +14,25 @@ const YouTubeEmbed: React.FC = () => {
       <div className={`video-background-container ${isLoaded ? "active" : ""}`}>
         <Box
           className="content-overlay"
-          sx={{ height: { xs: "100%", md: "75%" } }}
+          sx={{ height: { xs: "100%", md: "80%" } }}
         >
           <Typography
             component="h1"
+            height={600}
+            width={600}
             sx={{
-              fontSize: { xs: "1.5rem", md: "4.5rem" },
+              display: { xs: "none", md: "block", lg: "block" },
+              fontSize: { xs: "1.8rem", md: "4.5rem" },
               paddingBottom: { xs: 0, md: "26px" },
             }}
           >
             Mangata
           </Typography>
+          <Box
+            component="img"
+            sx={{ display: { xs: "block", md: "none", lg: "none" } }}
+            src="/images/svgMangataWhite.svg"
+          />
         </Box>
       </div>
 

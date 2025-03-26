@@ -13,6 +13,7 @@
   "description": "",
   "dependencies": {
     "@mercadopago/sdk-react": "^0.0.23",
+    "axios": "^1.8.3",
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",

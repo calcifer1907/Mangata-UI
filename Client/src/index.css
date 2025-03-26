@@ -5,30 +5,78 @@
 }
 
 :root{
-  --backgrounInput :#E8E8E8;
-  --blueDark: #2B3D5E;
-  --blueLigth:#6490c7;
-  --blueDarkLigth:#4672a5;  
-  --lightSand:#f8eac9;
+  --color-theme-soft-silver :#E8E8E8;
+  --color-theme-dark-blue: #2B3D5E;
+  --color-theme-ligth-blue:#6490c7;
+  --color-theme-dark-blueLigth:#4672a5;  
+  --color-theme-sand-light:#f8eac9;
+  --color-theme-gray: #D9D9D947;
+  --color-theme-white:#FFFFFF;
+  --color-theme-black:#000000;
+  --color-theme-black-opacity:#00000099;
+  --color-theme-midnight-black:#333333;
+  --color-theme-harvest-gold: #B99734;
 }
-
 
 body{
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-
+  -webkit-font-smoothing: antialiased; /* Mejora la renderización de fuentes en navegadores WebKit */
+  -moz-osx-font-smoothing: grayscale; /* Mejora la renderización de fuentes en Firefox */
+  background-color: #ffffff; /* Fondo blanco por defecto */
+  color: #000000; /* Color de texto predeterminado */
+  line-height: 1.5; /* Espaciado entre líneas */
+  overflow-x: hidden; /* Evita el desplazamiento horizontal no deseado */
 }
 
-
 #root{
+  min-height: 100vh; /* Asegura que el contenedor ocupe al menos el 100% del viewport */
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Diseño en columna para facilitar la estructura de la página */
   flex: 1;
   overflow-x: hidden;
 }
 
+.color-blue-dark{
+  color: var(--color-theme-dark-blue)
+}
+
+.color-harvest-gold{
+  color: var(--color-theme-harvest-gold)
+}
+
+.color-theme-black{
+  color: var(--color-theme-black)
+}
+
+.color-black-opacity{
+  color: var(--color-theme-black-opacity)
+}
+
+.color-theme-midnight-black{
+  color: var(--color-theme-midnight-black)
+}
+
+.color-blue-ligth{
+  color: var(--color-theme-dark-blueLigth)
+}
+
+.color-theme-white{
+  color: var(--color-theme-white)
+}
+
+.background-harvest-gold{
+  background-color: var(--color-theme-harvest-gold)
+}
+.background-ligth-blue{
+  background-color: var( --color-theme-ligth-blue)
+}
+
+.background-blue-blueLigth{
+  background-color: var( --color-theme-dark-blueLigth)
+}
+
+.background-blue-dark{
+  background-color: var(--color-theme-dark-blue)
+}
 
 #searchInput:focus{
   outline: none;
@@ -45,9 +93,7 @@ body{
   padding: 0px 20px;
 }
 
-
 .scrollable-container {
-
   scrollbar-width: thin;
   scrollbar-color: #888 #f1f1f1;
 }
@@ -70,8 +116,6 @@ body{
 .scrollable-container::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
-
-
 
 /* Contenedor principal */
 .video-background-container {
@@ -108,9 +152,10 @@ body{
   color: white;
   text-align: center;
   z-index: 1; /* Asegura que el contenido esté sobre el video */
-  padding: 20px;
-  align-content: center;
-  
+  /* padding: 20px; */
+  display: flex;
+ align-items: center;
+ justify-content: center;
 }
 
 .content-overlay h1 {
@@ -138,9 +183,20 @@ body{
   z-index: 0; /* Asegura que esté detrás del contenido pero delante del video */
 }
 
+.d-block{
+  display: block;
+}
 
 .d-flex{
   display: flex;
+}
+
+.flex-dirrection-row{
+  flex-direction: row;
+}
+
+.flex-direction-column{
+  flex-direction: column;
 }
 
 .justify-content-between{
@@ -159,8 +215,24 @@ body{
   justify-content: center ;
 }
 
+.justify-item-end{
+  justify-items: end ;
+}
+
+.flex-wrap{
+  flex-wrap: wrap;
+}
+
 .align-items-center{
   align-items: center;
+}
+
+.p-relative{
+  position:relative;
+}
+
+.p-absolute{
+  position:absolute
 }
 
 .gap-2{
@@ -175,10 +247,53 @@ body{
   gap:8px;
 }
 
+.gap-16{
+  gap:16px;
+}
+
 .wd-100{
   width: 100%;
 }
 
+.wd-24{
+  width: 24px;
+}
+
+.wd-70{
+  width: 70px;
+}
+
 .hg-100{
   height: 100%;
+}
+
+.hg-24{
+  height: 24px;
+}
+
+.hg-70{
+  width: 70px;
+}
+
+.margin-0-auto{
+  margin: 0px auto;
+}
+
+.margin-top-8{
+  margin-top: 8px;
+}
+
+.margin-buttom-16{
+  margin-bottom: 16px;
+}
+
+
+.text-align-center{
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .video-background-container.active {
+    background-color: #2B3D5E;
+  }
 }

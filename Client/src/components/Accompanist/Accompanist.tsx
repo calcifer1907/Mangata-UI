@@ -70,9 +70,8 @@ const Accompanist: FC<IPropsAccompanist> = ({
           <TextField
             label="Nombre Completo"
             variant="filled"
-            name="name"
             fullWidth
-            sx={{ width: "100%", maxWidth: 328, minWidth: 328 }}
+            sx={{ maxWidth: 328, minWidth: { xs: 300, lg: 328 } }}
             value={field.name}
             onChange={(e) => onChange(index, KEY_NAME, e.target.value)}
             error={errors.name}
@@ -97,15 +96,8 @@ const Accompanist: FC<IPropsAccompanist> = ({
           <Autocomplete
             options={lunchOptions}
             value={field.lunch}
-            // onChange={(_, newValue: IOptions | null) =>
-            //   onChange(
-            //     index,
-            //     KEY_LUNCH,
-            //     newValue ? newValue : { label: "", value: 0 }
-            //   )
-            // }
             getOptionLabel={(option) => option.label}
-            sx={{ width: "100%", maxWidth: 328, minWidth: 328, margin: 0 }}
+            sx={{ maxWidth: 328, minWidth: { xs: 300, lg: 328 }, margin: 0 }}
             renderInput={(params) => (
               <TextField
                 {...params}

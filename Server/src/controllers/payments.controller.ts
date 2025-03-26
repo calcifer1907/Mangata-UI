@@ -1,9 +1,12 @@
+import { Request, Response } from "express";
 import {
   Preference,
   MercadoPagoConfig,
   Payment,
   PaymentMethod,
 } from "mercadopago";
+
+import axios from "axios";
 
 import { pool } from "../Connection";
 
@@ -18,6 +21,7 @@ import {
   CALLBACK_URL,
   BACKEND_URL,
   PAYMENT_TOKEN_TEST_PUBLIC,
+  BOLD_KEY,
 } from "../configDB";
 
 initMercadoPago(PAYMENT_TOKEN_PROD_PUBLIC || "");
@@ -26,22 +30,23 @@ const client = new MercadoPagoConfig({
   accessToken: PAYMENT_TOKEN_PROD || "",
   options: { timeout: 5000 },
 });
-export const getListBanks = async (req: any, res: any) => {
+
+export const getListBanks = async (request: Request, response: Response) => {
   const methods = new PaymentMethod(client);
 
   try {
     const data = await methods.get();
     const banks = data.filter((bank) => bank.id === "pse");
 
-    res.json(banks.length > 0 ? banks[0].financial_institutions : []);
+    response.json(banks.length > 0 ? banks[0].financial_institutions : []);
   } catch (error) {
-    res.status(500).send(error);
+    response.status(500).send(error);
   }
 };
 
-export const createOrder = (req: any, res: any) => {
+export const createOrder = (request: Request, response: Response) => {
   const payment = new Preference(client);
-  const { amount, payment_id } = req.body;
+  const { amount, payment_id } = request.body;
   payment
     .create({
       body: {
@@ -69,14 +74,14 @@ export const createOrder = (req: any, res: any) => {
       },
     })
     .then(() => {
-      res.status(200).json({ id: payment_id });
+      response.status(200).json({ id: payment_id });
     })
     .catch((error) => {
-      res.status(error.status).send(error);
+      response.status(error.status).send(error);
     });
 };
 
-export const createPSEPayment = (req: any, res: any) => {
+export const createPSEPayment = (request: Request, response: Response) => {
   const payment = new Payment(client);
   const {
     first_name,
@@ -87,7 +92,7 @@ export const createPSEPayment = (req: any, res: any) => {
     banksList,
     transaction_amount,
     payment_id,
-  } = req.body;
+  } = request.body;
 
   const body = {
     transaction_amount: transaction_amount,
@@ -117,32 +122,62 @@ export const createPSEPayment = (req: any, res: any) => {
 
   payment
     .create({ body })
-    .then((response) => {
-      const { transaction_details } = response;
-      res
+    .then((respons) => {
+      const { transaction_details } = respons;
+      response
         .status(200)
         .json({ redirectTo: transaction_details?.external_resource_url });
     })
     .catch((error) => {
-      console.log(error);
-      res.status(error.status).send(error);
+      response.status(error.status).send(error);
     });
 };
 
-export const reciveWebhook = async (req: any, res: any) => {
-  const payment = req.query;
+export const paymentBold = async (request: Request, response: Response) => {
+  try {
+    const { email, currency, total_amount } = request.body;
+
+    const body = {
+      amount_type: "CLOSE",
+      description: "Mangata Pasa día",
+      callback_url: "https://mangata-ui-client.vercel.app/#/check-reservation",
+      payer_email: email,
+      amount: {
+        currency: currency,
+        total_amount: total_amount,
+      },
+    };
+    const headers = {
+      Authorization: `x-api-key ${BOLD_KEY}`,
+      "Content-Type": "application/json",
+    };
+    const link = "https://integrations.api.bold.co/online/link/v1";
+    const responseBold = await axios.post(link, body, { headers });
+    // console.log(responseBold);
+    response.json({ massage: "success", data: responseBold.data });
+  } catch (error) {
+    console.log(error);
+    response.status(500).json({ message: "Someting went wrong! " });
+  }
+};
+
+export const reciveWebhook = async (request: Request, response: Response) => {
+  const payment = request.query;
   try {
     if (payment.type === "payment") {
-      const data = await new Payment(client).get({ id: payment["data.id"] });
-      const { external_reference, id, status } = data;
-      await pool.query(
-        "UPDATE reservations SET PAYMENT_ID=$1, STATUS_RESERVATION=$2 WHERE CODE_RESERVATION=$3",
-        [id, status, external_reference]
-      );
+      const paymentId = payment["data.id"];
+      if (typeof paymentId === "string" || typeof paymentId === "number") {
+        const data = await new Payment(client).get({ id: paymentId });
+        const { external_reference, id, status } = data;
+        await pool.query(
+          "UPDATE reservations SET PAYMENT_ID=$1, STATUS_RESERVATION=$2 WHERE CODE_RESERVATION=$3",
+          [id, status, external_reference]
+        );
+      }
       // await sendEmail(external_reference || "");
     }
-    return res.sendStatus(204);
+    response.sendStatus(204);
   } catch (_error) {
-    return res.status(500).json({ message: "something went wrong" });
+    response.status(500).json({ message: "something went wrong" });
   }
 };

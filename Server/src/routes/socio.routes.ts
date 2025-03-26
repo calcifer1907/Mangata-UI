@@ -4,6 +4,6 @@ const router = Router();
 import { authenticate } from "../handles/authMiddleware";
 import socioController from "../controllers/socio.controller";
 
-router.get("/commission/:id", socioController.sumCommission);
+router.get("/commission/:id", authenticate, socioController.sumCommission);
 
 export default router;

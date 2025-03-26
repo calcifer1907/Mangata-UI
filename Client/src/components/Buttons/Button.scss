@@ -1,0 +1,22 @@
+.container-button{
+        height: 40px;
+        width: 178px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 100px;
+        gap: 8px;
+        .button{
+                text-transform: none;
+                font-size: 14px;
+                color: var(--color-theme-white);
+                font-weight: 400;
+        }
+                
+}
+
+
+.background-color-button-dark-blue{
+        background-color: var(--color-theme-dark-blue);
+        color:var(--color-theme-white)
+} 

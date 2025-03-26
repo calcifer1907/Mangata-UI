@@ -79,7 +79,7 @@ const DialogSelectLunch = ({
 
                 <Typography
                   sx={{
-                    color: "var(--blueDarkLigth)",
+                    color: "var(--color-theme-dark-blue)",
                     fontWeight: 600,
                     fontSize: 22,
                     margin: 2,

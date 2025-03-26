@@ -11,7 +11,7 @@ const errorHandler = (
     res.status(err.statusCode).json({ message: err.message });
   } else {
     console.error(err); // Log del error para depuración
-    res.status(500).json({ message: "Error interno del servidor" });
+    res.status(500).json({ message: err });
   }
 };
 

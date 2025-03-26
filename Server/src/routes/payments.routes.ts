@@ -4,12 +4,16 @@ import {
   reciveWebhook,
   createPSEPayment,
   getListBanks,
+  paymentBold,
 } from "../controllers/payments.controller";
 
 const router = Router();
 
 router.post("/mercadoPagoCreditCard", createOrder);
+
 router.post("/PSEPayment", createPSEPayment);
+
+router.post("/paymentsBold", paymentBold);
 
 router.post("/webhook", reciveWebhook);
 

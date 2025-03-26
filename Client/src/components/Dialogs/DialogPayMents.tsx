@@ -12,8 +12,10 @@ import { Box, Paper, Typography } from "@mui/material";
 /**Component */
 import Dialog from "./Dialog";
 import PayMenetMethod from "../../pages/PayMenetMethod";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
+
+import { enqueueSnackbar } from "notistack";
 
 import { VITE_PUBLIC_KEY } from "../../constant/URL.ts";
 
@@ -23,14 +25,12 @@ import { paymentBold } from "../../utils/api/agent";
 
 interface IProps {
   open: boolean;
-  setOpen: (data: boolean) => void;
+  setopen: (data: boolean) => void;
   amount: number;
   payment_id: number;
   name: string;
   email: string;
 }
-
-const fullScreen = { fullScreen: true };
 
 const stytlePaper = {
   maxHeight: "100px",
@@ -45,7 +45,7 @@ const stytlePaper = {
 
 const DialogPayMents = ({
   open,
-  setOpen,
+  setopen,
   amount,
   payment_id,
   name,
@@ -74,29 +74,62 @@ const DialogPayMents = ({
   // };
 
   const handleBoldPayment = async () => {
-    const body = {
-      amount_type: "CLOSE",
-      description: "Mangata Pasa día",
-      callback_url: "https://mangata-ui-client.vercel.app/#/check-reservation",
-      payer_email: "tabordac2@gmail.com",
-      amount: {
+    try {
+      const body = {
+        email: "tabordac2@gmail.com",
         currency: "COP",
         total_amount: 5000,
-      },
-    };
-
-    const respose = await paymentBold(body);
-
-    console.log(respose);
+      };
+      const { data } = await paymentBold(body);
+      if (data.payload) {
+        window.location.href = data.payload.url;
+      }
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar("Algo salio mal", {
+        variant: "error",
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "right",
+        },
+      });
+    }
   };
+
+  useEffect(() => {
+    // Verificar si el script ya existe
+    if (
+      !document.querySelector(
+        'script[src="https://bold.co/library/ui-kit.js?target=bold-pagos&layout=horizontal&type=slider"]'
+      ) &&
+      open
+    ) {
+      const script = document.createElement("script");
+      script.src =
+        "https://bold.co/library/ui-kit.js?target=bold-pagos&layout=horizontal&type=slider";
+
+      // Agregar al head
+      document.head.appendChild(script);
+    }
+
+    return () => {
+      // Opcional: remover el script al desmontar si es necesario
+      const script = document.querySelector(
+        'script[src="https://bold.co/library/ui-kit.js?target=bold-pagos&layout=horizontal&type=slider"]'
+      );
+      if (script) {
+        document.head.removeChild(script);
+      }
+    };
+  }, [open]);
 
   return (
     <Dialog
       open={open}
-      setOpen={setOpen}
+      setOpenDialog={setopen}
       tittle="Métodos de pago"
+      fullScreen
       showCancelButton={false}
-      {...fullScreen}
     >
       {!clickPSE && (
         <Box
@@ -128,17 +161,17 @@ const DialogPayMents = ({
             />
           </Paper>
           <Paper
-            component="button"
+            component="div"
             onClick={handleBoldPayment}
             variant="outlined"
             sx={stytlePaper}
           >
-            <img
+            {/* <img
               src="https://developers.bold.co/_next/static/media/logo.ac02f303.png"
               alt="BOLD"
               style={{ width: "100px" }}
-            />
-            <Typography variant="h6">Bold</Typography>
+            /> */}
+            <div id="bold-pagos" key={String(open)} />
             <Icon
               icon="solar:alt-arrow-right-outline"
               width="42"

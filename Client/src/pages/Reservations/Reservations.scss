@@ -1,0 +1,100 @@
+.principal-grid{
+        overflow-y: auto;
+        margin-top: 16px;
+}
+        
+
+.box-container{
+        padding-inline: 32px;
+        padding-bottom: 16px;
+}
+       
+
+.title-reservation{
+        font-size: 25px;
+        font-weight: 800;
+}
+        
+
+.container-asesor {
+        top: 36px;
+        left: 0;
+        height: 6px;
+        width: 90%;
+}
+        
+
+.title-asesor{
+        font-size: 24px;
+        font: weight 300px;
+        margin-top: 5px;
+}
+       
+.title-data-contact{
+  font-size:20px;
+  font-weight: 500;
+  margin-block: 16px
+}
+        
+
+.line-vertical{
+        height: 70%;
+        width: 6px;
+        position: relative;
+        top:100px;
+}
+
+.purchase-summary{
+        border-radius: 16px 16px 0px 0px;
+        z-index: 1;
+        transition: transform 0.2s;
+        overflow: hidden;
+        padding-bottom: 2px;
+}
+
+.purchase-summary-line-top{
+        width:35%;
+        height: 3px;
+        border-radius: 100px;
+        margin: 0 auto;
+        margin-top: 6px;
+        background-color: var(--color-theme-gray);
+  
+   .title-sale{
+        font-size: 20px;
+        font-weight: 800;
+    }
+
+  .title-total{
+        font-size: 14px;
+        font-weight: 800;
+  }
+}
+
+
+.standard-package {
+        flex-direction: row;
+        margin-inline-start: 40px;
+        margin-bottom: 16px;
+  }
+
+.margin-inline{
+        margin-inline: 12px;
+}
+.padding-inline{
+        padding-inline: 16px;
+}
+
+.total-title-1{
+        font-size: 1rem;
+        font-weight: 400;
+  }
+
+  .total-title-2{
+        font-size: 20px;
+        font-weight: 800;
+  }
+
+.margin-bottom{
+        margin-bottom: 3;
+}

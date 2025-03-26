@@ -39,80 +39,97 @@ import { STATUS_COLOR } from "../generalFunctions/status";
 
 import TableUI from "../components/TableUI/TableUI";
 import { GridColDef } from "@mui/x-data-grid";
+import Checkbox from "@mui/material/Checkbox";
 
 const FORMAT_DATE = "YYYY/MM/DD";
-
-const columns: GridColDef[] = [
-  {
-    field: "id",
-    headerName: "Id",
-    sortable: false,
-    flex: 1,
-  },
-  {
-    field: "code_reservation",
-    headerName: "Id Reserva",
-    sortable: false,
-    flex: 3,
-  },
-  {
-    field: "EMPLOYEE",
-    headerName: "Empleado",
-    sortable: false,
-    flex: 3,
-  },
-  {
-    field: "status_reservation",
-    headerName: "Estado reserva",
-    sortable: false,
-    flex: 3,
-  },
-  {
-    field: "current_commission",
-    headerName: "Precio Min",
-    sortable: true,
-    valueGetter: (value) => formatPrice(value as number),
-    flex: 3,
-  },
-  {
-    field: "commission_employee",
-    headerName: "Se Vendio en",
-    sortable: true,
-    valueGetter: (value) => formatPrice(value as number),
-    flex: 3,
-  },
-  {
-    field: "DIFF",
-    headerName: "Comision",
-    sortable: true,
-    valueGetter: (value) => formatPrice(value as number),
-    flex: 3,
-  },
-  {
-    field: "BANK_ACCOUNT",
-    headerName: "Cuneta Bancaria",
-    sortable: false,
-    flex: 3,
-  },
-  {
-    field: "created_at",
-    headerName: "Fecha Creación",
-    sortable: true,
-    valueGetter: (value) => format(value, FORMAT_DATE),
-    flex: 3,
-  },
-];
 
 const LIstOfCommissionAdmin = () => {
   const {
     dataList,
+    setDataList,
     changeStatusReservation,
     loading,
     dateChange,
     setDateChange,
+    updatePaymentEmployee,
   } = useSales({
     page: "admin",
   });
+
+  const columns: GridColDef[] = [
+    {
+      field: "id",
+      headerName: "Id",
+      sortable: false,
+      flex: 1,
+    },
+    {
+      field: "code_reservation",
+      headerName: "Id Reserva",
+      sortable: false,
+      flex: 3,
+    },
+    {
+      field: "EMPLOYEE",
+      headerName: "Empleado",
+      sortable: false,
+      flex: 3,
+    },
+    {
+      field: "status_reservation",
+      headerName: "Estado reserva",
+      sortable: false,
+      flex: 3,
+    },
+    {
+      field: "current_commission",
+      headerName: "Precio Min",
+      sortable: true,
+      valueGetter: (value) => formatPrice(value as number),
+      flex: 3,
+    },
+    {
+      field: "commission_employee",
+      headerName: "Se Vendio en",
+      sortable: true,
+      valueGetter: (value) => formatPrice(value as number),
+      flex: 3,
+    },
+    {
+      field: "BANK_ACCOUNT",
+      headerName: "Cuneta Bancaria",
+      sortable: false,
+      flex: 3,
+    },
+    {
+      field: "created_at",
+      headerName: "Fecha Creación",
+      sortable: true,
+      valueGetter: (value) => format(value, FORMAT_DATE),
+      flex: 3,
+    },
+    {
+      field: "pay",
+      headerName: "Pago Empleado",
+      flex: 3,
+      renderCell: (params) =>
+        params.row.EMPLOYEE !== "Mangata system" && (
+          <Checkbox
+            checked={params.value}
+            onChange={(event) => {
+              const { code_reservation } = params.row;
+              updatePaymentEmployee(code_reservation, event.target.checked);
+              const updatedRows = dataList.map((row) =>
+                row.code_reservation === code_reservation
+                  ? { ...row, pay: event.target.checked }
+                  : row
+              );
+              setDataList(updatedRows);
+            }}
+          />
+        ),
+    },
+  ];
 
   const [dataListFilter, setDataListFilter] = useState<IGetListSales[]>([]);
   const [maxHeight, setMaxHeight] = useState<number>(window.innerHeight);
@@ -347,14 +364,15 @@ const LIstOfCommissionAdmin = () => {
       </Box>
       <Container
         sx={{
-          height: "auto",
-          overflowY: "auto",
-          maxHeight: maxHeight - 250,
+          height: "100%",
           paddingBottom: 1,
         }}
       >
         <Box
           sx={{
+            height: "100%",
+            overflowY: "auto",
+            maxHeight: maxHeight - 250,
             display: "flex",
             flexWrap: "wrap",
             justifyContent: { xs: "center", lg: "flex-start" },

@@ -138,7 +138,7 @@ const CheckReservation = () => {
               <TableRow>
                 <TableCell>Mangata Beach Club</TableCell>
                 <TableCell>
-                  {formatDate(infoCheckReservation.created_at)}
+                  {formatDate(new Date(infoCheckReservation.created_at))}
                 </TableCell>
               </TableRow>
             </TableBody>

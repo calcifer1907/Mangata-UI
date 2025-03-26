@@ -1,7 +1,7 @@
 
 
 .containerInput{
-        background-color: var(--backgrounInput);
+        background-color: var(----color-theme-soft-silver);
         border-radius: 8px 8px 0px 0px;
         min-height: 55px;
         min-width: 328px;
@@ -14,8 +14,8 @@
 }
 
 input {
-        background-color: var(--backgrounInput);
-        border-color: var(--backgrounInput);
+        background-color: var(----color-theme-soft-silver);
+        border-color: var(----color-theme-soft-silver);
         font-size: 16px;
         font-weight:400;
         letter-spacing: 0.15px;

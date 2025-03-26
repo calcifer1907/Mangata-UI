@@ -12,11 +12,11 @@ import { IBanksList } from "../../interfaces/IMercadoPago";
 import {
   IBodyChangeStatus,
   IBodyStatusReservation,
+  ISaveCodeGenerate,
 } from "../../interfaces/IReservation";
+import { ICommission, IPaymentBold } from "../../interfaces/IAgent";
 
 const URI_LOGIN = "/auth/login";
-
-import { BOLD_KEY } from "../../constant/URL";
 
 export const login = {
   loginPage: (body: ILogin): Promise<IUserInfo> =>
@@ -52,19 +52,23 @@ export const getMinMax = {
 export const getAdmin = {
   changeStatus: (body: IBodyChangeStatus): Promise<unknown> =>
     requestApis.post(`/api/changeStatusReservation`, body),
+  paymentUpdate: (body: object): Promise<unknown> =>
+    requestApis.put(`/api/updatePaymentEmployee`, body),
 };
 
 export const apisMercadoPago = {
   createOrderPSE: (body: object): Promise<unknown> =>
     requestApis.post("/PSEPayment", body),
-  createOrderCreditCard: (body: object): Promise<any> =>
+  createOrderCreditCard: (body: object): Promise<object> =>
     requestApis.post("/mercadoPagoCreditCard", body),
   getListBanks: (): Promise<IBanksList[]> => requestApis.get("/getListBanks"),
 };
 
 export const requestExportData = {
   exportDataSales: (body: object): Promise<unknown> =>
-    requestApis.post(`/api/download-excel`, body),
+    requestApis.post(`/api/download-excel`, body, {
+      responseType: "arraybuffer",
+    }),
 };
 
 export const checkReservation = {
@@ -72,18 +76,19 @@ export const checkReservation = {
     requestApis.post(`/api/check-reservation`, body),
 };
 
-export const paymentBold = (body: object): Promise<unknown> => {
-  const headers = {
-    Authorization: `x-api-key ${BOLD_KEY}`,
-    "Content-Type": "application/json",
-  };
-  const link = "https://integrations.api.bold.co/online/link/v1";
-  return requestApis.post(link, body, headers);
+export const paymentBold = (body: object): Promise<IPaymentBold> => {
+  return requestApis.post("/paymentsBold", body);
 };
-
-interface ICommission {
-  sum_commission: number;
-}
 
 export const getSumCommission = (id_employee: number): Promise<ICommission> =>
   requestApis.get(`/api/commission/${id_employee}`);
+
+export const saveGenerateCode = (
+  body: ISaveCodeGenerate
+): Promise<ISaveCodeGenerate> =>
+  requestApis.post("/api/saveGenerateCode", body);
+
+export const getCodeReservation = (body: {
+  code: number;
+}): Promise<ISaveCodeGenerate> =>
+  requestApis.post("/api/getCodeReservation", body);

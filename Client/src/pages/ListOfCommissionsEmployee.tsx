@@ -412,7 +412,9 @@ const ListOfCommissions = () => {
                       <Typography>
                         {format(item.created_at, FORMAT_DATE, "co")}
                       </Typography>
-                      <Typography>{item.name_accompanist}</Typography>
+                      <Typography>
+                        {item.ACCOMPANIST[0].name_accompanist}
+                      </Typography>
                     </Box>
                   </Box>
                 </Paper>

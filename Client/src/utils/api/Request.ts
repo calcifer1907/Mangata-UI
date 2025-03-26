@@ -1,8 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 
-import { URL_BACKEND } from "../../constant/URL";
-
-const UI = import.meta.env.VITE_UI;
+import { URL_BACKEND, VITE_URL_UI } from "../../constant/URL";
 
 const responSeBody = (respose: AxiosResponse) => respose.data;
 
@@ -30,7 +28,7 @@ import { AxiosError } from "axios";
 const redirect = (error: AxiosError) => {
   if (error.response && error.response.status === 403) {
     localStorage.removeItem("info");
-    window.location.href = UI;
+    window.location.href = VITE_URL_UI;
     setTimeout(() => {
       window.location.reload();
     }, 1000);

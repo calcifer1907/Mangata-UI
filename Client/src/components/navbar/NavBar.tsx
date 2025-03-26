@@ -57,7 +57,7 @@ const Navbar = (props: Props) => {
     const root = document.getElementById("root");
     root?.style.setProperty(
       "overflow",
-      location.pathname.includes("ReservationEmployee") ? "hidden" : "auto"
+      location.pathname.includes("MangataReservation") ? "hidden" : "auto"
     );
   }, [location]);
 
