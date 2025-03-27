@@ -279,6 +279,10 @@ class ReservationController {
       }
     }
   }
+
+  async webhookBold(request: Request, response: Response) {
+    console.log(request);
+  }
 }
 
 export default new ReservationController();
