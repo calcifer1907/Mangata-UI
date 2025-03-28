@@ -21,7 +21,7 @@ router.post("/webhook", reciveWebhook);
 
 router.post("/webhook-bold", webhookBold);
 
-router.get("/getOrderId", getOrderIdBold);
+router.post("/api/getOrderId", getOrderIdBold);
 
 router.get("/success", (req: any, res: any) => {
   console.log(req);

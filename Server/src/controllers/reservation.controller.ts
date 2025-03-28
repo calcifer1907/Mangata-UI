@@ -192,7 +192,7 @@ export const checkReservation = async (
   try {
     if (payment_id) {
       const resultReservations = await pool.query(
-        `SELECT CODE_RESERVATION, STATUS_RESERVATION, COMMISSION_EMPLOYEE , CREATED_AT FROM reservations  WHERE PAYMENT_ID = $1`,
+        `SELECT CODE_RESERVATION, STATUS_RESERVATION, COMMISSION_EMPLOYEE ,EMAIL,CREATED_AT FROM reservations  WHERE PAYMENT_ID = $1`,
         [payment_id]
       );
       if (resultReservations.rowCount === 0) {
@@ -203,6 +203,7 @@ export const checkReservation = async (
           commission_employee,
           created_at,
           status_reservation,
+          email,
         } = resultReservations.rows[0];
 
         const resultAccompanist = await pool.query(
@@ -218,6 +219,7 @@ export const checkReservation = async (
             created_at,
             code_reservation,
             status_reservation,
+            email,
             total_payment: Number(commission_employee) * total_persons || 0,
           });
         }

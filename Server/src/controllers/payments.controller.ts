@@ -23,6 +23,7 @@ import {
   PAYMENT_TOKEN_TEST_PUBLIC,
   BOLD_KEY,
 } from "../configDB";
+import { request } from "http";
 
 initMercadoPago(PAYMENT_TOKEN_PROD_PUBLIC || "");
 
@@ -142,6 +143,7 @@ export const paymentBold = async (request: Request, response: Response) => {
       description: "Mangata Pasa Día",
       callback_url: "https://mangata-ui-client.vercel.app/#/check-reservation",
       payer_email: email,
+      payment_methods: ["CREDIT_CARD", "PSE", "BOTON_BANCOLOMBIA", "NEQUI"],
       amount: {
         currency: currency,
         total_amount: total_amount,
@@ -193,18 +195,16 @@ export const webhookBold = async (request: Request, response: Response) => {
   response.json({ masagge: "Todo Bien." });
 };
 
-export const getOrderIdBold = async (
-  _resquest: Request,
-  response: Response
-) => {
+export const getOrderIdBold = async (request: Request, response: Response) => {
+  const { order_id } = request.body;
   const headers = {
     Authorization: `x-api-key ${BOLD_KEY}`,
     "Content-Type": "application/json",
   };
   const responseBold = await axios.get(
-    "https://integrations.api.bold.co/online/link/v1/LNK_R8T9315XBD",
+    `https://integrations.api.bold.co/online/link/v1/${order_id}`,
     { headers }
   );
   console.log(responseBold);
-  response.json({ message: "s" });
+  response.json({ message: "success", data: responseBold.data });
 };
