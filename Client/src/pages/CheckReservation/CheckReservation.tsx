@@ -64,7 +64,10 @@ const CheckReservation = () => {
       }
     } catch (error: unknown) {
       setLoading(false);
-      if (error instanceof Error && (error as any).status === 404) {
+      if (
+        error instanceof Error &&
+        (error as { status?: number }).status === 404
+      ) {
         navigate("/404");
       }
     }

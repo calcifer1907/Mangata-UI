@@ -55,8 +55,12 @@ const useLogicReservations = () => {
         const resultUserSystem = await methodUser.getUserId({ id: -1 });
         refSystem.current = resultUserSystem.id;
       }
-    } catch (error: any) {
-      if (error.response?.status === 404) {
+    } catch (error: unknown) {
+      if (
+        error instanceof Error &&
+        "response" in error &&
+        (error as { response?: { status?: number } }).response?.status === 404
+      ) {
         navigator("/404");
       }
     }
