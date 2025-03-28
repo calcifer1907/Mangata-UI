@@ -60,9 +60,9 @@ const NameLunchForm: React.FC = () => {
     CODE_RESERVATION,
     removeField,
     calculatePrice,
+    allFields,
     handleFormatPrice,
     handleChange,
-    validateFields,
     handleClose,
     handleChangeDate,
   } = useLogicReservations();
@@ -337,9 +337,7 @@ const NameLunchForm: React.FC = () => {
                     md: "var(--color-theme-white)",
                   },
                 }}
-                onClick={() => {
-                  if (validateFields()) setOpenModal(true);
-                }}
+                onClick={allFields}
                 startIcon={
                   <Box
                     component={Icon}

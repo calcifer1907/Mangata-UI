@@ -17,6 +17,7 @@ import { generarCodigoReservaUX2 } from "../generalFunctions/generateCodeReserva
 
 import { enqueueSnackbar } from "notistack";
 import { formatPrice } from "../generalFunctions/formaters";
+import { validEmail } from "../generalFunctions/generalFunction";
 
 const useLogicReservations = () => {
   const [searchParams] = useSearchParams();
@@ -73,6 +74,21 @@ const useLogicReservations = () => {
     }),
     [minmax, dataCodeReservation]
   );
+
+  const allFields = () => {
+    const isValidEmail = validEmail(valueEmail);
+    const isValidForm = validateFields();
+    if (!isValidEmail) {
+      enqueueSnackbar("Correo invalido!", {
+        variant: "error",
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "right",
+        },
+      });
+    }
+    if (isValidForm && isValidEmail) setOpenModal(true);
+  };
 
   // Valida que todos los campos estén llenos
   const validateFields = (): boolean => {
@@ -190,7 +206,7 @@ const useLogicReservations = () => {
     handleFormatPrice,
     handleChangeDate,
     handleChange,
-    validateFields,
+    allFields,
     handleClose,
   };
 };
