@@ -108,7 +108,7 @@ const useLogicReservations = () => {
         EMAIL: valueEmail,
         AGREED_PRICE: Number(PRICES.PRICE_MAX),
         MIN_PRICE: Number(PRICES.PRICE_MIN),
-        CREATED_AT: formatDate(new Date(dateChange)),
+        CREATED_AT: formatDate(dateChange),
       };
 
       const data = await getAccompanist.saveReservation(body);

@@ -46,7 +46,7 @@ export const createReservation = async (
       "INSERT INTO accompanist(ID_RESERVATION,NAME_ACCOMPANIST,ID_LUNCHES) SELECT * FROM UNNEST($1::text[], $2::text[], $3::int[]);",
       [idsReservation, namesAccompanist, idsLunches]
     );
-    response.status(201).json({ id: result.rowCount, message: "success" });
+    response.json({ id: result.rowCount, message: "success" });
     // sendEmail(CODE_RESERVATION);
   } catch (_error) {
     console.log(_error);
@@ -278,11 +278,6 @@ class ReservationController {
         response.status(404).json({ message: error.message });
       }
     }
-  }
-
-  async webhookBold(request: Request, response: Response) {
-    console.log(request);
-    response.status(200);
   }
 }
 

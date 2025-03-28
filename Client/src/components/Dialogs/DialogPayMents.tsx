@@ -76,9 +76,10 @@ const DialogPayMents = ({
   const handleBoldPayment = async () => {
     try {
       const body = {
-        email: "tabordac2@gmail.com",
+        email: email,
         currency: "COP",
-        total_amount: 5000,
+        total_amount: amount,
+        payment_id,
       };
       const { data } = await paymentBold(body);
       if (data.payload) {

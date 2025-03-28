@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import reservationController, {
+import {
   createReservation,
   getListSalesAdmin,
   getListSalesEmployee,
@@ -35,8 +35,6 @@ router.post("/getCodeReservation", ReservationController.getCodeReservation);
 router.put("/updatePaymentEmployee", authenticate, updatePaymentEmployee);
 
 router.post("/check-reservation", checkReservation);
-
-router.post("/webhook-bold", reservationController.webhookBold);
 
 router.get("/lunches", ReservationController.getLunches);
 

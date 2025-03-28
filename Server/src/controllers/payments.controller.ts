@@ -135,11 +135,11 @@ export const createPSEPayment = (request: Request, response: Response) => {
 
 export const paymentBold = async (request: Request, response: Response) => {
   try {
-    const { email, currency, total_amount } = request.body;
+    const { email, currency, total_amount, payment_id } = request.body;
 
     const body = {
       amount_type: "CLOSE",
-      description: "Mangata Pasa día",
+      description: "Mangata Pasa Día",
       callback_url: "https://mangata-ui-client.vercel.app/#/check-reservation",
       payer_email: email,
       amount: {
@@ -153,7 +153,11 @@ export const paymentBold = async (request: Request, response: Response) => {
     };
     const link = "https://integrations.api.bold.co/online/link/v1";
     const responseBold = await axios.post(link, body, { headers });
-    // console.log(responseBold);
+    const { payload } = responseBold.data;
+    await pool.query(
+      "UPDATE reservations SET PAYMENT_ID=$1 WHERE CODE_RESERVATION=$2",
+      [payload.payment_link, payment_id]
+    );
     response.json({ massage: "success", data: responseBold.data });
   } catch (error) {
     console.log(error);
@@ -180,4 +184,27 @@ export const reciveWebhook = async (request: Request, response: Response) => {
   } catch (_error) {
     response.status(500).json({ message: "something went wrong" });
   }
+};
+
+export const webhookBold = async (request: Request, response: Response) => {
+  const { id } = request.body;
+  console.log(id);
+  console.log(request);
+  response.json({ masagge: "Todo Bien." });
+};
+
+export const getOrderIdBold = async (
+  _resquest: Request,
+  response: Response
+) => {
+  const headers = {
+    Authorization: `x-api-key ${BOLD_KEY}`,
+    "Content-Type": "application/json",
+  };
+  const responseBold = await axios.get(
+    "https://integrations.api.bold.co/online/link/v1/LNK_R8T9315XBD",
+    { headers }
+  );
+  console.log(responseBold);
+  response.json({ message: "s" });
 };
