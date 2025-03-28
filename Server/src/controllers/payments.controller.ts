@@ -23,6 +23,7 @@ import {
   PAYMENT_TOKEN_TEST_PUBLIC,
   BOLD_KEY,
 } from "../configDB";
+import { request } from "http";
 
 initMercadoPago(PAYMENT_TOKEN_PROD_PUBLIC || "");
 
@@ -135,13 +136,14 @@ export const createPSEPayment = (request: Request, response: Response) => {
 
 export const paymentBold = async (request: Request, response: Response) => {
   try {
-    const { email, currency, total_amount } = request.body;
+    const { email, currency, total_amount, payment_id } = request.body;
 
     const body = {
       amount_type: "CLOSE",
-      description: "Mangata Pasa día",
+      description: "Mangata Pasa Día",
       callback_url: "https://mangata-ui-client.vercel.app/#/check-reservation",
       payer_email: email,
+      payment_methods: ["CREDIT_CARD", "PSE", "BOTON_BANCOLOMBIA", "NEQUI"],
       amount: {
         currency: currency,
         total_amount: total_amount,
@@ -153,7 +155,11 @@ export const paymentBold = async (request: Request, response: Response) => {
     };
     const link = "https://integrations.api.bold.co/online/link/v1";
     const responseBold = await axios.post(link, body, { headers });
-    // console.log(responseBold);
+    const { payload } = responseBold.data;
+    await pool.query(
+      "UPDATE reservations SET PAYMENT_ID=$1 WHERE CODE_RESERVATION=$2",
+      [payload.payment_link, payment_id]
+    );
     response.json({ massage: "success", data: responseBold.data });
   } catch (error) {
     console.log(error);
@@ -180,4 +186,25 @@ export const reciveWebhook = async (request: Request, response: Response) => {
   } catch (_error) {
     response.status(500).json({ message: "something went wrong" });
   }
+};
+
+export const webhookBold = async (request: Request, response: Response) => {
+  const { id } = request.body;
+  console.log(id);
+  console.log(request);
+  response.json({ masagge: "Todo Bien." });
+};
+
+export const getOrderIdBold = async (request: Request, response: Response) => {
+  const { order_id } = request.body;
+  const headers = {
+    Authorization: `x-api-key ${BOLD_KEY}`,
+    "Content-Type": "application/json",
+  };
+  const responseBold = await axios.get(
+    `https://integrations.api.bold.co/online/link/v1/${order_id}`,
+    { headers }
+  );
+  console.log(responseBold);
+  response.json({ message: "success", data: responseBold.data });
 };

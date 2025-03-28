@@ -5,6 +5,8 @@ import {
   createPSEPayment,
   getListBanks,
   paymentBold,
+  webhookBold,
+  getOrderIdBold,
 } from "../controllers/payments.controller";
 
 const router = Router();
@@ -16,6 +18,10 @@ router.post("/PSEPayment", createPSEPayment);
 router.post("/paymentsBold", paymentBold);
 
 router.post("/webhook", reciveWebhook);
+
+router.post("/webhook-bold", webhookBold);
+
+router.post("/api/getOrderId", getOrderIdBold);
 
 router.get("/success", (req: any, res: any) => {
   console.log(req);

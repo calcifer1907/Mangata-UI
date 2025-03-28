@@ -92,3 +92,6 @@ export const getCodeReservation = (body: {
   code: number;
 }): Promise<ISaveCodeGenerate> =>
   requestApis.post("/api/getCodeReservation", body);
+
+export const getOrderIdBold = (body: { order_id: string }): Promise<unknown> =>
+  requestApis.post("/api/getOrderId", body);

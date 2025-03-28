@@ -55,8 +55,12 @@ const useLogicReservations = () => {
         const resultUserSystem = await methodUser.getUserId({ id: -1 });
         refSystem.current = resultUserSystem.id;
       }
-    } catch (error: any) {
-      if (error.response?.status === 404) {
+    } catch (error: unknown) {
+      if (
+        error instanceof Error &&
+        "response" in error &&
+        (error as { response?: { status?: number } }).response?.status === 404
+      ) {
         navigator("/404");
       }
     }
@@ -108,7 +112,7 @@ const useLogicReservations = () => {
         EMAIL: valueEmail,
         AGREED_PRICE: Number(PRICES.PRICE_MAX),
         MIN_PRICE: Number(PRICES.PRICE_MIN),
-        CREATED_AT: formatDate(new Date(dateChange)),
+        CREATED_AT: formatDate(dateChange),
       };
 
       const data = await getAccompanist.saveReservation(body);

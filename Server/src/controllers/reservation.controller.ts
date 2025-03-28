@@ -46,7 +46,7 @@ export const createReservation = async (
       "INSERT INTO accompanist(ID_RESERVATION,NAME_ACCOMPANIST,ID_LUNCHES) SELECT * FROM UNNEST($1::text[], $2::text[], $3::int[]);",
       [idsReservation, namesAccompanist, idsLunches]
     );
-    response.status(201).json({ id: result.rowCount, message: "success" });
+    response.json({ id: result.rowCount, message: "success" });
     // sendEmail(CODE_RESERVATION);
   } catch (_error) {
     console.log(_error);
@@ -192,7 +192,7 @@ export const checkReservation = async (
   try {
     if (payment_id) {
       const resultReservations = await pool.query(
-        `SELECT CODE_RESERVATION, STATUS_RESERVATION, COMMISSION_EMPLOYEE , CREATED_AT FROM reservations  WHERE PAYMENT_ID = $1`,
+        `SELECT CODE_RESERVATION, STATUS_RESERVATION, COMMISSION_EMPLOYEE ,EMAIL,CREATED_AT FROM reservations  WHERE PAYMENT_ID = $1`,
         [payment_id]
       );
       if (resultReservations.rowCount === 0) {
@@ -203,6 +203,7 @@ export const checkReservation = async (
           commission_employee,
           created_at,
           status_reservation,
+          email,
         } = resultReservations.rows[0];
 
         const resultAccompanist = await pool.query(
@@ -218,6 +219,7 @@ export const checkReservation = async (
             created_at,
             code_reservation,
             status_reservation,
+            email,
             total_payment: Number(commission_employee) * total_persons || 0,
           });
         }
@@ -278,11 +280,6 @@ class ReservationController {
         response.status(404).json({ message: error.message });
       }
     }
-  }
-
-  async webhookBold(request: Request, response: Response) {
-    console.log(request);
-    response.status(200);
   }
 }
 

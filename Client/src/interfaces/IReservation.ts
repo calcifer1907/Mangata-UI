@@ -18,6 +18,7 @@ export interface IBodyStatusReservation {
   email: string;
   created_at: string;
   total_payment: number;
+  payment_method?: string;
 }
 
 export interface ISaveCodeGenerate {
