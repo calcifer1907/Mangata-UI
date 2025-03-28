@@ -191,7 +191,7 @@ export const reciveWebhook = async (request: Request, response: Response) => {
 export const webhookBold = async (request: Request, response: Response) => {
   const { id } = request.body;
   console.log(id);
-  console.log(request);
+  console.log(JSON.stringify(request.body));
   response.json({ masagge: "Todo Bien." });
 };
 
