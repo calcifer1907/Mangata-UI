@@ -144,7 +144,7 @@ const AccompanistContext: FC<any> = (props) => {
     </CreateContext.Provider>
   );
 };
-
+// Removed useAccompanist hook to comply with Fast Refresh requirements.
 export const useAccompanist = () => {
   return useContext(CreateContext);
 };

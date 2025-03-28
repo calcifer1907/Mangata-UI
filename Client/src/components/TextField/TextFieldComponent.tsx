@@ -2,6 +2,10 @@
 import { Icon } from "@iconify/react";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
+import { enqueueSnackbar } from "notistack";
+
+/**Function */
+import { validEmail } from "../../generalFunctions/generalFunction";
 
 interface IProps {
   onChange: (date: string) => void;
@@ -24,6 +28,20 @@ const TextFieldComponent = ({
   helperText,
   iconName,
 }: IProps) => {
+  const showError = () => {
+    if (type === "email") {
+      if (!validEmail(value)) {
+        enqueueSnackbar("Correo invalido!", {
+          variant: "error",
+          anchorOrigin: {
+            vertical: "top",
+            horizontal: "right",
+          },
+        });
+      }
+    }
+  };
+
   return (
     <TextField
       variant="filled"
@@ -34,6 +52,7 @@ const TextFieldComponent = ({
       type={type}
       value={value}
       error={value === ""}
+      onBlur={showError}
       onChange={(e) => onChange(e.target.value)}
       helperText={value === "" ? helperText : ""}
       slotProps={{

@@ -38,7 +38,6 @@ const NameLunchForm: React.FC = () => {
   const {
     optionsLunches,
     dateChange,
-
     errors,
     valueCel,
     valueEmail,
@@ -61,9 +60,9 @@ const NameLunchForm: React.FC = () => {
     CODE_RESERVATION,
     removeField,
     calculatePrice,
+    allFields,
     handleFormatPrice,
     handleChange,
-    validateFields,
     handleClose,
     handleChangeDate,
   } = useLogicReservations();
@@ -75,7 +74,6 @@ const NameLunchForm: React.FC = () => {
       document.getElementById("contentPrimary")?.offsetHeight;
     setMaxHeight(heightContainer || 0);
   }, []);
-
 
   const style = {
     position: "absolute",
@@ -185,6 +183,7 @@ const NameLunchForm: React.FC = () => {
               value={valueEmail}
               onChange={handleOnChangeEmail}
               label="Correo"
+              type="email"
               placeholder="Ingrese tú Correo"
               iconName="letter-opened"
               helperText="Este campo es obligatorio"
@@ -338,9 +337,7 @@ const NameLunchForm: React.FC = () => {
                     md: "var(--color-theme-white)",
                   },
                 }}
-                onClick={() => {
-                  if (validateFields()) setOpenModal(true);
-                }}
+                onClick={allFields}
                 startIcon={
                   <Box
                     component={Icon}
