@@ -10,7 +10,7 @@ import axios from "axios";
 
 import { pool } from "../Connection";
 
-// import { sendEmail } from "./sendEmail.controller";
+import { sendEmail } from "./sendEmail.controller";
 
 import { initMercadoPago } from "@mercadopago/sdk-react";
 
@@ -24,6 +24,7 @@ import {
   BOLD_KEY,
 } from "../configDB";
 import { request } from "http";
+import { STATUS_BOLD } from "../generalFuncionts/generalFunctions";
 
 initMercadoPago(PAYMENT_TOKEN_PROD_PUBLIC || "");
 
@@ -176,7 +177,7 @@ export const reciveWebhook = async (request: Request, response: Response) => {
         const data = await new Payment(client).get({ id: paymentId });
         const { external_reference, id, status } = data;
         await pool.query(
-          "UPDATE reservations SET PAYMENT_ID=$1, STATUS_RESERVATION=$2 WHERE CODE_RESERVATION=$3",
+          "UPDATE reservations SET PAYMENT_ID=$1, STATUS_RESERVATION=$2 WHERE CODE_RESERVATION=$3;",
           [id, status, external_reference]
         );
       }
@@ -189,10 +190,19 @@ export const reciveWebhook = async (request: Request, response: Response) => {
 };
 
 export const webhookBold = async (request: Request, response: Response) => {
-  const { id } = request.body;
-  console.log(id);
-  console.log(JSON.stringify(request.body));
-  response.json({ masagge: "Todo Bien." });
+  try {
+    const { data, type } = request.body;
+    const status = STATUS_BOLD[type as keyof typeof STATUS_BOLD];
+    const payment_id = data.metadata.reference;
+    await pool.query(
+      "UPDATE reservations SET STATUS_RESERVATION=$1 WHERE PAYMENT_ID=$2;",
+      [status, payment_id]
+    );
+    await sendEmail(payment_id);
+    response.status(200);
+  } catch (error) {
+    response.status(500);
+  }
 };
 
 export const getOrderIdBold = async (request: Request, response: Response) => {
