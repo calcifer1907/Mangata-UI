@@ -11,11 +11,15 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+const formatDate = (date: string) => {
+  const newDate = new Date(date);
+};
+
 export const sendEmail = async (payment_id: string) => {
   try {
     const subject = "Bienvenido a Mangata Beach";
     const resultQuery = await pool.query(
-      "SELECT CREATED_AT,EMAIL FROM reservations WHERE PAYMENT_ID=$1",
+      "SELECT TO_CHAR(CREATED_AT AT TIME ZONE 'UTC', 'YYYY-MM-DD HH24:MI:SS') AS FORMATTED_DATE, EMAIL FROM reservations WHERE PAYMENT_ID = $1",
       [payment_id]
     );
 
@@ -23,7 +27,7 @@ export const sendEmail = async (payment_id: string) => {
     let email = null;
     if (resultQuery && resultQuery.rowCount) {
       email = resultQuery.rows[0].email;
-      date = resultQuery.rows[0].created_at;
+      date = resultQuery.rows[0].formatted_date;
     }
     const mailOptions = {
       from: "app.mangata.beach.club@gmail.com",

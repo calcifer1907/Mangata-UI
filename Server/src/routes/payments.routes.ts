@@ -7,6 +7,7 @@ import {
   paymentBold,
   webhookBold,
   getOrderIdBold,
+  testEmail,
 } from "../controllers/payments.controller";
 
 const router = Router();
@@ -22,6 +23,8 @@ router.post("/webhook", reciveWebhook);
 router.post("/webhook-bold", webhookBold);
 
 router.post("/api/getOrderId", getOrderIdBold);
+
+router.get("/testemail", testEmail);
 
 router.get("/success", (req: any, res: any) => {
   console.log(req);

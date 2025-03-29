@@ -198,7 +198,9 @@ export const webhookBold = async (request: Request, response: Response) => {
       "UPDATE reservations SET STATUS_RESERVATION=$1 WHERE PAYMENT_ID=$2;",
       [status, payment_id]
     );
-    await sendEmail(payment_id);
+    if (status === "approved") {
+      await sendEmail(payment_id);
+    }
     response.status(200);
   } catch (error) {
     response.status(500);
@@ -217,4 +219,13 @@ export const getOrderIdBold = async (request: Request, response: Response) => {
   );
   console.log(responseBold);
   response.json({ message: "success", data: responseBold.data });
+};
+
+export const testEmail = async (request: Request, response: Response) => {
+  try {
+    await sendEmail("LNK_VWE9JAMF4N");
+    response.status(200).json({ mesagge: "Send email test" });
+  } catch (error) {
+    response.status(500);
+  }
 };

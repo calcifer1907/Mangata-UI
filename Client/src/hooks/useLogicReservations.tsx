@@ -39,6 +39,8 @@ const useLogicReservations = () => {
     setOpenModal,
     setOpenDialogPayment,
     setDateChange,
+    setValueEmail,
+    setValueCel,
   } = useAccompanist();
 
   const requestGetCodeReservation = useCallback(async () => {
@@ -191,6 +193,14 @@ const useLogicReservations = () => {
     setErrors(updatedErrors);
   };
 
+  const handleOnchangeCel = (value: string) => {
+    if (value.length <= 10) setValueCel(value);
+  };
+
+  const handleOnChangeEmail = (value: string) => {
+    if (value.length < 40) setValueEmail(value);
+  };
+
   useEffect(() => {
     requestGetCodeReservation();
   }, [requestGetCodeReservation]);
@@ -208,6 +218,8 @@ const useLogicReservations = () => {
     handleChange,
     allFields,
     handleClose,
+    handleOnchangeCel,
+    handleOnChangeEmail,
   };
 };
 

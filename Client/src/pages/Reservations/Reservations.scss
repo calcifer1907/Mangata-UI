@@ -80,6 +80,17 @@
 
 .margin-inline{
         margin-inline: 12px;
+
+        #line-popup-confirm {
+                height: 40px;
+                width: 2px;
+                align-self: center;
+                background: var(--color-theme-black-opacity);
+            
+        }
+        .margin-content{
+                margin-block: 15px;
+        }
 }
 .padding-inline{
         padding-inline: 16px;
@@ -98,3 +109,5 @@
 .margin-bottom{
         margin-bottom: 3;
 }
+
+

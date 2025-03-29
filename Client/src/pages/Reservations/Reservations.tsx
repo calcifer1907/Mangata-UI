@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -9,7 +9,6 @@ import Modal from "@mui/material/Modal";
 import "./Reservations.scss";
 
 /**Libreries */
-import { format } from "@formkit/tempo";
 import { Icon } from "@iconify/react";
 
 import { enqueueSnackbar } from "notistack";
@@ -22,17 +21,19 @@ import TextFieldComponent from "../../components/TextField/TextFieldComponent";
 import LineTopIcon from "./LineTopIcon";
 import StandardPackage from "./StandardPackage";
 import PurchaseSummary from "./PurchaseSummary";
+import Calendar from "../../components/Calendar/Calendar";
 
 /**Functions */
 import { formatPrice } from "../../generalFunctions/formaters";
+
+/**JSON Style */
+import styleReservation from "./styleReservation.json";
 
 /**Hooks */
 import { useAccompanist } from "../../hooks/useReservationContext";
 import useLogicReservations from "../../hooks/useLogicReservations";
 
-const FORMAT = "DD/MM/YYYY";
-
-const NameLunchForm: React.FC = () => {
+const NameLunchForm: FC = () => {
   const [isVisibleGrid, setIsVisibleGrid] = useState(false);
 
   const {
@@ -41,8 +42,6 @@ const NameLunchForm: React.FC = () => {
     errors,
     valueCel,
     valueEmail,
-    setValueEmail,
-    setValueCel,
     fields,
     setOpenModal,
     openModal,
@@ -65,6 +64,8 @@ const NameLunchForm: React.FC = () => {
     handleChange,
     handleClose,
     handleChangeDate,
+    handleOnchangeCel,
+    handleOnChangeEmail,
   } = useLogicReservations();
 
   useEffect(() => {
@@ -74,19 +75,6 @@ const NameLunchForm: React.FC = () => {
       document.getElementById("contentPrimary")?.offsetHeight;
     setMaxHeight(heightContainer || 0);
   }, []);
-
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    bgcolor: "background.paper",
-    boxShadow: 24,
-    borderRadius: "16px",
-    pt: 2,
-    px: 1,
-    pb: 3,
-  };
 
   const handleCopy = async () => {
     const code_reserva = document.getElementById("code_reserva");
@@ -110,14 +98,6 @@ const NameLunchForm: React.FC = () => {
         anchorOrigin: { vertical: "top", horizontal: "right" },
       });
     }
-  };
-
-  const handleOnchangeCel = (value: string) => {
-    if (value.length <= 10) setValueCel(value);
-  };
-
-  const handleOnChangeEmail = (value: string) => {
-    if (value.length < 40) setValueEmail(value);
   };
 
   return (
@@ -151,25 +131,11 @@ const NameLunchForm: React.FC = () => {
               background="background-color-button-dark-blue"
             />
           </Box>
-          <TextFieldComponent
-            value={dateChange}
-            onChange={handleChangeDate}
-            label="Fecha"
-            placeholder="Fecha"
-            type="date"
-            iconName="calendar"
-          />
+          <Calendar callback={handleChangeDate} />
           <Typography className="color-blue-dark title-data-contact">
             Datos De Contacto
           </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              gap: 2,
-              flexWrap: "wrap",
-            }}
-          >
+          <Box className="d-flex gap-16 flex-wrap flex-dirrection-row">
             <TextFieldComponent
               value={valueCel}
               onChange={handleOnchangeCel}
@@ -220,25 +186,11 @@ const NameLunchForm: React.FC = () => {
         component="div"
         size={{ xs: 12, sm: 12, md: 12, lg: 5 }}
         sx={{
-          position: {
-            xs: "fixed",
-            sm: "fixed",
-            md: "sticky",
-          },
-          bottom: { xs: 0, sm: 0, md: "inherit" },
-          top: { xs: "inherit", sm: "inherit", md: 0 },
-          backgroundColor: {
-            xs: "var(--color-theme-dark-blue)",
-            sm: "var(--color-theme-dark-blue)",
-            md: "var(--color-theme-white)",
-            lg: "var(--color-theme-white)",
-          },
+          ...styleReservation.purchaseSummary,
           transform: {
             xs: `translateY(${!isVisibleGrid ? 0 : "calc(100% - 6.5rem"}))`,
             md: "translateY(0)",
           },
-          maxHeight: { xs: 550, sm: 550 },
-          cursor: { xs: "pointer", lg: "inherit" },
         }}
         onClick={() => setIsVisibleGrid((prev) => !prev)}
       >
@@ -295,7 +247,7 @@ const NameLunchForm: React.FC = () => {
 
             <StandardPackage
               title1="Fecha"
-              title2={format(dateChange, FORMAT, "co")}
+              title2={dateChange}
               iconName="calendar"
               marginBottom={2}
             />
@@ -365,41 +317,56 @@ const NameLunchForm: React.FC = () => {
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
-        <Box sx={{ ...style, width: { xs: 300, lg: 400 } }}>
-          <Box className="d-flex justify-content-center align-items-center flex-dirrection-row">
+        <Box
+          sx={{ ...styleReservation.centerDiv, width: { xs: 300, lg: 400 } }}
+        >
+          <Box className="d-flex justify-content-center align-items-center flex-dirrection-row gap-4">
             <Typography
               variant="h5"
               className="text-align-center color-theme-black"
             >
-              Reserva <span id="code_reserva">{CODE_RESERVATION}</span>
+              # Reserva
+              <span id="code_reserva">{CODE_RESERVATION}</span>
             </Typography>
-            <Box onClick={handleCopy}>
-              <Icon
-                className="color-blue-dark"
-                icon="solar:copy-bold-duotone"
-                width="24"
-                height="24"
-              />
-            </Box>
+            <Icon
+              className="color-blue-dark"
+              icon="solar:copy-bold-duotone"
+              width="24"
+              height="24"
+              onClick={handleCopy}
+            />
           </Box>
           <Box className="d-block color-black-opacity margin-inline">
-            <h3>{fields[0].name}</h3>
-            <h3>{format(dateChange, FORMAT, "co")}</h3>
-            <h3>{handleFormatPrice()}</h3>
+            <div className="text-align-center margin-top-8">
+              <h3>Nombre:</h3>
+              <h3> {fields[0].name}</h3>
+            </div>
+            <div className="d-flex justify-content-between margin-content">
+              <div className="text-align-center ">
+                <h3>Fecha</h3>
+                <h3>{dateChange}</h3>
+              </div>
+              <div id="line-popup-confirm" />
+              <div className="text-align-center margin-top-8">
+                <h3>Total</h3>
+                <h3>{handleFormatPrice()}</h3>
+              </div>
+            </div>
           </Box>
 
           <Box className="d-flex justify-content-center align-items-center flex-wrap gap-8">
             <ButtonComponent
               background="background-harvest-gold"
-              iconName="solar:dollar-bold-duotone"
+              iconName=""
               onClick={handleReservation}
               title="Confirmar"
             />
             <ButtonComponent
-              background="background-blue-dark"
-              iconName="solar:close-circle-bold-duotone"
+              background="background-gray"
+              iconName=""
               onClick={() => setOpenModal(false)}
               title="Cancelar"
+              colorTitle="black"
             />
           </Box>
         </Box>
