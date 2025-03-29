@@ -11,17 +11,16 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export const sendEmail = async (code_reservation: string) => {
+export const sendEmail = async (payment_id: string) => {
   try {
     const subject = "Bienvenido a Mangata Beach";
     const resultQuery = await pool.query(
-      "SELECT CREATED_AT,EMAIL FROM reservations WHERE CODE_RESERVATION=$1",
-      [code_reservation]
+      "SELECT CREATED_AT,EMAIL FROM reservations WHERE PAYMENT_ID=$1",
+      [payment_id]
     );
 
     let date = new Date().toDateString();
     let email = null;
-    console.log("resultQuery", resultQuery.rows);
     if (resultQuery && resultQuery.rowCount) {
       email = resultQuery.rows[0].email;
       date = resultQuery.rows[0].created_at;
