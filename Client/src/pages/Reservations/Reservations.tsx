@@ -76,19 +76,6 @@ const NameLunchForm: FC = () => {
     setMaxHeight(heightContainer || 0);
   }, []);
 
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    bgcolor: "background.paper",
-    boxShadow: 24,
-    borderRadius: "16px",
-    pt: 2,
-    px: 1,
-    pb: 3,
-  };
-
   const handleCopy = async () => {
     const code_reserva = document.getElementById("code_reserva");
     try {
@@ -330,7 +317,9 @@ const NameLunchForm: FC = () => {
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
-        <Box sx={{ ...style, width: { xs: 300, lg: 400 } }}>
+        <Box
+          sx={{ ...styleReservation.centerDiv, width: { xs: 300, lg: 400 } }}
+        >
           <Box className="d-flex justify-content-center align-items-center flex-dirrection-row">
             <Typography
               variant="h5"
