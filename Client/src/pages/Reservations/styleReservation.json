@@ -1,0 +1,33 @@
+{
+        "purchaseSummary": {
+                "position": {
+                        "xs": "fixed",
+                        "sm": "fixed",
+                        "md": "sticky"
+                },
+                "bottom": {
+                        "xs": 0,
+                        "sm": 0,
+                        "md": "inherit"
+                },
+                "top": {
+                        "xs": "inherit",
+                        "sm": "inherit",
+                        "md": 0
+                },
+                "backgroundColor": {
+                        "xs": "var(--color-theme-dark-blue)",
+                        "sm": "var(--color-theme-dark-blue)",
+                        "md": "var(--color-theme-white)",
+                        "lg": "var(--color-theme-white)"
+                },
+                "maxHeight": {
+                        "xs": 550,
+                        "sm": 550
+                },
+                "cursor": {
+                        "xs": "pointer",
+                        "lg": "inherit"
+                }
+        }
+}

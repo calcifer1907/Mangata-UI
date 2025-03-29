@@ -26,6 +26,9 @@ import Calendar from "../../components/Calendar/Calendar";
 /**Functions */
 import { formatPrice } from "../../generalFunctions/formaters";
 
+/**JSON Style */
+import styleReservation from "./styleReservation.json";
+
 /**Hooks */
 import { useAccompanist } from "../../hooks/useReservationContext";
 import useLogicReservations from "../../hooks/useLogicReservations";
@@ -196,25 +199,11 @@ const NameLunchForm: FC = () => {
         component="div"
         size={{ xs: 12, sm: 12, md: 12, lg: 5 }}
         sx={{
-          position: {
-            xs: "fixed",
-            sm: "fixed",
-            md: "sticky",
-          },
-          bottom: { xs: 0, sm: 0, md: "inherit" },
-          top: { xs: "inherit", sm: "inherit", md: 0 },
-          backgroundColor: {
-            xs: "var(--color-theme-dark-blue)",
-            sm: "var(--color-theme-dark-blue)",
-            md: "var(--color-theme-white)",
-            lg: "var(--color-theme-white)",
-          },
+          ...styleReservation.purchaseSummary,
           transform: {
             xs: `translateY(${!isVisibleGrid ? 0 : "calc(100% - 6.5rem"}))`,
             md: "translateY(0)",
           },
-          maxHeight: { xs: 550, sm: 550 },
-          cursor: { xs: "pointer", lg: "inherit" },
         }}
         onClick={() => setIsVisibleGrid((prev) => !prev)}
       >
