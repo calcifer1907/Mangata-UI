@@ -1,7 +1,9 @@
 import { format, diffHours } from "@formkit/tempo";
 
-export const formatDate = (date: string) => {
-  return format(date, "YYYY-MM-DD HH:mm:ss");
+export const formatDate = (date: string, formatDate?: string) => {
+  const initialFormat = formatDate ?? "YYYY-MM-DD HH:mm:ss";
+  const initialDate = date ? date : new Date();
+  return format(initialDate, initialFormat);
 };
 
 export const handleDiffHours = (date1: Date, date2: Date) => {

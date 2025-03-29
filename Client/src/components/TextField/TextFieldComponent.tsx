@@ -1,3 +1,4 @@
+import { FC } from "react";
 /**Libreries */
 import { Icon } from "@iconify/react";
 import TextField from "@mui/material/TextField";
@@ -18,7 +19,7 @@ interface IProps {
   helperText?: string;
 }
 
-const TextFieldComponent = ({
+const TextFieldComponent: FC<IProps> = ({
   value,
   onChange,
   label,
@@ -27,7 +28,7 @@ const TextFieldComponent = ({
   iconColor = "color-blue-dark",
   helperText,
   iconName,
-}: IProps) => {
+}) => {
   const showError = () => {
     if (type === "email") {
       if (!validEmail(value)) {

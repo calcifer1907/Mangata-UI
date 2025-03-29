@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -9,7 +9,6 @@ import Modal from "@mui/material/Modal";
 import "./Reservations.scss";
 
 /**Libreries */
-import { format } from "@formkit/tempo";
 import { Icon } from "@iconify/react";
 
 import { enqueueSnackbar } from "notistack";
@@ -22,6 +21,7 @@ import TextFieldComponent from "../../components/TextField/TextFieldComponent";
 import LineTopIcon from "./LineTopIcon";
 import StandardPackage from "./StandardPackage";
 import PurchaseSummary from "./PurchaseSummary";
+import Calendar from "../../components/Calendar/Calendar";
 
 /**Functions */
 import { formatPrice } from "../../generalFunctions/formaters";
@@ -30,9 +30,7 @@ import { formatPrice } from "../../generalFunctions/formaters";
 import { useAccompanist } from "../../hooks/useReservationContext";
 import useLogicReservations from "../../hooks/useLogicReservations";
 
-const FORMAT = "DD/MM/YYYY";
-
-const NameLunchForm: React.FC = () => {
+const NameLunchForm: FC = () => {
   const [isVisibleGrid, setIsVisibleGrid] = useState(false);
 
   const {
@@ -41,8 +39,6 @@ const NameLunchForm: React.FC = () => {
     errors,
     valueCel,
     valueEmail,
-    setValueEmail,
-    setValueCel,
     fields,
     setOpenModal,
     openModal,
@@ -65,6 +61,8 @@ const NameLunchForm: React.FC = () => {
     handleChange,
     handleClose,
     handleChangeDate,
+    handleOnchangeCel,
+    handleOnChangeEmail,
   } = useLogicReservations();
 
   useEffect(() => {
@@ -112,14 +110,6 @@ const NameLunchForm: React.FC = () => {
     }
   };
 
-  const handleOnchangeCel = (value: string) => {
-    if (value.length <= 10) setValueCel(value);
-  };
-
-  const handleOnChangeEmail = (value: string) => {
-    if (value.length < 40) setValueEmail(value);
-  };
-
   return (
     <Grid2
       spacing={2}
@@ -151,25 +141,11 @@ const NameLunchForm: React.FC = () => {
               background="background-color-button-dark-blue"
             />
           </Box>
-          <TextFieldComponent
-            value={dateChange}
-            onChange={handleChangeDate}
-            label="Fecha"
-            placeholder="Fecha"
-            type="date"
-            iconName="calendar"
-          />
+          <Calendar callback={handleChangeDate} />
           <Typography className="color-blue-dark title-data-contact">
             Datos De Contacto
           </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              gap: 2,
-              flexWrap: "wrap",
-            }}
-          >
+          <Box className="d-flex gap-16 flex-wrap flex-dirrection-row">
             <TextFieldComponent
               value={valueCel}
               onChange={handleOnchangeCel}
@@ -295,7 +271,7 @@ const NameLunchForm: React.FC = () => {
 
             <StandardPackage
               title1="Fecha"
-              title2={format(dateChange, FORMAT, "co")}
+              title2={dateChange}
               iconName="calendar"
               marginBottom={2}
             />
@@ -384,7 +360,7 @@ const NameLunchForm: React.FC = () => {
           </Box>
           <Box className="d-block color-black-opacity margin-inline">
             <h3>{fields[0].name}</h3>
-            <h3>{format(dateChange, FORMAT, "co")}</h3>
+            <h3>{dateChange}</h3>
             <h3>{handleFormatPrice()}</h3>
           </Box>
 
