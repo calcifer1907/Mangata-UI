@@ -320,40 +320,53 @@ const NameLunchForm: FC = () => {
         <Box
           sx={{ ...styleReservation.centerDiv, width: { xs: 300, lg: 400 } }}
         >
-          <Box className="d-flex justify-content-center align-items-center flex-dirrection-row">
+          <Box className="d-flex justify-content-center align-items-center flex-dirrection-row gap-4">
             <Typography
               variant="h5"
               className="text-align-center color-theme-black"
             >
-              Reserva <span id="code_reserva">{CODE_RESERVATION}</span>
+              # Reserva
+              <span id="code_reserva">{CODE_RESERVATION}</span>
             </Typography>
-            <Box onClick={handleCopy}>
-              <Icon
-                className="color-blue-dark"
-                icon="solar:copy-bold-duotone"
-                width="24"
-                height="24"
-              />
-            </Box>
+            <Icon
+              className="color-blue-dark"
+              icon="solar:copy-bold-duotone"
+              width="24"
+              height="24"
+              onClick={handleCopy}
+            />
           </Box>
           <Box className="d-block color-black-opacity margin-inline">
-            <h3>{fields[0].name}</h3>
-            <h3>{dateChange}</h3>
-            <h3>{handleFormatPrice()}</h3>
+            <div className="text-align-center margin-top-8">
+              <h3>Nombre:</h3>
+              <h3> {fields[0].name}</h3>
+            </div>
+            <div className="d-flex justify-content-between margin-content">
+              <div className="text-align-center ">
+                <h3>Fecha</h3>
+                <h3>{dateChange}</h3>
+              </div>
+              <div id="line-popup-confirm" />
+              <div className="text-align-center margin-top-8">
+                <h3>Total</h3>
+                <h3>{handleFormatPrice()}</h3>
+              </div>
+            </div>
           </Box>
 
           <Box className="d-flex justify-content-center align-items-center flex-wrap gap-8">
             <ButtonComponent
               background="background-harvest-gold"
-              iconName="solar:dollar-bold-duotone"
+              iconName=""
               onClick={handleReservation}
               title="Confirmar"
             />
             <ButtonComponent
-              background="background-blue-dark"
-              iconName="solar:close-circle-bold-duotone"
+              background="background-gray"
+              iconName=""
               onClick={() => setOpenModal(false)}
               title="Cancelar"
+              colorTitle="black"
             />
           </Box>
         </Box>

@@ -47,6 +47,10 @@ body{
   color: var(--color-theme-black)
 }
 
+.color-theme-white{
+  color: var(--color-theme-white)
+}
+
 .color-black-opacity{
   color: var(--color-theme-black-opacity)
 }
@@ -59,9 +63,7 @@ body{
   color: var(--color-theme-dark-blueLigth)
 }
 
-.color-theme-white{
-  color: var(--color-theme-white)
-}
+
 
 .background-harvest-gold{
   background-color: var(--color-theme-harvest-gold)
@@ -76,6 +78,10 @@ body{
 
 .background-blue-dark{
   background-color: var(--color-theme-dark-blue)
+}
+
+.background-gray{
+  background-color: var(--color-theme-gray)
 }
 
 #searchInput:focus{
