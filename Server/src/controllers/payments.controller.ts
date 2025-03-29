@@ -220,3 +220,12 @@ export const getOrderIdBold = async (request: Request, response: Response) => {
   console.log(responseBold);
   response.json({ message: "success", data: responseBold.data });
 };
+
+export const testEmail = async (request: Request, response: Response) => {
+  try {
+    await sendEmail("LNK_VWE9JAMF4N");
+    response.status(200).json({ mesagge: "Send email test" });
+  } catch (error) {
+    response.status(500);
+  }
+};
