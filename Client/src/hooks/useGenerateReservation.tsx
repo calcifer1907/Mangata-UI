@@ -43,7 +43,7 @@ const useGenerateReservation = () => {
       status: 200,
       min_price: minmax.MIN,
       agreed_price: valueSlider as number,
-      created_at: formatDate(new Date().toDateString()),
+      created_at: formatDate(""),
     };
     const data = await saveGenerateCode(body);
     if (data.status === 201) {
