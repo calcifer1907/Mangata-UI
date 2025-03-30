@@ -121,6 +121,10 @@ const useLogicReservations = () => {
 
   const handleReservation = async () => {
     const ID_EMPLOYEE = dataCodeReservation?.id || refSystem.current;
+    const date = new Date();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
     if (validateFields() && valueCel !== "" && valueEmail !== "") {
       const body = {
         CODE_RESERVATION,
@@ -130,7 +134,7 @@ const useLogicReservations = () => {
         EMAIL: valueEmail,
         AGREED_PRICE: Number(PRICES.PRICE_MAX),
         MIN_PRICE: Number(PRICES.PRICE_MIN),
-        CREATED_AT: formatDate(dateChange),
+        CREATED_AT: formatDate(`${dateChange} ${hours}:${minutes}:${seconds}`),
       };
 
       const data = await getAccompanist.saveReservation(body);
