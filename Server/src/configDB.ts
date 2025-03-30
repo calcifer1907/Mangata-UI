@@ -14,3 +14,6 @@ export const PAYMENT_TOKEN_PROD_PUBLIC = process.env.PAYMENT_TOKEN_PROD_PUBLIC;
 export const CALLBACK_URL = process.env.CALLBACK_URL;
 export const BACKEND_URL = process.env.BACKEND_URL;
 export const BOLD_KEY = process.env.BOLD_KEY;
+export const BOLD_URL = process.env.BOLD_URL;
+export const PASSWORD_EMAIL = process.env.PASSWORD_EMAIL;
+export const USER_EMAIL = process.env.USER_EMAIL;

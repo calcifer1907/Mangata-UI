@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from "express";
 import { pool } from "../Connection";
-import AppError from "../errors/appError";
 
 import reservationRepository from "../repository/reservationRepository";
 
