@@ -6,7 +6,7 @@ import {
   PaymentMethod,
 } from "mercadopago";
 
-import axios from "axios";
+import { requestApis } from "../utils/request/Request";
 
 import { pool } from "../Connection";
 
@@ -23,7 +23,7 @@ import {
   PAYMENT_TOKEN_TEST_PUBLIC,
   BOLD_KEY,
 } from "../configDB";
-import { request } from "http";
+
 import { STATUS_BOLD } from "../generalFuncionts/generalFunctions";
 
 initMercadoPago(PAYMENT_TOKEN_PROD_PUBLIC || "");
@@ -150,12 +150,8 @@ export const paymentBold = async (request: Request, response: Response) => {
         total_amount: total_amount,
       },
     };
-    const headers = {
-      Authorization: `x-api-key ${BOLD_KEY}`,
-      "Content-Type": "application/json",
-    };
-    const link = "https://integrations.api.bold.co/online/link/v1";
-    const responseBold = await axios.post(link, body, { headers });
+
+    const responseBold = await requestApis.post("/online/link/v1", body);
     const { payload } = responseBold.data;
     await pool.query(
       "UPDATE reservations SET PAYMENT_ID=$1 WHERE CODE_RESERVATION=$2",
@@ -163,7 +159,6 @@ export const paymentBold = async (request: Request, response: Response) => {
     );
     response.json({ massage: "success", data: responseBold.data });
   } catch (error) {
-    console.log(error);
     response.status(500).json({ message: "Someting went wrong! " });
   }
 };
@@ -209,15 +204,7 @@ export const webhookBold = async (request: Request, response: Response) => {
 
 export const getOrderIdBold = async (request: Request, response: Response) => {
   const { order_id } = request.body;
-  const headers = {
-    Authorization: `x-api-key ${BOLD_KEY}`,
-    "Content-Type": "application/json",
-  };
-  const responseBold = await axios.get(
-    `https://integrations.api.bold.co/online/link/v1/${order_id}`,
-    { headers }
-  );
-  console.log(responseBold);
+  const responseBold = await requestApis.get(`/online/link/v1/${order_id}`);
   response.json({ message: "success", data: responseBold.data });
 };
 

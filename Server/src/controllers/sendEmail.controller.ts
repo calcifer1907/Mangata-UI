@@ -3,21 +3,19 @@ import nodemailer from "nodemailer";
 import { pool } from "../Connection";
 import { htmlContent } from "../functions/functionHtml";
 
+import { PASSWORD_EMAIL, USER_EMAIL } from "../configDB";
+
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "app.mangata.beach.club@gmail.com",
-    pass: "vhkr alqu degu rijk",
+    user: USER_EMAIL,
+    pass: PASSWORD_EMAIL,
   },
 });
 
-const formatDate = (date: string) => {
-  const newDate = new Date(date);
-};
-
 export const sendEmail = async (payment_id: string) => {
   try {
-    const subject = "Bienvenido a Mangata Beach";
+    const subject = "Bienvenido a Mangata Beach Club";
     const resultQuery = await pool.query(
       "SELECT TO_CHAR(CREATED_AT AT TIME ZONE 'UTC', 'YYYY-MM-DD HH24:MI:SS') AS FORMATTED_DATE, EMAIL FROM reservations WHERE PAYMENT_ID = $1",
       [payment_id]
@@ -30,10 +28,17 @@ export const sendEmail = async (payment_id: string) => {
       date = resultQuery.rows[0].formatted_date;
     }
     const mailOptions = {
-      from: "app.mangata.beach.club@gmail.com",
+      from: USER_EMAIL,
       to: email,
       subject,
       html: htmlContent(date),
+      attachments: [
+        {
+          filename: "logo.png",
+          path: "https://mangata-ui-client.vercel.app/images/MangataWhite.png",
+          cid: "logo",
+        },
+      ],
     };
 
     transporter.sendMail(
