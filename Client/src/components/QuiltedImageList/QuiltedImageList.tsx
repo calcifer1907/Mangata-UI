@@ -61,28 +61,28 @@ export default function QuiltedImageList() {
 
 const itemData = [
   {
-    img: "/images/lunche/filete de pescado apanado.jpg",
+    img: "/images/lunche/filete de pescado apanado.webp",
     title: "Filete de pescado apanado",
     titleEN: "Breadded fish fillet",
     rows: 2,
     cols: 2,
   },
   {
-    img: "/images/lunche/nuggets de pollo.jpg",
+    img: "/images/lunche/nuggets de pollo.webp",
     title: "Nuggets de pollo",
     titleEN: "Chicken nuggets",
     cols: 2,
     rows: 4,
   },
   {
-    img: "/images/lunche/pasta boloñesa.jpg",
+    img: "/images/lunche/pasta boloñesa.webp",
     title: "Pasta boloñesa",
     titleEN: "Bolonese pasta",
     rows: 4,
     cols: 2,
   },
   {
-    img: "/images/lunche/pasta vegetariana.jpg",
+    img: "/images/lunche/pasta vegetariana.webp",
     title: "Pasta vegetariana",
     titleEN: "Vegetarian pasta",
     rows: 4,
@@ -90,28 +90,28 @@ const itemData = [
   },
 
   {
-    img: "/images/lunche/pescado frito.jpg",
+    img: "/images/lunche/pescado frito.webp",
     title: "Pescado frito",
     titleEN: "Fried fish",
     rows: 4,
     cols: 2,
   },
   {
-    img: "/images/lunche/risoto.jpg",
+    img: "/images/lunche/risoto.webp",
     title: "Risoto",
     titleEN: "Risoto",
     rows: 3,
     cols: 2,
   },
   {
-    img: "/images/lunche/pechuga a la plancha.jpg",
+    img: "/images/lunche/pechuga a la plancha.webp",
     title: "pechuga a la plancha",
     titleEN: "Grilled chicken breast",
     rows: 3,
     cols: 2,
   },
   {
-    img: "/images/lunche/pizza1.jpg",
+    img: "/images/lunche/pizza1.webp",
     title: "Pizza",
     titleEN: "Pizza",
     rows: 2,

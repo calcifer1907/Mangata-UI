@@ -62,19 +62,19 @@ const Home = () => {
           >
             <Card
               title="Transporte marítimo ida y regreso."
-              img="/images/MangataBoat.jpeg"
+              img="/images/MangataBoat.webp"
             />
             <Card
               title="Copa de champaña de bienvenida o jugo"
-              img="/images/MangataCopa.jpg"
+              img="/images/MangataCopa.webp"
             />
             <Card
               title="Restaurante con aire acondicionado o al aire libre"
-              img="/images/MangataEat.jpg"
+              img="/images/MangataEat.webp"
             />
             <Card
               title="Deportes acuáticos: Snorkelling, Kayak, Paddle Board"
-              img="/images/MangataKayak.png"
+              img="/images/MangataKayak.webp"
             />
           </Box>
         </Box>
