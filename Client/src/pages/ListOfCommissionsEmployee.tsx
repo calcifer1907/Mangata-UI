@@ -54,7 +54,9 @@ const ListOfCommissions = () => {
   const handleOnchange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const filter = dataList.filter((item) =>
-      `${item.code_reservation}${item.ACCOMPANIST[0].name_accompanist}`
+      `${item.code_reservation}${
+        item.ACCOMPANIST.length > 0 ? item.ACCOMPANIST[0].name_accompanist : ""
+      }`
         .toLowerCase()
         .includes(value.toLowerCase())
     );
@@ -413,7 +415,9 @@ const ListOfCommissions = () => {
                         {format(item.created_at, FORMAT_DATE, "co")}
                       </Typography>
                       <Typography>
-                        {item.ACCOMPANIST[0].name_accompanist}
+                        {item.ACCOMPANIST.length > 0
+                          ? item.ACCOMPANIST[0].name_accompanist
+                          : ""}
                       </Typography>
                     </Box>
                   </Box>
