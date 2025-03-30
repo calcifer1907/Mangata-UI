@@ -20,7 +20,7 @@ router.post("/paymentsBold", paymentBold);
 
 router.post("/webhook", reciveWebhook);
 
-router.post("/webhook-bold", webhookBold);
+router.post("/api/webhook-bold", webhookBold);
 
 router.post("/api/getOrderId", getOrderIdBold);
 
