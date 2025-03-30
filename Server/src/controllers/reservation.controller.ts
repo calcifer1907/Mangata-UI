@@ -62,7 +62,7 @@ export const getListSalesEmployee = async (
 
     const resultReservations = await pool.query(
       `SELECT CODE_RESERVATION, ID_EMPLOYEE, STATUS_RESERVATION, CREATED_AT FROM reservations  
-      WHERE CREATED_AT = $1 AND ID_EMPLOYEE = $2`,
+      WHERE TO_CHAR(CREATED_AT AT TIME ZONE 'UTC', 'YYYY-MM-DD') = $1 AND ID_EMPLOYEE = $2`,
       [date, id_employee]
     );
 
