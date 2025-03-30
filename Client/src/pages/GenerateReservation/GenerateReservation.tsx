@@ -38,7 +38,7 @@ const GenerateReservation = () => {
       setSaveCodeReservation("");
     }, 60000);
     if (timeClosed) return () => clearTimeout(timeClosed);
-  }, []);
+  }, [setSaveCodeReservation]);
 
   return (
     <Box className="container-generate-reservation">
