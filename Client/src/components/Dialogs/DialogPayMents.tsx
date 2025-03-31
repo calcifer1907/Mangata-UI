@@ -166,12 +166,13 @@ const DialogPayMents = ({
           variant="outlined"
           sx={stytlePaper}
         >
-          {/* <img
+          <div id="bold-pagos" key={String(open)}>
+            <img
               src="https://developers.bold.co/_next/static/media/logo.ac02f303.png"
               alt="BOLD"
               style={{ width: "100px" }}
-            /> */}
-          <div id="bold-pagos" key={String(open)} />
+            />
+          </div>
           <Icon
             icon="solar:alt-arrow-right-outline"
             width="42"
