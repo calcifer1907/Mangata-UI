@@ -15,6 +15,9 @@ import { useContextUser } from "../hooks/useContextUser";
 /**APis */
 import { login } from "../utils/api/agent";
 
+/**Libreries  */
+import { enqueueSnackbar } from "notistack";
+
 import LogoMangata from "../assets/Mangata.svg";
 
 interface LoginFormInputs {
@@ -43,9 +46,16 @@ const Login: FC = () => {
         navigation("/");
         setLoading(false);
       }
-    } catch (e) {
+    } catch (error: any) {
       setLoading(false);
-      console.log(e);
+      const message = error.response.data.message;
+      enqueueSnackbar(message, {
+        variant: "warning",
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "right",
+        },
+      });
       navigation("/Login");
     }
   };

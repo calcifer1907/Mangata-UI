@@ -2,7 +2,7 @@ import { pool } from "../Connection";
 import { Request, Response } from "express";
 import { comparePassword, createToken } from "../auth";
 
-const SQL_FIND_USER = `SELECT us.ID,us.EMAIL,us.PASSWORD,CONCAT(us.FIRST_NAME,' ',us.LAST_NAME) AS USER_NAME,rl.DESCRIPTION,us.ROLE_ID
+const SQL_FIND_USER = `SELECT us.ID,us.EMAIL,us.PASSWORD,CONCAT(us.FIRST_NAME,' ',us.LAST_NAME) AS USER_NAME,us.IS_ACTIVE,rl.DESCRIPTION,us.ROLE_ID
   FROM Users us INNER JOIN roles rl ON rl.ID = us.ROLE_ID;`;
 
 export const getAllUser = async (request: Request, response: Response) => {
@@ -21,6 +21,10 @@ export const getAllUser = async (request: Request, response: Response) => {
     const isPassword = comparePassword(password, findUser.password);
     if (!isPassword) {
       return response.status(401).json({ message: "Contraseña incorrecta" });
+    }
+
+    if (!findUser.is_active) {
+      return response.status(401).json({ message: "Usuario no activo." });
     }
 
     const token = createToken(findUser.id, findUser.user_name);
