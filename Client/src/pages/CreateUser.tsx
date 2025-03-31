@@ -1,30 +1,43 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  Container,
-  Box,
-  TextField,
-  InputAdornment,
-  Button,
-  MenuItem,
-} from "@mui/material";
+import { useCallback, useEffect, useState } from "react";
+
 import {
   useForm,
   SubmitHandler,
   Controller,
   FieldValues,
 } from "react-hook-form";
-import { Icon } from "@iconify/react";
-import { useEffect, useState } from "react";
-import { IUsers } from "../interfaces/IUser";
 
+/**Libreries */
+import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import InputAdornment from "@mui/material/InputAdornment";
+import Button from "@mui/material/Button";
+import MenuItem from "@mui/material/MenuItem";
+import { Icon } from "@iconify/react";
 import { enqueueSnackbar } from "notistack";
 
-import { format } from "@formkit/tempo";
+/**Interface */
+import { IUsers, IValidEmail } from "../interfaces/IUser";
+import { IBanksList } from "../interfaces/IMercadoPago";
 
-import { methodUser } from "../utils/api/agent";
+/**Apis */
+import { methodUser, getListBanks, getValidEmail } from "../utils/api/agent";
+
+/**Funcions */
 import { hashPassword } from "../generalFunctions/auth";
 
+/**Context */
+import { useContextUser } from "../hooks/useContextUser";
+import { formatDate } from "../generalFunctions/formatDate";
+
 const CreateUser = () => {
+  const { userInfo } = useContextUser();
+  const [validEmail, setValidEmail] = useState<IValidEmail>({
+    message: "",
+    status: 0,
+  });
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [selectRole, setSelectRole] = useState<string>("");
   const [innerWidth, setInnerWidth] = useState(window.innerWidth);
@@ -34,27 +47,74 @@ const CreateUser = () => {
       LAST_NAME: "",
       EMAIL: "",
       BANK_ACCOUNT: "",
-      ROLE_ID: 0,
+      BANK_NAME: null, // TRAE EL ID DEL BANCO
+      BANK_TYPE_ACCOUNT: null,
       PASSWORD: "",
+      ROLE_ID: 0,
     },
   });
+
+  const [listBanks, setListBanks] = useState<IBanksList[]>([]);
+
+  const getListBank = useCallback(async () => {
+    const data = await getListBanks();
+    setListBanks(data);
+  }, []);
+
+  const messageValidStatus = (status: number, message: string) => {
+    if (status) {
+      enqueueSnackbar(message, {
+        variant: status === 201 ? "success" : "error",
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "right",
+        },
+      });
+    }
+  };
+
+  const validExistEmail = async (email: string) => {
+    const data = await getValidEmail(email.toLocaleLowerCase());
+    messageValidStatus(data.status, data.message);
+    setValidEmail(data);
+    return data;
+  };
+
+  useEffect(() => {
+    getListBank();
+  }, [getListBank]);
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
       const newData = data;
-      newData.IS_ACTIVE = true;
-      newData.CREATED_AT = format(new Date(), "YYYY/MM/DD");
       newData.PASSWORD = hashPassword(data.PASSWORD);
-      const response = await methodUser.createUser(newData as IUsers);
-      if (response.message === "success") {
-        enqueueSnackbar("Se guardo correctamente el usurio", {
-          variant: "success",
-          anchorOrigin: {
-            vertical: "top",
-            horizontal: "right",
-          },
-        });
-        reset();
+      newData.ROLE_ID = newData.ROLE_ID || 2;
+      newData.IS_ACTIVE = userInfo?.TOKEN ? true : false;
+      newData.CREATED_AT = formatDate("");
+      newData.EMAIL = newData.EMAIL + "".toLocaleLowerCase();
+
+      if (validEmail.status === 500 || !validEmail.message) {
+        let valid = { message: "", status: 0 } as IValidEmail;
+        if (!validEmail.message) {
+          valid = await validExistEmail(newData.EMAIL);
+        } else {
+          messageValidStatus(
+            validEmail.status || valid.status,
+            validEmail.message || valid.message
+          );
+        }
+      } else {
+        const response = await methodUser.createUser(newData as IUsers);
+        if (response.message === "success") {
+          enqueueSnackbar("Se guardo correctamente el usurio", {
+            variant: "success",
+            anchorOrigin: {
+              vertical: "top",
+              horizontal: "right",
+            },
+          });
+          reset();
+        }
       }
     } catch (e: any) {
       if (e.status === 409) {
@@ -79,6 +139,12 @@ const CreateUser = () => {
     { value: 2, label: "Empleado" },
   ];
 
+  const BANK_TYPE_ACCOUNTS = [
+    { value: 1, label: "N/A" },
+    { value: 2, label: "Ahorros" },
+    { value: 3, label: "Corriente" },
+  ];
+
   useEffect(() => {
     window.addEventListener("resize", () => {
       setInnerWidth(window.innerWidth);
@@ -98,13 +164,14 @@ const CreateUser = () => {
         alignItems: "center", // Centrar contenido
         minHeight: "100vh", // Altura completa de la pantalla
         flexDirection: "column",
+        marginTop: 4,
         paddingTop: { xs: 3, sm: 0, md: 0 }, // Padding top
       }}
     >
       <Box
         sx={{
-          width: { xs: `${innerWidth - 10}px`, sm: "400px", md: "650px" }, // Tamaño dinámico
-          height: { xs: "auto", sm: "400px", md: "650px" }, // Tamaño dinámico
+          width: { xs: `${innerWidth - 10}px`, sm: "400px", md: "750px" }, // Tamaño dinámico
+          height: { xs: "auto", sm: "400px", md: "750px" }, // Tamaño dinámico
           backgroundColor: { xs: "#FFFFFF", md: "#2B3D5E" }, // Color del círculo
           borderRadius: "50%", // Hacerlo circular
           display: "flex", // Centrar contenido dentro del círculo
@@ -125,6 +192,7 @@ const CreateUser = () => {
         >
           <Box
             component="form"
+            autoComplete="off"
             onSubmit={handleSubmit(onSubmit)}
             noValidate
             sx={{
@@ -231,9 +299,14 @@ const CreateUser = () => {
                 <TextField
                   {...field}
                   fullWidth
-                  label="emil"
+                  autoComplete="off"
+                  label="Correo"
                   variant="filled"
                   margin="none"
+                  onBlur={(event) => {
+                    const { value } = event.target;
+                    validExistEmail(value);
+                  }}
                   slotProps={{
                     input: {
                       startAdornment: (
@@ -271,8 +344,9 @@ const CreateUser = () => {
                 },
                 pattern: {
                   value:
-                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#?¡¿/=])[A-Za-z\d@$!%*?&]{8,}$/,
-                  message: "Ingrese una contraseña segura",
+                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*+?&#=])[A-Za-z\d@$!%*+?&#=]{8,}$/,
+                  message:
+                    "Ingrese una contraseña segura caractered validos @$!%*+?&#= una letra en mayuscula.",
                 },
               }}
               render={({ field, fieldState }) => (
@@ -323,85 +397,38 @@ const CreateUser = () => {
                 />
               )}
             />
-            <Controller
-              name="ROLE_ID"
-              control={control}
-              rules={{ required: "El role obligario" }}
-              render={({
-                field: { onChange, value, ...field },
-                fieldState,
-              }) => (
-                <TextField
-                  {...field}
-                  select
-                  label="Role"
-                  fullWidth
-                  sx={{
-                    background: "#FFFFFF",
-                    borderRadius: "8px 8px 0 0",
-                    marginBottom: { xs: 1, sm: 2, md: 2 },
-                    marginTop: { xs: 0, sm: 1, md: 1 },
-                  }}
-                  variant="filled"
-                  margin="none"
-                  placeholder="Seleccione un role"
-                  error={!!fieldState.error}
-                  helperText={fieldState.error?.message}
-                  slotProps={{
-                    input: {
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <Icon
-                            icon="solar:users-group-rounded-bold-duotone"
-                            width="24"
-                            height="24"
-                            style={{ color: "#2B3D5E" }}
-                          />
-                        </InputAdornment>
-                      ),
-                    },
-                  }}
-                  value={value}
-                  onChange={(
-                    event: React.ChangeEvent<
-                      HTMLInputElement | HTMLTextAreaElement
-                    >
-                  ) => {
-                    const selectedRole = roles.find(
-                      (role) => role.value === Number(event.target.value)
-                    );
-                    if (selectedRole) {
-                      setSelectRole(selectedRole.label);
-                    }
-                    onChange(event.target.value);
-                  }}
-                >
-                  {roles.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              )}
-            />
-            {selectRole === "Empleado" && selectRole && (
+
+            {userInfo?.TOKEN && (
               <Controller
-                name="BANK_ACCOUNT"
+                name="ROLE_ID"
                 control={control}
-                render={({ field, fieldState }) => (
+                rules={{ required: "El role obligario" }}
+                render={({
+                  field: { onChange, value, ...field },
+                  fieldState,
+                }) => (
                   <TextField
                     {...field}
+                    select
+                    label="Role"
                     fullWidth
-                    type="number"
-                    label="Cuenta banco"
+                    sx={{
+                      background: "#FFFFFF",
+                      borderRadius: "8px 8px 0 0",
+                      marginBottom: { xs: 1, sm: 2, md: 2 },
+                      marginTop: { xs: 0, sm: 1, md: 1 },
+                    }}
                     variant="filled"
                     margin="none"
+                    placeholder="Seleccione un role"
+                    error={!!fieldState.error}
+                    helperText={fieldState.error?.message}
                     slotProps={{
                       input: {
                         startAdornment: (
                           <InputAdornment position="start">
                             <Icon
-                              icon="solar:key-minimalistic-square-bold-duotone"
+                              icon="solar:users-group-rounded-bold-duotone"
                               width="24"
                               height="24"
                               style={{ color: "#2B3D5E" }}
@@ -410,18 +437,188 @@ const CreateUser = () => {
                         ),
                       },
                     }}
-                    sx={{
-                      background: "#FFFFFF",
-                      borderRadius: "8px 8px 0 0",
-                      marginBottom: { xs: 1, sm: 2, md: 2 },
-                      marginTop: { xs: 0, sm: 1, md: 1 },
+                    value={value}
+                    onChange={(
+                      event: React.ChangeEvent<
+                        HTMLInputElement | HTMLTextAreaElement
+                      >
+                    ) => {
+                      const selectedRole = roles.find(
+                        (role) => role.value === Number(event.target.value)
+                      );
+                      if (selectedRole) {
+                        setSelectRole(selectedRole.label);
+                      }
+                      onChange(event.target.value);
                     }}
-                    error={!!fieldState.error}
-                    helperText={fieldState.error?.message}
-                  />
+                  >
+                    {roles.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
                 )}
               />
             )}
+
+            {(selectRole === "Empleado" || !userInfo.TOKEN) && (
+              <>
+                <Controller
+                  name="BANK_NAME"
+                  rules={{ required: "El banco obligario" }}
+                  control={control}
+                  render={({
+                    field: { onChange, value, ...field },
+                    fieldState,
+                  }) => (
+                    <TextField
+                      {...field}
+                      select
+                      label="Banco"
+                      fullWidth
+                      sx={{
+                        background: "#FFFFFF",
+                        borderRadius: "8px 8px 0 0",
+                        marginBottom: { xs: 1, sm: 2, md: 2 },
+                        marginTop: { xs: 0, sm: 1, md: 1 },
+                      }}
+                      variant="filled"
+                      margin="none"
+                      placeholder="Seleccione un banco"
+                      error={!!fieldState.error}
+                      helperText={fieldState.error?.message}
+                      slotProps={{
+                        input: {
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <Icon
+                                icon="solar:users-group-rounded-bold-duotone"
+                                width="24"
+                                height="24"
+                                style={{ color: "#2B3D5E" }}
+                              />
+                            </InputAdornment>
+                          ),
+                        },
+                      }}
+                      value={value}
+                      onChange={(
+                        event: React.ChangeEvent<
+                          HTMLInputElement | HTMLTextAreaElement
+                        >
+                      ) => {
+                        onChange(event.target.value);
+                      }}
+                    >
+                      {listBanks.map((option) => (
+                        <MenuItem key={option.id} value={option.id}>
+                          {option.description}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  )}
+                />
+                <Controller
+                  name="BANK_TYPE_ACCOUNT"
+                  rules={{ required: "El type de cuenta obligario" }}
+                  control={control}
+                  render={({
+                    field: { onChange, value, ...field },
+                    fieldState,
+                  }) => (
+                    <TextField
+                      {...field}
+                      select
+                      label="Typo de cuenta"
+                      fullWidth
+                      sx={{
+                        background: "#FFFFFF",
+                        borderRadius: "8px 8px 0 0",
+                        marginBottom: { xs: 1, sm: 2, md: 2 },
+                        marginTop: { xs: 0, sm: 1, md: 1 },
+                      }}
+                      variant="filled"
+                      margin="none"
+                      placeholder="Seleccione un typo"
+                      error={!!fieldState.error}
+                      helperText={fieldState.error?.message}
+                      slotProps={{
+                        input: {
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <Icon
+                                icon="solar:users-group-rounded-bold-duotone"
+                                width="24"
+                                height="24"
+                                style={{ color: "#2B3D5E" }}
+                              />
+                            </InputAdornment>
+                          ),
+                        },
+                      }}
+                      value={value}
+                      onChange={(
+                        event: React.ChangeEvent<
+                          HTMLInputElement | HTMLTextAreaElement
+                        >
+                      ) => {
+                        const { value } = event.target;
+                        onChange(value);
+                      }}
+                    >
+                      {BANK_TYPE_ACCOUNTS.map((option) => (
+                        <MenuItem
+                          key={option.value}
+                          value={option.value}
+                          title={option.label}
+                        >
+                          {option.label}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  )}
+                />
+                <Controller
+                  name="BANK_ACCOUNT"
+                  rules={{ required: "La cuenta es obligario" }}
+                  control={control}
+                  render={({ field, fieldState }) => (
+                    <TextField
+                      {...field}
+                      fullWidth
+                      type="number"
+                      label="Cuenta banco"
+                      variant="filled"
+                      margin="none"
+                      slotProps={{
+                        input: {
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <Icon
+                                icon="solar:key-minimalistic-square-bold-duotone"
+                                width="24"
+                                height="24"
+                                style={{ color: "#2B3D5E" }}
+                              />
+                            </InputAdornment>
+                          ),
+                        },
+                      }}
+                      sx={{
+                        background: "#FFFFFF",
+                        borderRadius: "8px 8px 0 0",
+                        marginBottom: { xs: 1, sm: 2, md: 2 },
+                        marginTop: { xs: 0, sm: 1, md: 1 },
+                      }}
+                      error={!!fieldState.error}
+                      helperText={fieldState.error?.message}
+                    />
+                  )}
+                />
+              </>
+            )}
+
             <Box
               sx={{
                 display: "grid",

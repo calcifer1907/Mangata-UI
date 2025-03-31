@@ -2,11 +2,13 @@ export interface IUsers {
   FIRST_NAME: string;
   LAST_NAME: string;
   EMAIL: string;
-  BANK_ACCOUNT: string;
   ROLE_ID: number;
   PASSWORD: string;
   IS_ACTIVE: boolean;
-  CREATED_aT: string;
+  CREATED_AT: string;
+  BANK_TYPE_ACCOUNT: string | null;
+  BANK_ACCOUNT: string | null;
+  BANK_NAME: number | null;
 }
 
 export interface IGetUserId {
@@ -35,4 +37,9 @@ export interface IGetListSales {
 
 export interface IGetListData {
   date: string;
+}
+
+export interface IValidEmail {
+  message: string;
+  status: number;
 }

@@ -25,8 +25,7 @@ class UserController {
 
   async createUser(request: Request, response: Response) {
     try {
-      const values = [request.body];
-      const result = await UserRepository.createUser(values);
+      const result = await UserRepository.createUser(request.body);
       response.json(result);
     } catch (error) {
       if ((error as { code: string })?.code === "23505")

@@ -6,6 +6,6 @@ import socioController from "../controllers/socio.controller";
 
 router.get("/commission/:id", authenticate, socioController.sumCommission);
 
-router.get("/getListBanks", authenticate, socioController.getListBanks);
+router.get("/getListBanks", socioController.getListBanks);
 
 export default router;

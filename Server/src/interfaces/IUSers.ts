@@ -5,17 +5,20 @@ export interface IUserName {
 
 export interface IMessages {
   message: string;
+  status?: number;
 }
 
 export interface ISaveUSer {
   FIRST_NAME: string;
   LAST_NAME: string;
   EMAIL: string;
-  BANK_ACCOUNT: string;
-  PASSWORD: string;
   ROLE_ID: number;
+  PASSWORD: string;
   IS_ACTIVE: boolean;
   CREATED_AT: string;
+  BANK_TYPE_ACCOUNT: string | null;
+  BANK_ACCOUNT: string | null;
+  BANK_NAME: number | null;
 }
 
 export interface ISumCommission {
