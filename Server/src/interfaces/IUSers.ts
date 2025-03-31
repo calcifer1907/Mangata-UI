@@ -17,3 +17,12 @@ export interface ISaveUSer {
   IS_ACTIVE: boolean;
   CREATED_AT: string;
 }
+
+export interface ISumCommission {
+  sum_commission: number;
+}
+
+export interface IListBanks {
+  id: number;
+  description: string;
+}

@@ -16,6 +16,19 @@ class SocioController {
       }
     }
   }
+
+  async getListBanks(_req: Request, res: Response): Promise<void> {
+    try {
+      const listBanks = await socioRepository.getListBanks();
+      res.json(listBanks);
+    } catch (error) {
+      if (error instanceof AppError) {
+        res.status(error.statusCode).json({ message: error.message });
+      } else {
+        res.status(500).json({ message: "Something wrong error!" });
+      }
+    }
+  }
 }
 
 export default new SocioController();
