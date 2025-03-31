@@ -48,6 +48,7 @@ const NameLunchForm: FC = () => {
     openDialogPayment,
     setOpenDialogPayment,
     dataCodeReservation,
+    loading,
   } = useAccompanist();
 
   const [maxHeight, setMaxHeight] = useState<number>(0);
@@ -358,8 +359,10 @@ const NameLunchForm: FC = () => {
             <ButtonComponent
               background="background-harvest-gold"
               iconName=""
-              onClick={handleReservation}
-              title="Confirmar"
+              onClick={() => {
+                if (!loading) handleReservation();
+              }}
+              title={loading ? "Guardando..." : "Confirmar"}
             />
             <ButtonComponent
               background="background-gray"

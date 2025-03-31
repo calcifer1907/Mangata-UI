@@ -55,4 +55,6 @@ export interface IAccompanistContext {
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
   openDialogPayment: boolean;
   setOpenDialogPayment: React.Dispatch<React.SetStateAction<boolean>>;
+  loading: boolean;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }

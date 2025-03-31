@@ -47,6 +47,8 @@ const initialState: IAccompanistContext = {
   setOpenModal: () => {},
   openDialogPayment: false,
   setOpenDialogPayment: () => {},
+  loading: false,
+  setLoading: () => {},
 };
 
 const CreateContext = createContext<IAccompanistContext>(initialState);
@@ -63,6 +65,8 @@ const AccompanistContext: FC<any> = (props) => {
   const [valueCel, setValueCel] = useState<string>("");
   const [valueEmail, setValueEmail] = useState<string>("");
   const [errors, setErrors] = useState<IErrorFieldAccompanist[]>([]);
+
+  const [loading, setLoading] = useState<boolean>(false);
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -122,9 +126,12 @@ const AccompanistContext: FC<any> = (props) => {
       setOpenModal,
       openDialogPayment,
       setOpenDialogPayment,
+      loading,
+      setLoading,
     }),
     [
       optionsLunches,
+      loading,
       minmax,
       dataCodeReservation,
       getUserId,
