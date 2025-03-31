@@ -1,11 +1,8 @@
 export interface IPaymentBold {
   message: string;
   data: {
-    error: unknown;
-    payload: {
-      payload: string;
-      url: string;
-    };
+    payload: string;
+    url: string;
   };
 }
 
