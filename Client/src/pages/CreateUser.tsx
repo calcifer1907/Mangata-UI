@@ -8,6 +8,8 @@ import {
   FieldValues,
 } from "react-hook-form";
 
+import { useNavigate } from "react-router-dom";
+
 /**Libreries */
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
@@ -33,6 +35,7 @@ import { useContextUser } from "../hooks/useContextUser";
 import { formatDate } from "../generalFunctions/formatDate";
 
 const CreateUser = () => {
+  const navigate = useNavigate();
   const { userInfo } = useContextUser();
   const [validEmail, setValidEmail] = useState<IValidEmail>({
     message: "",
@@ -115,6 +118,19 @@ const CreateUser = () => {
           });
           reset();
         }
+      }
+
+      if (!userInfo.TOKEN) {
+        enqueueSnackbar("El usuario se validará, recibirás respuesta en 24h.", {
+          variant: "success",
+          anchorOrigin: {
+            vertical: "bottom",
+            horizontal: "center",
+          },
+        });
+        setTimeout(() => {
+          navigate("/");
+        }, 5000);
       }
     } catch (e: any) {
       if (e.status === 409) {
