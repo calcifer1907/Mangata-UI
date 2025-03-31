@@ -6,12 +6,12 @@
  */
 
 /**Libreries */
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Paper } from "@mui/material";
 // import {NavLink} from "react-router-dom"
 
 /**Component */
 import Dialog from "./Dialog";
-import PayMenetMethod from "../../pages/PayMenetMethod";
+// import PayMenetMethod from "../../pages/PayMenetMethod";
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 
@@ -28,7 +28,7 @@ interface IProps {
   setopen: (data: boolean) => void;
   amount: number;
   payment_id: number;
-  name: string;
+  name?: string;
   email: string;
 }
 
@@ -48,10 +48,9 @@ const DialogPayMents = ({
   setopen,
   amount,
   payment_id,
-  name,
   email,
 }: IProps) => {
-  const [clickPSE, setClickPSE] = useState<boolean>(false);
+  // const [clickPSE, setClickPSE] = useState<boolean>(false);
   const [preferenceId] = useState<string | null>(null);
   initMercadoPago(VITE_PUBLIC_KEY);
 
@@ -132,17 +131,17 @@ const DialogPayMents = ({
       fullScreen
       showCancelButton={false}
     >
-      {!clickPSE && (
-        <Box
-          className="d-flex gap-4 justify-content-center"
-          style={{
-            flexDirection: "column",
-            maxWidth: "400px",
-            width: "100%",
-            margin: "0 auto",
-          }}
-        >
-          <Paper
+      {/* {!clickPSE && ( */}
+      <Box
+        className="d-flex gap-4 justify-content-center"
+        style={{
+          flexDirection: "column",
+          maxWidth: "400px",
+          width: "100%",
+          margin: "0 auto",
+        }}
+      >
+        {/* <Paper
             component="button"
             onClick={() => setClickPSE(true)}
             variant="outlined"
@@ -160,27 +159,27 @@ const DialogPayMents = ({
               height="64"
               color="#2B3D5E"
             />
-          </Paper>
-          <Paper
-            component="div"
-            onClick={handleBoldPayment}
-            variant="outlined"
-            sx={stytlePaper}
-          >
-            {/* <img
+          </Paper> */}
+        <Paper
+          component="div"
+          onClick={handleBoldPayment}
+          variant="outlined"
+          sx={stytlePaper}
+        >
+          {/* <img
               src="https://developers.bold.co/_next/static/media/logo.ac02f303.png"
               alt="BOLD"
               style={{ width: "100px" }}
             /> */}
-            <div id="bold-pagos" key={String(open)} />
-            <Icon
-              icon="solar:alt-arrow-right-outline"
-              width="42"
-              height="64"
-              color="#2B3D5E"
-            />
-          </Paper>
-          {/* <Paper
+          <div id="bold-pagos" key={String(open)} />
+          <Icon
+            icon="solar:alt-arrow-right-outline"
+            width="42"
+            height="64"
+            color="#2B3D5E"
+          />
+        </Paper>
+        {/* <Paper
             component="button"
             variant="outlined"
             onClick={handlePaymentCreditCard}
@@ -201,7 +200,7 @@ const DialogPayMents = ({
               color="#2B3D5E"
             />
           </Paper> */}
-          {/* <Paper
+        {/* <Paper
             component="button"
             variant="outlined"
             onClick={() => setClickPSE(true)}
@@ -221,16 +220,16 @@ const DialogPayMents = ({
               color="#2B3D5E"
             />
           </Paper> */}
-        </Box>
-      )}
-      {clickPSE && (
+      </Box>
+      {/* )} */}
+      {/* {clickPSE && (
         <PayMenetMethod
           amount={amount}
           payment_id={payment_id}
           name={name}
           email={email}
         />
-      )}
+      )} */}
       {preferenceId && <Wallet initialization={{ preferenceId }} />}
     </Dialog>
   );

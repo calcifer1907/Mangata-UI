@@ -7,10 +7,6 @@ const responSeBody = (respose: AxiosResponse) => respose.data;
 const api = axios.create({
   baseURL: BOLD_URL, // Cambia por tu URL base
   timeout: 5000, // Tiempo máximo de espera (opcional)
-  headers: {
-    Authorization: `x-api-key ${BOLD_KEY}`,
-    "Content-Type": "application/json",
-  },
 });
 
 export const requestApis = {

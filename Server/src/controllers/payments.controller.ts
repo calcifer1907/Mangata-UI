@@ -150,8 +150,16 @@ export const paymentBold = async (request: Request, response: Response) => {
         total_amount: total_amount,
       },
     };
+    const headers = {
+      Authorization: `x-api-key ${BOLD_KEY}`,
+      "Content-Type": "application/json",
+    };
 
-    const responseBold = await requestApis.post("/online/link/v1", body);
+    const responseBold = await requestApis.post(
+      "/online/link/v1",
+      body,
+      headers
+    );
     const { payload } = responseBold.data;
     await pool.query(
       "UPDATE reservations SET PAYMENT_ID=$1 WHERE CODE_RESERVATION=$2",

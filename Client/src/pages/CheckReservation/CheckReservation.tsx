@@ -44,6 +44,7 @@ const CheckReservation = () => {
     payment_method: "",
   });
   const payment_id = searchParams.get("bold-order-id");
+  const status = searchParams.get("bold-tx-status");
 
   const statusReservation = useCallback(async () => {
     try {
@@ -112,15 +113,10 @@ const CheckReservation = () => {
         <Typography
           variant="h4"
           textAlign="center"
-          color={
-            STATUS_COLOR[
-              infoCheckReservation.status_reservation as StatusReservationType
-            ]
-          }
+          color={STATUS_COLOR[status as StatusReservationType]}
           gutterBottom
         >
-          Transacción{" "}
-          {handleLabelStatus(infoCheckReservation.status_reservation)}
+          Transacción {status && handleLabelStatus(status || "")}
         </Typography>
 
         {/* Método de pago */}
