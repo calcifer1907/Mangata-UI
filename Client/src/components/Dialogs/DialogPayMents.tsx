@@ -81,8 +81,8 @@ const DialogPayMents = ({
         payment_id,
       };
       const { data } = await paymentBold(body);
-      if (data.payload) {
-        window.location.href = data.payload.url;
+      if (data) {
+        window.location.href = data.url;
       }
     } catch (error) {
       console.log(error);

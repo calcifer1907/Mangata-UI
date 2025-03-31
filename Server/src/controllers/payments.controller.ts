@@ -142,7 +142,7 @@ export const paymentBold = async (request: Request, response: Response) => {
     const body = {
       amount_type: "CLOSE",
       description: "Mangata Pasa Día",
-      callback_url: "https://mangata-ui-client.vercel.app/#/check-reservation",
+      callback_url: "https://mangatabeachclub.co/#/check-reservation",
       payer_email: email,
       payment_methods: ["CREDIT_CARD", "PSE", "BOTON_BANCOLOMBIA", "NEQUI"],
       amount: {
@@ -155,18 +155,17 @@ export const paymentBold = async (request: Request, response: Response) => {
       "Content-Type": "application/json",
     };
 
-    const responseBold = await requestApis.post(
-      "/online/link/v1",
-      body,
-      headers
-    );
-    const { payload } = responseBold.data;
+    const responseBold = await requestApis.post("/online/link/v1", body, {
+      headers,
+    });
+    const { payload } = responseBold;
     await pool.query(
       "UPDATE reservations SET PAYMENT_ID=$1 WHERE CODE_RESERVATION=$2",
       [payload.payment_link, payment_id]
     );
-    response.json({ massage: "success", data: responseBold.data });
+    response.json({ massage: "success", data: payload });
   } catch (error) {
+    console.log(error);
     response.status(500).json({ message: "Someting went wrong! " });
   }
 };
