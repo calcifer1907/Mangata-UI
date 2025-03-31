@@ -9,7 +9,7 @@ import {
 import { useAccompanist } from "./useReservationContext";
 
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { handleDiffHours, formatDate } from "../generalFunctions/formatDate";
+import { handleDiffHours } from "../generalFunctions/formatDate";
 
 /**Interfaces */
 import { IFields, IOptions } from "../interfaces/IAccompanist";
@@ -41,6 +41,7 @@ const useLogicReservations = () => {
     setDateChange,
     setValueEmail,
     setValueCel,
+    setLoading,
   } = useAccompanist();
 
   const requestGetCodeReservation = useCallback(async () => {
@@ -120,6 +121,7 @@ const useLogicReservations = () => {
   const handleClose = () => setOpenModal((prev) => !prev);
 
   const handleReservation = async () => {
+    setLoading(true);
     const ID_EMPLOYEE = dataCodeReservation?.id || refSystem.current;
     const date = new Date();
     const hours = date.getHours();
@@ -134,7 +136,7 @@ const useLogicReservations = () => {
         EMAIL: valueEmail,
         AGREED_PRICE: Number(PRICES.PRICE_MAX),
         MIN_PRICE: Number(PRICES.PRICE_MIN),
-        CREATED_AT: formatDate(`${dateChange} ${hours}:${minutes}:${seconds}`),
+        CREATED_AT: `${dateChange} ${hours}:${minutes}:${seconds}`,
       };
 
       const data = await getAccompanist.saveReservation(body);
@@ -150,6 +152,7 @@ const useLogicReservations = () => {
         setOpenDialogPayment(true);
       }
     }
+    setLoading(false);
   };
 
   // Elimina una fila específica
