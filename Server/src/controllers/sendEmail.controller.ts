@@ -3,7 +3,7 @@ import nodemailer from "nodemailer";
 import { pool } from "../Connection";
 import { htmlContent } from "../functions/functionHtml";
 
-import { PASSWORD_EMAIL, USER_EMAIL } from "../configDB";
+import { PASSWORD_EMAIL, USER_EMAIL, VITE_URL_UI } from "../configDB";
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -35,7 +35,7 @@ export const sendEmail = async (payment_id: string) => {
       attachments: [
         {
           filename: "logo.png",
-          path: "https://mangata-ui-client.vercel.app/images/MangataWhite.png",
+          path: VITE_URL_UI + "/images/MangataWhite.png",
           cid: "logo",
         },
       ],
@@ -45,13 +45,13 @@ export const sendEmail = async (payment_id: string) => {
       mailOptions,
       (error: Error | null, info: nodemailer.SentMessageInfo) => {
         if (error) {
-          console.error(error);
+          console.error(PASSWORD_EMAIL, USER_EMAIL);
           return;
         }
         console.log("Correo enviado: " + info.response);
       }
     );
   } catch (error) {
-    console.error(error);
+    console.error(PASSWORD_EMAIL, USER_EMAIL);
   }
 };

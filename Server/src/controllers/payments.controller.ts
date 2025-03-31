@@ -22,6 +22,7 @@ import {
   BACKEND_URL,
   PAYMENT_TOKEN_TEST_PUBLIC,
   BOLD_KEY,
+  VITE_URL_UI,
 } from "../configDB";
 
 import { STATUS_BOLD } from "../generalFuncionts/generalFunctions";
@@ -142,7 +143,7 @@ export const paymentBold = async (request: Request, response: Response) => {
     const body = {
       amount_type: "CLOSE",
       description: "Mangata Pasa Día",
-      callback_url: "https://mangatabeachclub.co/#/check-reservation",
+      callback_url: VITE_URL_UI + "/#/check-reservation",
       payer_email: email,
       payment_methods: ["CREDIT_CARD", "PSE", "BOTON_BANCOLOMBIA", "NEQUI"],
       amount: {
@@ -217,7 +218,7 @@ export const getOrderIdBold = async (request: Request, response: Response) => {
 
 export const testEmail = async (request: Request, response: Response) => {
   try {
-    await sendEmail("LNK_VWE9JAMF4N");
+    await sendEmail("LNK_HR1JXLGZKZ");
     response.status(200).json({ mesagge: "Send email test" });
   } catch (error) {
     response.status(500);
