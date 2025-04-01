@@ -16,40 +16,37 @@ const transporter = nodemailer.createTransport({
 export const sendEmail = async (payment_id: string) => {
   try {
     const subject = "Bienvenido a Mangata Beach Club";
-    const resultQuery = await pool.query(
+    const { rows, rowCount } = await pool.query(
       "SELECT TO_CHAR(CREATED_AT AT TIME ZONE 'UTC', 'YYYY-MM-DD HH24:MI:SS') AS FORMATTED_DATE, EMAIL FROM reservations WHERE PAYMENT_ID = $1",
       [payment_id]
     );
 
-    let date = new Date().toDateString();
-    let email = null;
-    if (resultQuery && resultQuery.rowCount) {
-      email = resultQuery.rows[0].email;
-      date = resultQuery.rows[0].formatted_date;
-    }
-    const mailOptions = {
-      from: USER_EMAIL,
-      to: email,
-      subject,
-      html: htmlContent(date),
-      attachments: [
-        {
-          filename: "logo.png",
-          path: VITE_URL_UI + "/images/MangataWhite.png",
-          cid: "logo",
-        },
-      ],
-    };
+    if (rowCount) {
+      const [resultQuery] = rows;
+      const mailOptions = {
+        from: USER_EMAIL,
+        to: resultQuery.email,
+        subject,
+        html: htmlContent(resultQuery.formatted_date),
+        attachments: [
+          {
+            filename: "logo.png",
+            path: VITE_URL_UI + "/images/MangataWhite.png",
+            cid: "logo",
+          },
+        ],
+      };
 
-    transporter.sendMail(
-      mailOptions,
-      (error: Error | null, info: nodemailer.SentMessageInfo) => {
-        if (error) {
-          return;
+      transporter.sendMail(
+        mailOptions,
+        (error: Error | null, info: nodemailer.SentMessageInfo) => {
+          if (error) {
+            return;
+          }
+          console.log("Correo enviado: " + info.response);
         }
-        console.log("Correo enviado: " + info.response);
-      }
-    );
+      );
+    }
   } catch (error) {
     console.error(PASSWORD_EMAIL, USER_EMAIL);
   }

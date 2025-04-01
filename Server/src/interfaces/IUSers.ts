@@ -12,6 +12,7 @@ export interface ISaveUSer {
   FIRST_NAME: string;
   LAST_NAME: string;
   EMAIL: string;
+  IDENTITY: string | null;
   ROLE_ID: number;
   PASSWORD: string;
   IS_ACTIVE: boolean;

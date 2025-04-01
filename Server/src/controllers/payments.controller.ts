@@ -196,6 +196,7 @@ export const webhookBold = async (request: Request, response: Response) => {
   try {
     const { data, type } = request.body;
     const status = STATUS_BOLD[type as keyof typeof STATUS_BOLD];
+    console.log(data);
     const payment_id = data.metadata.reference;
 
     // Primero obtenemos el estado actual de la reservación
@@ -204,8 +205,8 @@ export const webhookBold = async (request: Request, response: Response) => {
       [payment_id]
     );
 
+    console.log(rows);
     const currentStatus = rows[0]?.status_reservation;
-    const email = rows[0]?.email;
     // Solo actualizamos si el estado es diferente
     if (currentStatus && currentStatus !== status) {
       await pool.query(
@@ -213,7 +214,7 @@ export const webhookBold = async (request: Request, response: Response) => {
         [status, payment_id]
       );
       // Solo enviamos el correo si el nuevo estado es "approved"
-      if (status === "approved" && email) {
+      if (status === "approved") {
         await sendEmail(payment_id);
       }
     }
