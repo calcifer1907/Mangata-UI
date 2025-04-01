@@ -117,21 +117,23 @@ const CreateUser = () => {
               horizontal: "right",
             },
           });
+          if (!userInfo.TOKEN) {
+            enqueueSnackbar(
+              "El usuario se validará, recibirás respuesta en 24h.",
+              {
+                variant: "success",
+                anchorOrigin: {
+                  vertical: "bottom",
+                  horizontal: "center",
+                },
+              }
+            );
+            setTimeout(() => {
+              navigate("/");
+            }, 8000);
+          }
           reset();
         }
-      }
-
-      if (!userInfo.TOKEN) {
-        enqueueSnackbar("El usuario se validará, recibirás respuesta en 24h.", {
-          variant: "success",
-          anchorOrigin: {
-            vertical: "bottom",
-            horizontal: "center",
-          },
-        });
-        setTimeout(() => {
-          navigate("/");
-        }, 5000);
       }
     } catch (e: any) {
       if (e.status === 409) {
@@ -230,7 +232,7 @@ const CreateUser = () => {
                 <TextField
                   {...field}
                   fullWidth
-                  label="Primer nombre"
+                  label="Nombres"
                   variant="filled"
                   margin="none"
                   slotProps={{
@@ -274,7 +276,7 @@ const CreateUser = () => {
                   {...field}
                   fullWidth
                   type="text"
-                  label="Apellido"
+                  label="Apellidos"
                   variant="filled"
                   margin="none"
                   slotProps={{
@@ -593,7 +595,7 @@ const CreateUser = () => {
                     <TextField
                       {...field}
                       select
-                      label="Typo de cuenta"
+                      label="Tipo de cuenta"
                       fullWidth
                       sx={{
                         background: "#FFFFFF",
@@ -651,7 +653,7 @@ const CreateUser = () => {
                       {...field}
                       fullWidth
                       type="number"
-                      label="Cuenta banco"
+                      label="Numero de Cuenta"
                       variant="filled"
                       margin="none"
                       slotProps={{

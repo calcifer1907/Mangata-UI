@@ -24,12 +24,13 @@ class UserRepository {
 
   async createUser(values: ISaveUSer): Promise<IMessages> {
     const SQL_QUERY =
-      "INSERT INTO users(FIRST_NAME,LAST_NAME,EMAIL,BANK_ACCOUNT,BANK_NAME,BANK_TYPE_ACCOUNT,PASSWORD,ROLE_ID,IS_ACTIVE,CREATED_AT) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10);";
+      "INSERT INTO users(FIRST_NAME,LAST_NAME,EMAIL,IDENTITY,BANK_ACCOUNT,BANK_NAME,BANK_TYPE_ACCOUNT,PASSWORD,ROLE_ID,IS_ACTIVE,CREATED_AT) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11);";
     try {
       const {
         FIRST_NAME,
         LAST_NAME,
         EMAIL,
+        IDENTITY,
         BANK_ACCOUNT,
         BANK_NAME,
         BANK_TYPE_ACCOUNT,
@@ -42,6 +43,7 @@ class UserRepository {
         FIRST_NAME,
         LAST_NAME,
         EMAIL,
+        IDENTITY,
         BANK_ACCOUNT,
         BANK_NAME,
         BANK_TYPE_ACCOUNT,
