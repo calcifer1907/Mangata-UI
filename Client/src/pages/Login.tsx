@@ -40,6 +40,7 @@ const Login: FC = () => {
     try {
       if (!loading) {
         setLoading(true);
+        data.email = data.email.toLocaleLowerCase();
         const response = await login.loginPage(data);
         localStorage.setItem("info", JSON.stringify(response));
         setUserInfo(response);
