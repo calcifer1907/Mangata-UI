@@ -50,7 +50,7 @@ const GenerateReservation = () => {
           Precio de venta <span>{formatPrice(valueSlider as number)}</span>
         </h5>
       </Box>
-      <Container className="d-flex container-qr justify-content-center">
+      <Container className="d-flex container-qr justify-content-center margin-top-8">
         <Box className="justify-item-end">
           <ButtonComponent
             title="Generar QR"
