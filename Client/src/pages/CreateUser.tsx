@@ -48,6 +48,7 @@ const CreateUser = () => {
     defaultValues: {
       FIRST_NAME: "",
       LAST_NAME: "",
+      IDENTITY: "",
       EMAIL: "",
       BANK_ACCOUNT: "",
       BANK_NAME: null, // TRAE EL ID DEL BANCO
@@ -281,7 +282,7 @@ const CreateUser = () => {
                       startAdornment: (
                         <InputAdornment position="start">
                           <Icon
-                            icon="solar:key-minimalistic-square-bold-duotone"
+                            icon="solar:user-bold-duotone"
                             width="24"
                             height="24"
                             style={{ color: "#2B3D5E" }}
@@ -301,6 +302,52 @@ const CreateUser = () => {
                 />
               )}
             />
+
+            {(selectRole === "Empleado" || !userInfo.TOKEN) && (
+              <Controller
+                name="IDENTITY"
+                control={control}
+                rules={{
+                  required: "La cedúla es obligario",
+                  pattern: {
+                    value: /^[0-9]/,
+                    message: "Ingrese una cedúla valida",
+                  },
+                }}
+                render={({ field, fieldState }) => (
+                  <TextField
+                    {...field}
+                    fullWidth
+                    type="number"
+                    label="Cedúla"
+                    variant="filled"
+                    margin="none"
+                    slotProps={{
+                      input: {
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <Icon
+                              icon="solar:key-minimalistic-square-bold-duotone"
+                              width="24"
+                              height="24"
+                              style={{ color: "#2B3D5E" }}
+                            />
+                          </InputAdornment>
+                        ),
+                      },
+                    }}
+                    sx={{
+                      background: "#FFFFFF",
+                      borderRadius: "8px 8px 0 0",
+                      marginBottom: { xs: 1, sm: 2, md: 2 },
+                      marginTop: { xs: 0, sm: 1, md: 1 },
+                    }}
+                    error={!!fieldState.error}
+                    helperText={fieldState.error?.message}
+                  />
+                )}
+              />
+            )}
             <Controller
               name="EMAIL"
               control={control}

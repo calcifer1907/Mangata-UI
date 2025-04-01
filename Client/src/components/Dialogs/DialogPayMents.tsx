@@ -125,7 +125,7 @@ const DialogPayMents = ({
 
   return (
     <Dialog
-      open={!open}
+      open={open}
       setOpenDialog={setopen}
       tittle="Métodos de pago"
       fullScreen
@@ -224,12 +224,12 @@ const DialogPayMents = ({
       </Box>
       {/* )} */}
 
-      <PayMenetMethod
+      {/* <PayMenetMethod
         amount={amount}
         payment_id={payment_id}
         name={""}
         email={email}
-      />
+      /> */}
 
       {preferenceId && <Wallet initialization={{ preferenceId }} />}
     </Dialog>
