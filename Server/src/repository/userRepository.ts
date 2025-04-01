@@ -22,11 +22,34 @@ class UserRepository {
     }
   }
 
-  async createUser(values: ISaveUSer[]): Promise<IMessages> {
+  async createUser(values: ISaveUSer): Promise<IMessages> {
     const SQL_QUERY =
-      "INSERT INTO users(FIRST_NAME,LAST_NAME,EMAIL,BANK_ACCOUNT,PASSWORD,ROLE_ID,IS_ACTIVE,CREATED_AT) VALUES($1,$2,$3,$4,$5,$6,$7,$8);";
+      "INSERT INTO users(FIRST_NAME,LAST_NAME,EMAIL,BANK_ACCOUNT,BANK_NAME,BANK_TYPE_ACCOUNT,PASSWORD,ROLE_ID,IS_ACTIVE,CREATED_AT) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10);";
     try {
-      const { rowCount } = await pool.query(SQL_QUERY, values);
+      const {
+        FIRST_NAME,
+        LAST_NAME,
+        EMAIL,
+        BANK_ACCOUNT,
+        BANK_NAME,
+        BANK_TYPE_ACCOUNT,
+        PASSWORD,
+        ROLE_ID,
+        IS_ACTIVE,
+        CREATED_AT,
+      } = values;
+      const { rowCount } = await pool.query(SQL_QUERY, [
+        FIRST_NAME,
+        LAST_NAME,
+        EMAIL,
+        BANK_ACCOUNT,
+        BANK_NAME,
+        BANK_TYPE_ACCOUNT,
+        PASSWORD,
+        ROLE_ID,
+        IS_ACTIVE,
+        CREATED_AT,
+      ]);
       if (rowCount === 0) throw new Error("Error Inserting");
       return { message: "success" };
     } catch (error) {
@@ -36,14 +59,12 @@ class UserRepository {
 
   async validExistEmail(email: string): Promise<IMessages> {
     const SQL_QUERY = `SELECT EMAIL FROM users WHERE EMAIL=$1;`;
-    try {
-      const result = await pool.query(SQL_QUERY, [email]);
-      if (result.rows.length > 0)
-        return { message: "El correo ya está registrado" };
-      return { message: "Correo disponible" };
-    } catch (error) {
-      throw new Error(`Error: ${error}`);
-    }
+
+    const { rowCount } = await pool.query(SQL_QUERY, [email]);
+    return {
+      message: rowCount ? "El correo ya está registrado" : "Correo disponible",
+      status: rowCount ? 500 : 201,
+    };
   }
 }
 

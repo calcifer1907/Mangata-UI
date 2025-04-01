@@ -6,6 +6,7 @@ import {
   IUsers,
   IGetListSales,
   IGetListData,
+  IValidEmail,
 } from "../../interfaces/IUser";
 import { ILunches, IMinMaxResponse } from "../../interfaces/IAccompanist";
 import { IBanksList } from "../../interfaces/IMercadoPago";
@@ -95,3 +96,9 @@ export const getCodeReservation = (body: {
 
 export const getOrderIdBold = (body: { order_id: string }): Promise<unknown> =>
   requestApis.post("/api/getOrderId", body);
+
+export const getListBanks = (): Promise<IBanksList[]> =>
+  requestApis.get("/api/getListBanks");
+
+export const getValidEmail = (email: string): Promise<IValidEmail> =>
+  requestApis.post("/api/validEmail", { email });

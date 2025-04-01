@@ -9,7 +9,8 @@ const api = axios.create({
 });
 
 export const requestApis = {
-  get: (uri: string) => api.get(uri).then(responSeBody),
+  get: (uri: string, headers?: Object) =>
+    api.get(uri, headers).then(responSeBody),
   post: (uri: string, body: object, headers?: object) =>
     api.post(uri, body, headers).then(responSeBody),
   put: (uri: string, body: object) => api.put(uri, body).then(responSeBody),

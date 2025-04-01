@@ -197,26 +197,48 @@ export const webhookBold = async (request: Request, response: Response) => {
     const { data, type } = request.body;
     const status = STATUS_BOLD[type as keyof typeof STATUS_BOLD];
     const payment_id = data.metadata.reference;
-    await pool.query(
-      "UPDATE reservations SET STATUS_RESERVATION=$1 WHERE PAYMENT_ID=$2;",
-      [status, payment_id]
+
+    // Primero obtenemos el estado actual de la reservación
+    const { rows } = await pool.query(
+      "SELECT STATUS_RESERVATION,EMAIL FROM reservations WHERE PAYMENT_ID = $1",
+      [payment_id]
     );
-    if (status === "approved") {
-      await sendEmail(payment_id);
+
+    const currentStatus = rows[0]?.status_reservation;
+    const email = rows[0]?.email;
+    // Solo actualizamos si el estado es diferente
+    if (currentStatus && currentStatus !== status) {
+      await pool.query(
+        "UPDATE reservations SET STATUS_RESERVATION = $1 WHERE PAYMENT_ID = $2",
+        [status, payment_id]
+      );
+      // Solo enviamos el correo si el nuevo estado es "approved"
+      if (status === "approved" && email) {
+        await sendEmail(payment_id);
+      }
     }
-    response.status(200);
+
+    response.sendStatus(200);
   } catch (error) {
-    response.status(500);
+    console.error("Error en webhookBold:", error);
+    response.sendStatus(500);
   }
 };
 
 export const getOrderIdBold = async (request: Request, response: Response) => {
   const { order_id } = request.body;
-  const responseBold = await requestApis.get(`/online/link/v1/${order_id}`);
-  response.json({ message: "success", data: responseBold.data });
+  const headers = {
+    Authorization: `x-api-key ${BOLD_KEY}`,
+    "Content-Type": "application/json",
+  };
+  const responseBold = await requestApis.get(`/online/link/v1/${order_id}`, {
+    headers,
+  });
+  response.json({ message: "success", data: responseBold });
 };
 
-export const testEmail = async (request: Request, response: Response) => {
+// esto es para probar
+export const testEmail = async (_request: Request, response: Response) => {
   try {
     await sendEmail("LNK_HR1JXLGZKZ");
     response.status(200).json({ mesagge: "Send email test" });

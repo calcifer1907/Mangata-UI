@@ -25,14 +25,10 @@ class UserController {
 
   async createUser(request: Request, response: Response) {
     try {
-      const values = [request.body];
-      const result = await UserRepository.createUser(values);
+      const result = await UserRepository.createUser(request.body);
       response.json(result);
     } catch (error) {
-      if ((error as { code: string })?.code === "23505")
-        response.status(409).json({
-          message: "Error: El correo electrónico ya está registrado.",
-        });
+      response.status(500).json({ message: "sometghin gos wrong" });
     }
   }
 

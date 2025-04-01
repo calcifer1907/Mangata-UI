@@ -45,7 +45,6 @@ export const sendEmail = async (payment_id: string) => {
       mailOptions,
       (error: Error | null, info: nodemailer.SentMessageInfo) => {
         if (error) {
-          console.error(PASSWORD_EMAIL, USER_EMAIL);
           return;
         }
         console.log("Correo enviado: " + info.response);

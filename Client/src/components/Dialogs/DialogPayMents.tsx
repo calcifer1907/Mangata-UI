@@ -11,7 +11,7 @@ import { Box, Paper } from "@mui/material";
 
 /**Component */
 import Dialog from "./Dialog";
-// import PayMenetMethod from "../../pages/PayMenetMethod";
+import PayMenetMethod from "../../pages/PayMenetMethod";
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 
@@ -125,7 +125,7 @@ const DialogPayMents = ({
 
   return (
     <Dialog
-      open={open}
+      open={!open}
       setOpenDialog={setopen}
       tittle="Métodos de pago"
       fullScreen
@@ -223,14 +223,14 @@ const DialogPayMents = ({
           </Paper> */}
       </Box>
       {/* )} */}
-      {/* {clickPSE && (
-        <PayMenetMethod
-          amount={amount}
-          payment_id={payment_id}
-          name={name}
-          email={email}
-        />
-      )} */}
+
+      <PayMenetMethod
+        amount={amount}
+        payment_id={payment_id}
+        name={""}
+        email={email}
+      />
+
       {preferenceId && <Wallet initialization={{ preferenceId }} />}
     </Dialog>
   );

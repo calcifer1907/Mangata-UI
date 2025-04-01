@@ -3,7 +3,7 @@ import {
   createOrder,
   reciveWebhook,
   createPSEPayment,
-  getListBanks,
+  // getListBanks,
   paymentBold,
   webhookBold,
   getOrderIdBold,
@@ -39,6 +39,6 @@ router.get("/pending", (req: any, res: any) => {
   res.send("pending");
 });
 
-router.get("/getListBanks", getListBanks);
+// router.get("/getListBanks", getListBanks);
 
 export default router;
