@@ -11,7 +11,7 @@ import { Box, Paper } from "@mui/material";
 
 /**Component */
 import Dialog from "./Dialog";
-import PayMenetMethod from "../../pages/PayMenetMethod";
+// import PayMenetMethod from "../../pages/PayMenetMethod";
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 
