@@ -156,10 +156,10 @@ export const paymentBold = async (request: Request, response: Response) => {
       "Content-Type": "application/json",
     };
 
-    const responseBold = await requestApis.post("/online/link/v1", body, {
+    const { payload } = await requestApis.post("/online/link/v1", body, {
       headers,
     });
-    const { payload } = responseBold;
+    console.log("payload: ", payload);
     await pool.query(
       "UPDATE reservations SET PAYMENT_ID=$1 WHERE CODE_RESERVATION=$2",
       [payload.payment_link, payment_id]

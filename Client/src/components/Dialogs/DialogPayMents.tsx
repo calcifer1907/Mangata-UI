@@ -4,23 +4,26 @@
  * @version 1.0
  *
  */
+import { useEffect, useState } from "react";
 
 /**Libreries */
 import { Box, Paper } from "@mui/material";
+import { Icon } from "@iconify/react";
+import { enqueueSnackbar } from "notistack";
+import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
+
 // import {NavLink} from "react-router-dom"
 
 /**Component */
 import Dialog from "./Dialog";
+import LoadingPage from "../Loading/Loading.tsx";
+
 // import PayMenetMethod from "../../pages/PayMenetMethod";
-import { useEffect, useState } from "react";
-import { Icon } from "@iconify/react";
 
-import { enqueueSnackbar } from "notistack";
-
+/**Constant */
 import { VITE_PUBLIC_KEY } from "../../constant/URL.ts";
 
-import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
-
+/**APis */
 import { paymentBold } from "../../utils/api/agent";
 
 interface IProps {
@@ -52,6 +55,8 @@ const DialogPayMents = ({
 }: IProps) => {
   // const [clickPSE, setClickPSE] = useState<boolean>(false);
   const [preferenceId] = useState<string | null>(null);
+
+  const [loading, setLoading] = useState<boolean>(false);
   initMercadoPago(VITE_PUBLIC_KEY);
 
   // const handlePaymentCreditCard = async () => {
@@ -74,6 +79,7 @@ const DialogPayMents = ({
 
   const handleBoldPayment = async () => {
     try {
+      setLoading(true);
       const body = {
         email: email,
         currency: "COP",
@@ -81,11 +87,13 @@ const DialogPayMents = ({
         payment_id,
       };
       const { data } = await paymentBold(body);
+      setLoading(false);
       if (data) {
         window.location.href = data.url;
       }
     } catch (error) {
       console.log(error);
+      setLoading(false);
       enqueueSnackbar("Algo salio mal", {
         variant: "error",
         anchorOrigin: {
@@ -122,6 +130,8 @@ const DialogPayMents = ({
       }
     };
   }, [open]);
+
+  if (loading) return <LoadingPage />;
 
   return (
     <Dialog
