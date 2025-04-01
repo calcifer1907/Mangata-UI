@@ -258,7 +258,7 @@ const Home = () => {
         </Box>
         <Box
           component="a"
-          href="https://www.instagram.com/mangatabeachclub/"
+          href="https://www.instagram.com/mangatacartagena/"
           target="_blank"
         >
           <img width={32} src="/images/instagram.png" />
