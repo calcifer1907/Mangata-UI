@@ -17,6 +17,9 @@ import NavListDrawer from "./NavListDrawer";
 import { useContextUser } from "../../hooks/useContextUser";
 import { itemsNav } from "../../constant/userInfo";
 import { Avatar, Menu, MenuItem, Tooltip } from "@mui/material";
+import Fade from "@mui/material/Fade";
+import { useTranslation } from "react-i18next";
+import "../../i18n"; // Importa la configuración de i18n
 
 interface Props {
   /**
@@ -33,14 +36,16 @@ const Navbar = (props: Props) => {
   const location = useLocation();
 
   const { userInfo } = useContextUser();
+  const [language, setLanguage] = useState<string>("es");
 
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const container =
     window !== undefined ? () => window().document.body : undefined;
   const [mobileOpen, setMobileOpen] = useState(false);
   const drawerWidth = 240;
 
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-
+  const open = Boolean(anchorEl);
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -60,6 +65,22 @@ const Navbar = (props: Props) => {
       location.pathname.includes("MangataReservation") ? "hidden" : "auto"
     );
   }, [location]);
+
+  const { i18n } = useTranslation();
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const changeLanguage = (lng: string) => {
+    setLanguage(lng);
+    i18n.changeLanguage(lng);
+    handleClose();
+  };
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
 
   return (
     <>
@@ -160,6 +181,31 @@ const Navbar = (props: Props) => {
                 </Menu>
               </Box>
             )}
+            <Box sx={{ height: "100%" }}>
+              <Button
+                id="fade-button"
+                aria-controls={open ? "fade-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? "true" : undefined}
+                onClick={handleClick}
+                className="color-theme-black"
+              >
+                {language}
+              </Button>
+              <Menu
+                id="fade-menu"
+                MenuListProps={{
+                  "aria-labelledby": "fade-button",
+                }}
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                TransitionComponent={Fade}
+              >
+                <MenuItem onClick={() => changeLanguage("es")}>ES</MenuItem>
+                <MenuItem onClick={() => changeLanguage("en")}>EN</MenuItem>
+              </Menu>
+            </Box>
           </Box>
         </Toolbar>
       </AppBar>
