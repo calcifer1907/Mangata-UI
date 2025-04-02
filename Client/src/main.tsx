@@ -1,5 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+
+import "./i18n.ts";
 import App from "./App.tsx";
 
 import { SnackbarProvider } from "notistack";

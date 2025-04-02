@@ -1,18 +1,22 @@
 // import { useContextUser } from "../hooks/useContextUser";
 
+/**Libraries */
 import { Box, Typography } from "@mui/material";
+
+/**Component */
 import Card from "../components/Cards/Cards";
-
 import QuiltedImageList from "../components/QuiltedImageList/QuiltedImageList";
-
 import YouTubeEmbed from "../components/YouTubeEmbed/YouTubeEmbed";
+
+/** */
+import { useTranslation } from "react-i18next";
 
 const Home = () => {
   // const { userInfo } = useContextUser();
   //   <a href="https://api.whatsapp.com/send?phone=573128198146&text=Hola como estas">
   //   click me
   // </a>
-
+  const { t } = useTranslation("home");
   return (
     <>
       <Box
@@ -48,7 +52,7 @@ const Home = () => {
               textAlign: "center",
             }}
           >
-            Servicios incluidos
+            {t("servicesIncluded")}
           </Typography>
           <Box
             sx={{
