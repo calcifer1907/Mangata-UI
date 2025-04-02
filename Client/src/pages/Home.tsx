@@ -179,34 +179,6 @@ const Home = () => {
           </Box>
         </Box>
       </Box>
-
-      <Box
-        sx={{
-          background: "var(--color-theme-sand-light)",
-          color: "var(--color-theme-dark-blue)",
-          padding: 4,
-          textAlign: "center",
-          height: "auto",
-          alignContent: "center",
-          marginTop: 8,
-        }}
-      >
-        <Typography
-          sx={{
-            fontWeight: 600,
-            paddingBottom: 2,
-            fontSize: { xs: "1.2rem", md: "1.5rem" },
-          }}
-        >
-          Hora de llegada al muelle: 7:30 a.m.
-        </Typography>
-        <Typography
-          sx={{ fontWeight: 600, fontSize: { xs: "1.2rem", md: "1.5rem" } }}
-        >
-          Hora de regreso al muelle: aproximadamente 4:00 p.m.
-        </Typography>
-      </Box>
-
       <Box
         sx={{
           color: "var(--color-theme-dark-blue)",
@@ -226,6 +198,43 @@ const Home = () => {
           Actividades adicionales no mencionadas anteriormente
         </Typography>
       </Box>
+      <Box
+        sx={{
+          background: "var(--color-theme-sand-light)",
+          color: "var(--color-theme-dark-blue)",
+          padding: 4,
+          textAlign: "center",
+          height: "auto",
+          alignContent: "center",
+          marginBlock: 8,
+        }}
+      >
+        <Typography
+          sx={{
+            fontWeight: 600,
+            paddingBottom: 2,
+            fontSize: { xs: "1.2rem", md: "1.5rem" },
+          }}
+        >
+          Hora de llegada al muelle: 7:30 a.m.
+        </Typography>
+        <Typography
+          sx={{ fontWeight: 600, fontSize: { xs: "1.2rem", md: "1.5rem" } }}
+        >
+          Hora de regreso al muelle: aproximadamente 4:00 p.m.
+        </Typography>
+      </Box>
+
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3927.061749353047!2d-75.75613558870346!3d10.175636389896914!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ef62f072ea90277%3A0x9552edd740da742!2sIslas%20del%20Rosario%20Cartagena%20Colombia!5e0!3m2!1ses!2sco!4v1743615890002!5m2!1ses!2sco"
+        width="100%"
+        height="550"
+        style={{ border: 0 }}
+        allowFullScreen
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+      ></iframe>
+
       <Box
         component="footer"
         sx={{
