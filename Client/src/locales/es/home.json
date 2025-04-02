@@ -1,3 +1,22 @@
 {
-        "servicesIncluded": "Servicios incluidos"
+        "servicesIncluded": "Servicios incluidos",
+        "lunchCarte": "Almuerzo a la carta",
+        "roundTrip": "Transporte marítimo ida y regreso.",
+        "welcomeGlass": "Copa de champaña de bienvenida o jugo",
+        "airConditioned": "Restaurante con aire acondicionado o al aire libre",
+        "waterSports": "Deportes acuáticos: Snorkelling, Kayak, Paddle Board",
+        "enjoyYourLunch": "Disfruta de tu almuerzo cerca al mar",
+        "with8": "con 8 opciones de platos disponibles:",
+        "useOfFacilities": "Uso de instalaciones",
+        "inOurClub": "En nuestro club podrás disfrutar de instalaciones amplias y cómodas, tiempo de descanso y experiencias inigualables. Tendrás acceso a:",
+        "SunbathingChairs": "Sillas Asoleadoras",
+        "Hammocks": "Hamacas",
+        "BalineseBeds": "Camas Balinesas",
+        "Freshwater": "Ducha De Agua Dulce",
+        "towelService": "Servicio de Toalla",
+        "noInclude": "No Incluye",
+        "additionalActivities": "Actividades adicionales no mencionadas anteriormente",
+        "arrivalTime": "Hora de llegada al muelle",
+        "dockReturn": "Hora de regreso al muelle: aproximadamente",
+        "IslandsSector": "Islas del Rosario- Isla Grande sector"
 }

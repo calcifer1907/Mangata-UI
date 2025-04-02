@@ -64,22 +64,10 @@ const Home = () => {
               gap: "50px",
             }}
           >
-            <Card
-              title="Transporte marítimo ida y regreso."
-              img="/images/MangataBoat.webp"
-            />
-            <Card
-              title="Copa de champaña de bienvenida o jugo"
-              img="/images/MangataCopa.webp"
-            />
-            <Card
-              title="Restaurante con aire acondicionado o al aire libre"
-              img="/images/MangataEat.webp"
-            />
-            <Card
-              title="Deportes acuáticos: Snorkelling, Kayak, Paddle Board"
-              img="/images/MangataKayak.webp"
-            />
+            <Card title={t("roundTrip")} img="/images/MangataBoat.webp" />
+            <Card title={t("welcomeGlass")} img="/images/MangataCopa.webp" />
+            <Card title={t("airConditioned")} img="/images/MangataEat.webp" />
+            <Card title={t("waterSports")} img="/images/MangataKayak.webp" />
           </Box>
         </Box>
       </Box>
@@ -100,7 +88,7 @@ const Home = () => {
             textAlign: "center",
           }}
         >
-          Almuerzo a la carta
+          {t("lunchCarte")}
         </Typography>
         <Typography
           className="color-blue-dark"
@@ -112,8 +100,7 @@ const Home = () => {
             textAlign: "center",
           }}
         >
-          Disfruta de tu almuerzo cerca al mar{" "}
-          <b>con 8 opciones de platos disponibles:</b>
+          {t("enjoyYourLunch")} <b>{t("with8")}:</b>
         </Typography>
         <QuiltedImageList />
       </Box>
@@ -129,7 +116,7 @@ const Home = () => {
             textAlign: "center",
           }}
         >
-          Uso de instalaciones
+          {t("useOfFacilities")}
         </Typography>
         <Box
           sx={{
@@ -161,11 +148,8 @@ const Home = () => {
                 marginBlock: 2,
               }}
             >
-              En nuestro club podrás disfrutar de instalaciones amplias y
-              cómodas, tiempo de descanso y experiencias inigualables. Tendrás
-              acceso a:{" "}
+              {t("inOurClub")}{" "}
             </Typography>
-
             <Box
               sx={{
                 color: "var(--color-theme-dark-blue)",
@@ -173,35 +157,27 @@ const Home = () => {
               }}
             >
               <ul>
-                <li>Sillas asoleadoras</li>
-                <li>Hamacas</li>
-                <li>Camas balinesas</li>
-                <li>Ducha de agua dulce</li>
-                <li>Servicio de toalla</li>
+                <li>{t("SunbathingChairs")}</li>
+                <li>{t("Hammocks")} </li>
+                <li>{t("BalineseBeds")} </li>
+                <li>{t("Freshwater")} </li>
+                <li>{t("towelService")} </li>
               </ul>
             </Box>
           </Box>
         </Box>
       </Box>
-      <Box
-        sx={{
-          color: "var(--color-theme-dark-blue)",
-          padding: 4,
-          textAlign: "center",
-          height: "150px",
-          alignContent: "center",
-          marginTop: 8,
-        }}
-      >
-        <Typography
-          style={{ fontWeight: 600, paddingBottom: 14, fontSize: "1.5rem" }}
-        >
-          No Incluye
-        </Typography>
-        <Typography>
-          Actividades adicionales no mencionadas anteriormente
-        </Typography>
-      </Box>
+
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3927.061749353047!2d-75.75613558870346!3d10.175636389896914!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ef62f072ea90277%3A0x9552edd740da742!2sIslas%20del%20Rosario%20Cartagena%20Colombia!5e0!3m2!1ses!2sco!4v1743615890002!5m2!1ses!2sco"
+        width="100%"
+        height="550"
+        style={{ border: 0 }}
+        allowFullScreen
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+      ></iframe>
+
       <Box
         sx={{
           background: "var(--color-theme-sand-light)",
@@ -220,24 +196,31 @@ const Home = () => {
             fontSize: { xs: "1.2rem", md: "1.5rem" },
           }}
         >
-          Hora de llegada al muelle: 7:30 a.m.
+          {t("arrivalTime")}: 7:30 a.m.
         </Typography>
         <Typography
           sx={{ fontWeight: 600, fontSize: { xs: "1.2rem", md: "1.5rem" } }}
         >
-          Hora de regreso al muelle: aproximadamente 4:00 p.m.
+          {t("dockReturn")} 4:00 p.m.
         </Typography>
       </Box>
-
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3927.061749353047!2d-75.75613558870346!3d10.175636389896914!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ef62f072ea90277%3A0x9552edd740da742!2sIslas%20del%20Rosario%20Cartagena%20Colombia!5e0!3m2!1ses!2sco!4v1743615890002!5m2!1ses!2sco"
-        width="100%"
-        height="550"
-        style={{ border: 0 }}
-        allowFullScreen
-        loading="lazy"
-        referrerPolicy="no-referrer-when-downgrade"
-      ></iframe>
+      <Box
+        sx={{
+          color: "var(--color-theme-dark-blue)",
+          padding: 4,
+          textAlign: "center",
+          height: "150px",
+          alignContent: "center",
+          marginTop: 8,
+        }}
+      >
+        <Typography
+          style={{ fontWeight: 600, paddingBottom: 14, fontSize: "1.5rem" }}
+        >
+          {t("noInclude")}
+        </Typography>
+        <Typography>{t("additionalActivities")}</Typography>
+      </Box>
 
       <Box
         component="footer"
@@ -257,7 +240,7 @@ const Home = () => {
               marginBottom: 2,
             }}
           >
-            Islas del Rosario- Isla Grande sector Zaragoza, Colombia
+            {t("IslandsSector")} Zaragoza, Colombia
           </Typography>
           <Typography
             sx={{
