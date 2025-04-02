@@ -15,6 +15,7 @@ import { VITE_URL_UI } from "../../constant/URL";
 
 /**Component */
 import ButtonComponent from "../../components/Buttons/ButtonComponent";
+import CSSTransition from "../../components/Transition/Transition";
 
 /**Styles */
 import "./GenerateReservation.scss";
@@ -36,7 +37,7 @@ const GenerateReservation = () => {
   useEffect(() => {
     const timeClosed = setTimeout(() => {
       setSaveCodeReservation("");
-    }, 60000);
+    }, 10000);
     if (timeClosed) return () => clearTimeout(timeClosed);
   }, [setSaveCodeReservation]);
 
@@ -59,40 +60,44 @@ const GenerateReservation = () => {
             onClick={onClickSaveButton}
           />
         </Box>
-        <Box className="wd-100 d-flex  content-value-slider">
-          <Slider
-            aria-label="Always visible"
-            marks
-            value={valueSlider}
-            step={5000}
-            valueLabelDisplay="auto"
-            shiftStep={30}
-            min={minmax.MIN}
-            max={minmax.MAX}
-            onChange={handleOnChangeSlider}
-          />
-          <Box className="d-flex justify-content-between ">
-            <Typography
-              variant="body2"
-              onClick={() => {
-                setValueSlider(minmax.MIN);
-              }}
-              sx={{ cursor: "pointer" }}
-            >
-              {formatPrice(minmax.MIN)} Min
-            </Typography>
-            <Typography
-              variant="body2"
-              onClick={() => {
-                setValueSlider(minmax.MAX);
-              }}
-              sx={{ cursor: "pointer" }}
-            >
-              {formatPrice(minmax.MAX)} Max
-            </Typography>
+
+        <CSSTransition showComponent={saveCodeReservation === ""}>
+          <Box className="wd-100 d-flex  content-value-slider">
+            <Slider
+              aria-label="Always visible"
+              marks
+              value={valueSlider}
+              step={5000}
+              valueLabelDisplay="auto"
+              shiftStep={30}
+              min={minmax.MIN}
+              max={minmax.MAX}
+              onChange={handleOnChangeSlider}
+            />
+
+            <Box className="d-flex justify-content-between ">
+              <Typography
+                variant="body2"
+                onClick={() => {
+                  setValueSlider(minmax.MIN);
+                }}
+                sx={{ cursor: "pointer" }}
+              >
+                {""}
+              </Typography>
+              <Typography
+                variant="body2"
+                onClick={() => {
+                  setValueSlider(minmax.MAX);
+                }}
+                sx={{ cursor: "pointer" }}
+              >
+                {formatPrice(minmax.MAX)} Max
+              </Typography>
+            </Box>
           </Box>
-        </Box>
-        {saveCodeReservation && (
+        </CSSTransition>
+        <CSSTransition showComponent={saveCodeReservation !== ""}>
           <Box
             className="content-qr"
             sx={{
@@ -106,7 +111,7 @@ const GenerateReservation = () => {
               value={`${VITE_URL_UI}MangataReservation?id=${saveCodeReservation}`}
             />
           </Box>
-        )}
+        </CSSTransition>
       </Container>
     </Box>
   );
