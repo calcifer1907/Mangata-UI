@@ -14,6 +14,7 @@ import DialogSelectLunch from "./DialogSelectLunch";
 
 /**Interfaces */
 import { IPropsAccompanist } from "../../interfaces/IAccompanist";
+import { useTranslation } from "react-i18next";
 
 const KEY_NAME = "name";
 const KEY_LUNCH = "lunch";
@@ -29,7 +30,7 @@ const Accompanist: FC<IPropsAccompanist> = ({
   lunchOptions,
 }) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
-
+  const { t } = useTranslation("reserve");
   return (
     <Box sx={{ marginBottom: 2 }}>
       <Box
@@ -68,14 +69,14 @@ const Accompanist: FC<IPropsAccompanist> = ({
       >
         <Box>
           <TextField
-            label="Nombre Completo"
+            label={t("fullName")}
             variant="filled"
             fullWidth
             sx={{ maxWidth: 328, minWidth: { xs: 300, lg: 328 } }}
             value={field.name}
             onChange={(e) => onChange(index, KEY_NAME, e.target.value)}
             error={errors.name}
-            helperText={errors.name ? "El Nombre es obligatorio" : ""}
+            helperText={errors.name ? t("nameRequired") : ""}
             slotProps={{
               input: {
                 startAdornment: (
@@ -102,11 +103,11 @@ const Accompanist: FC<IPropsAccompanist> = ({
               <TextField
                 {...params}
                 variant="filled"
-                label="Elige el almuerzo"
+                label={t("chooseLunch")}
                 fullWidth
                 error={errors.lunch}
                 sx={{ marginLeft: 0 }}
-                helperText={errors.lunch ? "El Almuerzo es obligatorio" : ""}
+                helperText={errors.lunch ? t("lunchMandatory") : ""}
                 onClick={(e) => {
                   e.preventDefault();
                   setOpenModal(true);

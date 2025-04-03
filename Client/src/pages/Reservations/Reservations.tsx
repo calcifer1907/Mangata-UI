@@ -10,7 +10,7 @@ import "./Reservations.scss";
 
 /**Libreries */
 import { Icon } from "@iconify/react";
-
+import { useTranslation } from "react-i18next";
 import { enqueueSnackbar } from "notistack";
 
 /**Components */
@@ -35,7 +35,7 @@ import useLogicReservations from "../../hooks/useLogicReservations";
 
 const NameLunchForm: FC = () => {
   const [isVisibleGrid, setIsVisibleGrid] = useState(false);
-
+  const { t } = useTranslation("reserve");
   const {
     optionsLunches,
     dateChange,
@@ -116,17 +116,17 @@ const NameLunchForm: FC = () => {
           <Box style={{ marginBottom: 20 }}>
             <Box style={{ marginBottom: 15 }}>
               <Typography className="color-blue-dark title-reservation">
-                Reserva tu día {CODE_RESERVATION}
+                {t("reserveD")} {CODE_RESERVATION}
               </Typography>
               <Box className="background-blue-dark container-asesor p-absolute" />
               {dataCodeReservation && (
                 <Typography className="color-blue-dark title-asesor">
-                  Asesor: <span>{dataCodeReservation?.user_name}</span>
+                  {t("adviser")}: <span>{dataCodeReservation?.user_name}</span>
                 </Typography>
               )}
             </Box>
             <ButtonComponent
-              title="Agregar persona"
+              title={t("addPerson")}
               onClick={addField}
               iconName="solar:user-plus-bold-duotone"
               background="background-color-button-dark-blue"
@@ -134,26 +134,26 @@ const NameLunchForm: FC = () => {
           </Box>
           <Calendar callback={handleChangeDate} />
           <Typography className="color-blue-dark title-data-contact">
-            Datos De Contacto
+            {t("contactDetails")}
           </Typography>
           <Box className="d-flex gap-16 flex-wrap flex-dirrection-row">
             <TextFieldComponent
               value={valueCel}
               onChange={handleOnchangeCel}
               label="Celular"
-              placeholder="Ingrese tú Celular"
+              placeholder={t("cellPhone")}
               type="number"
               iconName="phone-calling-rounded"
-              helperText="Este campo es obligatorio"
+              helperText={t("fieldRequired")}
             />
             <TextFieldComponent
               value={valueEmail}
               onChange={handleOnChangeEmail}
-              label="Correo"
+              label={t("email")}
               type="email"
-              placeholder="Ingrese tú Correo"
+              placeholder={t("enterEmail")}
               iconName="letter-opened"
-              helperText="Este campo es obligatorio"
+              helperText={t("fieldRequired")}
             />
           </Box>
           <Box>
@@ -161,7 +161,9 @@ const NameLunchForm: FC = () => {
               <Accompanist
                 icon={index !== 0}
                 title={
-                  index === 0 ? "Datos De Reserva" : `Acompañante ${index}`
+                  index === 0
+                    ? t("bookingDetails")
+                    : `${t("accompanist")} ${index}`
                 }
                 key={index}
                 index={index}
@@ -241,20 +243,20 @@ const NameLunchForm: FC = () => {
           </Box>
           <Box>
             <StandardPackage
-              title1="Paquete Estandar"
+              title1={t("standardPackage")}
               title2={formatPrice(Number(PRICES.PRICE_MAX))}
               iconName="suitcase-tag"
             />
 
             <StandardPackage
-              title1="Fecha"
+              title1={t("date")}
               title2={dateChange}
               iconName="calendar"
               marginBottom={2}
             />
 
             <StandardPackage
-              title1="Personas"
+              title1={t("persons")}
               title2={fields.length.toString()}
               iconName="users-group-rounded"
               marginBottom={2}
@@ -306,7 +308,7 @@ const NameLunchForm: FC = () => {
                   />
                 }
               >
-                Reservar
+                {t("reserve")}
               </Button>
             </Box>
           </Box>
@@ -324,35 +326,39 @@ const NameLunchForm: FC = () => {
           <Box className="d-flex justify-content-center align-items-center flex-dirrection-row gap-4">
             <Typography
               variant="h5"
-              className="text-align-center color-theme-black"
+              className="text-align-center color-theme-black margin-block-16"
             >
-              # Reserva
-              <span id="code_reserva">{CODE_RESERVATION}</span>
+              {t("checkReservation")}
             </Typography>
-            <Icon
+          </Box>
+
+          {/* <Icon
               className="color-blue-dark"
               icon="solar:copy-bold-duotone"
               width="24"
               height="24"
               onClick={handleCopy}
-            />
-          </Box>
+            /> */}
+
           <Box className="d-block color-black-opacity margin-inline">
-            <div className="text-align-center margin-top-8">
-              <h3>Nombre:</h3>
-              <h3> {fields[0].name}</h3>
-            </div>
-            <div className="d-flex justify-content-between margin-content">
-              <div className="text-align-center ">
-                <h3>Fecha</h3>
-                <h3>{dateChange}</h3>
-              </div>
-              <div id="line-popup-confirm" />
-              <div className="text-align-center margin-top-8">
-                <h3>Total</h3>
-                <h3>{handleFormatPrice()}</h3>
-              </div>
-            </div>
+            <StandardPackage
+              title1={t("reservation") + " Cod."}
+              title2={CODE_RESERVATION}
+              iconName="copy"
+              marginBottom={2}
+            />
+            <StandardPackage
+              title1={t("date")}
+              title2={dateChange}
+              iconName="calendar"
+              marginBottom={2}
+            />
+            <StandardPackage
+              title1="Total"
+              title2={handleFormatPrice()}
+              iconName="cart-large-4"
+              marginBottom={2}
+            />
           </Box>
 
           <Box className="d-flex justify-content-center align-items-center flex-wrap gap-8">
@@ -362,13 +368,13 @@ const NameLunchForm: FC = () => {
               onClick={() => {
                 if (!loading) handleReservation();
               }}
-              title={loading ? "Guardando..." : "Confirmar"}
+              title={loading ? `${t("save")}...` : t("confirm")}
             />
             <ButtonComponent
               background="background-gray"
               iconName=""
               onClick={() => setOpenModal(false)}
-              title="Cancelar"
+              title={t("cancel")}
               colorTitle="black"
             />
           </Box>

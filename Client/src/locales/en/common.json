@@ -1,4 +1,5 @@
 {
         "welcome": "Welcome to my app!",
-        "changeLanguage": "Change language"
+        "changeLanguage": "Change language",
+        "date": "Date"
 }
