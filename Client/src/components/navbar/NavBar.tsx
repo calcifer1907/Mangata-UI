@@ -20,6 +20,7 @@ import { Avatar, Menu, MenuItem, Tooltip } from "@mui/material";
 import Fade from "@mui/material/Fade";
 import { useTranslation } from "react-i18next";
 import "../../i18n"; // Importa la configuración de i18n
+import ExpandMore from "@mui/icons-material/ExpandMore";
 
 interface Props {
   /**
@@ -143,68 +144,71 @@ const Navbar = (props: Props) => {
               )}
             </Box>
 
-            {userInfo.TOKEN && (
-              <Box>
-                <Tooltip title="Configuraciónes">
-                  <IconButton onClick={handleOpenUserMenu}>
-                    <Avatar alt={userInfo.USER_INFO.USER_NAME} />
-                  </IconButton>
-                </Tooltip>
-                <Menu
-                  sx={{ mt: "45px" }}
-                  id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
+            <Box className="d-flex align-items-center ">
+              {userInfo.TOKEN && (
+                <Box>
+                  <Tooltip title="Configuraciónes">
+                    <IconButton onClick={handleOpenUserMenu}>
+                      <Avatar alt={userInfo.USER_INFO.USER_NAME} />
+                    </IconButton>
+                  </Tooltip>
+                  <Menu
+                    sx={{ mt: "45px" }}
+                    id="menu-appbar"
+                    anchorEl={anchorElUser}
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    open={Boolean(anchorElUser)}
+                    onClose={handleCloseUserMenu}
+                  >
+                    {settings.map((setting) => (
+                      <MenuItem key={setting}>
+                        <Button
+                          key={setting}
+                          sx={{ color: "#1C1B21" }}
+                          to="/logout"
+                          component={NavLink}
+                        >
+                          {setting}
+                        </Button>
+                      </MenuItem>
+                    ))}
+                  </Menu>
+                </Box>
+              )}
+              <Box sx={{ height: "100%" }}>
+                <Button
+                  id="fade-button"
+                  aria-controls={open ? "fade-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? "true" : undefined}
+                  onClick={handleClick}
+                  className="color-theme-black"
+                  endIcon={<ExpandMore />}
                 >
-                  {settings.map((setting) => (
-                    <MenuItem key={setting}>
-                      <Button
-                        key={setting}
-                        sx={{ color: "#1C1B21" }}
-                        to="/logout"
-                        component={NavLink}
-                      >
-                        {setting}
-                      </Button>
-                    </MenuItem>
-                  ))}
+                  {language}
+                </Button>
+                <Menu
+                  id="fade-menu"
+                  MenuListProps={{
+                    "aria-labelledby": "fade-button",
+                  }}
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  TransitionComponent={Fade}
+                >
+                  <MenuItem onClick={() => changeLanguage("es")}>ES</MenuItem>
+                  <MenuItem onClick={() => changeLanguage("en")}>EN</MenuItem>
                 </Menu>
               </Box>
-            )}
-            <Box sx={{ height: "100%" }}>
-              <Button
-                id="fade-button"
-                aria-controls={open ? "fade-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
-                onClick={handleClick}
-                className="color-theme-black"
-              >
-                {language}
-              </Button>
-              <Menu
-                id="fade-menu"
-                MenuListProps={{
-                  "aria-labelledby": "fade-button",
-                }}
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                TransitionComponent={Fade}
-              >
-                <MenuItem onClick={() => changeLanguage("es")}>ES</MenuItem>
-                <MenuItem onClick={() => changeLanguage("en")}>EN</MenuItem>
-              </Menu>
             </Box>
           </Box>
         </Toolbar>
