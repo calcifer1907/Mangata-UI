@@ -66,7 +66,7 @@ const Navbar = (props: Props) => {
     );
   }, [location]);
 
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation("home");
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -136,7 +136,7 @@ const Navbar = (props: Props) => {
                       to={item.path}
                       component={NavLink}
                     >
-                      {item.title}
+                      {t(item.title)}
                     </Button>
                   ))}
                 </>
@@ -230,6 +230,7 @@ const Navbar = (props: Props) => {
             handleDrawerToggle={handleDrawerToggle}
             navItems={userInfo.MENU}
             token={userInfo.TOKEN}
+            changeLanguage={changeLanguage}
           />
         </Drawer>
       </nav>

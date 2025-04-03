@@ -1,4 +1,11 @@
 {
+        "changeLanguage": "Change language",
+        "es": "Spanish",
+        "en": "English",
+        "home": "home",
+        "Reserve": "Reservar",
+        "becomePartner": "Become a Partner",
+        "signIn": "Sign in",
         "servicesIncluded": "Services included",
         "lunchCarte": "Lunch a la carte",
         "roundTrip": "Round trip sea transport.",

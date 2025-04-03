@@ -5,8 +5,8 @@ export const initialUserInfo = {
 };
 
 export const itemsNav = [
-  { title: "Inicio", path: "/" },
-  { title: "Reservar", path: "/MangataReservation" },
-  { title: "Se Socio", path: "/CreateUser" },
-  { title: "Iniciar sesión ", path: "/Login" },
+  { title: "home", path: "/" },
+  { title: "Reserve", path: "/MangataReservation" },
+  { title: "becomePartner", path: "/CreateUser" },
+  { title: "signIn", path: "/Login" },
 ];

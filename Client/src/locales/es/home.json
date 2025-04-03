@@ -1,4 +1,11 @@
 {
+        "changeLanguage": "Cambiar idioma",
+        "es": "Español",
+        "en": "Ingles",
+        "home": "Inicio",
+        "Reserve": "Reservar",
+        "becomePartner": "Se socio",
+        "signIn": "Iniciar sesión",
         "servicesIncluded": "Servicios incluidos",
         "lunchCarte": "Almuerzo a la carta",
         "roundTrip": "Transporte marítimo ida y regreso.",
