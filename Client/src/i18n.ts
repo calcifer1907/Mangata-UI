@@ -10,6 +10,8 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
+    lng: "es", // Idioma por defecto
+    ns: ["common", "home"], // Espacio de nombres para la carga de archivos JSON
     fallbackLng: "es",
     debug: true,
     interpolation: {
