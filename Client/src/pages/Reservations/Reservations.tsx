@@ -11,7 +11,6 @@ import "./Reservations.scss";
 /**Libreries */
 import { Icon } from "@iconify/react";
 import { useTranslation } from "react-i18next";
-import { enqueueSnackbar } from "notistack";
 
 /**Components */
 import Accompanist from "../../components/Accompanist/Accompanist";
@@ -76,30 +75,6 @@ const NameLunchForm: FC = () => {
       document.getElementById("contentPrimary")?.offsetHeight;
     setMaxHeight(heightContainer || 0);
   }, []);
-
-  const handleCopy = async () => {
-    const code_reserva = document.getElementById("code_reserva");
-    try {
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        await navigator.clipboard.writeText(code_reserva?.textContent || "");
-      } else {
-        const textarea = document.createElement("textarea");
-        textarea.value = code_reserva?.textContent || "";
-        textarea.style.position = "fixed";
-        textarea.style.top = "-9999px";
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand("copy");
-        document.body.removeChild(textarea);
-      }
-    } catch (error) {
-      console.log("Error al copiar el codigo de reserva", error);
-      enqueueSnackbar(JSON.stringify(error), {
-        variant: "error",
-        anchorOrigin: { vertical: "top", horizontal: "right" },
-      });
-    }
-  };
 
   return (
     <Grid2
