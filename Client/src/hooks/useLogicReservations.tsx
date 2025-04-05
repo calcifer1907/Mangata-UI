@@ -8,7 +8,7 @@ import {
 } from "../utils/api/agent";
 
 /**Context */
-import { useAccompanist } from "./useReservationContext";
+import { useContextAccompanist } from "./useReservation/useContextReservation";
 
 /**Libreries */
 import { useSearchParams, useNavigate } from "react-router-dom";
@@ -49,7 +49,7 @@ const useLogicReservations = () => {
     setValueEmail,
     setValueCel,
     setLoading,
-  } = useAccompanist();
+  } = useContextAccompanist();
 
   const requestGetCodeReservation = useCallback(async () => {
     try {

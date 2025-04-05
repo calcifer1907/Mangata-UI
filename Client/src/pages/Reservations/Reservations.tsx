@@ -29,7 +29,7 @@ import { formatPrice } from "../../generalFunctions/formaters";
 import styleReservation from "./styleReservation.json";
 
 /**Hooks */
-import { useAccompanist } from "../../hooks/useReservationContext";
+import { useContextAccompanist } from "../../hooks/useReservation/useContextReservation";
 import useLogicReservations from "../../hooks/useLogicReservations";
 
 const NameLunchForm: FC = () => {
@@ -48,7 +48,7 @@ const NameLunchForm: FC = () => {
     setOpenDialogPayment,
     dataCodeReservation,
     loading,
-  } = useAccompanist();
+  } = useContextAccompanist();
 
   const [maxHeight, setMaxHeight] = useState<number>(0);
 

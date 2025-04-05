@@ -1,64 +1,38 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   useCallback,
   useEffect,
   useState,
-  createContext,
   cloneElement,
   useMemo,
-  useContext,
   FC,
+  isValidElement,
 } from "react";
 
-import { getAccompanist, getMinMax } from "../utils/api/agent";
+import { getAccompanist, getMinMax } from "../../utils/api/agent";
 
 import {
   IErrorFieldAccompanist,
   IFields,
   IMinMax,
   IOptions,
-} from "../interfaces/IAccompanist";
-import {
-  IAccompanistContext,
-  ISaveCodeGenerate,
-} from "../interfaces/IReservation";
-import { IGetUserId } from "../interfaces/IUser";
+} from "../../interfaces/IAccompanist";
+import { ISaveCodeGenerate } from "../../interfaces/IReservation";
+import { IGetUserId } from "../../interfaces/IUser";
 import { format } from "@formkit/tempo";
-
-const initialState: IAccompanistContext = {
-  optionsLunches: [],
-  setOptionsLunches: () => {},
-  minmax: { MIN: 0, MAX: 0 },
-  dataCodeReservation: null,
-  setDataCodeReservation: () => {},
-  getUserId: null,
-  setGetUserId: () => {},
-  fields: [{ name: "", lunch: { label: "", value: 0 } }],
-  setFields: () => {},
-  errors: [],
-  setErrors: () => {},
-  valueCel: "",
-  setValueCel: () => {},
-  valueEmail: "",
-  setValueEmail: () => {},
-  dateChange: "",
-  setDateChange: () => {},
-  openModal: false,
-  setOpenModal: () => {},
-  openDialogPayment: false,
-  setOpenDialogPayment: () => {},
-  loading: false,
-  setLoading: () => {},
-};
-
-const CreateContext = createContext<IAccompanistContext>(initialState);
+import { CreateContext } from "./CreateContextReservatin";
 
 const today = format(new Date(), "YYYY-MM-DD", "co");
-const AccompanistContext: FC<any> = (props) => {
-  const childrenWithProps = cloneElement(props.children, {
-    ...props,
-    children: props.children.props.children,
-  });
+
+interface AccompanistContextProps {
+  children: React.ReactNode;
+}
+
+const AccompanistContext: FC<AccompanistContextProps> = (props) => {
+  const childrenWithProps = isValidElement(props.children)
+    ? cloneElement(props.children, {
+        ...props,
+      })
+    : props.children;
   const [optionsLunches, setOptionsLunches] = useState<IOptions[]>([]);
   const [minmax, setMinMax] = useState<IMinMax>({ MIN: 0, MAX: 0 });
   const [getUserId, setGetUserId] = useState<IGetUserId | null>(null);
@@ -150,10 +124,6 @@ const AccompanistContext: FC<any> = (props) => {
       {childrenWithProps}
     </CreateContext.Provider>
   );
-};
-
-export const useAccompanist = () => {
-  return useContext(CreateContext);
 };
 
 export default AccompanistContext;
