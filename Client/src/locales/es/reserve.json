@@ -22,5 +22,7 @@
         "save": "Guardando",
         "confirm": "Confirmar",
         "cancel": "Cancelar",
-        "checkReservation": "Verifica tú reserve"
+        "checkReservation": "Verifica tú reserve",
+        "BookingSaving": "Se guardo correctamente la reserva",
+        "IvalidEmail": "Correo inválido!",
 }

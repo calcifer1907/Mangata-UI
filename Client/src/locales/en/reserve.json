@@ -22,5 +22,7 @@
         "save": "Saving",
         "confirm": "Confirm",
         "cancel": "Cancel",
-        "checkReservation": "Check Your Reservation"
+        "checkReservation": "Check Your Reservation",
+        "BookingSaving": "Booking was successfully saved",
+        "IvalidEmail": "Invalid mail!"
 }
