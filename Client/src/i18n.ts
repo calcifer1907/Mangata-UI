@@ -19,7 +19,7 @@ i18n
     },
     backend: {
       // Configuración específica del backend
-      loadPath: "src/locales/{{lng}}/{{ns}}.json",
+      loadPath: "./src/locales/{{lng}}/{{ns}}.json",
     },
   });
 
