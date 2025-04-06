@@ -11,6 +11,7 @@ import TextFieldComponent from "../TextField/TextFieldComponent";
 
 import "react-date-range/dist/styles.css"; // Estilos principales
 import "react-date-range/dist/theme/default.css"; // Tema por defectoo de calendario de react-icons
+import { useTranslation } from "react-i18next";
 
 const FORMAT_DATE = "DD-MM-YYYY";
 
@@ -22,7 +23,7 @@ const DatePickerWithIcon = ({ callback }: IProps) => {
   const initalDate = () => {
     return new Date();
   };
-
+  const { t } = useTranslation("common");
   const [date, setDate] = useState<Date>(initalDate());
   const [showCalendar, setShowCalendar] = useState(false);
   const calendarRef = useRef<HTMLDivElement | null>(null);
@@ -70,8 +71,8 @@ const DatePickerWithIcon = ({ callback }: IProps) => {
         <TextFieldComponent
           value={formatDate(date.toISOString(), FORMAT_DATE)}
           onChange={() => {}}
-          label="Fecha"
-          placeholder="Fecha"
+          label={t("date")}
+          placeholder={t("date")}
           type="text"
           iconName="calendar"
         />

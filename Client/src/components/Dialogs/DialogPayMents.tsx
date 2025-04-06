@@ -11,6 +11,7 @@ import { Box, Paper } from "@mui/material";
 import { Icon } from "@iconify/react";
 import { enqueueSnackbar } from "notistack";
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
+import { useTranslation } from "react-i18next";
 
 // import {NavLink} from "react-router-dom"
 
@@ -55,7 +56,7 @@ const DialogPayMents = ({
 }: IProps) => {
   // const [clickPSE, setClickPSE] = useState<boolean>(false);
   const [preferenceId] = useState<string | null>(null);
-
+  const { t } = useTranslation("reserve");
   const [loading, setLoading] = useState<boolean>(false);
   initMercadoPago(VITE_PUBLIC_KEY);
 
@@ -137,7 +138,7 @@ const DialogPayMents = ({
     <Dialog
       open={open}
       setOpenDialog={setopen}
-      tittle="Métodos de pago"
+      tittle={t("paymentMethod")}
       fullScreen
       showCancelButton={false}
     >

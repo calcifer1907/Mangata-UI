@@ -1,24 +1,55 @@
+import { useCallback, useEffect, useState } from "react";
+
 import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Box from "@mui/material/Box";
+import Collapse from "@mui/material/Collapse";
 import Typography from "@mui/material/Typography";
 import { NavLink } from "react-router-dom";
 import { itemsNav } from "../../constant/userInfo";
+import { useTranslation } from "react-i18next";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
 
 interface IProps {
   handleDrawerToggle: () => void;
   navItems: { title: string; path: string }[];
   token: string;
+  changeLanguage: (lng: string) => void;
 }
 
-const NavListDrawer = ({ handleDrawerToggle, navItems, token }: IProps) => {
+const NavListDrawer = ({
+  handleDrawerToggle,
+  navItems,
+  token,
+  changeLanguage,
+}: IProps) => {
+  const { t } = useTranslation("home");
+  const [open, setOpen] = useState(false);
+
+  const handleClick = () => {
+    setOpen(!open);
+  };
+
+  const handleOnDrawerToggle = useCallback(() => {
+    const clickListItem = document.getElementsByClassName("onClickListItem");
+    const itemsArray = Array.from(clickListItem);
+    itemsArray.forEach((item) => {
+      item.addEventListener("click", handleDrawerToggle);
+    });
+  }, [handleDrawerToggle]);
+
+  useEffect(() => {
+    handleOnDrawerToggle();
+  }, [handleOnDrawerToggle]);
+
   return (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
+    <Box sx={{ textAlign: "center" }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        MUI
+        Mangata
       </Typography>
       <Divider />
       <List>
@@ -27,9 +58,9 @@ const NavListDrawer = ({ handleDrawerToggle, navItems, token }: IProps) => {
             {navItems.map((item) => (
               <ListItem key={item.title} disablePadding>
                 <ListItemButton
-                  sx={{ textAlign: "center" }}
                   component={NavLink}
                   to={item.path}
+                  className="onClickListItem"
                 >
                   <ListItemText primary={item.title} />
                 </ListItemButton>
@@ -37,9 +68,9 @@ const NavListDrawer = ({ handleDrawerToggle, navItems, token }: IProps) => {
             ))}
             <ListItem disablePadding>
               <ListItemButton
-                sx={{ textAlign: "center" }}
                 component={NavLink}
                 to="/Logout"
+                className="onClickListItem"
               >
                 <ListItemText primary="Cerrar sesión" />
               </ListItemButton>
@@ -50,16 +81,30 @@ const NavListDrawer = ({ handleDrawerToggle, navItems, token }: IProps) => {
             {itemsNav.map((item) => (
               <ListItem key={item.title} disablePadding>
                 <ListItemButton
-                  sx={{ textAlign: "center" }}
                   component={NavLink}
                   to={item.path}
+                  className="onClickListItem"
                 >
-                  <ListItemText primary={item.title} />
+                  <ListItemText primary={t(item.title)} />
                 </ListItemButton>
               </ListItem>
             ))}
           </>
         )}
+        <ListItemButton onClick={handleClick}>
+          <ListItemText primary={t("changeLanguage")} />
+          {open ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <ListItemButton sx={{ pl: 4 }} onClick={() => changeLanguage("es")}>
+              <ListItemText primary={t("es")} />
+            </ListItemButton>
+            <ListItemButton sx={{ pl: 4 }} onClick={() => changeLanguage("en")}>
+              <ListItemText primary={t("en")} />
+            </ListItemButton>
+          </List>
+        </Collapse>
       </List>
     </Box>
   );

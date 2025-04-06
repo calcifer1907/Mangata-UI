@@ -1,29 +1,36 @@
 import { useCallback, useEffect, useMemo, useRef } from "react";
 
+/**Apis */
 import {
   getCodeReservation,
   getAccompanist,
   methodUser,
 } from "../utils/api/agent";
 
-import { useAccompanist } from "./useReservationContext";
+/**Context */
+import { useContextAccompanist } from "./useReservation/useContextReservation";
 
+/**Libreries */
 import { useSearchParams, useNavigate } from "react-router-dom";
+import { enqueueSnackbar } from "notistack";
+import { useTranslation } from "react-i18next";
+
+/**Functions */
 import { handleDiffHours } from "../generalFunctions/formatDate";
+import { formatPrice } from "../generalFunctions/formaters";
+import { validEmail } from "../generalFunctions/generalFunction";
+import { generarCodigoReservaUX2 } from "../generalFunctions/generateCodeReservation";
 
 /**Interfaces */
 import { IFields, IOptions } from "../interfaces/IAccompanist";
-import { generarCodigoReservaUX2 } from "../generalFunctions/generateCodeReservation";
-
-import { enqueueSnackbar } from "notistack";
-import { formatPrice } from "../generalFunctions/formaters";
-import { validEmail } from "../generalFunctions/generalFunction";
 
 const useLogicReservations = () => {
   const [searchParams] = useSearchParams();
   const navigator = useNavigate();
   const refSystem = useRef<number>(0);
   const ID_PARAM = searchParams.get("id");
+
+  const { t } = useTranslation("reserve");
 
   const {
     dataCodeReservation,
@@ -42,7 +49,7 @@ const useLogicReservations = () => {
     setValueEmail,
     setValueCel,
     setLoading,
-  } = useAccompanist();
+  } = useContextAccompanist();
 
   const requestGetCodeReservation = useCallback(async () => {
     try {
@@ -82,7 +89,7 @@ const useLogicReservations = () => {
     const isValidEmail = validEmail(valueEmail);
     const isValidForm = validateFields();
     if (!isValidEmail) {
-      enqueueSnackbar("Correo invalido!", {
+      enqueueSnackbar(t("IvalidEmail"), {
         variant: "error",
         anchorOrigin: {
           vertical: "top",
@@ -141,7 +148,7 @@ const useLogicReservations = () => {
 
       const data = await getAccompanist.saveReservation(body);
       if (data.message === "success") {
-        enqueueSnackbar("Se guardo correctamente la reserva", {
+        enqueueSnackbar(t("BookingSaving"), {
           variant: "success",
           anchorOrigin: {
             vertical: "top",

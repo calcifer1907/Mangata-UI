@@ -97,7 +97,7 @@ const LIstOfCommissionAdmin = () => {
     },
     {
       field: "BANK_ACCOUNT",
-      headerName: "Cuneta Bancaria",
+      headerName: "Cuenta Bancaria",
       sortable: false,
       flex: 3,
     },
