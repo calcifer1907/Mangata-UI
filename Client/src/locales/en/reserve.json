@@ -24,5 +24,6 @@
         "cancel": "Cancel",
         "checkReservation": "Check Your Reservation",
         "BookingSaving": "Booking was successfully saved",
-        "IvalidEmail": "Invalid mail!"
+        "IvalidEmail": "Invalid mail!",
+        "paymentMethod": "Payment method"
 }

@@ -24,5 +24,6 @@
         "cancel": "Cancelar",
         "checkReservation": "Verifica tú reserve",
         "BookingSaving": "Se guardo correctamente la reserva",
-        "IvalidEmail": "Correo inválido!"
+        "IvalidEmail": "Correo inválido!",
+        "paymentMethod": "Método de pago"
 }

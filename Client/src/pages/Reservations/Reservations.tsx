@@ -3,7 +3,7 @@ import { FC, useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Grid2 from "@mui/material/Grid2";
+import Grid2 from "@mui/material/Grid";
 import Modal from "@mui/material/Modal";
 
 import "./Reservations.scss";
