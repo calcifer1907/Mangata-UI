@@ -186,7 +186,7 @@ const Home = () => {
           textAlign: "center",
           height: "auto",
           alignContent: "center",
-          marginBlock: 4,
+          marginBlock: 2,
         }}
       >
         <Typography
@@ -224,11 +224,10 @@ const Home = () => {
       <Box
         component="footer"
         sx={{
-          height: "auto",
-          background: "#cfb57d",
-          marginTop: 2,
-          textAlign: "center",
           padding: 2,
+          marginTop: 2,
+          background: "#cfb57d",
+          textAlign: "center",
         }}
       >
         <Box>
