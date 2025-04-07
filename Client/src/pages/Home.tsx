@@ -186,7 +186,7 @@ const Home = () => {
           textAlign: "center",
           height: "auto",
           alignContent: "center",
-          marginBlock: 8,
+          marginBlock: 4,
         }}
       >
         <Typography
@@ -211,7 +211,6 @@ const Home = () => {
           textAlign: "center",
           height: "150px",
           alignContent: "center",
-          marginTop: 8,
         }}
       >
         <Typography
@@ -227,7 +226,7 @@ const Home = () => {
         sx={{
           height: "auto",
           background: "#cfb57d",
-          marginTop: 10,
+          marginTop: 2,
           textAlign: "center",
           padding: 2,
         }}
