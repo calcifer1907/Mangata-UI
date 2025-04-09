@@ -19,11 +19,12 @@ export const createReservation = async (
     ACCOMPANIST,
     MIN_PRICE,
     CREATED_AT,
+    CREATED_ON,
     EMAIL,
   } = request.body;
   try {
     const result = await pool.query(
-      "INSERT INTO reservations(CODE_RESERVATION,ID_EMPLOYEE,TELEPHONE,EMAIL,CURRENT_COMMISSION,COMMISSION_EMPLOYEE,CREATED_AT) VALUES($1,$2,$3,$4,$5,$6,$7);",
+      "INSERT INTO reservations(CODE_RESERVATION,ID_EMPLOYEE,TELEPHONE,EMAIL,CURRENT_COMMISSION,COMMISSION_EMPLOYEE,CREATED_AT,CREATED_ON) VALUES($1,$2,$3,$4,$5,$6,$7,$8);",
       [
         CODE_RESERVATION,
         ID_EMPLOYEE,
@@ -32,6 +33,7 @@ export const createReservation = async (
         MIN_PRICE,
         AGREED_PRICE,
         CREATED_AT,
+        CREATED_ON,
       ]
     );
 
