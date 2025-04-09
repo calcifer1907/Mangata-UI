@@ -13,10 +13,12 @@ i18n
     lng: "es", // Idioma por defecto
     ns: ["common", "home"], // Espacio de nombres para la carga de archivos JSON
     fallbackLng: "es",
-    debug: true,
+    debug: false,
     interpolation: {
       escapeValue: false,
     },
+    saveMissing: true,
+    saveMissingTo: "all",
     backend: {
       // Configuración específica del backend
       loadPath: "/locales/{{lng}}/{{ns}}.json",
