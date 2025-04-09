@@ -13,7 +13,7 @@ import "react-date-range/dist/styles.css"; // Estilos principales
 import "react-date-range/dist/theme/default.css"; // Tema por defectoo de calendario de react-icons
 import { useTranslation } from "react-i18next";
 
-const FORMAT_DATE = "DD-MM-YYYY";
+const FORMAT_DATE = "YYYY-MM-DD";
 
 interface IProps {
   callback: (date: string) => void;
@@ -40,11 +40,11 @@ const DatePickerWithIcon = ({ callback }: IProps) => {
   };
 
   // Función para bloquear días
-  const isDayBlocked = (day: Date) => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return day < today || day > maxDate;
-  };
+  // const isDayBlocked = (day: Date) => {
+  //   const today = new Date();
+  //   today.setHours(0, 0, 0, 0);
+  //   return day < today || day > maxDate;
+  // };
 
   // Cerrar calendario al hacer clic fuera
   useEffect(() => {
@@ -62,6 +62,12 @@ const DatePickerWithIcon = ({ callback }: IProps) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const handlelastDayYear = (): Date => {
+    const today = new Date();
+    const lastDayYear = new Date(today.getFullYear(), 11, 31); // Último día del año actual
+    return lastDayYear;
+  };
   return (
     <div
       className="date-picker-container"
@@ -94,7 +100,8 @@ const DatePickerWithIcon = ({ callback }: IProps) => {
             date={date}
             onChange={handleSelect}
             minDate={new Date()}
-            disabledDay={isDayBlocked}
+            maxDate={handlelastDayYear()}
+            // disabledDay={isDayBlocked}
           />
         </div>
       )}
