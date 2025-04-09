@@ -74,6 +74,9 @@ const NameLunchForm: FC = () => {
     const heightContainer =
       document.getElementById("contentPrimary")?.offsetHeight;
     setMaxHeight(heightContainer || 0);
+    return () => {
+      body?.style.setProperty("overflow-y", "auto");
+    };
   }, []);
 
   return (
