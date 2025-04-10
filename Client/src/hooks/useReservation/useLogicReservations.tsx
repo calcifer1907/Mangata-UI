@@ -5,10 +5,10 @@ import {
   getCodeReservation,
   getAccompanist,
   methodUser,
-} from "../utils/api/agent";
+} from "../../utils/api/agent";
 
 /**Context */
-import { useContextAccompanist } from "./useReservation/useContextReservation";
+import { useContextAccompanist } from "./useContextReservation";
 
 /**Libreries */
 import { useSearchParams, useNavigate } from "react-router-dom";
@@ -16,13 +16,13 @@ import { enqueueSnackbar } from "notistack";
 import { useTranslation } from "react-i18next";
 
 /**Functions */
-import { handleDiffHours } from "../generalFunctions/formatDate";
-import { formatPrice } from "../generalFunctions/formaters";
-import { validEmail } from "../generalFunctions/generalFunction";
-import { generarCodigoReservaUX2 } from "../generalFunctions/generateCodeReservation";
+import { formatDate, handleDiffHours } from "../../generalFunctions/formatDate";
+import { formatPrice } from "../../generalFunctions/formaters";
+import { validEmail } from "../../generalFunctions/generalFunction";
+import { generarCodigoReservaUX2 } from "../../generalFunctions/generateCodeReservation";
 
 /**Interfaces */
-import { IFields, IOptions } from "../interfaces/IAccompanist";
+import { IFields, IOptions } from "../../interfaces/IAccompanist";
 
 const useLogicReservations = () => {
   const [searchParams] = useSearchParams();
@@ -130,10 +130,6 @@ const useLogicReservations = () => {
   const handleReservation = async () => {
     setLoading(true);
     const ID_EMPLOYEE = dataCodeReservation?.id || refSystem.current;
-    const date = new Date();
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    const seconds = date.getSeconds();
     if (validateFields() && valueCel !== "" && valueEmail !== "") {
       const body = {
         CODE_RESERVATION,
@@ -143,7 +139,8 @@ const useLogicReservations = () => {
         EMAIL: valueEmail,
         AGREED_PRICE: Number(PRICES.PRICE_MAX),
         MIN_PRICE: Number(PRICES.PRICE_MIN),
-        CREATED_AT: `${dateChange} ${hours}:${minutes}:${seconds}`,
+        CREATED_AT: dateChange,
+        CREATED_ON: formatDate(""),
       };
 
       const data = await getAccompanist.saveReservation(body);

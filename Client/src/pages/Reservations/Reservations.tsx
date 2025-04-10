@@ -30,7 +30,7 @@ import styleReservation from "./styleReservation.json";
 
 /**Hooks */
 import { useContextAccompanist } from "../../hooks/useReservation/useContextReservation";
-import useLogicReservations from "../../hooks/useLogicReservations";
+import useLogicReservations from "../../hooks/useReservation/useLogicReservations";
 
 const NameLunchForm: FC = () => {
   const [isVisibleGrid, setIsVisibleGrid] = useState(false);
@@ -74,6 +74,9 @@ const NameLunchForm: FC = () => {
     const heightContainer =
       document.getElementById("contentPrimary")?.offsetHeight;
     setMaxHeight(heightContainer || 0);
+    return () => {
+      body?.style.setProperty("overflow-y", "auto");
+    };
   }, []);
 
   return (
