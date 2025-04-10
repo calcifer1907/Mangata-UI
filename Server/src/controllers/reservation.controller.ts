@@ -51,7 +51,7 @@ export const createReservation = async (
     // sendEmail(CODE_RESERVATION);
   } catch (_error) {
     console.log(_error);
-    response.status(500).json({ message: "sometghin gos wrong" });
+    response.status(500).json({ message: "Something went wrong" });
   }
 };
 
@@ -88,7 +88,7 @@ export const getListSalesEmployee = async (
     response.json(diff);
   } catch (_error) {
     console.log(_error);
-    response.status(500).json({ message: "sometghin gos wrong" });
+    response.status(500).json({ message: "Something went wrong" });
   }
 };
 
@@ -137,7 +137,7 @@ export const getListSalesAdmin = async (
     });
     response.json(diff);
   } catch (error) {
-    response.status(500).json({ message: "sometghin gos wrong" });
+    response.status(500).json({ message: "Something went wrong" });
   }
 };
 
@@ -146,41 +146,7 @@ export const getMinMax = async (_request: Request, response: Response) => {
     const result = await pool.query("SELECT MIN,MAX FROM min_max;");
     response.json(result.rows[0]);
   } catch (error) {
-    response.status(500).json({ message: "sometghin gos wrong" });
-  }
-};
-
-export const changeStatusReservation = async (
-  request: Request,
-  response: Response
-) => {
-  try {
-    const { id, status, updated } = request.body;
-    const result = await pool.query(
-      "UPDATE reservations SET STATUS_RESERVATION=$1,UPDATED_AT=$2 WHERE CODE_RESERVATION=$3;",
-      [status, updated, id]
-    );
-
-    response.json(result.rows[0]);
-  } catch (error) {
-    response.status(500).json({ message: "sometghin gos wrong" });
-  }
-};
-
-export const updatePaymentEmployee = async (
-  request: Request,
-  response: Response
-) => {
-  try {
-    const { id, pay } = request.body;
-    const result = await pool.query(
-      "UPDATE reservations SET PAY=$1 WHERE CODE_RESERVATION=$2;",
-      [pay, id]
-    );
-    if (result.rows)
-      response.json({ messagge: "Se modifico Correctamente", status: 201 });
-  } catch (error) {
-    response.status(500).json({ message: "sometghin gos wrong" });
+    response.status(500).json({ message: "Something went wrong" });
   }
 };
 
@@ -228,7 +194,7 @@ export const checkReservation = async (
     }
   } catch (error) {
     next(error);
-    res.status(500).json({ message: "something went wrong" });
+    res.status(500).json({ message: "Something went wrong" });
   }
 };
 
@@ -260,7 +226,7 @@ class ReservationController {
       const result = await reservationRepository.getLunches();
       response.send(result);
     } catch (error) {
-      response.status(500).json({ message: "sometghin gos wrong" });
+      response.status(500).json({ message: "Something went wrong" });
     }
   }
 
@@ -280,6 +246,31 @@ class ReservationController {
       if (error instanceof Error) {
         response.status(404).json({ message: error.message });
       }
+    }
+  }
+
+  async updatePaymentEmployee(request: Request, response: Response) {
+    try {
+      const { id, pay } = request.body;
+      const result = await reservationRepository.updatePayment(id, pay);
+      if (result)
+        response.json({ messagge: "Se modifico Correctamente", status: 201 });
+    } catch (error) {
+      response.status(500).json({ message: "Something went wrong" });
+    }
+  }
+
+  async changeStatusReservation(request: Request, response: Response) {
+    try {
+      const { id, status } = request.body;
+      const result = await reservationRepository.changeStatus(id, status);
+      if (result) {
+        response.json({ message: "Se modifico Correctamente", status: 201 });
+      } else {
+        response.status(404).json({ message: "No se encontró la reservación" });
+      }
+    } catch (error) {
+      response.status(500).json({ message: "Something went wrong" });
     }
   }
 }

@@ -48,7 +48,7 @@ const calculatingDate = async (startDate: string, enddate: string) => {
     });
     return diff;
   } catch (error) {
-    return new Error("sometghin gos wrong");
+    return new Error("Something went wrong");
   }
 };
 

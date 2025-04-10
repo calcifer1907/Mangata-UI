@@ -28,7 +28,7 @@ class UserController {
       const result = await UserRepository.createUser(request.body);
       response.json(result);
     } catch (error) {
-      response.status(500).json({ message: "sometghin gos wrong" });
+      response.status(500).json({ message: "Something went wrong" });
     }
   }
 
@@ -38,7 +38,7 @@ class UserController {
       const result = await UserRepository.validExistEmail(email);
       response.json(result);
     } catch (error) {
-      response.status(500).json({ message: "sometghin gos wrong" });
+      response.status(500).json({ message: "Something went wrong" });
     }
   }
 }

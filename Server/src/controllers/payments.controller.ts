@@ -188,7 +188,7 @@ export const reciveWebhook = async (request: Request, response: Response) => {
     }
     response.sendStatus(204);
   } catch (_error) {
-    response.status(500).json({ message: "something went wrong" });
+    response.status(500).json({ message: "Something went wrong" });
   }
 };
 

@@ -18,7 +18,7 @@ export const handleError = (
   response.status(500).json({
     status: 500,
     error: "Internal Server Error",
-    message: "Sometghin gos wrong",
+    message: "Something went wrong",
   });
   next();
 };

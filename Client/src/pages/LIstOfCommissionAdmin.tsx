@@ -166,11 +166,10 @@ const LIstOfCommissionAdmin = () => {
     const changeStatus = dataList.findIndex(
       ({ code_reservation }) => code_reservation === codeRe
     );
-    // console.log(changeStatus, status, code);
-    dataList[changeStatus].status_reservation = status;
-    const updated = format(new Date(), "YYYY-MM-DDTHH:mm:ss", "co");
-    changeStatusReservation(codeRe, status, updated);
-    handleClose();
+    changeStatusReservation(codeRe, status).then(() => {
+      dataList[changeStatus].status_reservation = status;
+      handleClose();
+    });
   };
 
   useEffect(() => {

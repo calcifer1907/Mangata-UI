@@ -51,9 +51,9 @@ export const getMinMax = {
 };
 
 export const getAdmin = {
-  changeStatus: (body: IBodyChangeStatus): Promise<unknown> =>
+  changeStatus: (body: IBodyChangeStatus): Promise<IResponseApi> =>
     requestApis.post(`/api/changeStatusReservation`, body),
-  paymentUpdate: (body: object): Promise<unknown> =>
+  paymentUpdate: (body: object): Promise<IResponseApi> =>
     requestApis.put(`/api/updatePaymentEmployee`, body),
 };
 
