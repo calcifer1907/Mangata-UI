@@ -25,7 +25,7 @@ import {
   VITE_URL_UI,
 } from "../configDB";
 
-import { STATUS_BOLD } from "../generalFuncionts/generalFunctions";
+import { STATUS_BOLD } from "../functions/generalFunctions";
 
 initMercadoPago(PAYMENT_TOKEN_PROD_PUBLIC || "");
 
