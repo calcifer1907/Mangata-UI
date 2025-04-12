@@ -9,7 +9,6 @@ import { IGetUserId } from "./IUser";
 export interface IBodyChangeStatus {
   id: string;
   status: string;
-  updated: string;
 }
 
 export interface IBodyStatusReservation {

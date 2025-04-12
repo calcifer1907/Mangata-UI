@@ -40,6 +40,22 @@ class ReservationRepository {
     if (rowCount === 0) throw new Error("No se encontró el código de reserva");
     return rows[0] as ISaveCodeReservation;
   }
+
+  async updatePayment(id: string, pay: boolean): Promise<boolean> {
+    const { rowCount } = await pool.query(
+      "UPDATE reservations SET PAY=$1 WHERE CODE_RESERVATION=$2;",
+      [pay, id]
+    );
+    return (rowCount ?? 0) > 0;
+  }
+
+  async changeStatus(id: string, status: string): Promise<boolean> {
+    const { rowCount } = await pool.query(
+      "UPDATE reservations SET STATUS_RESERVATION=$1 WHERE CODE_RESERVATION=$2;",
+      [status, id]
+    );
+    return (rowCount ?? 0) > 0;
+  }
 }
 
 export default new ReservationRepository();

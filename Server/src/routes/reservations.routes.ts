@@ -5,9 +5,7 @@ import {
   getListSalesAdmin,
   getListSalesEmployee,
   getMinMax,
-  changeStatusReservation,
   checkReservation,
-  updatePaymentEmployee,
 } from "../controllers/reservation.controller";
 
 import ReservationController from "../controllers/reservation.controller";
@@ -22,7 +20,11 @@ router.post("/mycommissions", authenticate, getListSalesEmployee);
 
 router.post("/mySales", authenticate, getListSalesAdmin);
 
-router.post("/changeStatusReservation", authenticate, changeStatusReservation);
+router.post(
+  "/changeStatusReservation",
+  authenticate,
+  ReservationController.changeStatusReservation
+);
 
 router.post(
   "/saveGenerateCode",
@@ -32,7 +34,11 @@ router.post(
 
 router.post("/getCodeReservation", ReservationController.getCodeReservation);
 
-router.put("/updatePaymentEmployee", authenticate, updatePaymentEmployee);
+router.put(
+  "/updatePaymentEmployee",
+  authenticate,
+  ReservationController.updatePaymentEmployee
+);
 
 router.post("/check-reservation", checkReservation);
 

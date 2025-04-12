@@ -40,6 +40,6 @@ export const getAllUser = async (request: Request, response: Response) => {
     });
   } catch (error) {
     console.log(error);
-    return response.status(500).json({ message: "sometghin gos wrong" });
+    return response.status(500).json({ message: "Something went wrong" });
   }
 };

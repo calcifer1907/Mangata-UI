@@ -8,6 +8,8 @@ import { format } from "@formkit/tempo";
 
 import { useContextUser } from "../hooks/useContextUser";
 
+import { enqueueSnackbar } from "notistack";
+
 import { IGetListSales } from "../interfaces/IUser";
 
 interface IProps {
@@ -49,20 +51,53 @@ export const useSales = ({ page }: IProps) => {
     setLoading(false);
   }, [page, dateChange]);
 
-  const changeStatusReservation = async (
-    id: string,
-    status: string,
-    updated: string
-  ) => {
-    const body = { id, status, updated };
-    const data = await getAdmin.changeStatus(body);
-    return data;
+  const changeStatusReservation = async (id: string, status: string) => {
+    const body = { id, status };
+    try {
+      const data = await getAdmin.changeStatus(body);
+      enqueueSnackbar(data.message, {
+        variant: "success",
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "right",
+        },
+      });
+    } catch (error) {
+      const er = (error as { response?: { data?: { message?: string } } })
+        ?.response?.data?.message;
+      enqueueSnackbar(er, {
+        variant: "error",
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "right",
+        },
+      });
+      throw new Error("Error Update Status Reservation");
+    }
   };
 
   const updatePaymentEmployee = async (id: string, pay: boolean) => {
     const body = { id, pay };
-    const data = await getAdmin.paymentUpdate(body);
-    console.log(data);
+    try {
+      const data = await getAdmin.paymentUpdate(body);
+      enqueueSnackbar(data.message, {
+        variant: "error",
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "right",
+        },
+      });
+    } catch (error) {
+      const er = (error as { response?: { data?: { message?: string } } })
+        ?.response?.data?.message;
+      enqueueSnackbar(er, {
+        variant: "error",
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "right",
+        },
+      });
+    }
   };
 
   const fetchSumCommission = useCallback(async () => {

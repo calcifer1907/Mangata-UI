@@ -25,7 +25,7 @@ import {
   VITE_URL_UI,
 } from "../configDB";
 
-import { STATUS_BOLD } from "../generalFuncionts/generalFunctions";
+import { STATUS_BOLD } from "../functions/generalFunctions";
 
 initMercadoPago(PAYMENT_TOKEN_PROD_PUBLIC || "");
 
@@ -188,7 +188,7 @@ export const reciveWebhook = async (request: Request, response: Response) => {
     }
     response.sendStatus(204);
   } catch (_error) {
-    response.status(500).json({ message: "something went wrong" });
+    response.status(500).json({ message: "Something went wrong" });
   }
 };
 
