@@ -22,7 +22,6 @@ body{
   -webkit-font-smoothing: antialiased; /* Mejora la renderización de fuentes en navegadores WebKit */
   -moz-osx-font-smoothing: grayscale; /* Mejora la renderización de fuentes en Firefox */
   background-color: #ffffff; /* Fondo blanco por defecto */
-  color: #000000; /* Color de texto predeterminado */
   line-height: 1.5; /* Espaciado entre líneas */
   overflow-x: hidden; /* Evita el desplazamiento horizontal no deseado */
 }
