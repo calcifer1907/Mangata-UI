@@ -26,6 +26,7 @@ import {
 } from "../configDB";
 
 import { STATUS_BOLD } from "../functions/generalFunctions";
+import { stat } from "fs";
 
 initMercadoPago(PAYMENT_TOKEN_PROD_PUBLIC || "");
 
@@ -204,7 +205,7 @@ export const webhookBold = async (request: Request, response: Response) => {
       "SELECT STATUS_RESERVATION,EMAIL FROM reservations WHERE PAYMENT_ID = $1",
       [payment_id]
     );
-
+    console.log(type);
     console.log(rows);
     const currentStatus = rows[0]?.status_reservation;
     // Solo actualizamos si el estado es diferente
@@ -213,6 +214,7 @@ export const webhookBold = async (request: Request, response: Response) => {
         "UPDATE reservations SET STATUS_RESERVATION = $1 WHERE PAYMENT_ID = $2",
         [status, payment_id]
       );
+      console.log("Email:", status, currentStatus);
       // Solo enviamos el correo si el nuevo estado es "approved"
       if (status === "approved") {
         await sendEmail(payment_id);
@@ -241,7 +243,7 @@ export const getOrderIdBold = async (request: Request, response: Response) => {
 // esto es para probar
 export const testEmail = async (_request: Request, response: Response) => {
   try {
-    await sendEmail("LNK_HR1JXLGZKZ");
+    await sendEmail("LNK_KWJD8ESVT0");
     response.status(200).json({ mesagge: "Send email test" });
   } catch (error) {
     response.status(500);

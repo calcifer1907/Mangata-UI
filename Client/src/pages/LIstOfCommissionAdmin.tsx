@@ -18,7 +18,6 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import { format } from "@formkit/tempo";
 import { Icon } from "@iconify/react";
 
 /**Hooks */
@@ -29,6 +28,7 @@ import DialogListAccompanist from "../components/Dialogs/DialogListAccompanist";
 
 /**Functions */
 import { formatPrice } from "../generalFunctions/formaters";
+import { formatDate } from "../generalFunctions/formatDate";
 
 /**Icon */
 import searchIcon from "../../src/assets/searchIcon.svg";
@@ -105,7 +105,7 @@ const LIstOfCommissionAdmin = () => {
       field: "created_at",
       headerName: "Fecha Creación",
       sortable: true,
-      valueGetter: (value) => format(value, FORMAT_DATE),
+      valueGetter: (value) => formatDate(value, FORMAT_DATE),
       flex: 3,
     },
     {
@@ -432,7 +432,7 @@ const LIstOfCommissionAdmin = () => {
                         {item.code_reservation}
                       </Typography>
                       <Typography>
-                        {format(item.created_at, FORMAT_DATE, "co")} -{" "}
+                        {formatDate(item.created_at, FORMAT_DATE)} -{" "}
                         <Typography component="span" sx={{ fontWeight: 600 }}>
                           {formatPrice(
                             Number(item.commission_employee) *

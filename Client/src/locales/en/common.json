@@ -1,5 +1,7 @@
 {
         "welcome": "Welcome to my app!",
         "changeLanguage": "Change language",
-        "date": "Date"
+        "date": "Date",
+        "persons": "Persons",
+        "close": "Close"
 }

@@ -7,6 +7,7 @@
 
 /**Libreries */
 import { Box, Paper, Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 /**Interface */
 import { IAccompanistListSales } from "../../interfaces/IUser";
@@ -21,8 +22,9 @@ interface IProps {
 }
 
 export default function ScrollDialog({ accompanist, open, setOpen }: IProps) {
+  const { t } = useTranslation("common");
   return (
-    <Dialog open={open} setOpenDialog={setOpen} tittle={"Personas"}>
+    <Dialog open={open} setOpenDialog={setOpen} tittle={t("persons")}>
       {accompanist.map((values) => (
         <Paper key={values.name_accompanist} sx={{ marginBottom: 2 }}>
           <Box sx={{ display: "flex", flexDirection: "column" }}>

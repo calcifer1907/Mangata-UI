@@ -25,6 +25,8 @@ const initialState: IAccompanistContext = {
   setOpenDialogPayment: () => {},
   loading: false,
   setLoading: () => {},
+  selectedCountry: null,
+  setSelectedCountry: () => {},
 };
 
 export const CreateContext = createContext<IAccompanistContext>(initialState);

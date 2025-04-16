@@ -104,7 +104,6 @@ const Accompanist: FC<IPropsAccompanist> = ({
                 {...params}
                 variant="filled"
                 label={t("chooseLunch")}
-                fullWidth
                 error={errors.lunch}
                 sx={{ marginLeft: 0 }}
                 helperText={errors.lunch ? t("lunchMandatory") : ""}
