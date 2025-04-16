@@ -14,6 +14,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
   children: ReactNode;
@@ -38,6 +39,8 @@ const ScrollDialog: FC<IProps> = ({
     setOpenDialog(false);
   };
 
+  const { t } = useTranslation("common");
+
   return (
     <Dialog
       fullScreen={fullScreen}
@@ -55,7 +58,7 @@ const ScrollDialog: FC<IProps> = ({
       </DialogContent>
       {showCancelButton && (
         <DialogActions>
-          <Button onClick={handleClose}>Cerrar</Button>
+          <Button onClick={handleClose}>{t("close")}</Button>
         </DialogActions>
       )}
     </Dialog>
