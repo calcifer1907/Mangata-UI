@@ -247,6 +247,15 @@ const Home = () => {
               marginBottom: 2,
             }}
           >
+            +57 312 6056467
+          </Typography>
+          <Typography
+            sx={{
+              color: "#FFFFFF",
+              fontSize: 14,
+              marginBottom: 2,
+            }}
+          >
             CopyRigth © {new Date().getFullYear()} Mangata Beach Club
           </Typography>
         </Box>
