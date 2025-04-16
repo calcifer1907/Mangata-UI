@@ -29,13 +29,13 @@ export const htmlContent = (create_at: string) => {
           <tr>
             <td style="padding: 16px; text-align: left; border-bottom: 1px solid #e0e0e0;font-size:16px;font-family:Montserrat;color: #4672a5;">Confirmada</td>
             <td style="padding: 16px; text-align: left; border-bottom: 1px solid #e0e0e0;font-size:16px;font-family:Montserrat;color: #4672a5;">${create_at}</td>
-            <td style="padding: 16px; text-align: left; border-bottom: 1px solid #e0e0e0;font-size:16px;font-family:Montserrat;color: #4672a5;">+57 3507372901</td>
+            <td style="padding: 16px; text-align: left; border-bottom: 1px solid #e0e0e0;font-size:16px;font-family:Montserrat;color: #4672a5;">+57 3126056467</td>
           </tr>
         </tbody>
-      </table>
-      
+      </table>      
       <!-- Sección destacada -->
       <div style="background: #f8eac9; color: #4672a5; padding: 32px; text-align: center;">
+        <p style="font-size: 1.2rem; margin: 0 0 16px 0;font-family:Montserrat;">Muelle todo Mar Cartagena</p>
         <p style="font-size: 1.2rem; margin: 0 0 16px 0;font-family:Montserrat;">Hora de llegada al muelle: 7:30 a.m.</p>
         <p style="font-size: 1.2rem; margin: 0 0 16px 0;font-family:Montserrat;">Hora de regreso al muelle: aproximadamente 4:00 p.m.</p>
       </div>

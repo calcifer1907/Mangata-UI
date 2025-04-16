@@ -17,7 +17,7 @@ export const sendEmail = async (payment_id: string) => {
   try {
     const subject = "Bienvenido a Mangata Beach Club";
     const { rows, rowCount } = await pool.query(
-      "SELECT TO_CHAR(CREATED_AT AT TIME ZONE 'UTC', 'YYYY-MM-DD HH24:MI:SS') AS FORMATTED_DATE, EMAIL FROM reservations WHERE PAYMENT_ID = $1",
+      "SELECT TO_CHAR(CREATED_AT AT TIME ZONE 'UTC', 'YYYY-MM-DD') AS FORMATTED_DATE, EMAIL FROM reservations WHERE PAYMENT_ID = $1",
       [payment_id]
     );
 
