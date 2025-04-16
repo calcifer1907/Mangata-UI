@@ -25,5 +25,7 @@
         "checkReservation": "Check Your Reservation",
         "BookingSaving": "Booking was successfully saved",
         "IvalidEmail": "Invalid mail!",
-        "paymentMethod": "Payment method"
+        "paymentMethod": "Payment method",
+        "chooseCounty": "Choose a country",
+        "chooseCountyRequired": "Country is required"
 }

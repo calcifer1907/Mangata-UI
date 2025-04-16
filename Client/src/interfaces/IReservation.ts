@@ -4,6 +4,7 @@ import {
   IMinMax,
   IOptions,
 } from "./IAccompanist";
+import { CountryType } from "./ICountry";
 import { IGetUserId } from "./IUser";
 
 export interface IBodyChangeStatus {
@@ -56,4 +57,6 @@ export interface IAccompanistContext {
   setOpenDialogPayment: React.Dispatch<React.SetStateAction<boolean>>;
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  selectedCountry: CountryType | null;
+  setSelectedCountry: React.Dispatch<React.SetStateAction<CountryType | null>>;
 }

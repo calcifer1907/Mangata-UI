@@ -49,6 +49,7 @@ const useLogicReservations = () => {
     setValueEmail,
     setValueCel,
     setLoading,
+    selectedCountry,
   } = useContextAccompanist();
 
   const requestGetCodeReservation = useCallback(async () => {
@@ -134,7 +135,7 @@ const useLogicReservations = () => {
       const body = {
         CODE_RESERVATION,
         ID_EMPLOYEE,
-        TELEPHONE: valueCel,
+        TELEPHONE: selectedCountry?.phone + valueCel,
         ACCOMPANIST: fields,
         EMAIL: valueEmail,
         AGREED_PRICE: Number(PRICES.PRICE_MAX),

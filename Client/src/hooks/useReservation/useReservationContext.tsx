@@ -20,6 +20,7 @@ import { ISaveCodeGenerate } from "../../interfaces/IReservation";
 import { IGetUserId } from "../../interfaces/IUser";
 import { format } from "@formkit/tempo";
 import { CreateContext } from "./CreateContextReservatin";
+import { CountryType } from "../../interfaces/ICountry";
 
 const today = format(new Date(), "YYYY-MM-DD", "co");
 
@@ -39,6 +40,9 @@ const AccompanistContext: FC<AccompanistContextProps> = (props) => {
   const [valueCel, setValueCel] = useState<string>("");
   const [valueEmail, setValueEmail] = useState<string>("");
   const [errors, setErrors] = useState<IErrorFieldAccompanist[]>([]);
+  const [selectedCountry, setSelectedCountry] = useState<CountryType | null>(
+    null
+  );
 
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -102,6 +106,8 @@ const AccompanistContext: FC<AccompanistContextProps> = (props) => {
       setOpenDialogPayment,
       loading,
       setLoading,
+      selectedCountry,
+      setSelectedCountry,
     }),
     [
       optionsLunches,
@@ -116,6 +122,7 @@ const AccompanistContext: FC<AccompanistContextProps> = (props) => {
       dateChange,
       openModal,
       openDialogPayment,
+      selectedCountry,
     ]
   );
 

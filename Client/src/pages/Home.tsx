@@ -247,6 +247,7 @@ const Home = () => {
               marginBottom: 2,
             }}
           >
+            mangatabypietro2021@gmail.com <br />
             +57 312 6056467
           </Typography>
           <Typography
