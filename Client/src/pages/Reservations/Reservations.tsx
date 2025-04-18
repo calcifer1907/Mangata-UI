@@ -199,7 +199,7 @@ const NameLunchForm: FC = () => {
               },
               display: { xs: "none", md: "flex" },
             }}
-            alt="Logo Mangatas"
+            alt="Logo Mangata"
           />
           <Box className="d-flex justify-content-between align-items-center margin-bottom">
             <PurchaseSummary

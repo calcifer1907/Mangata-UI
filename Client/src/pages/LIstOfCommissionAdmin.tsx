@@ -228,7 +228,6 @@ const LIstOfCommissionAdmin = () => {
             <img src={searchIcon} style={{ paddingInlineEnd: "18px" }} />
           </Box>
         </Box>
-
         <Box sx={{ height: "auto", width: "auto" }}>
           <Box
             sx={{
@@ -358,6 +357,7 @@ const LIstOfCommissionAdmin = () => {
           sx={{
             background: "#FFFFFF",
             borderRadius: "8px 8px 0 0",
+            minHeight: 56,
           }}
         />
       </Box>
