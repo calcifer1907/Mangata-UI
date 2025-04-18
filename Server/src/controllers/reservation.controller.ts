@@ -273,6 +273,16 @@ class ReservationController {
       response.status(500).json({ message: "Something went wrong" });
     }
   }
+
+  async getIsBlockDay(_: Request, response: Response) {
+    try {
+      const result = await reservationRepository.isBlockedDay();
+      response.json(result);
+    } catch (error) {
+      console.log(error);
+      response.status(500).json({ message: "Something went wrong" });
+    }
+  }
 }
 
 export default new ReservationController();

@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 
 /**Libreries */
 import { Calendar } from "react-date-range";
@@ -8,6 +8,9 @@ import { formatDate } from "../../generalFunctions/formatDate";
 
 /**Components */
 import TextFieldComponent from "../TextField/TextFieldComponent";
+
+/**Apis */
+import { getIsDayBlocked } from "../../utils/api/agent";
 
 import "react-date-range/dist/styles.css"; // Estilos principales
 import "react-date-range/dist/theme/default.css"; // Tema por defectoo de calendario de react-icons
@@ -28,9 +31,20 @@ const DatePickerWithIcon = ({ callback }: IProps) => {
   const [showCalendar, setShowCalendar] = useState(false);
   const calendarRef = useRef<HTMLDivElement | null>(null);
 
-  // Configurar fecha máxima (opcional)
-  const maxDate = new Date();
-  maxDate.setDate(maxDate.getDate() + 30); // 30 días en el futuro
+  const [isDayBlocked, setIsDayBlocked] = useState<Date[]>([]);
+
+  const apiGetIsDayBlocked = useCallback(async () => {
+    try {
+      const response = await getIsDayBlocked();
+      const setDate = response.map((f) => {
+        const d = new Date(f.valid_date);
+        return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+      });
+      setIsDayBlocked(setDate);
+    } catch (error) {
+      console.error("Error al obtener el estado del día bloqueado:", error);
+    }
+  }, []);
 
   // Función para manejar el cambio de fecha
   const handleSelect = (date: Date) => {
@@ -39,29 +53,25 @@ const DatePickerWithIcon = ({ callback }: IProps) => {
     callback(formatDate(date.toISOString(), FORMAT_DATE));
   };
 
-  // Función para bloquear días
-  // const isDayBlocked = (day: Date) => {
-  //   const today = new Date();
-  //   today.setHours(0, 0, 0, 0);
-  //   return day < today || day > maxDate;
-  // };
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      calendarRef.current &&
+      !calendarRef.current.contains(event.target as Node)
+    ) {
+      setShowCalendar(false);
+    }
+  };
 
-  // Cerrar calendario al hacer clic fuera
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        calendarRef.current &&
-        !calendarRef.current.contains(event.target as Node)
-      ) {
-        setShowCalendar(false);
-      }
-    };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    apiGetIsDayBlocked();
+  }, [apiGetIsDayBlocked]);
 
   const handlelastDayYear = (): Date => {
     const today = new Date();
@@ -101,7 +111,7 @@ const DatePickerWithIcon = ({ callback }: IProps) => {
             onChange={handleSelect}
             minDate={new Date()}
             maxDate={handlelastDayYear()}
-            // disabledDay={isDayBlocked}
+            disabledDates={isDayBlocked}
           />
         </div>
       )}

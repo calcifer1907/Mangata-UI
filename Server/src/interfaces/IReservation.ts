@@ -6,3 +6,8 @@ export interface ISaveCodeReservation {
   created_at: string;
   user_name?: string;
 }
+
+export interface IBodyBlockDay {
+  id: number;
+  valid_date: Date;
+}

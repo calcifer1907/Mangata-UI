@@ -135,7 +135,7 @@ const useLogicReservations = () => {
       const body = {
         CODE_RESERVATION,
         ID_EMPLOYEE,
-        TELEPHONE: selectedCountry?.phone + valueCel,
+        TELEPHONE: `+${selectedCountry?.phone}/${valueCel}`,
         ACCOMPANIST: fields,
         EMAIL: valueEmail,
         AGREED_PRICE: Number(PRICES.PRICE_MAX),
@@ -213,25 +213,33 @@ const useLogicReservations = () => {
     if (value.length < 40) setValueEmail(value);
   };
 
+  const handleValidHoursMoreTenLessSies = useMemo((): boolean => {
+    const currentDate = new Date();
+    const currentHours = currentDate.getHours();
+    const isValidTime = currentHours >= 22 || currentHours <= 6;
+    return !isValidTime;
+  }, []);
+
   useEffect(() => {
     requestGetCodeReservation();
   }, [requestGetCodeReservation]);
 
   return {
+    CODE_RESERVATION,
+    PRICES,
     dataCodeReservation,
     handleReservation,
-    PRICES,
     addField,
-    CODE_RESERVATION,
     removeField,
+    allFields,
     calculatePrice,
     handleFormatPrice,
     handleChangeDate,
     handleChange,
-    allFields,
     handleClose,
     handleOnchangeCel,
     handleOnChangeEmail,
+    handleValidHoursMoreTenLessSies,
   };
 };
 

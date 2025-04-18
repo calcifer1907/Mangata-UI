@@ -1,6 +1,9 @@
 import { createECDH } from "crypto";
 import { pool } from "../Connection";
-import { ISaveCodeReservation } from "../interfaces/IReservation";
+import {
+  IBodyBlockDay,
+  ISaveCodeReservation,
+} from "../interfaces/IReservation";
 
 class ReservationRepository {
   async saveCodeReservation(values: ISaveCodeReservation): Promise<boolean> {
@@ -55,6 +58,13 @@ class ReservationRepository {
       [status, id]
     );
     return (rowCount ?? 0) > 0;
+  }
+
+  async isBlockedDay(): Promise<IBodyBlockDay[]> {
+    const { rows } = await pool.query(
+      "SELECT id,TO_CHAR(valid_date AT TIME ZONE 'UTC', 'YYYY/MM/DD') as valid_date FROM is_block_day;"
+    );
+    return rows;
   }
 }
 

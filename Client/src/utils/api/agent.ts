@@ -16,6 +16,7 @@ import {
   ISaveCodeGenerate,
 } from "../../interfaces/IReservation";
 import { ICommission, IPaymentBold } from "../../interfaces/IAgent";
+import { IBodyBlockDay } from "../../interfaces/ICalendar";
 
 const URI_LOGIN = "/auth/login";
 
@@ -102,3 +103,6 @@ export const getListBanks = (): Promise<IBanksList[]> =>
 
 export const getValidEmail = (email: string): Promise<IValidEmail> =>
   requestApis.post("/api/validEmail", { email });
+
+export const getIsDayBlocked = (): Promise<IBodyBlockDay[]> =>
+  requestApis.get("/api/isDayBlocked");
