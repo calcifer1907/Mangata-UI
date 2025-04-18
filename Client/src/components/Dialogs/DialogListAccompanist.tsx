@@ -14,6 +14,7 @@ import { IAccompanistListSales } from "../../interfaces/IUser";
 
 /**Component */
 import Dialog from "./Dialog";
+import LazyImage from "../LazyImage/LazyImage";
 
 interface IProps {
   open: boolean;
@@ -28,8 +29,7 @@ export default function ScrollDialog({ accompanist, open, setOpen }: IProps) {
       {accompanist.map((values) => (
         <Paper key={values.name_accompanist} sx={{ marginBottom: 2 }}>
           <Box sx={{ display: "flex", flexDirection: "column" }}>
-            <img
-              width="100%"
+            <LazyImage
               src={`/images/lunche/${values.description
                 .toLowerCase()
                 .replaceAll(" ", "")}.jpg`}
