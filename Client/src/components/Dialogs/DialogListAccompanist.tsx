@@ -25,16 +25,19 @@ interface IProps {
 export default function ScrollDialog({ accompanist, open, setOpen }: IProps) {
   const { t } = useTranslation("common");
   return (
-    <Dialog open={open} setOpenDialog={setOpen} tittle={t("persons")}>
+    <Dialog
+      open={open}
+      setOpenDialog={setOpen}
+      tittle={`${t("persons")}: #${accompanist.length}`}
+    >
       {accompanist.map((values) => (
         <Paper key={values.name_accompanist} sx={{ marginBottom: 2 }}>
-          <Box sx={{ display: "flex", flexDirection: "column" }}>
+          <Box className="d-flex flex-direction-column">
             <LazyImage
               src={`/images/lunche/${values.description
                 .toLowerCase()
                 .replaceAll(" ", "")}.jpg`}
             />
-
             <Typography
               sx={{
                 color: "var(--color-theme-dark-blue)",
