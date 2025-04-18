@@ -27,5 +27,6 @@
         "IvalidEmail": "Correo inválido!",
         "paymentMethod": "Método de pago",
         "chooseCounty": "Seleccione el País",
-        "chooseCountyRequired": "El País es obligatorio"
+        "chooseCountyRequired": "El País es obligatorio",
+        "notReservation": "En este horario no se puede reservas."
 }

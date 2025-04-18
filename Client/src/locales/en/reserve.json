@@ -27,5 +27,6 @@
         "IvalidEmail": "Invalid mail!",
         "paymentMethod": "Payment method",
         "chooseCounty": "Choose a country",
-        "chooseCountyRequired": "Country is required"
+        "chooseCountyRequired": "Country is required",
+        "notReservation": "Reservations cannot be made at this time."
 }

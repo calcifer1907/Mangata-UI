@@ -250,7 +250,7 @@ const NameLunchForm: FC = () => {
               marginBottom={2}
             />
           </Box>
-          {handleValidHoursMoreTenLessSies && (
+          {handleValidHoursMoreTenLessSies ? (
             <Box className="d-flex justify-content-end">
               <Box
                 className="container-button margin-buttom-16"
@@ -294,6 +294,10 @@ const NameLunchForm: FC = () => {
                 </Button>
               </Box>
             </Box>
+          ) : (
+            <Typography style={{ color: "red", fontSize: 18 }}>
+              {t("notReservation")}
+            </Typography>
           )}
         </Box>
       </Grid2>
