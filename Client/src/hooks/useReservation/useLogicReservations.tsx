@@ -217,7 +217,7 @@ const useLogicReservations = () => {
     const currentDate = new Date();
     const currentHours = currentDate.getHours();
     const isValidTime = currentHours >= 22 || currentHours <= 6;
-    return isValidTime;
+    return !isValidTime;
   }, []);
 
   useEffect(() => {
