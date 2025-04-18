@@ -67,6 +67,7 @@ const NameLunchForm: FC = () => {
     handleChangeDate,
     handleOnchangeCel,
     handleOnChangeEmail,
+    handleValidHoursMoreTenLessSies,
   } = useLogicReservations();
 
   useEffect(() => {
@@ -249,49 +250,51 @@ const NameLunchForm: FC = () => {
               marginBottom={2}
             />
           </Box>
-          <Box className="d-flex justify-content-end">
-            <Box
-              className="container-button margin-buttom-16"
-              sx={{
-                backgroundColor: {
-                  xs: "var(--color-theme-white)",
-                  sm: "var(--color-theme-white)",
-                  md: "var(--color-theme-dark-blue)",
-                },
-              }}
-            >
-              <Button
-                className=""
-                size="small"
+          {handleValidHoursMoreTenLessSies && (
+            <Box className="d-flex justify-content-end">
+              <Box
+                className="container-button margin-buttom-16"
                 sx={{
-                  textTransform: "none",
-                  fontSize: 14,
-                  color: {
-                    xs: "var(--color-theme-dark-blue)",
-                    sm: "var(--color-theme-dark-blue)",
-                    md: "var(--color-theme-white)",
+                  backgroundColor: {
+                    xs: "var(--color-theme-white)",
+                    sm: "var(--color-theme-white)",
+                    md: "var(--color-theme-dark-blue)",
                   },
                 }}
-                onClick={allFields}
-                startIcon={
-                  <Box
-                    component={Icon}
-                    icon="solar:user-plus-bold-duotone"
-                    className="wd-24 hg-24"
-                    sx={{
-                      color: {
-                        xs: "var(--color-theme-dark-blue)",
-                        sm: "var(--color-theme-dark-blue)",
-                        md: "var(--color-theme-white)",
-                      },
-                    }}
-                  />
-                }
               >
-                {t("reserve")}
-              </Button>
+                <Button
+                  className=""
+                  size="small"
+                  sx={{
+                    textTransform: "none",
+                    fontSize: 14,
+                    color: {
+                      xs: "var(--color-theme-dark-blue)",
+                      sm: "var(--color-theme-dark-blue)",
+                      md: "var(--color-theme-white)",
+                    },
+                  }}
+                  onClick={allFields}
+                  startIcon={
+                    <Box
+                      component={Icon}
+                      icon="solar:user-plus-bold-duotone"
+                      className="wd-24 hg-24"
+                      sx={{
+                        color: {
+                          xs: "var(--color-theme-dark-blue)",
+                          sm: "var(--color-theme-dark-blue)",
+                          md: "var(--color-theme-white)",
+                        },
+                      }}
+                    />
+                  }
+                >
+                  {t("reserve")}
+                </Button>
+              </Box>
             </Box>
-          </Box>
+          )}
         </Box>
       </Grid2>
       <Modal

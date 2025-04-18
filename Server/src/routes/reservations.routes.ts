@@ -20,6 +20,8 @@ router.post("/mycommissions", authenticate, getListSalesEmployee);
 
 router.post("/mySales", authenticate, getListSalesAdmin);
 
+router.get("/isDayBlocked", ReservationController.getIsBlockDay);
+
 router.post(
   "/changeStatusReservation",
   authenticate,
