@@ -135,7 +135,7 @@ const useLogicReservations = () => {
       const body = {
         CODE_RESERVATION,
         ID_EMPLOYEE,
-        TELEPHONE: selectedCountry?.phone + valueCel,
+        TELEPHONE: `+${selectedCountry?.phone}/${valueCel}`,
         ACCOMPANIST: fields,
         EMAIL: valueEmail,
         AGREED_PRICE: Number(PRICES.PRICE_MAX),
