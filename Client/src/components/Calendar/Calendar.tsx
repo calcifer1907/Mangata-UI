@@ -37,21 +37,14 @@ const DatePickerWithIcon = ({ callback }: IProps) => {
     try {
       const response = await getIsDayBlocked();
       const setDate = response.map((f) => {
-        console.log(f.valid_date);
         const d = new Date(f.valid_date);
-        console.log(d);
         return new Date(d.getFullYear(), d.getMonth(), d.getDate());
       });
-      console.log(setDate);
       setIsDayBlocked(setDate);
     } catch (error) {
       console.error("Error al obtener el estado del día bloqueado:", error);
     }
   }, []);
-
-  // Configurar fecha máxima (opcional)
-  const maxDate = new Date();
-  maxDate.setDate(maxDate.getDate() + 30); // 30 días en el futuro
 
   // Función para manejar el cambio de fecha
   const handleSelect = (date: Date) => {
