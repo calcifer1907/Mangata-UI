@@ -6,11 +6,9 @@ import { useTranslation } from "react-i18next";
 import { countries } from "../../constant/Country";
 import { useContextAccompanist } from "../../hooks/useReservation/useContextReservation";
 
-interface IProps {
-  onSelect: (countryCode: string) => void;
-}
+import LazyImage from "../LazyImage/LazyImage";
 
-const CountrySelect = ({ onSelect }: IProps) => {
+const CountrySelect = () => {
   const { t } = useTranslation("reserve");
   const { selectedCountry, setSelectedCountry } = useContextAccompanist();
   return (
@@ -21,9 +19,6 @@ const CountrySelect = ({ onSelect }: IProps) => {
       value={selectedCountry}
       onChange={(_, newValue) => {
         setSelectedCountry(newValue);
-        if (onSelect && newValue) {
-          onSelect(newValue.code);
-        }
       }}
       renderOption={(props, option) => {
         const { key, ...optionProps } = props;
@@ -34,12 +29,9 @@ const CountrySelect = ({ onSelect }: IProps) => {
             sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
             {...optionProps}
           >
-            <img
-              loading="lazy"
-              width="20"
+            <LazyImage
               srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
               src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
-              alt=""
             />
             {option.label} ({option.code}) +{option.phone}
           </Box>
@@ -49,8 +41,9 @@ const CountrySelect = ({ onSelect }: IProps) => {
         <TextField
           {...params}
           variant="filled"
-          helperText={!selectedCountry ? t("chooseCountyRequired") : ""}
-          label={t("chooseCounty")}
+          helperText={!selectedCountry ? t("chooseCountryRequired") : ""}
+          label={t("chooseCountry")}
+          placeholder={t("enterCountry")}
           error={!selectedCountry}
           value={selectedCountry}
           InputProps={{

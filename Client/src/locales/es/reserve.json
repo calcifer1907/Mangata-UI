@@ -26,7 +26,8 @@
         "BookingSaving": "Se guardo correctamente la reserva",
         "IvalidEmail": "Correo inválido!",
         "paymentMethod": "Método de pago",
-        "chooseCounty": "Seleccione el País",
-        "chooseCountyRequired": "El País es obligatorio",
+        "chooseCountry": "Seleccione el País",
+        "enterCountry": "Ingrese un País",
+        "chooseCountryRequired": "El País es obligatorio",
         "notReservation": "En este horario no se puede reservas."
 }
