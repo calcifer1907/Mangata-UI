@@ -6,8 +6,6 @@ import { useTranslation } from "react-i18next";
 import { countries } from "../../constant/Country";
 import { useContextAccompanist } from "../../hooks/useReservation/useContextReservation";
 
-import LazyImage from "../LazyImage/LazyImage";
-
 const CountrySelect = () => {
   const { t } = useTranslation("reserve");
   const { selectedCountry, setSelectedCountry } = useContextAccompanist();
@@ -15,7 +13,7 @@ const CountrySelect = () => {
     <Autocomplete
       options={countries}
       getOptionLabel={(option) => option.label}
-      sx={{ maxWidth: 328, minWidth: { xs: 300, lg: 328 }, margin: 0 }}
+      fullWidth
       value={selectedCountry}
       onChange={(_, newValue) => {
         setSelectedCountry(newValue);
@@ -29,9 +27,11 @@ const CountrySelect = () => {
             sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
             {...optionProps}
           >
-            <LazyImage
+            <img
+              loading="lazy"
               srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
               src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
+              width={20}
             />
             {option.label} ({option.code}) +{option.phone}
           </Box>
@@ -41,11 +41,16 @@ const CountrySelect = () => {
         <TextField
           {...params}
           variant="filled"
+          fullWidth
           helperText={!selectedCountry ? t("chooseCountryRequired") : ""}
           label={t("chooseCountry")}
           placeholder={t("enterCountry")}
           error={!selectedCountry}
           value={selectedCountry}
+          sx={{
+            background: "#FFFFFF",
+            maxWidth: { md: 328, lg: 328 },
+          }}
           InputProps={{
             ...params.InputProps,
             startAdornment: (

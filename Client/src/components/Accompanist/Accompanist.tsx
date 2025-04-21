@@ -1,13 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FC, useState } from "react";
-import {
-  Autocomplete,
-  Box,
-  InputAdornment,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Autocomplete, Box, TextField, Typography } from "@mui/material";
 import { Icon } from "@iconify/react";
 
 import DialogSelectLunch from "./DialogSelectLunch";
@@ -15,6 +8,7 @@ import DialogSelectLunch from "./DialogSelectLunch";
 /**Interfaces */
 import { IPropsAccompanist } from "../../interfaces/IAccompanist";
 import { useTranslation } from "react-i18next";
+import TextFieldComponent from "../TextField/TextFieldComponent";
 
 const KEY_NAME = "name";
 const KEY_LUNCH = "lunch";
@@ -62,71 +56,52 @@ const Accompanist: FC<IPropsAccompanist> = ({
           />
         )}
       </Box>
-      <Stack
-        direction={{ xs: "column", md: "row" }}
-        spacing={0}
-        sx={{ flexWrap: "wrap", display: "flex", gap: 2 }}
-      >
-        <Box>
-          <TextField
-            label={t("fullName")}
-            variant="filled"
-            fullWidth
-            sx={{ maxWidth: 328, minWidth: { xs: 300, lg: 328 } }}
-            value={field.name}
-            onChange={(e) => onChange(index, KEY_NAME, e.target.value)}
-            error={errors.name}
-            helperText={errors.name ? t("nameRequired") : ""}
-            slotProps={{
-              input: {
+      <Box className="d-flex gap-16 flex-wrap flex-dirrection-row">
+        <TextFieldComponent
+          value={field.name}
+          label={t("fullName")}
+          onChange={(value) => onChange(index, KEY_NAME, value)}
+          helperText={errors.name ? t("nameRequired") : ""}
+          iconName="user"
+          placeholder=""
+        />
+
+        <Autocomplete
+          options={lunchOptions}
+          value={field.lunch}
+          fullWidth
+          getOptionLabel={(option) => option.label}
+          sx={{
+            maxWidth: { md: 328, lg: 328 },
+            margin: 0,
+          }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              variant="filled"
+              label={t("chooseLunch")}
+              error={errors.lunch}
+              sx={{ marginLeft: 0 }}
+              helperText={errors.lunch ? t("lunchMandatory") : ""}
+              onClick={(e) => {
+                e.preventDefault();
+                setOpenModal(true);
+              }}
+              InputProps={{
+                ...params.InputProps,
                 startAdornment: (
-                  <InputAdornment position="start">
-                    <Icon
-                      icon="solar:user-bold-duotone"
-                      width="24"
-                      height="24"
-                      style={{ color: "#2B3D5E" }}
-                    />
-                  </InputAdornment>
+                  <Icon
+                    icon="solar:ladle-bold-duotone"
+                    width="24"
+                    height="24"
+                    style={{ color: "#2B3D5E" }}
+                  />
                 ),
-              },
-            }}
-          />
-        </Box>
-        <Box>
-          <Autocomplete
-            options={lunchOptions}
-            value={field.lunch}
-            getOptionLabel={(option) => option.label}
-            sx={{ maxWidth: 328, minWidth: { xs: 300, lg: 328 }, margin: 0 }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="filled"
-                label={t("chooseLunch")}
-                error={errors.lunch}
-                sx={{ marginLeft: 0 }}
-                helperText={errors.lunch ? t("lunchMandatory") : ""}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setOpenModal(true);
-                }}
-                InputProps={{
-                  ...params.InputProps,
-                  startAdornment: (
-                    <Icon
-                      icon="solar:ladle-bold-duotone"
-                      width="24"
-                      height="24"
-                      style={{ color: "#2B3D5E" }}
-                    />
-                  ),
-                }}
-              />
-            )}
-          />
-        </Box>
-      </Stack>
+              }}
+            />
+          )}
+        />
+      </Box>
       <DialogSelectLunch
         openModal={openModal}
         setOpenModal={setOpenModal}
