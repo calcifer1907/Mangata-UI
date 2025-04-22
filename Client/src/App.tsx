@@ -14,6 +14,7 @@ import MyNavbar from "./components/navbar/NavBar";
 import GenerateReservation from "./pages/GenerateReservation/GenerateReservation";
 import CheckReservation from "./pages/CheckReservation/CheckReservation";
 import NotFound from "./pages/NotFound";
+import Calendar from "./components/Calendar/CalendarPage/CalendarPage";
 
 // import PayMenetMethod from "./pages/PayMenetMethod";
 
@@ -26,6 +27,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/CreateUser" element={<CreateUser />} />
+            <Route path="/Calendar" element={<Calendar />} />
             <Route
               path="/GenerateReservation"
               element={<GenerateReservation />}
