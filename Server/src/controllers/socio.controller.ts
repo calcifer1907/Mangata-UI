@@ -9,6 +9,7 @@ class SocioController {
       const socios = await socioRepository.sumCommission(Number(id));
       res.json(socios);
     } catch (error) {
+      console.log(error)
       if (error instanceof AppError) {
         res.status(error.statusCode).json({ message: error.message });
       } else {

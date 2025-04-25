@@ -292,9 +292,18 @@ body{
   margin-bottom: 16px;
 }
 
+.margin-buttom-8{
+  margin-bottom: 8px;
+}
 
 .text-align-center{
   text-align: center;
+}
+
+.ellipsisText{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 @media (max-width: 768px) {

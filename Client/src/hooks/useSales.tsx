@@ -4,21 +4,18 @@ import {
   getAdmin,
   getSumCommission,
 } from "../utils/api/agent";
-import { format } from "@formkit/tempo";
 
 import { useContextUser } from "../hooks/useContextUser";
 
 import { enqueueSnackbar } from "notistack";
 
 import { IGetListSales } from "../interfaces/IUser";
+import { IRangaDate } from "../interfaces/ICalendar";
+import { formatDate } from "../generalFunctions/formatDate";
+import { IBodySales } from "../interfaces/IReservation";
 
 interface IProps {
   page: string;
-}
-
-interface IBodyListData {
-  date: string;
-  id_employee?: number | undefined;
 }
 
 const PATH_ADMIN = "mySales";
@@ -26,15 +23,21 @@ const PATH_EMPLOYEE = "mycommissions";
 
 export const useSales = ({ page }: IProps) => {
   const { userInfo } = useContextUser();
-  const today = format(new Date(), "YYYY-MM-DD", "co");
   const [dataList, setDataList] = useState<IGetListSales[]>([]);
-  const [dateChange, setDateChange] = useState<string>(today);
+  const [dateChange, setDateChange] = useState<IRangaDate>({
+    startDate: new Date(),
+    endDate: new Date(),
+    key: "selection",
+  });
   const [loading, setLoading] = useState<boolean>(false);
 
   const [sumCommissionState, setSumCommissionState] = useState<number>(0);
 
   const responseData = useCallback(async () => {
-    const body: IBodyListData = { date: dateChange };
+    const body: IBodySales = {
+      startDate: formatDate(dateChange.startDate, "YYYY-MM-DD"),
+      endDate: formatDate(dateChange.endDate, "YYYY-MM-DD"),
+    };
     setLoading(true);
     let data: IGetListSales[] = [];
     if (page.includes("admin")) {
@@ -49,7 +52,7 @@ export const useSales = ({ page }: IProps) => {
 
     setDataList(data);
     setLoading(false);
-  }, [page, dateChange]);
+  }, [page, dateChange, userInfo.USER_INFO.ID_EMPLOYEE]);
 
   const changeStatusReservation = async (id: string, status: string) => {
     const body = { id, status };

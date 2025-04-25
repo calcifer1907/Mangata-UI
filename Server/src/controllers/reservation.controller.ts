@@ -102,10 +102,11 @@ export const getListSalesAdmin = async (
   response: Response
 ) => {
   try {
-    const { date } = request.body;
+    const { startDate, endDate } = request.body;
     const resultReservations = await pool.query(
-      `SELECT CODE_RESERVATION, ID_EMPLOYEE, STATUS_RESERVATION, COMMISSION_EMPLOYEE, CURRENT_COMMISSION,PAY, TO_CHAR(CREATED_AT AT TIME ZONE 'UTC', 'YYYY-MM-DD') AS CREATED_AT FROM reservations  WHERE TO_CHAR(CREATED_AT AT TIME ZONE 'UTC', 'YYYY-MM-DD') = $1`,
-      [date]
+      `SELECT CODE_RESERVATION, ID_EMPLOYEE, STATUS_RESERVATION, COMMISSION_EMPLOYEE, CURRENT_COMMISSION,PAY,
+       TO_CHAR(CREATED_AT AT TIME ZONE 'UTC', 'YYYY-MM-DD') AS CREATED_AT,CREATED_ON FROM reservations  WHERE TO_CHAR(CREATED_AT AT TIME ZONE 'UTC', 'YYYY-MM-DD') BETWEEN  $1 AND $2 ORDER BY CREATED_AT`,
+      [startDate, endDate]
     );
     const codeReservations = resultReservations.rows.map(
       (values) => values.code_reservation

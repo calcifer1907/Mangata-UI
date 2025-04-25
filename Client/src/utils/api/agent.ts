@@ -5,13 +5,13 @@ import {
   IGetUserId,
   IUsers,
   IGetListSales,
-  IGetListData,
   IValidEmail,
 } from "../../interfaces/IUser";
 import { ILunches, IMinMaxResponse } from "../../interfaces/IAccompanist";
 import { IBanksList } from "../../interfaces/IMercadoPago";
 import {
   IBodyChangeStatus,
+  IBodySales,
   IBodyStatusReservation,
   ISaveCodeGenerate,
 } from "../../interfaces/IReservation";
@@ -43,7 +43,7 @@ export const methodUser = {
 };
 
 export const getLIstForTable = {
-  getListData: (body: IGetListData, uri: string): Promise<IGetListSales[]> =>
+  getListData: (body: IBodySales, uri: string): Promise<IGetListSales[]> =>
     requestApis.post(`/api/${uri}`, body),
 };
 

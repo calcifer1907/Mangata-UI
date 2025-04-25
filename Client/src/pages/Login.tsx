@@ -48,6 +48,7 @@ const Login: FC = () => {
         setLoading(false);
       }
     } catch (error: any) {
+      console.log(error);
       setLoading(false);
       const message = error.response.data.message;
       enqueueSnackbar(message, {

@@ -7,6 +7,13 @@ const responSeBody = (respose: AxiosResponse) => respose.data;
 const api = axios.create({
   baseURL: URL_BACKEND, // Cambia por tu URL base
   timeout: 5000, // Tiempo máximo de espera (opcional)
+  headers: {
+    "Content-Type": "application/json",
+    // Asegúrate que Axios no intente interpretar scripts
+    "X-Content-Type-Options": "nosniff",
+  },
+  // Asegúrate que las credenciales se manejen adecuadamente
+  // withCredentials: true,
 });
 
 api.interceptors.request.use(
@@ -16,6 +23,7 @@ api.interceptors.request.use(
       const { TOKEN } = JSON.parse(info);
       if (TOKEN) config.headers.Authorization = `Bearer ${TOKEN}`;
     }
+
     return config;
   },
   (error) => {

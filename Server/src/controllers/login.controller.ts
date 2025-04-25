@@ -29,7 +29,7 @@ export const getAllUser = async (request: Request, response: Response) => {
 
     const token = createToken(findUser.id, findUser.user_name);
 
-    response.json({
+    return response.json({
       TOKEN: token,
       USER_INFO: {
         ROLE: findUser.description,
@@ -39,7 +39,6 @@ export const getAllUser = async (request: Request, response: Response) => {
       MENU: resultRoles.rows,
     });
   } catch (error) {
-    console.log(error);
     return response.status(500).json({ message: "Something went wrong" });
   }
 };

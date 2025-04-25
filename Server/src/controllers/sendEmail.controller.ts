@@ -20,7 +20,8 @@ export const sendEmail = async (payment_id: string) => {
       "SELECT TO_CHAR(CREATED_AT AT TIME ZONE 'UTC', 'YYYY-MM-DD') AS FORMATTED_DATE, EMAIL FROM reservations WHERE PAYMENT_ID = $1",
       [payment_id]
     );
-
+    console.log("rows: ", rows);
+    console.log("rowCount: ", rowCount);
     if (rowCount) {
       const [resultQuery] = rows;
       const mailOptions = {
@@ -41,6 +42,7 @@ export const sendEmail = async (payment_id: string) => {
         mailOptions,
         (error: Error | null, info: nodemailer.SentMessageInfo) => {
           if (error) {
+            console.log(error);
             return;
           }
           console.log("Correo enviado: " + info.response);

@@ -4,20 +4,21 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { FC } from "react";
 
 import { requestExportData } from "../../utils/api/agent";
+import { IRangaDate } from "../../interfaces/ICalendar";
 
 const paginationModel = { page: 0, pageSize: 5 };
 
 interface IProps {
   data: any[];
   columns: GridColDef[];
-  dateChange: string;
+  dateChange: IRangaDate;
 }
 
 const TableUI: FC<IProps> = ({ data, columns, dateChange }) => {
   const exportToExcel = async () => {
     const dataBlob = await requestExportData.exportDataSales({
-      startDate: dateChange,
-      endDate: dateChange,
+      startDate: dateChange.startDate,
+      endDate: dateChange.endDate,
     });
     if (dataBlob instanceof ArrayBuffer) {
       const blob = new Blob([dataBlob], {
@@ -43,22 +44,12 @@ const TableUI: FC<IProps> = ({ data, columns, dateChange }) => {
   };
 
   return (
-    <Box
-      sx={{
-        width: "100%",
-        margin: "0 auto",
-        marginTop: 2,
-      }}
-    >
+    <Box className="wd-100">
       <Box
+        className="d-flex align-items-center justify-content-end gap-8 wd-100"
         style={{
-          width: "100%",
           textAlign: "end",
           color: "#FFFFFF",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "end",
-          gap: 8,
           marginBottom: "10px",
         }}
       >

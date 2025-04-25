@@ -36,10 +36,6 @@ export interface IGetListSales {
   id: number;
 }
 
-export interface IGetListData {
-  date: string;
-}
-
 export interface IValidEmail {
   message: string;
   status: number;

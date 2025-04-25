@@ -60,3 +60,9 @@ export interface IAccompanistContext {
   selectedCountry: CountryType | null;
   setSelectedCountry: React.Dispatch<React.SetStateAction<CountryType | null>>;
 }
+
+export interface IBodySales {
+  id_employee?: number;
+  startDate: string;
+  endDate: string;
+}

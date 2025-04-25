@@ -86,12 +86,6 @@ const Calendar = () => {
     },
   ];
 
-  const categories = [
-    { name: "DIARIO", items: ["Trabajo", "Personal", "Salud"] },
-    { name: "APPS", items: ["Correo", "Calendario", "Notas"] },
-    { name: "OTROS", items: ["Cumpleaños", "Feriados"] },
-  ];
-
   const handlePrevMonth = () => {
     setCurrentDate(addMonths(currentDate, -1));
   };
@@ -102,12 +96,7 @@ const Calendar = () => {
 
   const renderCalendarHeader = () => {
     return (
-      <Box
-        display="flex"
-        alignItems="center"
-        justifyContent="space-between"
-        mb={2}
-      >
+      <Box className="d-flex justify-content-between align-items-center" mb={2}>
         <IconButton onClick={handlePrevMonth}>
           <ChevronLeft />
         </IconButton>
@@ -184,7 +173,7 @@ const Calendar = () => {
           <Box display="flex" justifyContent="space-between">
             <Typography
               variant="body2"
-              color={isCurrentDay ? "primary.main" : "text.primary"}
+              color={isCurrentDay ? "primarymain" : "text.primary"}
               fontWeight={isCurrentDay ? "bold" : "normal"}
             >
               {format(day, "d")}
@@ -237,9 +226,14 @@ const Calendar = () => {
           {format(selectedDate, "EEEE d MMMM", { locale: es })}
         </Typography>
         {dayEvents.length > 0 ? (
-          <List>
+          <List className="d-flex flex-column gap-8">
             {dayEvents.map((event) => (
-              <Paper key={event.id} elevation={2} sx={{ mb: 2 }}>
+              <Paper
+                key={event.id}
+                elevation={2}
+                sx={{ mb: 2 }}
+                style={{ maxWidth: 320, width: "100%" }}
+              >
                 <ListItem>
                   <ListItemText
                     primary={event.title}
@@ -276,35 +270,15 @@ const Calendar = () => {
   };
 
   return (
-    <Box display="flex" minHeight="100vh">
+    <Box display="flex" width="70%">
       {/* Sidebar */}
-      <Box width={250} bgcolor="background.paper" p={2} boxShadow={2}>
-        <Typography variant="h5" gutterBottom>
-          Calendario
-        </Typography>
-        <Divider sx={{ my: 2 }} />
-        {categories.map((category) => (
-          <Box key={category.name} mb={3}>
-            <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-              {category.name}
-            </Typography>
-            <List dense>
-              {category.items.map((item) => (
-                <ListItem key={item} component="button">
-                  <ListItemText primary={item} />
-                </ListItem>
-              ))}
-            </List>
-          </Box>
-        ))}
-      </Box>
 
       {/* Main content */}
       <Box flex={1} p={3}>
         {renderCalendarHeader()}
         {renderDayNames()}
         {renderCalendarDays()}
-        {renderSelectedDateEvents()}
+        {/* {renderSelectedDateEvents()} */}
       </Box>
     </Box>
   );
