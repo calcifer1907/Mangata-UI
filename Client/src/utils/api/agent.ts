@@ -13,6 +13,7 @@ import {
   IBodyChangeStatus,
   IBodySales,
   IBodyStatusReservation,
+  ISalesData,
   ISaveCodeGenerate,
 } from "../../interfaces/IReservation";
 import { ICommission, IPaymentBold } from "../../interfaces/IAgent";
@@ -106,3 +107,8 @@ export const getValidEmail = (email: string): Promise<IValidEmail> =>
 
 export const getIsDayBlocked = (): Promise<IBodyBlockDay[]> =>
   requestApis.get("/api/isDayBlocked");
+
+export const getCharListSales = (body: {
+  startDate: string;
+  endDate: string;
+}): Promise<ISalesData[]> => requestApis.post("/api/charListSales", body);

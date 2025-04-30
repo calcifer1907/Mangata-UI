@@ -18,29 +18,30 @@ import { Icon } from "@iconify/react";
 import FlatwareIcon from "@mui/icons-material/Flatware";
 
 /**Hooks */
-import { useSales } from "../hooks/useSales";
+import { useSales } from "../../hooks/useSales";
 
 /**Component */
-import DialogListAccompanist from "../components/Dialogs/DialogListAccompanist";
+import DialogListAccompanist from "../../components/Dialogs/DialogListAccompanist";
 // import CalendarPage from "../components/Calendar/CalendarPage/CalendarPage";
-import Loading from "../components/Loading/Loading";
-import DialogUserInfo from "../components/Dialogs/DialogUserInfo";
+import Loading from "../../components/Loading/Loading";
+import DialogUserInfo from "../../components/Dialogs/DialogUserInfo";
+import SalesChart from "../../components/Charts/SalesChart";
 
 /**Functions */
-import { formatPrice } from "../generalFunctions/formaters";
-import { formatDate } from "../generalFunctions/formatDate";
+import { formatPrice } from "../../generalFunctions/formaters";
+import { formatDate } from "../../generalFunctions/formatDate";
 
 /**Interface */
-import { IGetListSales, IAccompanistListSales } from "../interfaces/IUser";
-import { STATUS_COLOR } from "../generalFunctions/status";
+import { IGetListSales, IAccompanistListSales } from "../../interfaces/IUser";
+import { STATUS_COLOR } from "../../generalFunctions/status";
 
-import TableUI from "../components/TableUI/TableUI";
+import TableUI from "../../components/TableUI/TableUI";
 import { GridColDef } from "@mui/x-data-grid";
 import Checkbox from "@mui/material/Checkbox";
-import MenuLeft from "../components/Calendar/CalendarPage/MenuLeft";
+import MenuLeft from "../../components/Calendar/CalendarPage/MenuLeft";
 import { DateRange } from "react-date-range";
-import ButtonComponent from "../components/Buttons/ButtonComponent";
-import { InitialCalendar } from "../constant/Calendar";
+import ButtonComponent from "../../components/Buttons/ButtonComponent";
+import { InitialCalendar } from "../../constant/Calendar";
 
 const FORMAT_DATE = "YYYY/MM/DD";
 
@@ -53,6 +54,7 @@ const LIstOfCommissionAdmin = () => {
     dateChange,
     setDateChange,
     updatePaymentEmployee,
+    dataChartList,
   } = useSales({
     page: "admin",
   });
@@ -72,7 +74,7 @@ const LIstOfCommissionAdmin = () => {
       renderCell: (params) => {
         const status = params.value as string;
         return (
-          <Box>
+          <Box style={{ alignContent: "center", height: "100%" }}>
             <Typography
               style={{
                 textAlign: "center",
@@ -80,6 +82,9 @@ const LIstOfCommissionAdmin = () => {
                 opacity: 0.8,
                 color: "white",
                 fontWeight: 600,
+                borderRadius: 100,
+                fontSize: 12,
+                padding: "4px 8px",
                 backgroundColor:
                   STATUS_COLOR[status as keyof typeof STATUS_COLOR],
               }}
@@ -238,14 +243,23 @@ const LIstOfCommissionAdmin = () => {
       <MenuLeft />
       <Box m={2} className="wd-100">
         <Box className="d-flex flex-row gap-8 wd-100 flex-dirrection-row ">
-          <TableUI data={dataList} columns={columns} dateChange={dateChange} />
+          <Box className="d-flex flex-direction-column gap-8 wd-100">
+            <Box className="d-flex">
+              <SalesChart salesData={dataChartList} />
+              {/* <SalesChart salesData={dataChartList} /> */}
+            </Box>
+            <TableUI
+              data={dataList}
+              columns={columns}
+              dateChange={dateChange}
+            />
+          </Box>
           <Box>
             <Paper className="margin-buttom-8" sx={{ p: 2 }} elevation={3}>
               <DateRange
                 editableDateInputs={true}
                 onChange={(item) => {
                   const { startDate, endDate } = item.selection;
-                  // setChangeRangeDate();
                   setChangeRangeDate({
                     startDate: startDate || new Date(),
                     endDate: endDate || new Date(),
@@ -277,112 +291,121 @@ const LIstOfCommissionAdmin = () => {
                 <Loading />
               ) : (
                 <>
-                  {dataListFilter.map((item) => (
-                    <Paper
-                      key={item.code_reservation}
-                      elevation={4}
-                      sx={{
-                        borderLeft: `2px solid ${
-                          STATUS_COLOR[
-                            item.status_reservation as keyof typeof STATUS_COLOR
-                          ]
-                        }`,
-                        width: "auto",
-                        maxHeight: "100px",
-                        marginBlock: 1,
-                      }}
-                    >
-                      <Box
-                        className="d-flex flex-dirrection-row  justify-content-between hg-100 gap-8"
+                  {dataListFilter.length > 0 ? (
+                    dataListFilter.map((item) => (
+                      <Paper
+                        key={item.code_reservation}
+                        elevation={4}
                         sx={{
-                          padding: "8px",
+                          borderLeft: `2px solid ${
+                            STATUS_COLOR[
+                              item.status_reservation as keyof typeof STATUS_COLOR
+                            ]
+                          }`,
+                          width: "auto",
+                          maxHeight: "100px",
+                          marginBlock: 1,
                         }}
                       >
-                        <FlatwareIcon
+                        <Box
+                          className="d-flex flex-dirrection-row  justify-content-between hg-100 gap-8"
                           sx={{
-                            width: 24,
-                            height: 24,
-                            alignSelf: "center",
-                            color: "var(--color-theme-ligth-blue)",
-                            cursor: "pointer",
+                            padding: "8px",
                           }}
-                          onClick={() => {
-                            setOpenDialog(true);
-                            setArrayShowAccompanist(item.ACCOMPANIST);
-                          }}
-                        />
+                        >
+                          <FlatwareIcon
+                            sx={{
+                              width: 24,
+                              height: 24,
+                              alignSelf: "center",
+                              color: "var(--color-theme-ligth-blue)",
+                              cursor: "pointer",
+                            }}
+                            onClick={() => {
+                              setOpenDialog(true);
+                              setArrayShowAccompanist(item.ACCOMPANIST);
+                            }}
+                          />
 
-                        <Box>
-                          <Typography sx={{ fontWeight: 600 }}>
-                            {item.code_reservation}
-                          </Typography>
-                          <Typography>
-                            {formatDate(item.created_at, FORMAT_DATE)} -{" "}
-                            <Typography
-                              component="span"
-                              sx={{ fontWeight: 600 }}
-                            >
-                              {formatPrice(
-                                Number(item.commission_employee) *
-                                  item.ACCOMPANIST.length
-                              )}
+                          <Box>
+                            <Typography sx={{ fontWeight: 600 }}>
+                              {item.code_reservation}
                             </Typography>
-                          </Typography>
-                          <Box className="d-flex flex-dirrection-row align-items-center gap-8">
-                            <Icon
-                              icon="solar:user-bold-duotone"
-                              style={{ height: "100%", cursor: "pointer" }}
-                              width={16}
-                              height={16}
-                              onClick={() => {
-                                setCurrentItem(item);
-                                setOpenDialogUserInfo(true);
-                              }}
-                              color={
-                                STATUS_COLOR[
-                                  item.status_reservation as keyof typeof STATUS_COLOR
-                                ]
-                              }
-                            />
-                            <Typography
-                              className="ellipsisText"
-                              style={{ width: "190px" }}
-                            >
-                              {item.ACCOMPANIST[0].name_accompanist}
+                            <Typography>
+                              {formatDate(item.created_at, FORMAT_DATE)} -{" "}
+                              <Typography
+                                component="span"
+                                sx={{ fontWeight: 600 }}
+                              >
+                                {formatPrice(
+                                  Number(item.commission_employee) *
+                                    item.ACCOMPANIST.length
+                                )}
+                              </Typography>
                             </Typography>
+                            <Box className="d-flex flex-dirrection-row align-items-center gap-8">
+                              <Icon
+                                icon="solar:user-bold-duotone"
+                                style={{ height: "100%", cursor: "pointer" }}
+                                width={16}
+                                height={16}
+                                onClick={() => {
+                                  setCurrentItem(item);
+                                  setOpenDialogUserInfo(true);
+                                }}
+                                color={
+                                  STATUS_COLOR[
+                                    item.status_reservation as keyof typeof STATUS_COLOR
+                                  ]
+                                }
+                              />
+                              <Typography
+                                className="ellipsisText"
+                                style={{ width: "190px" }}
+                              >
+                                {item.ACCOMPANIST[0].name_accompanist}
+                              </Typography>
+                            </Box>
                           </Box>
+                          {
+                            <Box sx={{ height: "100%" }}>
+                              <Button
+                                id="basic-button"
+                                aria-controls={open ? "basic-menu" : undefined}
+                                aria-haspopup="true"
+                                aria-expanded={open ? "true" : undefined}
+                                sx={{ height: "100%" }}
+                                onClick={(e) => {
+                                  if (item.status_reservation !== "approved")
+                                    handleClick(e, item.code_reservation);
+                                }}
+                                startIcon={
+                                  <Icon
+                                    icon={
+                                      item.status_reservation !== "approved"
+                                        ? "solar:pen-new-round-bold-duotone"
+                                        : "solar:unread-bold-duotone"
+                                    }
+                                    width={24}
+                                    height={24}
+                                    color="#2B3D5E"
+                                  />
+                                }
+                              />
+                              <MenuOptions />
+                            </Box>
+                          }
                         </Box>
-                        {
-                          <Box sx={{ height: "100%" }}>
-                            <Button
-                              id="basic-button"
-                              aria-controls={open ? "basic-menu" : undefined}
-                              aria-haspopup="true"
-                              aria-expanded={open ? "true" : undefined}
-                              sx={{ height: "100%" }}
-                              onClick={(e) => {
-                                if (item.status_reservation !== "approved")
-                                  handleClick(e, item.code_reservation);
-                              }}
-                              startIcon={
-                                <Icon
-                                  icon={
-                                    item.status_reservation !== "approved"
-                                      ? "solar:pen-new-round-bold-duotone"
-                                      : "solar:unread-bold-duotone"
-                                  }
-                                  width={24}
-                                  height={24}
-                                  color="#2B3D5E"
-                                />
-                              }
-                            />
-                            <MenuOptions />
-                          </Box>
-                        }
-                      </Box>
-                    </Paper>
-                  ))}
+                      </Paper>
+                    ))
+                  ) : (
+                    <Box
+                      style={{}}
+                      className="d-flex justify-content-center align-items-center hg-100"
+                    >
+                      <Typography>No Hay Datos</Typography>
+                    </Box>
+                  )}
                 </>
               )}
             </Paper>

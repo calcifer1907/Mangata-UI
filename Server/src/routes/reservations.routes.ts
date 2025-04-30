@@ -15,13 +15,16 @@ import { authenticate } from "../handles/authMiddleware";
 const router = Router();
 
 router.post("/reservations", createReservation);
-
 router.post("/mycommissions", authenticate, getListSalesEmployee);
-
 router.post("/mySales", authenticate, getListSalesAdmin);
+router.post("/check-reservation", checkReservation);
+router.post("/getCodeReservation", ReservationController.getCodeReservation);
 
-router.get("/isDayBlocked", ReservationController.getIsBlockDay);
-
+router.post(
+  "/charListSales",
+  authenticate,
+  ReservationController.getCharListSalesAdmin
+);
 router.post(
   "/changeStatusReservation",
   authenticate,
@@ -34,18 +37,14 @@ router.post(
   ReservationController.saveCodeReservation
 );
 
-router.post("/getCodeReservation", ReservationController.getCodeReservation);
-
 router.put(
   "/updatePaymentEmployee",
   authenticate,
   ReservationController.updatePaymentEmployee
 );
 
-router.post("/check-reservation", checkReservation);
-
+router.get("/isDayBlocked", ReservationController.getIsBlockDay);
 router.get("/lunches", ReservationController.getLunches);
-
 router.get("/MimMax", getMinMax);
 
 export default router;

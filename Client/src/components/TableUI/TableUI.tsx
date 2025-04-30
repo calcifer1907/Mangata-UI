@@ -73,7 +73,7 @@ const TableUI: FC<IProps> = ({ data, columns, dateChange }) => {
       </Box>
       <Paper
         sx={{
-          height: 400,
+          height: 300,
           width: "100%",
           display: { xs: "none", sm: "block" },
         }}

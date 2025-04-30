@@ -3,6 +3,7 @@ import {
   getLIstForTable,
   getAdmin,
   getSumCommission,
+  getCharListSales,
 } from "../utils/api/agent";
 
 import { useContextUser } from "../hooks/useContextUser";
@@ -12,7 +13,7 @@ import { enqueueSnackbar } from "notistack";
 import { IGetListSales } from "../interfaces/IUser";
 import { IRangaDate } from "../interfaces/ICalendar";
 import { formatDate } from "../generalFunctions/formatDate";
-import { IBodySales } from "../interfaces/IReservation";
+import { IBodySales, ISalesData } from "../interfaces/IReservation";
 
 interface IProps {
   page: string;
@@ -23,6 +24,8 @@ const PATH_EMPLOYEE = "mycommissions";
 
 export const useSales = ({ page }: IProps) => {
   const { userInfo } = useContextUser();
+
+  const [dataChartList, setDataChartList] = useState<ISalesData[]>([]);
   const [dataList, setDataList] = useState<IGetListSales[]>([]);
   const [dateChange, setDateChange] = useState<IRangaDate>({
     startDate: new Date(),
@@ -111,6 +114,19 @@ export const useSales = ({ page }: IProps) => {
     }
   }, [userInfo.USER_INFO.ID_EMPLOYEE]);
 
+  const fetchGetChartList = useCallback(async () => {
+    const body: IBodySales = {
+      startDate: formatDate(dateChange.startDate, "YYYY-MM-DD"),
+      endDate: formatDate(dateChange.endDate, "YYYY-MM-DD"),
+    };
+    const data = await getCharListSales(body);
+    setDataChartList(data);
+  }, [dateChange]);
+
+  useEffect(() => {
+    fetchGetChartList();
+  }, [fetchGetChartList]);
+
   useEffect(() => {
     responseData();
   }, [responseData]);
@@ -128,5 +144,6 @@ export const useSales = ({ page }: IProps) => {
     setDateChange,
     updatePaymentEmployee,
     dateChange,
+    dataChartList,
   };
 };

@@ -24,8 +24,11 @@ export interface IAccompanistListSales {
 
 export interface IGetListSales {
   code_reservation: string;
+  email: string;
+  telephone: string;
   commission_employee: string;
   created_at: string;
+  created_on: Date;
   current_commission: string;
   DIFF: string;
   EMPLOYEE: string;

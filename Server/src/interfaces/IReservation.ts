@@ -11,3 +11,15 @@ export interface IBodyBlockDay {
   id: number;
   valid_date: Date;
 }
+
+export interface IChartListSalesEmployee {
+  commission_employee: number;
+  code_reservation: string;
+  created_at: string;
+  WHO_SALE: string;
+}
+
+export interface ICountPersonReservation {
+  number_persons: number;
+  id_reservation: string;
+}

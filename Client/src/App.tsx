@@ -8,7 +8,7 @@ import Login from "./pages/Login";
 import CreateUser from "./pages/CreateUser";
 import Reservation from "./pages/Reservations/ContainerContextReservation";
 import ListOfCommissionsEmployee from "./pages/ListOfCommissionsEmployee";
-import LIstOFCommissionAdmin from "./pages/LIstOfCommissionAdmin";
+import LIstOFCommissionAdmin from "./pages/Sales/LIstOfCommissionAdmin";
 import Logout from "./pages/Logout";
 import MyNavbar from "./components/navbar/NavBar";
 import GenerateReservation from "./pages/GenerateReservation/GenerateReservation";

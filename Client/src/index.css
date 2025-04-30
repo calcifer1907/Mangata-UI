@@ -62,7 +62,9 @@ body{
   color: var(--color-theme-dark-blueLigth)
 }
 
-
+.color-blue-ligth-blue{
+  color: var(--color-theme-ligth-blue)
+}
 
 .background-harvest-gold{
   background-color: var(--color-theme-harvest-gold)
