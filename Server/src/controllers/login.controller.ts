@@ -14,7 +14,7 @@ export const getAllUser = async (request: Request, response: Response) => {
       return response.status(401).json({ message: "Usuario no encontrado" });
     }
     const params = [findUser.role_id];
-    const resultRoles = await pool.query(
+    const { rows } = await pool.query(
       "SELECT TITLE,PATH FROM menu_roles WHERE ROLE_ID=$1",
       params
     );
@@ -28,7 +28,6 @@ export const getAllUser = async (request: Request, response: Response) => {
     }
 
     const token = createToken(findUser.id, findUser.user_name);
-
     return response.json({
       TOKEN: token,
       USER_INFO: {
@@ -36,7 +35,7 @@ export const getAllUser = async (request: Request, response: Response) => {
         USER_NAME: findUser.user_name,
         ID_EMPLOYEE: findUser.id,
       },
-      MENU: resultRoles.rows,
+      MENU: rows,
     });
   } catch (error) {
     return response.status(500).json({ message: "Something went wrong" });

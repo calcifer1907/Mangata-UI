@@ -5,17 +5,12 @@
  *
  */
 
-import { useEffect, useState, MouseEvent } from "react";
+import { useEffect, useState } from "react";
 
 /**Libreries */
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import MenuItem from "@mui/material/MenuItem";
-import Menu from "@mui/material/Menu";
-import { Icon } from "@iconify/react";
-import FlatwareIcon from "@mui/icons-material/Flatware";
 
 /**Hooks */
 import { useSales } from "../../hooks/useSales";
@@ -38,11 +33,12 @@ import { STATUS_COLOR } from "../../generalFunctions/status";
 import TableUI from "../../components/TableUI/TableUI";
 import { GridColDef } from "@mui/x-data-grid";
 import Checkbox from "@mui/material/Checkbox";
-import MenuLeft from "../../components/Calendar/CalendarPage/MenuLeft";
+import MenuLeft from "./MenuLeft";
 import { DateRange } from "react-date-range";
 import ButtonComponent from "../../components/Buttons/ButtonComponent";
 import { InitialCalendar } from "../../constant/Calendar";
 import BoxSales from "./BoxSales";
+import SaleList from "./SaleList";
 
 const FORMAT_DATE = "YYYY/MM/DD";
 
@@ -50,7 +46,6 @@ const LIstOfCommissionAdmin = () => {
   const {
     dataList,
     setDataList,
-    changeStatusReservation,
     loading,
     dateChange,
     setDateChange,
@@ -143,7 +138,6 @@ const LIstOfCommissionAdmin = () => {
 
   const [dataListFilter, setDataListFilter] = useState<IGetListSales[]>([]);
   // const [_maxHeight, setMaxHeight] = useState<number>(window.innerHeight);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [openDialogUserInfo, setOpenDialogUserInfo] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<IGetListSales | null>(null);
@@ -156,38 +150,6 @@ const LIstOfCommissionAdmin = () => {
   const [arrayShowAccompanist, setArrayShowAccompanist] = useState<
     IAccompanistListSales[]
   >([]);
-  const open = Boolean(anchorEl);
-
-  const [codeRe, setCodeRe] = useState<string>("");
-
-  const handleClick = (event: MouseEvent<HTMLButtonElement>, code: string) => {
-    setAnchorEl(event.currentTarget);
-    setCodeRe(code);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  // const handleOnchange = (e: ChangeEvent<HTMLInputElement>) => {
-  //   const value = e.target.value;
-  //   const filter = dataList.filter((item) => {
-  //     return `${item.code_reservation}${item.ACCOMPANIST[0].name_accompanist}`
-  //       .toLowerCase()
-  //       .includes(value.toLowerCase());
-  //   });
-  //   setDataListFilter(value ? filter : dataList);
-  // };
-
-  const handleChangeStatus = (status: string) => {
-    const changeStatus = dataList.findIndex(
-      ({ code_reservation }) => code_reservation === codeRe
-    );
-    changeStatusReservation(codeRe, status).then(() => {
-      dataList[changeStatus].status_reservation = status;
-      handleClose();
-    });
-  };
 
   const handleApllyRangeDate = () => {
     if (changeRangeDate) {
@@ -198,6 +160,16 @@ const LIstOfCommissionAdmin = () => {
   useEffect(() => {
     setDataListFilter(dataList);
   }, [dataList]);
+
+  // const handleOnchange = (e: ChangeEvent<HTMLInputElement>) => {
+  //   const value = e.target.value;
+  //   const filter = dataList.filter((item) => {
+  //     return `${item.code_reservation}${item.ACCOMPANIST[0].name_accompanist}`
+  //       .toLowerCase()
+  //       .includes(value.toLowerCase());
+  //   });
+  //   setDataListFilter(value ? filter : dataList);
+  // };
 
   // const updateMaxHeight = () => {
   //   setMaxHeight(window.innerHeight); // Usamos el alto del viewport
@@ -215,31 +187,6 @@ const LIstOfCommissionAdmin = () => {
   //     window.removeEventListener("resize", updateMaxHeight);
   //   };
   // }, []);
-
-  const MenuOptions = () => {
-    return (
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          "aria-labelledby": "basic-button",
-        }}
-      >
-        <MenuItem onClick={() => handleChangeStatus("approved")}>
-          Confirmar
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            handleChangeStatus("cancel");
-          }}
-        >
-          Cancelar
-        </MenuItem>
-      </Menu>
-    );
-  };
 
   return (
     <Box className="d-flex " style={{ height: "100vh" }}>
@@ -299,112 +246,14 @@ const LIstOfCommissionAdmin = () => {
               ) : (
                 <>
                   {dataListFilter.length > 0 ? (
-                    dataListFilter.map((item) => (
-                      <Paper
-                        key={item.code_reservation}
-                        elevation={4}
-                        sx={{
-                          borderLeft: `2px solid ${
-                            STATUS_COLOR[
-                              item.status_reservation as keyof typeof STATUS_COLOR
-                            ]
-                          }`,
-                          width: "auto",
-                          maxHeight: "100px",
-                          marginBlock: 1,
-                        }}
-                      >
-                        <Box
-                          className="d-flex flex-dirrection-row  justify-content-between hg-100 gap-8"
-                          sx={{
-                            padding: "8px",
-                          }}
-                        >
-                          <FlatwareIcon
-                            sx={{
-                              width: 24,
-                              height: 24,
-                              alignSelf: "center",
-                              color: "var(--color-theme-ligth-blue)",
-                              cursor: "pointer",
-                            }}
-                            onClick={() => {
-                              setOpenDialog(true);
-                              setArrayShowAccompanist(item.ACCOMPANIST);
-                            }}
-                          />
-
-                          <Box>
-                            <Box className="d-flex flex-dirrection-row align-items-center gap-8">
-                              <Icon
-                                icon="solar:user-bold-duotone"
-                                style={{ height: "100%", cursor: "pointer" }}
-                                width={16}
-                                height={16}
-                                onClick={() => {
-                                  setCurrentItem(item);
-                                  setOpenDialogUserInfo(true);
-                                }}
-                                color={
-                                  STATUS_COLOR[
-                                    item.status_reservation as keyof typeof STATUS_COLOR
-                                  ]
-                                }
-                              />
-                              <Typography
-                                className="ellipsisText"
-                                style={{ width: "190px" }}
-                              >
-                                {item.ACCOMPANIST[0].name_accompanist}
-                              </Typography>
-                            </Box>
-
-                            <Typography sx={{ fontWeight: 600 }}>
-                              {item.code_reservation}
-                            </Typography>
-                            <Typography>
-                              {formatDate(item.created_at, FORMAT_DATE)} -{" "}
-                              <Typography
-                                component="span"
-                                sx={{ fontWeight: 600 }}
-                              >
-                                {formatPrice(
-                                  Number(item.commission_employee) *
-                                    item.ACCOMPANIST.length
-                                )}
-                              </Typography>
-                            </Typography>
-                          </Box>
-
-                          <Box>
-                            <Button
-                              id="basic-button"
-                              aria-controls={open ? "basic-menu" : undefined}
-                              aria-haspopup="true"
-                              aria-expanded={open ? "true" : undefined}
-                              sx={{ height: "100%" }}
-                              onClick={(e) => {
-                                if (item.status_reservation !== "approved")
-                                  handleClick(e, item.code_reservation);
-                              }}
-                              startIcon={
-                                <Icon
-                                  icon={
-                                    item.status_reservation !== "approved"
-                                      ? "solar:pen-new-round-bold-duotone"
-                                      : "solar:unread-bold-duotone"
-                                  }
-                                  width={24}
-                                  height={24}
-                                  color="#2B3D5E"
-                                />
-                              }
-                            />
-                            <MenuOptions />
-                          </Box>
-                        </Box>
-                      </Paper>
-                    ))
+                    <SaleList
+                      dataList={dataList}
+                      dataListFilter={dataListFilter}
+                      setOpenDialog={setOpenDialog}
+                      setArrayShowAccompanist={setArrayShowAccompanist}
+                      setCurrentItem={setCurrentItem}
+                      setOpenDialogUserInfo={setOpenDialogUserInfo}
+                    />
                   ) : (
                     <Box
                       style={{}}
