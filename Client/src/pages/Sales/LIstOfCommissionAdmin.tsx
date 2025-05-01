@@ -42,6 +42,7 @@ import MenuLeft from "../../components/Calendar/CalendarPage/MenuLeft";
 import { DateRange } from "react-date-range";
 import ButtonComponent from "../../components/Buttons/ButtonComponent";
 import { InitialCalendar } from "../../constant/Calendar";
+import BoxSales from "./BoxSales";
 
 const FORMAT_DATE = "YYYY/MM/DD";
 
@@ -55,14 +56,42 @@ const LIstOfCommissionAdmin = () => {
     setDateChange,
     updatePaymentEmployee,
     dataChartList,
+    totalSaleStatus,
   } = useSales({
     page: "admin",
   });
 
   const columns: GridColDef[] = [
     {
+      field: "pay",
+      headerName: "Pago Empleado",
+      flex: 2,
+      renderCell: (params) =>
+        params.row.EMPLOYEE !== "Mangata system" && (
+          <Checkbox
+            checked={params.value}
+            onChange={(event) => {
+              const { code_reservation } = params.row;
+              updatePaymentEmployee(code_reservation, event.target.checked);
+              const updatedRows = dataList.map((row) =>
+                row.code_reservation === code_reservation
+                  ? { ...row, pay: event.target.checked }
+                  : row
+              );
+              setDataList(updatedRows);
+            }}
+          />
+        ),
+    },
+    {
       field: "EMPLOYEE",
       headerName: "Creado por",
+      sortable: false,
+      flex: 3,
+    },
+    {
+      field: "BANK_ACCOUNT",
+      headerName: "Cuenta Bancaria",
       sortable: false,
       flex: 3,
     },
@@ -102,39 +131,13 @@ const LIstOfCommissionAdmin = () => {
       valueGetter: (value) => formatPrice(value as number),
       flex: 3,
     },
-    {
-      field: "BANK_ACCOUNT",
-      headerName: "Cuenta Bancaria",
-      sortable: false,
-      flex: 3,
-    },
+
     {
       field: "created_at",
       headerName: "Fecha Creación",
       sortable: true,
       valueGetter: (value) => formatDate(value, FORMAT_DATE),
       flex: 3,
-    },
-    {
-      field: "pay",
-      headerName: "Pago Empleado",
-      flex: 3,
-      renderCell: (params) =>
-        params.row.EMPLOYEE !== "Mangata system" && (
-          <Checkbox
-            checked={params.value}
-            onChange={(event) => {
-              const { code_reservation } = params.row;
-              updatePaymentEmployee(code_reservation, event.target.checked);
-              const updatedRows = dataList.map((row) =>
-                row.code_reservation === code_reservation
-                  ? { ...row, pay: event.target.checked }
-                  : row
-              );
-              setDataList(updatedRows);
-            }}
-          />
-        ),
     },
   ];
 
@@ -244,9 +247,13 @@ const LIstOfCommissionAdmin = () => {
       <Box m={2} className="wd-100">
         <Box className="d-flex flex-row gap-8 wd-100 flex-dirrection-row ">
           <Box className="d-flex flex-direction-column gap-8 wd-100">
-            <Box className="d-flex">
-              <SalesChart salesData={dataChartList} />
-              {/* <SalesChart salesData={dataChartList} /> */}
+            <Box className="d-flex  gap-8 wd-100">
+              <Paper sx={{ width: "80%" }} elevation={3}>
+                <SalesChart salesData={dataChartList} />
+              </Paper>
+              <Box className="d-flex flex-direction-column gap-8">
+                <BoxSales totalSales={totalSaleStatus} />
+              </Box>
             </Box>
             <TableUI
               data={dataList}
@@ -255,7 +262,7 @@ const LIstOfCommissionAdmin = () => {
             />
           </Box>
           <Box>
-            <Paper className="margin-buttom-8" sx={{ p: 2 }} elevation={3}>
+            <Paper className="margin-buttom-8" sx={{ p: 1 }} elevation={3}>
               <DateRange
                 editableDateInputs={true}
                 onChange={(item) => {
@@ -328,21 +335,6 @@ const LIstOfCommissionAdmin = () => {
                           />
 
                           <Box>
-                            <Typography sx={{ fontWeight: 600 }}>
-                              {item.code_reservation}
-                            </Typography>
-                            <Typography>
-                              {formatDate(item.created_at, FORMAT_DATE)} -{" "}
-                              <Typography
-                                component="span"
-                                sx={{ fontWeight: 600 }}
-                              >
-                                {formatPrice(
-                                  Number(item.commission_employee) *
-                                    item.ACCOMPANIST.length
-                                )}
-                              </Typography>
-                            </Typography>
                             <Box className="d-flex flex-dirrection-row align-items-center gap-8">
                               <Icon
                                 icon="solar:user-bold-duotone"
@@ -366,35 +358,50 @@ const LIstOfCommissionAdmin = () => {
                                 {item.ACCOMPANIST[0].name_accompanist}
                               </Typography>
                             </Box>
+
+                            <Typography sx={{ fontWeight: 600 }}>
+                              {item.code_reservation}
+                            </Typography>
+                            <Typography>
+                              {formatDate(item.created_at, FORMAT_DATE)} -{" "}
+                              <Typography
+                                component="span"
+                                sx={{ fontWeight: 600 }}
+                              >
+                                {formatPrice(
+                                  Number(item.commission_employee) *
+                                    item.ACCOMPANIST.length
+                                )}
+                              </Typography>
+                            </Typography>
                           </Box>
-                          {
-                            <Box sx={{ height: "100%" }}>
-                              <Button
-                                id="basic-button"
-                                aria-controls={open ? "basic-menu" : undefined}
-                                aria-haspopup="true"
-                                aria-expanded={open ? "true" : undefined}
-                                sx={{ height: "100%" }}
-                                onClick={(e) => {
-                                  if (item.status_reservation !== "approved")
-                                    handleClick(e, item.code_reservation);
-                                }}
-                                startIcon={
-                                  <Icon
-                                    icon={
-                                      item.status_reservation !== "approved"
-                                        ? "solar:pen-new-round-bold-duotone"
-                                        : "solar:unread-bold-duotone"
-                                    }
-                                    width={24}
-                                    height={24}
-                                    color="#2B3D5E"
-                                  />
-                                }
-                              />
-                              <MenuOptions />
-                            </Box>
-                          }
+
+                          <Box>
+                            <Button
+                              id="basic-button"
+                              aria-controls={open ? "basic-menu" : undefined}
+                              aria-haspopup="true"
+                              aria-expanded={open ? "true" : undefined}
+                              sx={{ height: "100%" }}
+                              onClick={(e) => {
+                                if (item.status_reservation !== "approved")
+                                  handleClick(e, item.code_reservation);
+                              }}
+                              startIcon={
+                                <Icon
+                                  icon={
+                                    item.status_reservation !== "approved"
+                                      ? "solar:pen-new-round-bold-duotone"
+                                      : "solar:unread-bold-duotone"
+                                  }
+                                  width={24}
+                                  height={24}
+                                  color="#2B3D5E"
+                                />
+                              }
+                            />
+                            <MenuOptions />
+                          </Box>
                         </Box>
                       </Paper>
                     ))

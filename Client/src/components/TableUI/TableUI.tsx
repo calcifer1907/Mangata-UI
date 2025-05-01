@@ -44,7 +44,7 @@ const TableUI: FC<IProps> = ({ data, columns, dateChange }) => {
   };
 
   return (
-    <Box className="wd-100">
+    <Paper className="wd-100">
       <Box
         className="d-flex align-items-center justify-content-end gap-8 wd-100"
         style={{
@@ -71,9 +71,9 @@ const TableUI: FC<IProps> = ({ data, columns, dateChange }) => {
           Exportar.xls
         </Box>
       </Box>
-      <Paper
+      <Box
         sx={{
-          height: 300,
+          height: 363,
           width: "100%",
           display: { xs: "none", sm: "block" },
         }}
@@ -85,8 +85,8 @@ const TableUI: FC<IProps> = ({ data, columns, dateChange }) => {
           pageSizeOptions={[5, 10]}
           sx={{ border: 0 }}
         />
-      </Paper>
-    </Box>
+      </Box>
+    </Paper>
   );
 };
 

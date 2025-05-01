@@ -95,7 +95,7 @@ const SalesChart = ({ salesData }: { salesData: ISalesData[] }) => {
   };
 
   return (
-    <div style={{ width: "100%", height: "400px" }}>
+    <div style={{ width: "100%", height: "403px" }}>
       <Bar data={data} options={options} />
       <div style={{ marginTop: "20px" }}>
         <h3>Detalle por fecha:</h3>

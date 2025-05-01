@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   getLIstForTable,
   getAdmin,
@@ -14,6 +14,7 @@ import { IGetListSales } from "../interfaces/IUser";
 import { IRangaDate } from "../interfaces/ICalendar";
 import { formatDate } from "../generalFunctions/formatDate";
 import { IBodySales, ISalesData } from "../interfaces/IReservation";
+import { formatPrice } from "../generalFunctions/formaters";
 
 interface IProps {
   page: string;
@@ -123,6 +124,37 @@ export const useSales = ({ page }: IProps) => {
     setDataChartList(data);
   }, [dateChange]);
 
+  const totalSaleStatus = useMemo(() => {
+    const totalApproved = dataChartList.filter(
+      ({ status_reservation }) => status_reservation === "approved"
+    ).length;
+    const totalPendding = dataChartList.filter(
+      ({ status_reservation }) => status_reservation === "pending"
+    ).length;
+    const totalSaleApproved = dataChartList.reduce(
+      (acc, reservation) =>
+        acc +
+        (reservation.status_reservation === "approved"
+          ? reservation.suma_sale
+          : 0),
+      0
+    );
+    const totalSalePendding = dataChartList.reduce(
+      (acc, reservation) =>
+        acc +
+        (reservation.status_reservation === "pending"
+          ? reservation.suma_sale
+          : 0),
+      0
+    );
+    return {
+      totalMoneyApproved: formatPrice(totalSaleApproved),
+      totalMoneyPendding: formatPrice(totalSalePendding),
+      totalApproved,
+      totalPendding,
+    };
+  }, [dataChartList]);
+
   useEffect(() => {
     fetchGetChartList();
   }, [fetchGetChartList]);
@@ -145,5 +177,6 @@ export const useSales = ({ page }: IProps) => {
     updatePaymentEmployee,
     dateChange,
     dataChartList,
+    totalSaleStatus,
   };
 };
