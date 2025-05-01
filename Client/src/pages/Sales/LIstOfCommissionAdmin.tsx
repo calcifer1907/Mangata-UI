@@ -137,7 +137,6 @@ const LIstOfCommissionAdmin = () => {
   ];
 
   const [dataListFilter, setDataListFilter] = useState<IGetListSales[]>([]);
-  // const [_maxHeight, setMaxHeight] = useState<number>(window.innerHeight);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [openDialogUserInfo, setOpenDialogUserInfo] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<IGetListSales | null>(null);
@@ -161,36 +160,18 @@ const LIstOfCommissionAdmin = () => {
     setDataListFilter(dataList);
   }, [dataList]);
 
-  // const handleOnchange = (e: ChangeEvent<HTMLInputElement>) => {
-  //   const value = e.target.value;
-  //   const filter = dataList.filter((item) => {
-  //     return `${item.code_reservation}${item.ACCOMPANIST[0].name_accompanist}`
-  //       .toLowerCase()
-  //       .includes(value.toLowerCase());
-  //   });
-  //   setDataListFilter(value ? filter : dataList);
-  // };
-
-  // const updateMaxHeight = () => {
-  //   setMaxHeight(window.innerHeight); // Usamos el alto del viewport
-  // };
-
-  // useEffect(() => {
-  //   // Actualizar al cargar
-  //   updateMaxHeight();
-
-  //   // Escuchar cambios de tamaño del viewport
-  //   window.addEventListener("resize", updateMaxHeight);
-
-  //   // Limpiar el listener al desmontar el componente
-  //   return () => {
-  //     window.removeEventListener("resize", updateMaxHeight);
-  //   };
-  // }, []);
+  const handleOnchange = (value: string) => {
+    const filter = dataList.filter((item) => {
+      return `${item.code_reservation}${item.ACCOMPANIST[0].name_accompanist}`
+        .toLowerCase()
+        .includes(value.toLowerCase());
+    });
+    setDataListFilter(value ? filter : dataList);
+  };
 
   return (
     <Box className="d-flex " style={{ height: "100vh" }}>
-      <MenuLeft />
+      <MenuLeft callBack={handleOnchange} />
       <Box m={2} className="wd-100">
         <Box className="d-flex flex-row gap-8 wd-100 flex-dirrection-row ">
           <Box className="d-flex flex-direction-column gap-8 wd-100">
@@ -203,7 +184,7 @@ const LIstOfCommissionAdmin = () => {
               </Box>
             </Box>
             <TableUI
-              data={dataList}
+              data={dataListFilter}
               columns={columns}
               dateChange={dateChange}
             />
