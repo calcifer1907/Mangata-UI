@@ -2,20 +2,15 @@ import { useState } from "react";
 import {
   Box,
   Typography,
-  List,
-  ListItem,
-  ListItemText,
-  Paper,
+  // List,
+  // ListItem,
+  // ListItemText,
+  // Paper,
   IconButton,
   Chip,
 } from "@mui/material";
 
-import {
-  ChevronLeft,
-  ChevronRight,
-  LocationOn,
-  Event,
-} from "@mui/icons-material";
+import { ChevronLeft, ChevronRight, Event } from "@mui/icons-material";
 
 import {
   format,
@@ -214,59 +209,59 @@ const Calendar = () => {
     );
   };
 
-  const renderSelectedDateEvents = () => {
-    const dayEvents = events.filter((event) =>
-      isSameDay(event.date, selectedDate)
-    );
+  // const renderSelectedDateEvents = () => {
+  //   const dayEvents = events.filter((event) =>
+  //     isSameDay(event.date, selectedDate)
+  //   );
 
-    return (
-      <Box mt={4}>
-        <Typography variant="h6" gutterBottom>
-          {format(selectedDate, "EEEE d MMMM", { locale: es })}
-        </Typography>
-        {dayEvents.length > 0 ? (
-          <List className="d-flex flex-column gap-8">
-            {dayEvents.map((event) => (
-              <Paper
-                key={event.id}
-                elevation={2}
-                sx={{ mb: 2 }}
-                style={{ maxWidth: 320, width: "100%" }}
-              >
-                <ListItem>
-                  <ListItemText
-                    primary={event.title}
-                    secondary={
-                      <>
-                        <Box component="span" display="block">
-                          {event.time}
-                        </Box>
-                        <Box display="flex" alignItems="center" mt={0.5}>
-                          <LocationOn fontSize="small" color="action" />
-                          <Typography
-                            variant="body2"
-                            color="text.secondary"
-                            ml={0.5}
-                          >
-                            {event.location}
-                          </Typography>
-                        </Box>
-                      </>
-                    }
-                  />
-                  <Chip label={event.category} size="small" color="primary" />
-                </ListItem>
-              </Paper>
-            ))}
-          </List>
-        ) : (
-          <Typography variant="body2" color="text.secondary">
-            No hay eventos programados para este día
-          </Typography>
-        )}
-      </Box>
-    );
-  };
+  //   return (
+  //     <Box mt={4}>
+  //       <Typography variant="h6" gutterBottom>
+  //         {format(selectedDate, "EEEE d MMMM", { locale: es })}
+  //       </Typography>
+  //       {dayEvents.length > 0 ? (
+  //         <List className="d-flex flex-column gap-8">
+  //           {dayEvents.map((event) => (
+  //             <Paper
+  //               key={event.id}
+  //               elevation={2}
+  //               sx={{ mb: 2 }}
+  //               style={{ maxWidth: 320, width: "100%" }}
+  //             >
+  //               <ListItem>
+  //                 <ListItemText
+  //                   primary={event.title}
+  //                   secondary={
+  //                     <>
+  //                       <Box component="span" display="block">
+  //                         {event.time}
+  //                       </Box>
+  //                       <Box display="flex" alignItems="center" mt={0.5}>
+  //                         <LocationOn fontSize="small" color="action" />
+  //                         <Typography
+  //                           variant="body2"
+  //                           color="text.secondary"
+  //                           ml={0.5}
+  //                         >
+  //                           {event.location}
+  //                         </Typography>
+  //                       </Box>
+  //                     </>
+  //                   }
+  //                 />
+  //                 <Chip label={event.category} size="small" color="primary" />
+  //               </ListItem>
+  //             </Paper>
+  //           ))}
+  //         </List>
+  //       ) : (
+  //         <Typography variant="body2" color="text.secondary">
+  //           No hay eventos programados para este día
+  //         </Typography>
+  //       )}
+  //     </Box>
+  //   );
+  // };
 
   return (
     <Box display="flex" width="70%">

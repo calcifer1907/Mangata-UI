@@ -14,6 +14,8 @@ const Loading = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        opacity: 0.8,
+        transition: "opacity 0.3s ease-in-out",
       }}
     >
       <CircularProgress />

@@ -1,12 +1,8 @@
 import { requestApis } from "./Request";
 
 import { ILogin, IUserInfo } from "../../interfaces/ILogin";
-import {
-  IGetUserId,
-  IUsers,
-  IGetListSales,
-  IValidEmail,
-} from "../../interfaces/IUser";
+import { IGetUserId, IUsers, IValidEmail } from "../../interfaces/IUser";
+import { IGetListSales } from "../../interfaces/ISales";
 import { ILunches, IMinMaxResponse } from "../../interfaces/IAccompanist";
 import { IBanksList } from "../../interfaces/IMercadoPago";
 import {

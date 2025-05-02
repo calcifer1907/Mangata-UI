@@ -1,20 +1,24 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+
+/**Apis */
 import {
   getLIstForTable,
   getAdmin,
   getSumCommission,
   getCharListSales,
-} from "../utils/api/agent";
+} from "../../utils/api/agent";
 
-import { useContextUser } from "../hooks/useContextUser";
+/**Context */
+import { useContextSales } from "../../hooks/useSales/useSalesContex";
+import { useContextUser } from "../useContextUser";
 
+/**Libreries */
 import { enqueueSnackbar } from "notistack";
 
-import { IGetListSales } from "../interfaces/IUser";
-import { IRangaDate } from "../interfaces/ICalendar";
-import { formatDate } from "../generalFunctions/formatDate";
-import { IBodySales, ISalesData } from "../interfaces/IReservation";
-import { formatPrice } from "../generalFunctions/formaters";
+import { formatDate } from "../../generalFunctions/formatDate";
+import { IBodySales } from "../../interfaces/IReservation";
+import { formatPrice } from "../../generalFunctions/formaters";
+import { IGetListSales } from "../../interfaces/ISales";
 
 interface IProps {
   page: string;
@@ -26,14 +30,17 @@ const PATH_EMPLOYEE = "mycommissions";
 export const useSales = ({ page }: IProps) => {
   const { userInfo } = useContextUser();
 
-  const [dataChartList, setDataChartList] = useState<ISalesData[]>([]);
-  const [dataList, setDataList] = useState<IGetListSales[]>([]);
-  const [dateChange, setDateChange] = useState<IRangaDate>({
-    startDate: new Date(),
-    endDate: new Date(),
-    key: "selection",
-  });
-  const [loading, setLoading] = useState<boolean>(false);
+  const {
+    dataChartList,
+    dataList,
+    dateChange,
+    setDataChartList,
+    loading,
+    setDataList,
+    setDateChange,
+    setLoading,
+    setDataListFilter,
+  } = useContextSales();
 
   const [sumCommissionState, setSumCommissionState] = useState<number>(0);
 
@@ -55,6 +62,7 @@ export const useSales = ({ page }: IProps) => {
     }
 
     setDataList(data);
+    setDataListFilter(data);
     setLoading(false);
   }, [page, dateChange, userInfo.USER_INFO.ID_EMPLOYEE]);
 

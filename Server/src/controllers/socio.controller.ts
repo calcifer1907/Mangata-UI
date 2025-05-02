@@ -7,13 +7,12 @@ class SocioController {
     try {
       const { id } = req.params;
       const socios = await socioRepository.sumCommission(Number(id));
-      res.json(socios); // Se agrega return para detener la ejecución
+      return res.json(socios); // Se agrega return para detener la ejecución
     } catch (error) {
-      console.log(error);
       if (error instanceof AppError) {
         res.status(error.statusCode).json({ message: error.message }); // Se agrega return
       } else {
-        res.status(500).json({ message: "Something wrong error!" }); // Se agrega return
+        return res.status(500).json({ message: "Something wrong error!" }); // Se agrega return
       }
     }
   }

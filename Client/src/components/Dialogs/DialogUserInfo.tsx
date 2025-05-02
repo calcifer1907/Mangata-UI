@@ -1,5 +1,5 @@
 import Dialog from "./Dialog";
-import { IGetListSales } from "../../interfaces/IUser";
+import { IGetListSales } from "../../interfaces/ISales";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { formatDate } from "../../generalFunctions/formatDate";

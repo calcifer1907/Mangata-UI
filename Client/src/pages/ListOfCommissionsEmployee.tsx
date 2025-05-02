@@ -19,13 +19,13 @@ import { Icon } from "@iconify/react";
 import { format } from "@formkit/tempo";
 
 /**Hooks */
-import { useSales } from "../hooks/useSales";
+import { useSales } from "../hooks/useSales/useSales";
 
 /**Functions */
 import { formatPrice } from "../generalFunctions/formaters";
 
 /**Interface */
-import { IAccompanistListSales, IGetListSales } from "../interfaces/IUser";
+import { IAccompanistListSales, IGetListSales } from "../interfaces/ISales";
 
 /**SVG */
 import searchIcon from "../../src/assets/searchIcon.svg";
@@ -285,7 +285,13 @@ const ListOfCommissions = () => {
           margin="none"
           type="date"
           value={dateChange}
-          onChange={(e) => setDateChange(e.target.value)}
+          onChange={(e) =>
+            setDateChange({
+              startDate: new Date(e.target.value),
+              endDate: new Date(e.target.value),
+              key: "selection",
+            })
+          }
           slotProps={{
             input: {
               startAdornment: (

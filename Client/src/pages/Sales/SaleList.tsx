@@ -1,7 +1,8 @@
 import { MouseEvent } from "react";
 
 /**Hooks */
-import { useSales } from "../../hooks/useSales";
+import { useSales } from "../../hooks/useSales/useSales";
+import { useContextSales } from "../../hooks/useSales/useSalesContex";
 
 /**Libreries */
 import { Icon } from "@iconify/react";
@@ -19,13 +20,12 @@ import { formatPrice } from "../../generalFunctions/formaters";
 import { STATUS_COLOR } from "../../generalFunctions/status";
 import { FC, useState } from "react";
 import MenuOptions from "./MenuOptions";
-import { IAccompanistListSales, IGetListSales } from "../../interfaces/IUser";
+import { IGetListSales } from "../../interfaces/ISales";
 
 interface SaleListProps {
   dataList: IGetListSales[];
   dataListFilter: IGetListSales[];
   setOpenDialog: (open: boolean) => void;
-  setArrayShowAccompanist: (accompanist: IAccompanistListSales[]) => void;
   setCurrentItem: (item: IGetListSales | null) => void;
   setOpenDialogUserInfo: (open: boolean) => void;
 }
@@ -36,11 +36,11 @@ const SaleList: FC<SaleListProps> = ({
   dataList,
   dataListFilter,
   setOpenDialog,
-  setArrayShowAccompanist,
   setCurrentItem,
   setOpenDialogUserInfo,
 }) => {
   const { changeStatusReservation } = useSales({ page: "admin" });
+  const { setArrayShowAccompanist } = useContextSales();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [codeRe, setCodeRe] = useState<string>("");
