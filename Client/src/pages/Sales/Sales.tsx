@@ -42,9 +42,11 @@ const Sales = ({
     setDateChange,
   } = useContextSales();
 
-  const { updatePaymentEmployee, totalSaleStatus } = useSales({
-    page: "admin",
-  });
+  const { updatePaymentEmployee, totalSaleStatus, changeStatusReservation } =
+    useSales({
+      page: "admin",
+    });
+
   const [changeRangeDate, setChangeRangeDate] = useState<{
     startDate: Date;
     endDate: Date;
@@ -137,9 +139,6 @@ const Sales = ({
     }
   };
 
-  //   useEffect(() => {
-  //     setDataListFilter(dataList);
-  //   }, [dataList]);
   return (
     <Box m={2} className="wd-100">
       <Box className="d-flex flex-row gap-8 wd-100 flex-dirrection-row ">
@@ -197,8 +196,7 @@ const Sales = ({
               <>
                 {dataListFilter.length > 0 ? (
                   <SaleList
-                    dataList={dataList}
-                    dataListFilter={dataListFilter}
+                    changeStatusReservation={changeStatusReservation}
                     setOpenDialog={setOpenDialog}
                     setOpenDialogUserInfo={setOpenDialogUserInfo}
                     setCurrentItem={setCurrentItem}

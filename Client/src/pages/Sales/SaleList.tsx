@@ -1,7 +1,7 @@
 import { MouseEvent } from "react";
 
 /**Hooks */
-import { useSales } from "../../hooks/useSales/useSales";
+// import { useSales } from "../../hooks/useSales/useSales";
 import { useContextSales } from "../../hooks/useSales/useSalesContex";
 
 /**Libreries */
@@ -23,24 +23,23 @@ import MenuOptions from "./MenuOptions";
 import { IGetListSales } from "../../interfaces/ISales";
 
 interface SaleListProps {
-  dataList: IGetListSales[];
-  dataListFilter: IGetListSales[];
   setOpenDialog: (open: boolean) => void;
   setCurrentItem: (item: IGetListSales | null) => void;
   setOpenDialogUserInfo: (open: boolean) => void;
+  changeStatusReservation: (code: string, status: string) => Promise<void>;
 }
 
 const FORMAT_DATE = "YYYY/MM/DD";
 
 const SaleList: FC<SaleListProps> = ({
-  dataList,
-  dataListFilter,
   setOpenDialog,
   setCurrentItem,
   setOpenDialogUserInfo,
+  changeStatusReservation,
 }) => {
-  const { changeStatusReservation } = useSales({ page: "admin" });
-  const { setArrayShowAccompanist } = useContextSales();
+  // const { changeStatusReservation } = useSales({ page: "admin" });
+  const { setArrayShowAccompanist, dataList, dataListFilter } =
+    useContextSales();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [codeRe, setCodeRe] = useState<string>("");

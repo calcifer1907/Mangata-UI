@@ -22,10 +22,10 @@ const useContextSales = (props: IContextProps) => {
   const [arrayShowAccompanist, setArrayShowAccompanist] = useState<
     IAccompanistListSales[]
   >([]);
-  const [dateChange, setDateChange] = useState<IRangaDate>({
+  const [dateChange, setDateChange] = useState<IRangaDate | null>({
     startDate: new Date(),
     endDate: new Date(),
-    key: "selection",
+    key: "select",
   });
   const [loading, setLoading] = useState<boolean>(false);
 

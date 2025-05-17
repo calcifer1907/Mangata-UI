@@ -72,7 +72,6 @@ class ReservationRepository {
     startDate: string,
     endDate: string
   ): Promise<IChartListSalesEmployee[]> {
-    console.log(startDate, endDate);
     const { rows } = await pool.query(
       `SELECT re.STATUS_RESERVATION,re.COMMISSION_EMPLOYEE,TO_CHAR(re.CREATED_AT AT TIME ZONE 'UTC', 'YYYY-MM-DD') AS CREATED_AT, CONCAT(us.FIRST_NAME,us.LAST_NAME) AS WHO_SALE,CODE_RESERVATION FROM reservations re INNER JOIN users us ON us.ID = re.ID_EMPLOYEE WHERE 
       (re.CREATED_AT BETWEEN $1 AND $2) ORDER BY re.CREATED_AT;`,

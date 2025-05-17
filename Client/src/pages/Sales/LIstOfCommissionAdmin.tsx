@@ -15,7 +15,7 @@ import { useContextSales } from "../../hooks/useSales/useSalesContex";
 
 /**Component */
 import DialogListAccompanist from "../../components/Dialogs/DialogListAccompanist";
-// import CalendarPage from "../components/Calendar/CalendarPage/CalendarPage";
+import CalendarPage from "../../components/Calendar/CalendarPage/CalendarPage";
 import DialogUserInfo from "../../components/Dialogs/DialogUserInfo";
 
 import MenuLeft from "./MenuLeft";
@@ -29,6 +29,7 @@ const LIstOfCommissionAdmin = () => {
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [openDialogUserInfo, setOpenDialogUserInfo] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<IGetListSales | null>(null);
+  const [selectView, setSelectView] = useState<string>("Tabla");
 
   const handleOnchange = (value: string) => {
     const filter = dataList.filter((item) => {
@@ -41,13 +42,21 @@ const LIstOfCommissionAdmin = () => {
 
   return (
     <Box className="d-flex " style={{ height: "100vh" }}>
-      <MenuLeft callBack={handleOnchange} />
-
-      <Sales
-        setCurrentItem={setCurrentItem}
-        setOpenDialog={setOpenDialog}
-        setOpenDialogUserInfo={setOpenDialogUserInfo}
+      <MenuLeft
+        callBack={handleOnchange}
+        setSelectView={setSelectView}
+        selectView={selectView}
       />
+
+      {selectView === "Tabla" ? (
+        <Sales
+          setCurrentItem={setCurrentItem}
+          setOpenDialog={setOpenDialog}
+          setOpenDialogUserInfo={setOpenDialogUserInfo}
+        />
+      ) : (
+        <CalendarPage />
+      )}
 
       <DialogListAccompanist
         open={openDialog}

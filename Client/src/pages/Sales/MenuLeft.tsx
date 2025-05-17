@@ -8,7 +8,6 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
-import { NavLink } from "react-router-dom";
 
 /**Components */
 import TextFieldComponent from "../../components/TextField/TextFieldComponent";
@@ -20,28 +19,32 @@ const categories = [
 
 interface IProps {
   callBack: (date: string) => void;
+  selectView: string;
+  setSelectView: (view: string) => void;
 }
 
-const MenuLeft: FC<IProps> = ({ callBack }) => {
+const MenuLeft: FC<IProps> = ({ callBack, setSelectView, selectView }) => {
   const [values, setValues] = useState("");
 
   return (
-    <Box width={350} bgcolor="background.paper" p={2} boxShadow={2}>
-      <Typography variant="h5" gutterBottom>
-        Reservaciones
-      </Typography>
-      <Divider sx={{ my: 2 }} />
-      <TextFieldComponent
-        iconName=""
-        label=""
-        placeholder="Busqueda..."
-        onChange={(value) => {
-          setValues(value);
-          callBack(value);
-        }}
-        value={values}
-      />
-      <Divider sx={{ my: 2 }} />
+    <Box width={350} bgcolor="background.paper" pl={2} boxShadow={2}>
+      <Box pr={2}>
+        <Typography variant="h5" gutterBottom>
+          Reservaciones
+        </Typography>
+        <Divider sx={{ my: 2 }} />
+        <TextFieldComponent
+          iconName=""
+          label=""
+          placeholder="Busqueda..."
+          onChange={(value) => {
+            setValues(value);
+            callBack(value);
+          }}
+          value={values}
+        />
+        <Divider sx={{ my: 2 }} />
+      </Box>
       {categories.map((category) => (
         <Box key={category.name} mb={3}>
           <Typography variant="subtitle2" color="text.secondary" gutterBottom>
@@ -49,8 +52,16 @@ const MenuLeft: FC<IProps> = ({ callBack }) => {
           </Typography>
           <List dense>
             {category.items.map((item) => (
-              <ListItem key={item}>
-                <Button to={item} component={NavLink}>
+              <ListItem
+                key={item}
+                className={selectView === item ? "activeMenuLeft" : ""}
+              >
+                <Button
+                  style={{ color: selectView === item ? "#FFF" : "#000" }}
+                  onClick={() => {
+                    setSelectView(item);
+                  }}
+                >
                   <ListItemText primary={item} />
                 </Button>
               </ListItem>

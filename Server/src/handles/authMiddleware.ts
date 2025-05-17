@@ -1,4 +1,13 @@
 import { Response, Request, NextFunction } from "express";
+
+// Extend the Request interface to include the 'user' property
+declare global {
+  namespace Express {
+    interface Request {
+      user?: any;
+    }
+  }
+}
 import { verifyToken } from "../auth";
 
 // Middleware para proteger las rutas
@@ -20,7 +29,6 @@ export const authenticate = (
       res.status(403).json({ message: "Token no válido" });
     } else {
       // Si el token es válido, adjuntamos la información del usuario al request
-      //@ts-ignore
       req.user = decoded;
     }
   }

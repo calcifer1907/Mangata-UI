@@ -312,6 +312,12 @@ body{
   white-space: nowrap;
 }
 
+.activeMenuLeft{
+  background-color: var(--color-theme-ligth-blue);
+  border-radius: 12px 0px  0px 12px;
+  
+}
+
 @media (max-width: 768px) {
   .video-background-container.active {
     background-color: #2B3D5E;

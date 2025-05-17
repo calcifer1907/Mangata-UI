@@ -32,12 +32,9 @@ export const useSales = ({ page }: IProps) => {
 
   const {
     dataChartList,
-    dataList,
     dateChange,
     setDataChartList,
-    loading,
     setDataList,
-    setDateChange,
     setLoading,
     setDataListFilter,
   } = useContextSales();
@@ -45,25 +42,27 @@ export const useSales = ({ page }: IProps) => {
   const [sumCommissionState, setSumCommissionState] = useState<number>(0);
 
   const responseData = useCallback(async () => {
-    const body: IBodySales = {
-      startDate: formatDate(dateChange.startDate, "YYYY-MM-DD"),
-      endDate: formatDate(dateChange.endDate, "YYYY-MM-DD"),
-    };
-    setLoading(true);
-    let data: IGetListSales[] = [];
-    if (page.includes("admin")) {
-      data = await getLIstForTable.getListData(body, PATH_ADMIN);
-    } else {
-      const idEmployee = userInfo.USER_INFO.ID_EMPLOYEE;
-      if (idEmployee) {
-        body.id_employee = idEmployee;
+    if (dateChange?.startDate && dateChange?.endDate) {
+      const body: IBodySales = {
+        startDate: formatDate(dateChange.startDate, "YYYY-MM-DD"),
+        endDate: formatDate(dateChange.endDate, "YYYY-MM-DD"),
+      };
+      setLoading(true);
+      let data: IGetListSales[] = [];
+      if (page.includes("admin")) {
+        data = await getLIstForTable.getListData(body, PATH_ADMIN);
+      } else {
+        const idEmployee = userInfo.USER_INFO.ID_EMPLOYEE;
+        if (idEmployee) {
+          body.id_employee = idEmployee;
+        }
+        data = await getLIstForTable.getListData(body, PATH_EMPLOYEE);
       }
-      data = await getLIstForTable.getListData(body, PATH_EMPLOYEE);
-    }
 
-    setDataList(data);
-    setDataListFilter(data);
-    setLoading(false);
+      setDataList(data);
+      setDataListFilter(data);
+      setLoading(false);
+    }
   }, [page, dateChange, userInfo.USER_INFO.ID_EMPLOYEE]);
 
   const changeStatusReservation = async (id: string, status: string) => {
@@ -124,12 +123,14 @@ export const useSales = ({ page }: IProps) => {
   }, [userInfo.USER_INFO.ID_EMPLOYEE]);
 
   const fetchGetChartList = useCallback(async () => {
-    const body: IBodySales = {
-      startDate: formatDate(dateChange.startDate, "YYYY-MM-DD"),
-      endDate: formatDate(dateChange.endDate, "YYYY-MM-DD"),
-    };
-    const data = await getCharListSales(body);
-    setDataChartList(data);
+    if (dateChange?.startDate && dateChange?.endDate) {
+      const body: IBodySales = {
+        startDate: formatDate(dateChange.startDate, "YYYY-MM-DD"),
+        endDate: formatDate(dateChange.endDate, "YYYY-MM-DD"),
+      };
+      const data = await getCharListSales(body);
+      setDataChartList(data);
+    }
   }, [dateChange]);
 
   const totalSaleStatus = useMemo(() => {
@@ -176,15 +177,9 @@ export const useSales = ({ page }: IProps) => {
   }, [fetchSumCommission]);
 
   return {
-    dataList,
-    setDataList,
-    loading,
     sumCommissionState,
     changeStatusReservation,
-    setDateChange,
     updatePaymentEmployee,
-    dateChange,
-    dataChartList,
     totalSaleStatus,
   };
 };

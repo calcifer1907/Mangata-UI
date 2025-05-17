@@ -28,12 +28,12 @@ export interface ISales {
   setDataList: (data: IGetListSales[]) => void;
   dataChartList: ISalesData[];
   setDataChartList: (data: ISalesData[]) => void;
+  dateChange: IRangaDate | null;
   setDateChange: (date: IRangaDate) => void;
-  dateChange: IRangaDate;
-  setLoading: (loading: boolean) => void;
   loading: boolean;
+  setLoading: (loading: boolean) => void;
   dataListFilter: IGetListSales[];
   setDataListFilter: (data: IGetListSales[]) => void;
-  setArrayShowAccompanist: (data: IAccompanistListSales[]) => void;
   arrayShowAccompanist: IAccompanistListSales[];
+  setArrayShowAccompanist: (data: IAccompanistListSales[]) => void;
 }
