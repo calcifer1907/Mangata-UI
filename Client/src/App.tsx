@@ -7,7 +7,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import CreateUser from "./pages/CreateUser";
 import Reservation from "./pages/Reservations/ContainerContextReservation";
-import ListOfCommissionsEmployee from "./pages/Sales/ListOfCommissionsEmployee";
+import ListOfCommissionsEmployee from "./pages/Sales/MainCommisionEmployee";
 import MainSales from "./pages/Sales/MainSales";
 import Logout from "./pages/Logout";
 import MyNavbar from "./components/navbar/NavBar";

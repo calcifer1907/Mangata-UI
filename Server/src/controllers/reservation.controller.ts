@@ -61,12 +61,11 @@ export const getListSalesEmployee = async (
   response: Response
 ) => {
   try {
-    const { date, id_employee } = request.body;
-
+    const { startDate, endDate, id_employee } = request.body;
     const resultReservations = await pool.query(
       `SELECT CODE_RESERVATION, ID_EMPLOYEE, STATUS_RESERVATION, CREATED_AT FROM reservations  
-      WHERE TO_CHAR(CREATED_AT AT TIME ZONE 'UTC', 'YYYY-MM-DD') = $1 AND ID_EMPLOYEE = $2`,
-      [date, id_employee]
+      WHERE TO_CHAR(CREATED_AT AT TIME ZONE 'UTC', 'YYYY-MM-DD') BETWEEN  $1 AND $2 AND ID_EMPLOYEE = $3 ORDER BY CREATED_AT`,
+      [startDate, endDate, id_employee]
     );
 
     const codeReservations = resultReservations.rows.map(
