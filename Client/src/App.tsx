@@ -7,13 +7,14 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import CreateUser from "./pages/CreateUser";
 import Reservation from "./pages/Reservations/ContainerContextReservation";
-import ListOfCommissionsEmployee from "./pages/ListOfCommissionsEmployee";
-import LIstOFCommissionAdmin from "./pages/LIstOfCommissionAdmin";
+import ListOfCommissionsEmployee from "./pages/Sales/MainCommisionEmployee";
+import MainSales from "./pages/Sales/MainSales";
 import Logout from "./pages/Logout";
 import MyNavbar from "./components/navbar/NavBar";
 import GenerateReservation from "./pages/GenerateReservation/GenerateReservation";
 import CheckReservation from "./pages/CheckReservation/CheckReservation";
 import NotFound from "./pages/NotFound";
+import CalendarPage from "./components/Calendar/CalendarPage/CalendarPage";
 
 // import PayMenetMethod from "./pages/PayMenetMethod";
 
@@ -26,6 +27,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/CreateUser" element={<CreateUser />} />
+            <Route path="/Calendar" element={<CalendarPage />} />
             <Route
               path="/GenerateReservation"
               element={<GenerateReservation />}
@@ -35,7 +37,7 @@ const App = () => {
               path="/MyCommissions"
               element={<ListOfCommissionsEmployee />}
             />
-            <Route path="/Reservations" element={<LIstOFCommissionAdmin />} />
+            <Route path="/Reservations" element={<MainSales />} />
             <Route path="/check-reservation" element={<CheckReservation />} />
             <Route path="/Login" element={<Login />} />
             <Route path="/Logout" element={<Logout />} />

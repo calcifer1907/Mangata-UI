@@ -10,7 +10,7 @@ import { Box, Paper, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 /**Interface */
-import { IAccompanistListSales } from "../../interfaces/IUser";
+import { IAccompanistListSales } from "../../interfaces/ISales";
 
 /**Component */
 import Dialog from "./Dialog";

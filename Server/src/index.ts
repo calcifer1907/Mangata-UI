@@ -21,9 +21,9 @@ const corsOptions = {
     "http://localhost:5173",
     "http://192.168.0.233:5173",
     "https://mangatabeachclub.com",
-    "https://mangata-ui-client.vercel.app",
     "https://integrations.api.bold.co",
   ],
+  credentials: true,
 };
 
 const PORT = process.env.PORT || 8080;
@@ -43,6 +43,31 @@ app.use("/api", exportData);
 app.use("/api", socio);
 app.use(payments);
 app.use(errorHandler);
+
+app.use((req, res, next) => {
+  // res.setHeader(
+  //   "Content-Security-Policy",
+  //   "default-src 'self'; " +
+  //     "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://apis.google.com; " +
+  //     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
+  //     "connect-src 'self' https://mangatabeachclub.com; " +
+  //     "frame-src 'self' https://www.youtube.com; " +
+  //     "object-src 'none'; " +
+  //     "base-uri 'self'; " +
+  //     "form-action 'self';"
+  // );
+
+  // HSTS
+  // res.setHeader(
+  //   "Strict-Transport-Security",
+  //   "max-age=63072000; includeSubDomains; preload"
+  // );
+
+  // X-Content-Type-Options
+  res.setHeader("X-Content-Type-Options", "nosniff");
+
+  next();
+});
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);

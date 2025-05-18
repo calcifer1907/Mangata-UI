@@ -11,28 +11,32 @@ import { useState, ChangeEvent, useEffect } from "react";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Container from "@mui/material/Container";
-import InputAdornment from "@mui/material/InputAdornment";
 import Paper from "@mui/material/Paper";
-import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { Icon } from "@iconify/react";
 import { format } from "@formkit/tempo";
 
 /**Hooks */
-import { useSales } from "../hooks/useSales";
+import { useSales } from "../../hooks/useSales/useSales";
+
+/**Context */
+import { useContextSales } from "../../hooks/useSales/useSalesContex";
 
 /**Functions */
-import { formatPrice } from "../generalFunctions/formaters";
+import { formatPrice } from "../../generalFunctions/formaters";
 
 /**Interface */
-import { IAccompanistListSales, IGetListSales } from "../interfaces/IUser";
+import { IAccompanistListSales, IGetListSales } from "../../interfaces/ISales";
 
 /**SVG */
-import searchIcon from "../../src/assets/searchIcon.svg";
+import searchIcon from "../../../src/assets/searchIcon.svg";
 
 /**Component */
-import DialogListAccompanist from "../components/Dialogs/DialogListAccompanist";
-import { STATUS_COLOR } from "../generalFunctions/status";
+import DialogListAccompanist from "../../components/Dialogs/DialogListAccompanist";
+import { STATUS_COLOR } from "../../generalFunctions/status";
+import { DateRange } from "react-date-range";
+import { InitialCalendar } from "../../constant/Calendar";
+import ButtonComponent from "../../components/Buttons/ButtonComponent";
 
 // import TableUI from "../components/TableUI/TableUI";
 // import { GridColDef } from "@mui/x-data-grid";
@@ -40,20 +44,32 @@ import { STATUS_COLOR } from "../generalFunctions/status";
 const FORMAT_DATE = "YYYY-MM-DD";
 
 const ListOfCommissions = () => {
-  const { dataList, loading, dateChange, setDateChange, sumCommissionState } =
-    useSales({
-      page: "employee",
-    });
+  const {
+    dataList,
+    loading,
+    setDateChange,
+    dataListFilter,
+    setDataListFilter,
+  } = useContextSales();
+
+  const { sumCommissionState } = useSales({
+    page: "employee",
+  });
   const [maxHeight, setMaxHeight] = useState<number>(window.innerHeight);
-  const [dataListFilter, setDataListFilter] = useState<IGetListSales[]>([]);
   const [openDialog, setOpenDialog] = useState(false);
   const [arrayShowAccompanist, setArrayShowAccompanist] = useState<
     IAccompanistListSales[]
   >([]);
 
+  const [changeRangeDate, setChangeRangeDate] = useState<{
+    startDate: Date;
+    endDate: Date;
+    key: string;
+  }>(InitialCalendar);
+
   const handleOnchange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    const filter = dataList.filter((item) =>
+    const filter = dataList.filter((item: IGetListSales) =>
       `${item.code_reservation}${
         item.ACCOMPANIST.length > 0 ? item.ACCOMPANIST[0].name_accompanist : ""
       }`
@@ -67,9 +83,11 @@ const ListOfCommissions = () => {
     setMaxHeight(window.innerHeight); // Usamos el alto del viewport
   };
 
-  useEffect(() => {
-    setDataListFilter(dataList);
-  }, [dataList]);
+  const handleApllyRangeDate = () => {
+    if (changeRangeDate) {
+      setDateChange(changeRangeDate);
+    }
+  };
 
   useEffect(() => {
     // Actualizar al cargar
@@ -269,46 +287,7 @@ const ListOfCommissions = () => {
           </Box>
         </Box>
       </Box>
-      <Box
-        sx={{
-          paddingInline: { xs: "10px", md: "40px", lg: "40px" },
-          height: "56px",
-          marginBottom: 2,
-          maxWidth: "390px",
-          minWidth: "200px",
-        }}
-      >
-        <TextField
-          fullWidth
-          label="Fecha"
-          variant="filled"
-          margin="none"
-          type="date"
-          value={dateChange}
-          onChange={(e) => setDateChange(e.target.value)}
-          slotProps={{
-            input: {
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Icon
-                    icon="solar:calendar-bold-duotone"
-                    width="24"
-                    height="24"
-                    style={{ color: "#2B3D5E" }}
-                  />
-                </InputAdornment>
-              ),
-            },
-          }}
-          InputLabelProps={{
-            shrink: true, // Asegura que la etiqueta permanezca arriba
-          }}
-          sx={{
-            background: "#FFFFFF",
-            borderRadius: "8px 8px 0 0",
-          }}
-        />
-      </Box>
+
       <Box
         sx={{
           borderBottom: "6px solid #2B3D5E",
@@ -340,6 +319,7 @@ const ListOfCommissions = () => {
           {formatPrice(sumCommissionState)}
         </Typography>
       </Box>
+
       <Container
         sx={{
           height: "auto",
@@ -348,6 +328,29 @@ const ListOfCommissions = () => {
           paddingBottom: 1,
         }}
       >
+        <Paper className="margin-buttom-8" sx={{ p: 1 }} elevation={3}>
+          <DateRange
+            editableDateInputs={true}
+            onChange={(item) => {
+              const { startDate, endDate } = item.selection;
+              setChangeRangeDate({
+                startDate: startDate || new Date(),
+                endDate: endDate || new Date(),
+                key: "selection",
+              });
+            }}
+            moveRangeOnFirstSelection={false}
+            ranges={[changeRangeDate]}
+          />
+          <Box slot="end" className="d-flex justify-content-end">
+            <ButtonComponent
+              iconName=""
+              title="Aplicar"
+              onClick={handleApllyRangeDate}
+              background="background-color-button-dark-blue"
+            />
+          </Box>
+        </Paper>
         <Box
           sx={{
             display: "flex",

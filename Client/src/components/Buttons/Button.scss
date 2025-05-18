@@ -1,6 +1,7 @@
 .container-button{
         height: 40px;
-        width: 178px;
+        width: max-content;
+        padding-inline: 16px;
         display: flex;
         align-items: center;
         justify-content: center;

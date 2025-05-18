@@ -4,6 +4,7 @@ import { pool } from "../Connection";
 import reservationRepository from "../repository/reservationRepository";
 
 import userRepository from "../repository/userRepository";
+import { ICountPersonReservation } from "../interfaces/IReservation";
 
 // import { sendEmail } from "./sendEmail.controller";
 
@@ -60,12 +61,11 @@ export const getListSalesEmployee = async (
   response: Response
 ) => {
   try {
-    const { date, id_employee } = request.body;
-
+    const { startDate, endDate, id_employee } = request.body;
     const resultReservations = await pool.query(
       `SELECT CODE_RESERVATION, ID_EMPLOYEE, STATUS_RESERVATION, CREATED_AT FROM reservations  
-      WHERE TO_CHAR(CREATED_AT AT TIME ZONE 'UTC', 'YYYY-MM-DD') = $1 AND ID_EMPLOYEE = $2`,
-      [date, id_employee]
+      WHERE TO_CHAR(CREATED_AT AT TIME ZONE 'UTC', 'YYYY-MM-DD') BETWEEN  $1 AND $2 AND ID_EMPLOYEE = $3 ORDER BY CREATED_AT`,
+      [startDate, endDate, id_employee]
     );
 
     const codeReservations = resultReservations.rows.map(
@@ -73,17 +73,16 @@ export const getListSalesEmployee = async (
     );
 
     const resultAccompanist = await pool.query(
-      `SELECT ac.NAME_ACCOMPANIST, lun.DESCRIPTION, ac.ID_RESERVATION FROM  
-      accompanist ac INNER JOIN lunches lun ON lun.ID = ac.ID_LUNCHES WHERE ac.ID_RESERVATION = ANY($1::text[])`,
+      `SELECT ac.NAME_ACCOMPANIST, lun.DESCRIPTION, ac.ID_RESERVATION,ac.ID FROM  
+      accompanist ac INNER JOIN lunches lun ON lun.ID = ac.ID_LUNCHES WHERE ac.ID_RESERVATION = ANY($1::text[]) `,
       [codeReservations]
     );
-
     const diff = resultReservations.rows.map((values: any, index: number) => ({
       ...values,
       id: index + 1,
-      ACCOMPANIST: resultAccompanist.rows.filter(
-        (item) => item.id_reservation === values.code_reservation
-      ),
+      ACCOMPANIST: resultAccompanist.rows
+        .filter((item) => item.id_reservation === values.code_reservation)
+        .sort((a, b) => a.id - b.id),
     }));
     response.json(diff);
   } catch (_error) {
@@ -102,16 +101,17 @@ export const getListSalesAdmin = async (
   response: Response
 ) => {
   try {
-    const { date } = request.body;
+    const { startDate, endDate } = request.body;
     const resultReservations = await pool.query(
-      `SELECT CODE_RESERVATION, ID_EMPLOYEE, STATUS_RESERVATION, COMMISSION_EMPLOYEE, CURRENT_COMMISSION,PAY, TO_CHAR(CREATED_AT AT TIME ZONE 'UTC', 'YYYY-MM-DD') AS CREATED_AT FROM reservations  WHERE TO_CHAR(CREATED_AT AT TIME ZONE 'UTC', 'YYYY-MM-DD') = $1`,
-      [date]
+      `SELECT CODE_RESERVATION, ID_EMPLOYEE, STATUS_RESERVATION, COMMISSION_EMPLOYEE, CURRENT_COMMISSION,PAY,EMAIL,TELEPHONE,
+       TO_CHAR(CREATED_AT AT TIME ZONE 'UTC', 'YYYY-MM-DD') AS CREATED_AT,CREATED_ON FROM reservations  WHERE TO_CHAR(CREATED_AT AT TIME ZONE 'UTC', 'YYYY-MM-DD') BETWEEN  $1 AND $2 ORDER BY CREATED_AT`,
+      [startDate, endDate]
     );
     const codeReservations = resultReservations.rows.map(
       (values) => values.code_reservation
     );
     const resultAccompanist = await pool.query(
-      `SELECT ac.NAME_ACCOMPANIST, lun.DESCRIPTION, ac.ID_RESERVATION FROM  
+      `SELECT ac.ID,ac.NAME_ACCOMPANIST, lun.DESCRIPTION, ac.ID_RESERVATION FROM  
       accompanist ac INNER JOIN lunches lun ON lun.ID = ac.ID_LUNCHES WHERE ac.ID_RESERVATION = ANY($1::text[])`,
       [codeReservations]
     );
@@ -130,9 +130,9 @@ export const getListSalesAdmin = async (
         DIFF: values.commission_employee - values.current_commission,
         EMPLOYEE,
         BANK_ACCOUNT,
-        ACCOMPANIST: resultAccompanist.rows.filter(
-          (item) => item.id_reservation === values.code_reservation
-        ),
+        ACCOMPANIST: resultAccompanist.rows
+          .filter((item) => item.id_reservation === values.code_reservation)
+          .sort((a, b) => a.id - b.id),
       };
     });
     response.json(diff);
@@ -278,6 +278,37 @@ class ReservationController {
     try {
       const result = await reservationRepository.isBlockedDay();
       response.json(result);
+    } catch (error) {
+      console.log(error);
+      response.status(500).json({ message: "Something went wrong" });
+    }
+  }
+
+  async getCharListSalesAdmin(request: Request, response: Response) {
+    try {
+      const { startDate, endDate } = request.body;
+      const result = await reservationRepository.chartListSalesEmployee(
+        startDate,
+        endDate
+      );
+      const codeReservations = result.map((values) => values.code_reservation);
+      const countPerson =
+        await reservationRepository.countNumberPersonReservation(
+          codeReservations
+        );
+      const resultCharList = result.map((values) => {
+        const findCount = countPerson.find(
+          ({ id_reservation }: ICountPersonReservation) =>
+            id_reservation === values.code_reservation
+        );
+        return {
+          ...values,
+          suma_sale:
+            (findCount?.number_persons || 0) *
+            Number(values.commission_employee),
+        };
+      });
+      response.json(resultCharList);
     } catch (error) {
       console.log(error);
       response.status(500).json({ message: "Something went wrong" });

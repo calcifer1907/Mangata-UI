@@ -1,18 +1,15 @@
 import { requestApis } from "./Request";
 
 import { ILogin, IUserInfo } from "../../interfaces/ILogin";
-import {
-  IGetUserId,
-  IUsers,
-  IGetListSales,
-  IGetListData,
-  IValidEmail,
-} from "../../interfaces/IUser";
+import { IGetUserId, IUsers, IValidEmail } from "../../interfaces/IUser";
+import { IGetListSales } from "../../interfaces/ISales";
 import { ILunches, IMinMaxResponse } from "../../interfaces/IAccompanist";
 import { IBanksList } from "../../interfaces/IMercadoPago";
 import {
   IBodyChangeStatus,
+  IBodySales,
   IBodyStatusReservation,
+  ISalesData,
   ISaveCodeGenerate,
 } from "../../interfaces/IReservation";
 import { ICommission, IPaymentBold } from "../../interfaces/IAgent";
@@ -43,7 +40,7 @@ export const methodUser = {
 };
 
 export const getLIstForTable = {
-  getListData: (body: IGetListData, uri: string): Promise<IGetListSales[]> =>
+  getListData: (body: IBodySales, uri: string): Promise<IGetListSales[]> =>
     requestApis.post(`/api/${uri}`, body),
 };
 
@@ -106,3 +103,8 @@ export const getValidEmail = (email: string): Promise<IValidEmail> =>
 
 export const getIsDayBlocked = (): Promise<IBodyBlockDay[]> =>
   requestApis.get("/api/isDayBlocked");
+
+export const getCharListSales = (body: {
+  startDate: string;
+  endDate: string;
+}): Promise<ISalesData[]> => requestApis.post("/api/charListSales", body);

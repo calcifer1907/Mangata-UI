@@ -15,6 +15,7 @@ import { getIsDayBlocked } from "../../utils/api/agent";
 import "react-date-range/dist/styles.css"; // Estilos principales
 import "react-date-range/dist/theme/default.css"; // Tema por defectoo de calendario de react-icons
 import { useTranslation } from "react-i18next";
+import { Box } from "@mui/material";
 
 const FORMAT_DATE = "YYYY-MM-DD";
 
@@ -79,11 +80,13 @@ const DatePickerWithIcon = ({ callback }: IProps) => {
     return lastDayYear;
   };
   return (
-    <div
-      className="date-picker-container"
-      style={{ position: "relative", width: "250px" }}
-    >
-      <div onClick={() => setShowCalendar(!showCalendar)}>
+    <div className="date-picker-container" style={{ position: "relative" }}>
+      <Box
+        onClick={() => setShowCalendar(!showCalendar)}
+        sx={{
+          maxWidth: { md: 328, lg: 328 },
+        }}
+      >
         <TextFieldComponent
           value={formatDate(date.toISOString(), FORMAT_DATE)}
           onChange={() => {}}
@@ -92,7 +95,7 @@ const DatePickerWithIcon = ({ callback }: IProps) => {
           type="text"
           iconName="calendar"
         />
-      </div>
+      </Box>
 
       {showCalendar && (
         <div

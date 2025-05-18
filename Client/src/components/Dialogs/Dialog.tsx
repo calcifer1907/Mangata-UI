@@ -50,7 +50,11 @@ const ScrollDialog: FC<IProps> = ({
       aria-labelledby="scroll-dialog-title"
       aria-describedby="scroll-dialog-description"
     >
-      <DialogTitle id="scroll-dialog-title">{tittle}</DialogTitle>
+      {tittle && (
+        <DialogTitle id="scroll-dialog-title" className="color-blue-ligth-blue">
+          {tittle}
+        </DialogTitle>
+      )}
       <DialogContent dividers>
         <DialogContentText id="scroll-dialog-description">
           {children}

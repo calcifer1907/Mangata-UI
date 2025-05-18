@@ -117,7 +117,7 @@ const NameLunchForm: FC = () => {
             {t("contactDetails")}
           </Typography>
           <Box className="d-flex gap-16 flex-wrap flex-dirrection-row">
-            <CountrySelect onSelect={() => {}} />
+            <CountrySelect />
             <TextFieldComponent
               value={valueCel}
               onChange={handleOnchangeCel}

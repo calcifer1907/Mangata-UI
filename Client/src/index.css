@@ -11,11 +11,15 @@
   --color-theme-dark-blueLigth:#4672a5;  
   --color-theme-sand-light:#f8eac9;
   --color-theme-gray: #D9D9D947;
-  --color-theme-white:#FFFFFF;
+  --color-theme-white:#FFFFFF ;
   --color-theme-black:#000000;
   --color-theme-black-opacity:#00000099;
   --color-theme-midnight-black:#333333;
   --color-theme-harvest-gold: #B99734;
+  --color-theme-pending: #7D1C80;
+  --color-theme-cancel: #C6A02F;
+  --color-theme-approved: #46AE32;
+  --color-theme-rejected: #A93D3F;
 }
 
 body{
@@ -62,7 +66,9 @@ body{
   color: var(--color-theme-dark-blueLigth)
 }
 
-
+.color-blue-ligth-blue{
+  color: var(--color-theme-ligth-blue)
+}
 
 .background-harvest-gold{
   background-color: var(--color-theme-harvest-gold)
@@ -292,9 +298,24 @@ body{
   margin-bottom: 16px;
 }
 
+.margin-buttom-8{
+  margin-bottom: 8px;
+}
 
 .text-align-center{
   text-align: center;
+}
+
+.ellipsisText{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.activeMenuLeft{
+  background-color: var(--color-theme-ligth-blue);
+  border-radius: 12px 0px  0px 12px;
+  
 }
 
 @media (max-width: 768px) {

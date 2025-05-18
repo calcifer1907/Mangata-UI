@@ -2,6 +2,8 @@ import { createECDH } from "crypto";
 import { pool } from "../Connection";
 import {
   IBodyBlockDay,
+  IChartListSalesEmployee,
+  ICountPersonReservation,
   ISaveCodeReservation,
 } from "../interfaces/IReservation";
 
@@ -63,6 +65,27 @@ class ReservationRepository {
   async isBlockedDay(): Promise<IBodyBlockDay[]> {
     const { rows } = await pool.query(
       "SELECT id,TO_CHAR(valid_date AT TIME ZONE 'UTC', 'YYYY/MM/DD') as valid_date FROM is_block_day;"
+    );
+    return rows;
+  }
+  async chartListSalesEmployee(
+    startDate: string,
+    endDate: string
+  ): Promise<IChartListSalesEmployee[]> {
+    const { rows } = await pool.query(
+      `SELECT re.STATUS_RESERVATION,re.COMMISSION_EMPLOYEE,TO_CHAR(re.CREATED_AT AT TIME ZONE 'UTC', 'YYYY-MM-DD') AS CREATED_AT, CONCAT(us.FIRST_NAME,us.LAST_NAME) AS WHO_SALE,CODE_RESERVATION FROM reservations re INNER JOIN users us ON us.ID = re.ID_EMPLOYEE WHERE 
+      (re.CREATED_AT BETWEEN $1 AND $2) ORDER BY re.CREATED_AT;`,
+      [startDate, endDate]
+    );
+    return rows;
+  }
+
+  async countNumberPersonReservation(
+    code_reservation: string[]
+  ): Promise<ICountPersonReservation[]> {
+    const { rows } = await pool.query(
+      `SELECT COUNT(*) AS NUMBER_PERSONS,ID_RESERVATION FROM accompanist WHERE ID_RESERVATION = ANY($1::text[]) GROUP BY ID_RESERVATION;`,
+      [code_reservation]
     );
     return rows;
   }

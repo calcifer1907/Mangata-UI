@@ -47,10 +47,10 @@ const TextFieldComponent: FC<IProps> = ({
     <TextField
       variant="filled"
       margin="none"
-      fullWidth
       placeholder={placeholder}
       label={label}
       type={type}
+      fullWidth
       value={value}
       error={value === ""}
       onBlur={showError}
@@ -72,8 +72,7 @@ const TextFieldComponent: FC<IProps> = ({
       }}
       sx={{
         background: "#FFFFFF",
-        maxWidth: 328,
-        minWidth: 300,
+        maxWidth: { md: 328, lg: 328 },
       }}
     />
   );

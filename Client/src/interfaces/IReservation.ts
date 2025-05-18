@@ -60,3 +60,18 @@ export interface IAccompanistContext {
   selectedCountry: CountryType | null;
   setSelectedCountry: React.Dispatch<React.SetStateAction<CountryType | null>>;
 }
+
+export interface IBodySales {
+  id_employee?: number;
+  startDate: string;
+  endDate: string;
+}
+
+export interface ISalesData {
+  commission_employee: string;
+  created_at: string;
+  who_sale: string;
+  code_reservation: string;
+  suma_sale: number;
+  status_reservation: string;
+}

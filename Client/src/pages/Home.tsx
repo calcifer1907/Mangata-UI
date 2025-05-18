@@ -250,15 +250,6 @@ const Home = () => {
             mangatabypietro2021@gmail.com <br />
             +57 312 6056467
           </Typography>
-          <Typography
-            sx={{
-              color: "#FFFFFF",
-              fontSize: 14,
-              marginBottom: 2,
-            }}
-          >
-            CopyRigth © {new Date().getFullYear()} Mangata Beach Club
-          </Typography>
         </Box>
         <Box
           component="a"
@@ -267,6 +258,15 @@ const Home = () => {
         >
           <img width={32} src="/images/instagram.png" />
         </Box>
+        <Typography
+          sx={{
+            color: "#FFFFFF",
+            fontSize: 14,
+            marginTop: 2,
+          }}
+        >
+          CopyRigth © {new Date().getFullYear()} Mangata Beach Club
+        </Typography>
       </Box>
     </>
   );

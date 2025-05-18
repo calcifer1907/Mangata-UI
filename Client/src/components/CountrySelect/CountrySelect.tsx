@@ -6,24 +6,17 @@ import { useTranslation } from "react-i18next";
 import { countries } from "../../constant/Country";
 import { useContextAccompanist } from "../../hooks/useReservation/useContextReservation";
 
-interface IProps {
-  onSelect: (countryCode: string) => void;
-}
-
-const CountrySelect = ({ onSelect }: IProps) => {
+const CountrySelect = () => {
   const { t } = useTranslation("reserve");
   const { selectedCountry, setSelectedCountry } = useContextAccompanist();
   return (
     <Autocomplete
       options={countries}
       getOptionLabel={(option) => option.label}
-      sx={{ maxWidth: 328, minWidth: { xs: 300, lg: 328 }, margin: 0 }}
+      fullWidth
       value={selectedCountry}
       onChange={(_, newValue) => {
         setSelectedCountry(newValue);
-        if (onSelect && newValue) {
-          onSelect(newValue.code);
-        }
       }}
       renderOption={(props, option) => {
         const { key, ...optionProps } = props;
@@ -36,10 +29,9 @@ const CountrySelect = ({ onSelect }: IProps) => {
           >
             <img
               loading="lazy"
-              width="20"
               srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
               src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
-              alt=""
+              width={20}
             />
             {option.label} ({option.code}) +{option.phone}
           </Box>
@@ -49,10 +41,16 @@ const CountrySelect = ({ onSelect }: IProps) => {
         <TextField
           {...params}
           variant="filled"
-          helperText={!selectedCountry ? t("chooseCountyRequired") : ""}
-          label={t("chooseCounty")}
+          fullWidth
+          helperText={!selectedCountry ? t("chooseCountryRequired") : ""}
+          label={t("chooseCountry")}
+          placeholder={t("enterCountry")}
           error={!selectedCountry}
           value={selectedCountry}
+          sx={{
+            background: "#FFFFFF",
+            maxWidth: { md: 328, lg: 328 },
+          }}
           InputProps={{
             ...params.InputProps,
             startAdornment: (
