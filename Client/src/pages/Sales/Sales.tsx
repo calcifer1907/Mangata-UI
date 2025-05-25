@@ -59,7 +59,8 @@ const Sales = ({
       headerName: "Pago Empleado",
       flex: 2,
       renderCell: (params) =>
-        params.row.EMPLOYEE !== "Mangata system" && (
+        params.row.EMPLOYEE !== "Mangata system" &&
+        params.row.status_reservation === "approved" && (
           <Checkbox
             checked={params.value}
             onChange={(event) => {

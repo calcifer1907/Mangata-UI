@@ -239,7 +239,7 @@ export const getOrderIdBold = async (request: Request, response: Response) => {
 // esto es para probar
 export const testEmail = async (_request: Request, response: Response) => {
   try {
-    await sendEmail("LNK_4CJ71S15ZJ");
+    await sendEmail("LNK_WRINX89U58");
     response.status(200).json({ mesagge: "Send email test" });
   } catch (error) {
     response.status(500);
