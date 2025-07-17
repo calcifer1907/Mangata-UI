@@ -19,14 +19,15 @@ export const authenticate = (
   const token = req.headers["authorization"];
 
   if (!token) {
-    res.status(403).json({ message: "Token no proporcionado" });
+    res.sendStatus(403).json({ message: "Token no proporcionado" });
   } else {
     // Eliminar "Bearer " del token
     const bearerToken = token.split(" ")[1];
 
     const decoded = verifyToken(bearerToken);
+    console.log("Decoded token:", decoded);
     if (!decoded) {
-      res.status(403).json({ message: "Token no válido" });
+      res.sendStatus(403).json({ message: "Token no válido" });
     } else {
       // Si el token es válido, adjuntamos la información del usuario al request
       req.user = decoded;
