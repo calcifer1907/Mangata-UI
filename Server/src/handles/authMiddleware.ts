@@ -23,9 +23,7 @@ export const authenticate = (
   } else {
     // Eliminar "Bearer " del token
     const bearerToken = token.split(" ")[1];
-
     const decoded = verifyToken(bearerToken);
-    console.log("Decoded token:", decoded);
     if (!decoded) {
       res.sendStatus(403).json({ message: "Token no válido" });
     } else {
