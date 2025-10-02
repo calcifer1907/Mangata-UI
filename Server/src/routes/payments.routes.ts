@@ -1,8 +1,8 @@
 import { Router } from "express";
 import {
-  createOrder,
-  reciveWebhook,
-  createPSEPayment,
+  // createOrder,
+  // reciveWebhook,
+  // createPSEPayment,
   // getListBanks,
   paymentBold,
   webhookBold,
@@ -12,13 +12,11 @@ import {
 
 const router = Router();
 
-router.post("/mercadoPagoCreditCard", createOrder);
-
-router.post("/PSEPayment", createPSEPayment);
+// router.post("/mercadoPagoCreditCard", createOrder);
+// router.post("/PSEPayment", createPSEPayment);
+// router.post("/webhook", reciveWebhook);
 
 router.post("/paymentsBold", paymentBold);
-
-router.post("/webhook", reciveWebhook);
 
 router.post("/api/webhook-bold", webhookBold);
 
