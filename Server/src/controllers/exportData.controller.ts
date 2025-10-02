@@ -4,8 +4,6 @@ import { pool } from "../Connection";
 
 import * as XLSX from "xlsx";
 
-import fs from "fs";
-
 const findEmployeeById = (users: any, idEmployee: string) => {
   const user = users.find((user: any) => user.id === idEmployee);
   return user;
@@ -72,7 +70,7 @@ export const downloadExcel = async (request: Request, response: Response) => {
     });
 
     // Guardar el archivo temporalmente para verificar su integridad
-    fs.writeFileSync("temp.xlsx", excelBuffer);
+    // fs.writeFileSync("temp.xlsx", excelBuffer);
 
     // Configurar la respuesta para descargar el archivo
     response.setHeader(
@@ -83,6 +81,6 @@ export const downloadExcel = async (request: Request, response: Response) => {
       "Content-Type",
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     );
-    response.send(excelBuffer).status(200);
+    response.send(excelBuffer);
   });
 };
