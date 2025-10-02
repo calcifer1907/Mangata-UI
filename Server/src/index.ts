@@ -14,7 +14,6 @@ import errorHandler from "./middlewares/handleError";
 import { apiCacheControl, clearCache } from "./middlewares/cacheControl";
 import {
   performanceOptimizer,
-  responseTimeMonitor,
   memoryOptimizer,
   basicRateLimit,
 } from "./middlewares/performance";
@@ -26,13 +25,13 @@ app.use(helmet());
 
 // Middlewares de optimización y rendimiento
 app.use(performanceOptimizer);
-app.use(responseTimeMonitor);
+// app.use(responseTimeMonitor);
 app.use(memoryOptimizer);
 app.use(basicRateLimit);
 
 const corsOptions = {
   origin: [
-    // // "http://localhost:5173",
+    "http://localhost:5173",
     // "http://192.168.0.233:5173",
     "https://mangatabeachclub.com",
     "https://integrations.api.bold.co",
