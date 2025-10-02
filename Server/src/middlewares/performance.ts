@@ -49,7 +49,7 @@ export const responseTimeMonitor = (
     const status = res.statusCode;
 
     // Log solo si la respuesta es lenta (> 1 segundo)
-    if (duration > 1000) {
+    if (duration > 000) {
       console.warn(
         `⚠️  Respuesta lenta: ${req.method} ${req.path} - ${duration}ms - Status: ${status}`
       );

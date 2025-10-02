@@ -83,6 +83,6 @@ export const downloadExcel = async (request: Request, response: Response) => {
       "Content-Type",
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     );
-    response.send(excelBuffer);
+    response.send(excelBuffer).status(200);
   });
 };

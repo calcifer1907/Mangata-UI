@@ -225,17 +225,20 @@ export const webhookBold = async (request: Request, response: Response) => {
 };
 
 export const getOrderIdBold = async (request: Request, response: Response) => {
-  const { order_id } = request.body;
-  const headers = {
-    Authorization: `x-api-key ${BOLD_KEY}`,
-    "Content-Type": "application/json",
-  };
-  const responseBold = await requestApis.get(`/online/link/v1/${order_id}`, {
-    headers,
-  });
-  response.json({ message: "success", data: responseBold });
+  try {
+    const { order_id } = request.body;
+    const headers = {
+      Authorization: `x-api-key ${BOLD_KEY}`,
+      "Content-Type": "application/json",
+    };
+    const responseBold = await requestApis.get(`/online/link/v1/${order_id}`, {
+      headers,
+    });
+    response.json({ message: "success", data: responseBold });
+  } catch (error) {
+    console.log(error);
+  }
 };
-
 // esto es para probar
 export const testEmail = async (_request: Request, response: Response) => {
   try {

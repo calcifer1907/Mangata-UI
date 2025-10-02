@@ -7,6 +7,6 @@ export const initialUserInfo = {
 export const itemsNav = [
   { title: "home", path: "/" },
   { title: "Reserve", path: "/MangataReservation" },
-  { title: "becomePartner", path: "/CreateUser" },
+  // { title: "becomePartner", path: "/CreateUser" },
   { title: "signIn", path: "/Login" },
 ];
