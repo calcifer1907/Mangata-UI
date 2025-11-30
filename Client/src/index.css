@@ -283,7 +283,15 @@ body{
 }
 
 .hg-70{
-  width: 70px;
+  height: 70px;
+}
+
+.hg-100{
+  height: 100%;
+}
+
+.padding-inline-24{
+  padding-inline: 24px;
 }
 
 .margin-0-auto{

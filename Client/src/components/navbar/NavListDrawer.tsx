@@ -60,7 +60,7 @@ const NavListDrawer = ({
                 <ListItemButton
                   component={NavLink}
                   to={item.path}
-                  className="onClickListItem"
+                  className="onClickListItem "
                 >
                   <ListItemText primary={item.title} />
                 </ListItemButton>
@@ -70,7 +70,7 @@ const NavListDrawer = ({
               <ListItemButton
                 component={NavLink}
                 to="/Logout"
-                className="onClickListItem"
+                className="onClickListItem font-family-uppercase"
               >
                 <ListItemText primary="Cerrar sesión" />
               </ListItemButton>
@@ -83,7 +83,7 @@ const NavListDrawer = ({
                 <ListItemButton
                   component={NavLink}
                   to={item.path}
-                  className="onClickListItem"
+                  className="onClickListItem font-family-uppercase"
                 >
                   <ListItemText primary={t(item.title)} />
                 </ListItemButton>
@@ -92,15 +92,26 @@ const NavListDrawer = ({
           </>
         )}
         <ListItemButton onClick={handleClick}>
-          <ListItemText primary={t("changeLanguage")} />
+          <ListItemText
+            primary={t("changeLanguage")}
+            className="font-family-uppercase"
+          />
           {open ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            <ListItemButton sx={{ pl: 4 }} onClick={() => changeLanguage("es")}>
+            <ListItemButton
+              sx={{ pl: 4 }}
+              onClick={() => changeLanguage("es")}
+              className="font-family-uppercase"
+            >
               <ListItemText primary={t("es")} />
             </ListItemButton>
-            <ListItemButton sx={{ pl: 4 }} onClick={() => changeLanguage("en")}>
+            <ListItemButton
+              sx={{ pl: 4 }}
+              onClick={() => changeLanguage("en")}
+              className="font-family-uppercase"
+            >
               <ListItemText primary={t("en")} />
             </ListItemButton>
           </List>
