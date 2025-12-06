@@ -60,11 +60,13 @@ const Home = () => {
               img="/images/MangataBeach.webp"
               button
               redirectTo="/#/DayTrip"
-              buttonTitle="Descubrir"
             />
-            <Card title={t("welcomeGlass")} img="/images/MangataCopa.webp" />
-            <Card title={t("airConditioned")} img="/images/MangataEat.webp" />
-            <Card title={t("waterSports")} img="/images/MangataKayak.webp" />
+            <Card
+              title={t("Lodging")}
+              img="/images/Hotel.webp"
+              button
+              redirectTo="/#/Lodging"
+            />
           </Box>
         </Box>
       </Box>
