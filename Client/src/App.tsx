@@ -16,6 +16,7 @@ import CheckReservation from "./pages/CheckReservation/CheckReservation";
 import NotFound from "./pages/NotFound";
 import CalendarPage from "./components/Calendar/CalendarPage/CalendarPage";
 import DayTrip from "./pages/DayTrip/DayTrip";
+import Lodging from "./pages/Lodging/Lodging";
 
 // import PayMenetMethod from "./pages/PayMenetMethod";
 
@@ -35,6 +36,7 @@ const App = () => {
             />
             <Route path="/MangataReservation" element={<Reservation />} />
             <Route path="/DayTrip" element={<DayTrip />} />
+            <Route path="/Lodging" element={<Lodging />} />
             <Route
               path="/MyCommissions"
               element={<ListOfCommissionsEmployee />}
