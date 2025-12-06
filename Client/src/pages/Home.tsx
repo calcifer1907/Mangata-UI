@@ -54,7 +54,13 @@ const Home = () => {
             {t("servicesIncluded")}
           </Typography>
           <Box className="d-flex align-items-center justify-content-center flex-wrap flex-row gap-50">
-            <Card title={t("roundTrip")} img="/images/MangataBoat.webp" />
+            <Card
+              title={t("pasa día")}
+              img="/images/MangataBeach.webp"
+              button
+              redirectTo="/#/DayTrip"
+              buttonTitle="Descubrir"
+            />
             <Card title={t("welcomeGlass")} img="/images/MangataCopa.webp" />
             <Card title={t("airConditioned")} img="/images/MangataEat.webp" />
             <Card title={t("waterSports")} img="/images/MangataKayak.webp" />

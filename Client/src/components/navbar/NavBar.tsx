@@ -146,15 +146,14 @@ const Navbar = (props: Props) => {
               <Box className="d-flex align-items-center list-menu-nav">
                 {userInfo.TOKEN ? (
                   userInfo.MENU.map((item) => (
-                    <li className="navegation-a">
-                      <Button
-                        key={item.title}
-                        to={`/${item.path}`}
-                        component={NavLink}
-                      >
-                        {item.title}
-                      </Button>
-                    </li>
+                    <Button
+                      key={item.title}
+                      to={`/${item.path}`}
+                      component={NavLink}
+                      className="navegation-a"
+                    >
+                      {item.title}
+                    </Button>
                   ))
                 ) : (
                   <>
