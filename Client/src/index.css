@@ -20,6 +20,7 @@
   --color-theme-cancel: #C6A02F;
   --color-theme-approved: #46AE32;
   --color-theme-rejected: #A93D3F;
+  --spacing:0.25rem;
 }
 
 body{
@@ -347,7 +348,27 @@ body{
   
 }
 
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
 
+.duration-200 {
+  transition-duration: 200ms;
+}
+
+.hover\:scale-105:hover {
+  transform: scale(1.05);
+}
+
+.hover\:scale-110:hover {
+  transform: scale(1.10);
+}
+
+.active\:scale-95:active {
+  transform: scale(0.95);
+}
 
 
 @media (max-width: 768px) {

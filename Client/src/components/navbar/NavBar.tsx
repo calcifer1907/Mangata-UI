@@ -141,7 +141,9 @@ const Navbar = (props: Props) => {
               }}
             >
               <Box className="title-mangta">
-                <h1>mangata</h1>
+                <h1>
+                  <a href="/#/">mangata</a>
+                </h1>
               </Box>
               <Box className="d-flex align-items-center list-menu-nav">
                 {userInfo.TOKEN ? (

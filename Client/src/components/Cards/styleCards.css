@@ -1,8 +1,8 @@
 .buttonDiscover {
-  padding-inline: calc(0.25rem * 3);
+  padding-inline: calc(var(--spacing) * 3);
+  padding-block: calc(var(--spacing) * 2);
     text-decoration: none;
     font-size: 16px;
-    padding-block: calc(0.25rem * 2);
     background-color: var(--color-theme-dark-blue);
     color: #fff;
     border-radius: 0.5rem;

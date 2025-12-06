@@ -8,56 +8,40 @@ import { useTranslation } from "react-i18next";
 import "./DayTrip.css";
 import { NavLink } from "react-router-dom";
 import QuiltedImageList from "../../components/QuiltedImageList/QuiltedImageList";
+import Footer from "../../components/Footer/Footer";
 
 const DayTrip = () => {
   const { t } = useTranslation("home");
   return (
-    <Box className="">
+    <Box className="content-day-trip" component="section">
       <Box className="container-day-trip">
         <Box
           sx={{
-            maxWidth: { xs: "90%", md: "80%", lg: "70%" },
-            margin: "0 auto",
+            maxWidth: { xs: "90%", md: "80%", lg: "50%" },
+            margin: "5rem",
           }}
         >
-          <Typography
-            component="h1"
-            sx={{
-              fontSize: { xs: "2rem", md: "3.2rem" },
-              lineHeight: 1.1,
-              marginBottom: 3,
-              textAlign: "left",
-            }}
-          >
-            Tu día perfecto frente al mar
-          </Typography>
-          <Typography
-            component="p"
-            sx={{
-              fontSize: { xs: "1rem", md: "1.2rem" },
-              lineHeight: 1.6,
-              textAlign: "left",
-              maxWidth: "800px",
-              marginBottom: 4,
-            }}
-          >
+          <Box>
+            <Typography
+              component="h1"
+              className="title-day-trip"
+              sx={{
+                fontSize: { xs: "2rem", md: "3.2rem" },
+              }}
+            >
+              tu día perfecto
+            </Typography>
+            <Typography component="h1" className="title-day-trip">
+              frente al mar
+            </Typography>
+          </Box>
+          <Typography component="p" className="descriotion-day-trip">
             Disfruta un pasadía completo en Mangata: playa, gastronomía,
             cocteles y actividades en las Islas del Rosario.
           </Typography>
 
           <Button
-            sx={{
-              backgroundColor: "var(--color-theme-dark-blue)",
-              color: "white",
-              padding: "12px 32px",
-              fontSize: "1rem",
-              fontWeight: 500,
-              textTransform: "none",
-              borderRadius: "100px",
-              "&:hover": {
-                backgroundColor: "var(--color-theme-dark-blueLigth)",
-              },
-            }}
+            className="button-reservation transition-all duration-200 hover:scale-105 active:scale-95"
             to="/MangataReservation"
             component={NavLink}
           >
@@ -106,7 +90,7 @@ const DayTrip = () => {
         sx={{
           maxWidth: { xs: "96%", md: "65%" },
           margin: "0 auto",
-          marginBottom: 8,
+          marginBlock: 12,
         }}
       >
         <Typography
@@ -135,6 +119,11 @@ const DayTrip = () => {
         </Typography>
         <QuiltedImageList />
       </Box>
+      <Box className="noInclude">
+        <Typography>{t("noInclude")}</Typography>
+        <Typography>{t("additionalActivities")}</Typography>
+      </Box>
+      <Footer />
     </Box>
   );
 };

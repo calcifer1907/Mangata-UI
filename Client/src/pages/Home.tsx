@@ -9,6 +9,7 @@ import YouTubeEmbed from "../components/YouTubeEmbed/YouTubeEmbed";
 
 /** */
 import { useTranslation } from "react-i18next";
+import Footer from "../components/Footer/Footer";
 
 const Home = () => {
   // const { userInfo } = useContextUser();
@@ -140,17 +141,17 @@ const Home = () => {
         allowFullScreen
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"
-      ></iframe>
+      />
 
       <Box
         sx={{
           background: "var(--color-theme-sand-light)",
           color: "var(--color-theme-dark-blue)",
-          padding: 4,
+          padding: 10,
           textAlign: "center",
           height: "auto",
           alignContent: "center",
-          marginBlock: 2,
+          marginBlock: 8,
         }}
       >
         <Typography
@@ -168,70 +169,8 @@ const Home = () => {
           {t("dockReturn")} 4:00 p.m.
         </Typography>
       </Box>
-      <Box
-        sx={{
-          color: "var(--color-theme-dark-blue)",
-          padding: 4,
-          textAlign: "center",
-          height: "150px",
-          alignContent: "center",
-        }}
-      >
-        <Typography
-          style={{ fontWeight: 600, paddingBottom: 14, fontSize: "1.5rem" }}
-        >
-          {t("noInclude")}
-        </Typography>
-        <Typography>{t("additionalActivities")}</Typography>
-      </Box>
 
-      <Box
-        component="footer"
-        sx={{
-          padding: 2,
-          marginTop: 2,
-          background: "#cfb57d",
-          textAlign: "center",
-        }}
-      >
-        <Box>
-          <Typography
-            sx={{
-              color: "#FFFFFF",
-              fontSize: 14,
-              marginBottom: 2,
-            }}
-          >
-            {t("IslandsSector")} Zaragoza, Colombia
-          </Typography>
-          <Typography
-            sx={{
-              color: "#FFFFFF",
-              fontSize: 14,
-              marginBottom: 2,
-            }}
-          >
-            mangatabypietro2021@gmail.com <br />
-            +57 312 6056467
-          </Typography>
-        </Box>
-        <Box
-          component="a"
-          href="https://www.instagram.com/mangatacartagena/"
-          target="_blank"
-        >
-          <img width={32} src="/images/instagram.png" />
-        </Box>
-        <Typography
-          sx={{
-            color: "#FFFFFF",
-            fontSize: 14,
-            marginTop: 2,
-          }}
-        >
-          CopyRigth © {new Date().getFullYear()} Mangata Beach Club
-        </Typography>
-      </Box>
+      <Footer />
     </>
   );
 };

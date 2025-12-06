@@ -20,8 +20,13 @@
 .title-mangta{
    text-transform: uppercase;
   letter-spacing: 0.7em;
-  color: #1C1B21;
   font-family: Jost ;
+  cursor: pointer;
+}
+
+.title-mangta a{
+  text-decoration: none;
+  color: #1C1B21;
 }
 
 
