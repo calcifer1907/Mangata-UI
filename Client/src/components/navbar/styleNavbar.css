@@ -32,13 +32,19 @@
   letter-spacing: 3px;
   border-radius: 0px;
   line-height: 16px;
+  list-style: none;
 }
 
-.navegation-a::after{
+.list-menu-nav .navegation-a::after {
   content: "|";
   margin: 0 20px;
   color:#cbcbcb;
   font-family: Jost;
+}
+
+.list-menu-nav .navegation-a::after:last-child {
+  content: "";
+  margin: 0;
 }
 
 .width-nav-80{

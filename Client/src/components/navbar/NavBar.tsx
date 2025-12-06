@@ -135,7 +135,7 @@ const Navbar = (props: Props) => {
             </IconButton>
 
             <Box
-              className=" align-items-center justify-content-between wd-100"
+              className=" align-items-center justify-content-between wd-100 hg-100"
               sx={{
                 display: { xs: "none", md: "flex", height: 90 },
               }}
@@ -143,17 +143,18 @@ const Navbar = (props: Props) => {
               <Box className="title-mangta">
                 <h1>mangata</h1>
               </Box>
-              <Box className="d-flex align-items-center">
+              <Box className="d-flex align-items-center list-menu-nav">
                 {userInfo.TOKEN ? (
                   userInfo.MENU.map((item) => (
-                    <Button
-                      key={item.title}
-                      to={`/${item.path}`}
-                      component={NavLink}
-                      className="navegation-a"
-                    >
-                      {item.title}
-                    </Button>
+                    <li className="navegation-a">
+                      <Button
+                        key={item.title}
+                        to={`/${item.path}`}
+                        component={NavLink}
+                      >
+                        {item.title}
+                      </Button>
+                    </li>
                   ))
                 ) : (
                   <>
@@ -169,6 +170,7 @@ const Navbar = (props: Props) => {
                     ))}
                   </>
                 )}
+
                 <Box className="d-flex align-items-center ">
                   {userInfo.TOKEN && (
                     <Box>

@@ -15,6 +15,7 @@ import GenerateReservation from "./pages/GenerateReservation/GenerateReservation
 import CheckReservation from "./pages/CheckReservation/CheckReservation";
 import NotFound from "./pages/NotFound";
 import CalendarPage from "./components/Calendar/CalendarPage/CalendarPage";
+import DayTrip from "./pages/DayTrip/DayTrip";
 
 // import PayMenetMethod from "./pages/PayMenetMethod";
 
@@ -33,6 +34,7 @@ const App = () => {
               element={<GenerateReservation />}
             />
             <Route path="/MangataReservation" element={<Reservation />} />
+            <Route path="/DayTrip" element={<DayTrip />} />
             <Route
               path="/MyCommissions"
               element={<ListOfCommissionsEmployee />}

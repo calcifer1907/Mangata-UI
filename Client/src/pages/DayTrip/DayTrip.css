@@ -1,0 +1,17 @@
+.container-day-trip{
+        background-color: azure;
+        padding-block: calc(0.25rem * 32);
+        background-color: oklch(54.6% 0.245 262.881);
+        margin-bottom: 200px;
+}
+
+.container-day-trip h1 , p{
+        color:white
+}
+
+
+.container-day-trip h1{
+        font-size: 3.2rem;
+        line-height: 1.1;
+}
+

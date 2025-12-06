@@ -5,7 +5,6 @@ import { Box, Typography } from "@mui/material";
 
 /**Component */
 import Card from "../components/Cards/Cards";
-import QuiltedImageList from "../components/QuiltedImageList/QuiltedImageList";
 import YouTubeEmbed from "../components/YouTubeEmbed/YouTubeEmbed";
 
 /** */
@@ -54,16 +53,7 @@ const Home = () => {
           >
             {t("servicesIncluded")}
           </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              flexWrap: "wrap",
-              flexDirection: "row",
-              gap: "50px",
-            }}
-          >
+          <Box className="d-flex align-items-center justify-content-center flex-wrap flex-row gap-50">
             <Card title={t("roundTrip")} img="/images/MangataBoat.webp" />
             <Card title={t("welcomeGlass")} img="/images/MangataCopa.webp" />
             <Card title={t("airConditioned")} img="/images/MangataEat.webp" />
@@ -71,39 +61,7 @@ const Home = () => {
           </Box>
         </Box>
       </Box>
-      <Box
-        sx={{
-          maxWidth: { xs: "96%", md: "65%" },
-          margin: "0 auto",
-          marginBottom: 8,
-        }}
-      >
-        <Typography
-          className="color-blue-dark"
-          sx={{
-            fontSize: 22,
-            fontWeight: 600,
-            marginBlock: 2,
-            textTransform: "uppercase",
-            textAlign: "center",
-          }}
-        >
-          {t("lunchCarte")}
-        </Typography>
-        <Typography
-          className="color-blue-dark"
-          sx={{
-            fontSize: 18,
-            fontWeight: 400,
-            marginBlock: 2,
-            textTransform: "uppercase",
-            textAlign: "center",
-          }}
-        >
-          {t("enjoyYourLunch")} <b>{t("with8")}:</b>
-        </Typography>
-        <QuiltedImageList />
-      </Box>
+
       <Box>
         <Typography
           component="h2"

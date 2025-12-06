@@ -234,6 +234,10 @@ body{
   flex-wrap: wrap;
 }
 
+.flex-row{
+  flex-direction: row;
+}
+
 .align-items-center{
   align-items: center;
 }
@@ -260,6 +264,10 @@ body{
 
 .gap-16{
   gap:16px;
+}
+
+.gap-50{
+  gap:50px;
 }
 
 .wd-100{
@@ -326,8 +334,12 @@ body{
   
 }
 
+
+
+
 @media (max-width: 768px) {
   .video-background-container.active {
     background-color: #2B3D5E;
   }
 }
+
