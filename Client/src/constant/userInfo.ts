@@ -5,7 +5,7 @@ export const initialUserInfo = {
 };
 
 export const itemsNav = [
-  { title: "home", path: "/" },
-  { title: "pasa día", path: "/DayTrip" },
+  { title: "dayTrip", path: "/DayTrip" },
+  { title: "Lodging", path: "/Lodging" },
   { title: "signIn", path: "/Login" },
 ];

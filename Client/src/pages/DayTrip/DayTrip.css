@@ -1,79 +1,73 @@
-.content-day-trip{
-
+.container-day-trip {
+  padding-block: calc(0.25rem * 32);
+  background-color: transparent;
+  background-image: url("/images/MangataBeach.jpg");
+  background-repeat: no-repeat;
+  width: 100%;
+  object-fit: contain;
+  margin-bottom: 200px;
 }
 
-.container-day-trip{
-        padding-block: calc(0.25rem * 32);
-       background-color: transparent;
-        background-image: url('/images/MangataBeach.jpg');
-        background-repeat: no-repeat;
-        
-        width: 100%;
-      object-fit: contain;
-        margin-bottom: 200px;
+.container-day-trip h1,
+p {
+  color: white;
 }
 
-.container-day-trip h1 , p{
-        color:white
-}
-
-
-.container-day-trip h1{
-        font-size: 3.2rem;
-        line-height: 1.1;
+.container-day-trip h1 {
+  font-size: 3.2rem;
+  line-height: 1.1;
 }
 
 .button-reservation {
-   background-color:#FFFFFF;
-   padding-inline: calc(var(--spacing) * 8);
-   padding-block: calc(var(--spacing) * 3);
-   font-size: 1rem;
-   border-radius: 0.5rem;  
+  background-color: #ffffff;
+  padding-inline: calc(var(--spacing) * 8);
+  padding-block: calc(var(--spacing) * 3);
+  font-size: 1rem;
+  border-radius: 0.5rem;
 }
 
 .button-reservation:hover {
-    cursor: pointer;
-    scale: var(--spacing) var(--spacing);
+  cursor: pointer;
+  scale: var(--spacing) var(--spacing);
 }
 
-.descriotion-day-trip{
-        margin-top: calc(var(--spacing) * 8);
-        color: white;
-        font-size: 1.25rem;
-        line-height: 1.6;
-        max-width: 800px;
-        padding-bottom: 32px;
-        font-weight: 500;
+.descriotion-day-trip {
+  margin-top: calc(var(--spacing) * 8);
+  color: white;
+  font-size: 1.25rem;
+  line-height: 1.6;
+  max-width: 800px;
+  padding-bottom: 32px;
+  font-weight: 500;
 }
 
-.title-day-trip{
-        font-size:1.5rem;
-        line-height: 1.1;
-        margin-bottom: calc(var(--spacing) * 3);
-        text-align: left;
-        text-transform: capitalize;
-        font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-        font-weight: 700;
-        color:oklch(93.2% 0.032 255.585);
-        line-height: calc(2 / 1.5);
-}
- 
-
-.noInclude{
-   padding: 2rem;
-   text-align: center;
-   height: 150px;
-   align-content: center,  
+.title-day-trip {
+  font-size: 1.5rem;
+  line-height: 1.1;
+  margin-bottom: calc(var(--spacing) * 3);
+  text-align: left;
+  text-transform: capitalize;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  color: oklch(93.2% 0.032 255.585);
+  line-height: calc(2 / 1.5);
 }
 
-.noInclude p{
-    color: var(--color-theme-dark-blue);
-    font-weight: 600;
-    padding-bottom: 16px;
-    font-size:1.5rem;        
+.noInclude {
+  padding: 2rem;
+  text-align: center;
+  height: 150px;
+  align-content: center;
 }
 
-.noInclude p:last-child{
-    font-size:1.2rem; 
-    font-weight: 400;
+.noInclude p {
+  color: var(--color-theme-dark-blue);
+  font-weight: 600;
+  padding-bottom: 16px;
+  font-size: 1.5rem;
+}
+
+.noInclude p:last-child {
+  font-size: 1.2rem;
+  font-weight: 400;
 }
