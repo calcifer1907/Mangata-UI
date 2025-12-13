@@ -66,13 +66,9 @@ const DayTrip = () => {
           }}
         >
           <Typography
+            className="title-home"
             sx={{
               color: { xs: "#FFFFFF", md: "var(--color-theme-dark-blue)" },
-              fontSize: 22,
-              fontWeight: 600,
-              marginBlock: 4,
-              textTransform: "uppercase",
-              textAlign: "center",
             }}
           >
             {t("servicesIncluded")}
@@ -93,20 +89,11 @@ const DayTrip = () => {
           marginBlock: 12,
         }}
       >
-        <Typography
-          className="color-blue-dark"
-          sx={{
-            fontSize: 22,
-            fontWeight: 600,
-            marginBlock: 2,
-            textTransform: "uppercase",
-            textAlign: "center",
-          }}
-        >
+        <Typography className="color-blue-dark title-home">
           {t("lunchCarte")}
         </Typography>
         <Typography
-          className="color-blue-dark"
+          className="color-blue-dark "
           sx={{
             fontSize: 18,
             fontWeight: 400,

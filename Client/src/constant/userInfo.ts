@@ -7,6 +7,7 @@ export const initialUserInfo = {
 export const itemsNav = [
   { title: "dayTrip", path: "/DayTrip" },
   { title: "Lodging", path: "/Lodging" },
+  { title: "Menu", path: "/Menu" },
   { title: "Events", path: "/Events" },
   { title: "signIn", path: "/Login" },
 ];

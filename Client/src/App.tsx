@@ -18,6 +18,7 @@ import CalendarPage from "./components/Calendar/CalendarPage/CalendarPage";
 import DayTrip from "./pages/DayTrip/DayTrip";
 import Lodging from "./pages/Lodging/Lodging";
 import Events from "./pages/Events/Events";
+import Menu from "./pages/Menu/Menu";
 
 // import PayMenetMethod from "./pages/PayMenetMethod";
 
@@ -39,6 +40,7 @@ const App = () => {
             <Route path="/DayTrip" element={<DayTrip />} />
             <Route path="/Events" element={<Events />} />
             <Route path="/Lodging" element={<Lodging />} />
+            <Route path="/Menu" element={<Menu />} />
             <Route
               path="/MyCommissions"
               element={<ListOfCommissionsEmployee />}
