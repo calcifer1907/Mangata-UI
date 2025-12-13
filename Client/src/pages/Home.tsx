@@ -59,19 +59,19 @@ const Home = () => {
           </Typography>
           <Box className="d-flex align-items-center justify-content-center flex-wrap flex-row gap-50">
             <Card
-              title={t("pasa día")}
+              title={t("TitleCardDayTrip")}
               img="/images/MangataBeach.webp"
               button
               redirectTo="/#/DayTrip"
             />
             <Card
-              title={t("Lodging")}
+              title={t("titleCardLoding")}
               img="/images/Hotel.webp"
               button
               redirectTo="/#/Lodging"
             />
             <Card
-              title={t("events")}
+              title={t("titleCardEvents")}
               img="/images/Events.webp"
               button
               redirectTo="/#/events"

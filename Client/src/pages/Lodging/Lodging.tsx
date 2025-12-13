@@ -6,7 +6,7 @@ import "./styleLodging.css";
 const Lodging = () => {
   return (
     <Box>
-      <Box className="container-day-trip">
+      <Box className="container-loading">
         <Box
           sx={{
             maxWidth: { xs: "90%", md: "80%", lg: "50%" },

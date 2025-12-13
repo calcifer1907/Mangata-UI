@@ -29,5 +29,8 @@
         "additionalActivities": "Additional activities not mentioned above",
         "arrivalTime": "Arrival time at the pier",
         "dockReturn": "Dock Return Time: Approximately",
-        "IslandsSector": "Rosario Islands- Isla Grande sector"
+        "IslandsSector": "Rosario Islands- Isla Grande sector",
+        "TitleCardDayTrip": "Your perfect day by the sea",
+        "titleCardLoding": "Wake up to the sound of the sea",
+        "titleCardEvents": "Celebrate in paradise"
 }

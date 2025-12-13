@@ -29,5 +29,8 @@
         "additionalActivities": "Actividades adicionales no mencionadas anteriormente",
         "arrivalTime": "Hora de llegada al muelle",
         "dockReturn": "Hora de regreso al muelle: aproximadamente",
-        "IslandsSector": "Islas del Rosario- Isla Grande sector"
+        "IslandsSector": "Islas del Rosario- Isla Grande sector",
+        "TitleCardDayTrip": "Tu día perfecto frente al mar",
+        "titleCardLoding": "Despierta con el sonido del mar",
+        "titleCardEvents": "Celebra en el paraíso"
 }
