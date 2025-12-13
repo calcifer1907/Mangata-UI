@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 
 import ContextUser from "./hooks/useContextUser";
 
-import Home from "./pages/Home";
+import Home from "./pages/Home/Home";
 import Login from "./pages/Login";
 import CreateUser from "./pages/CreateUser";
 import Reservation from "./pages/Reservations/ContainerContextReservation";

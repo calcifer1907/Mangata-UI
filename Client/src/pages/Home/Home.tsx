@@ -4,13 +4,15 @@
 import { Box, Typography } from "@mui/material";
 
 /**Component */
-import Card from "../components/Cards/Cards";
-import YouTubeEmbed from "../components/YouTubeEmbed/YouTubeEmbed";
+import Card from "../../components/Cards/Cards";
+import YouTubeEmbed from "../../components/YouTubeEmbed/YouTubeEmbed";
 
 /** */
 import { useTranslation } from "react-i18next";
-import Footer from "../components/Footer/Footer";
-import InitialSummary from "../components/Initialsummary/InitialSummary";
+import Footer from "../../components/Footer/Footer";
+import InitialSummary from "../../components/Initialsummary/InitialSummary";
+
+import "./styleHome.css";
 
 const Home = () => {
   // const { userInfo } = useContextUser();
@@ -32,10 +34,10 @@ const Home = () => {
       <Box
         className="background-ligth-blue"
         sx={{
-          position: "relative",
           height: { xs: "auto", xl: "400px" },
-          marginBottom: 8,
           paddingBlock: { xs: 2, xl: 0 },
+          position: "relative",
+          marginBottom: 8,
         }}
       >
         <Box
@@ -47,13 +49,9 @@ const Home = () => {
           }}
         >
           <Typography
+            className="title-home"
             sx={{
               color: { xs: "#FFFFFF", md: "var(--color-theme-dark-blue)" },
-              fontSize: 22,
-              fontWeight: 600,
-              marginBlock: 4,
-              textTransform: "uppercase",
-              textAlign: "center",
             }}
           >
             {t("servicesIncluded")}
@@ -82,28 +80,10 @@ const Home = () => {
       </Box>
 
       <Box>
-        <Typography
-          component="h2"
-          className="color-blue-dark"
-          sx={{
-            fontWeight: 600,
-            marginBlock: 2,
-            fontSize: 22,
-            textTransform: "uppercase",
-            textAlign: "center",
-          }}
-        >
+        <Typography component="h2" className="color-blue-dark title-home">
           {t("useOfFacilities")}
         </Typography>
-        <Box
-          sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: 4,
-            marginBlock: 6,
-            minHeight: 400,
-          }}
-        >
+        <Box className="d-flex flex-wrap gap-16 container-facilities">
           <Box sx={{ width: { xs: "100%", md: "50%" } }}>
             <Box
               component="img"
@@ -159,7 +139,7 @@ const Home = () => {
         sx={{
           background: "var(--color-theme-sand-light)",
           color: "var(--color-theme-dark-blue)",
-          padding: 3,
+          padding: { xs: 2, md: 4, lg: 6 },
           textAlign: "center",
           height: "auto",
           alignContent: "center",

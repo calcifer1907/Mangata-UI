@@ -4,7 +4,10 @@ import "./styleInitialSummary.css";
 
 const InitialSummary = () => {
   return (
-    <Box className="initial-summary-container">
+    <Box
+      className="initial-summary-container"
+      sx={{ marginBottom: { xs: 0, md: "250px", lg: "250px" } }}
+    >
       <Box className="initial-summary-image">
         <img src="/images/MangataEat.webp" />{" "}
       </Box>
