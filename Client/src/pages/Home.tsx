@@ -10,6 +10,7 @@ import YouTubeEmbed from "../components/YouTubeEmbed/YouTubeEmbed";
 /** */
 import { useTranslation } from "react-i18next";
 import Footer from "../components/Footer/Footer";
+import InitialSummary from "../components/Initialsummary/InitialSummary";
 
 const Home = () => {
   // const { userInfo } = useContextUser();
@@ -22,12 +23,12 @@ const Home = () => {
       <Box
         className="video-background-container"
         sx={{
-          marginBottom: { xs: 0, md: "200px" },
           display: { xs: "none", md: "block", lg: "block" },
         }}
       >
         <YouTubeEmbed />
       </Box>
+      <InitialSummary />
       <Box
         className="background-ligth-blue"
         sx={{
