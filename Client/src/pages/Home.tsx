@@ -21,7 +21,10 @@ const Home = () => {
     <>
       <Box
         className="video-background-container"
-        sx={{ marginBottom: { xs: 0, md: "200px" } }}
+        sx={{
+          marginBottom: { xs: 0, md: "200px" },
+          display: { xs: "none", md: "block", lg: "block" },
+        }}
       >
         <YouTubeEmbed />
       </Box>
@@ -66,6 +69,12 @@ const Home = () => {
               img="/images/Hotel.webp"
               button
               redirectTo="/#/Lodging"
+            />
+            <Card
+              title={t("events")}
+              img="/images/Events.webp"
+              button
+              redirectTo="/#/events"
             />
           </Box>
         </Box>
@@ -149,11 +158,10 @@ const Home = () => {
         sx={{
           background: "var(--color-theme-sand-light)",
           color: "var(--color-theme-dark-blue)",
-          padding: 10,
+          padding: 3,
           textAlign: "center",
           height: "auto",
           alignContent: "center",
-          marginBlock: 8,
         }}
       >
         <Typography

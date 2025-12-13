@@ -1,7 +1,6 @@
 .content-event {
   background-color: #f1ece6;
   padding-bottom: 4rem;
-  padding-top: 2rem;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -12,12 +11,12 @@
 .container-event {
   background-image: none;
   margin-bottom: 0px;
-  padding-block: calc(0.25rem * 16);
+  padding-block: calc(0.25rem * 4);
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 3rem;
+  gap: 0.5rem;
   width: 100%;
   max-width: 1600px;
 }
@@ -76,7 +75,6 @@
   .container-event {
     flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
   }
 
   .title-event {
