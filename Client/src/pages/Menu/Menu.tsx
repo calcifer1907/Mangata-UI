@@ -6,7 +6,11 @@ import {
   DialogContent,
   IconButton,
 } from "@mui/material";
+<<<<<<< HEAD
 import { useState, useEffect } from "react";
+=======
+import { useState } from "react";
+>>>>>>> 33d5241 (menu)
 import { Document, Page, pdfjs } from "react-pdf";
 import {
   Close as CloseIcon,
@@ -15,7 +19,11 @@ import {
 } from "@mui/icons-material";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
+<<<<<<< HEAD
 import workerUrl from "react-pdf/node_modules/pdfjs-dist/build/pdf.worker.min.mjs?url";
+=======
+import workerUrl from "pdfjs-dist/build/pdf.worker.mjs?url";
+>>>>>>> 33d5241 (menu)
 
 import "./styleMenu.css";
 import Footer from "../../components/Footer/Footer";
@@ -31,6 +39,7 @@ const Menu = () => {
   const [open, setOpen] = useState(false);
   const [numPages, setNumPages] = useState<number | null>(null);
   const [pageNumber, setPageNumber] = useState(1);
+<<<<<<< HEAD
   const [documentError, setDocumentError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -49,17 +58,31 @@ const Menu = () => {
     setOpen(false);
     setPageNumber(1);
     setDocumentError(null);
+=======
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => {
+    setOpen(false);
+    setPageNumber(1);
+>>>>>>> 33d5241 (menu)
   };
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
     setNumPages(numPages);
     setPageNumber(1);
+<<<<<<< HEAD
     setDocumentError(null);
   }
 
   function onDocumentLoadError(error: any) {
     console.error("Error al cargar el PDF:", error);
     setDocumentError(error?.message || String(error));
+=======
+  }
+
+  function onDocumentLoadError(error: Error) {
+    console.error("Error al cargar el PDF:", error);
+>>>>>>> 33d5241 (menu)
   }
 
   const goToPrevPage = () => {
@@ -157,6 +180,7 @@ const Menu = () => {
                 <Typography sx={{ color: "error.main", marginBottom: "1rem" }}>
                   Error al cargar el PDF. Por favor, intente nuevamente.
                 </Typography>
+<<<<<<< HEAD
                 {documentError && (
                   <Typography
                     variant="body2"
@@ -168,6 +192,10 @@ const Menu = () => {
                 <Typography variant="body2" sx={{ color: "text.secondary" }}>
                   Asegúrese de que el archivo existe en la carpeta public y que
                   el worker de PDF.js está configurado.
+=======
+                <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                  Asegúrese de que el archivo existe en la carpeta public.
+>>>>>>> 33d5241 (menu)
                 </Typography>
               </Box>
             }
