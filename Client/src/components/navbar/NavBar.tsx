@@ -152,17 +152,21 @@ const Navbar = (props: Props) => {
                       key={item.title}
                       to={`/${item.path}`}
                       component={NavLink}
-                      className="navegation-a"
+                      className="navegation-a navegation-a-content"
                     >
                       {item.title}
                     </Button>
                   ))
                 ) : (
                   <>
-                    {itemsNav.map((item) => (
+                    {itemsNav.map((item, index) => (
                       <Button
                         key={item.path}
-                        className="navegation-a"
+                        className={
+                          itemsNav.length - 1 === index
+                            ? "navegation-a"
+                            : "navegation-a navegation-a-content"
+                        }
                         to={item.path}
                         component={NavLink}
                       >

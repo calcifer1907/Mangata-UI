@@ -26,6 +26,7 @@ import {
   EventAvailable as EventIcon,
   Water as WaterIcon,
 } from "@mui/icons-material";
+import { NavLink } from "react-router";
 
 const Events = () => {
   const theme = useTheme();
@@ -581,6 +582,8 @@ const Events = () => {
           size="large"
           startIcon={<EventIcon />}
           endIcon={<NavigateNextIcon />}
+          component={NavLink}
+          to="/Contact"
           sx={{
             bgcolor: "white",
             color: theme.palette.primary.dark,
