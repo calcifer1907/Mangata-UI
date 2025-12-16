@@ -9,5 +9,6 @@ export const itemsNav = [
   { title: "Lodging", path: "/Lodging" },
   { title: "Menu", path: "/Menu" },
   { title: "Events", path: "/Events" },
+  { title: "Contact", path: "/Contact" },
   { title: "signIn", path: "/Login" },
 ];

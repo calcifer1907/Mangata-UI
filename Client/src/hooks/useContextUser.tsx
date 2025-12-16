@@ -1,13 +1,5 @@
-import {
-  cloneElement,
-  createContext,
-  useMemo,
-  useState,
-  useContext,
-  ReactNode,
-  FC,
-  isValidElement,
-} from "react";
+import { createContext, useMemo, useState, useContext } from "react";
+import type { ReactNode, FC } from "react";
 
 import { IUserInfo } from "../interfaces/ILogin";
 import { initialUserInfo } from "../constant/userInfo";
@@ -26,13 +18,7 @@ interface IProps {
   children: ReactNode;
 }
 
-const ContextUSers: FC<IProps> = (props) => {
-  const childrenWithProps = isValidElement(props.children)
-    ? cloneElement(props.children, {
-        ...props,
-      })
-    : props.children;
-
+const ContextUSers: FC<IProps> = ({ children }) => {
   const [userInfo, setUserInfo] = useState<IUserInfo>(() => {
     const saveData = localStorage.getItem("info");
     return saveData ? JSON.parse(saveData) : initialUserInfo;
@@ -48,12 +34,18 @@ const ContextUSers: FC<IProps> = (props) => {
 
   return (
     <ContextUser.Provider value={contextValues}>
-      {childrenWithProps}
+      {children}
     </ContextUser.Provider>
   );
 };
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const useContextUser = () => useContext(ContextUser);
+export const useContextUser = () => {
+  const context = useContext(ContextUser);
+  if (!context) {
+    throw new Error("useUsers must be used within UserProvider");
+  }
+  return context;
+};
 
 export default ContextUSers;

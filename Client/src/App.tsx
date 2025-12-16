@@ -17,6 +17,7 @@ import NotFound from "./pages/NotFound";
 import CalendarPage from "./components/Calendar/CalendarPage/CalendarPage";
 import DayTrip from "./pages/DayTrip/DayTrip";
 import Lodging from "./pages/Lodging/Lodging";
+import Contact from "./pages/Contact/Contact";
 import Events from "./pages/Events/Events";
 import Menu from "./pages/Menu/Menu";
 
@@ -39,6 +40,7 @@ const App = () => {
             <Route path="/MangataReservation" element={<Reservation />} />
             <Route path="/DayTrip" element={<DayTrip />} />
             <Route path="/Events" element={<Events />} />
+            <Route path="/Contact" element={<Contact />} />
             <Route path="/Lodging" element={<Lodging />} />
             <Route path="/Menu" element={<Menu />} />
             <Route

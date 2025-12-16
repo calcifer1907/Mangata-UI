@@ -1,246 +1,606 @@
-import { ChangeEvent, FormEvent, useState } from "react";
-import { Box, Button, Paper, TextField, Typography } from "@mui/material";
-
-import "./styleEvents.css";
-import Footer from "../../components/Footer/Footer";
+import React from "react";
+import {
+  Container,
+  Typography,
+  Grid,
+  ListItemIcon,
+  ListItemText,
+  Box,
+  Paper,
+  Button,
+  Chip,
+  useTheme,
+  alpha,
+  Avatar,
+} from "@mui/material";
+import {
+  Celebration as CelebrationIcon,
+  BeachAccess as BeachIcon,
+  Cake as CakeIcon,
+  Groups as GroupsIcon,
+  Business as BusinessIcon,
+  CheckCircle as CheckIcon,
+  AddCircle as AddIcon,
+  NavigateNext as NavigateNextIcon,
+  Palette as PaletteIcon,
+  EventAvailable as EventIcon,
+  Water as WaterIcon,
+} from "@mui/icons-material";
 
 const Events = () => {
-  const [formValues, setFormValues] = useState({
-    nombre: "",
-    telefono: "",
-    correo: "",
-    mensaje: "",
-  });
+  const theme = useTheme();
 
-  const handleChange = (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = event.target;
-    setFormValues((prev) => ({ ...prev, [name]: value }));
-  };
+  const eventTypes = [
+    {
+      title: "Bodas en la playa",
+      description:
+        "Ceremonias íntimas y mágicas junto al mar, con la brisa caribeña y el sonido de las olas de fondo.",
+      icon: <BeachIcon />,
+      color: "#4A90E2", // Azul playa
+      tags: ["Romántico", "Íntimo", "Natural"],
+      featured: true,
+    },
+    {
+      title: "Cumpleaños & celebraciones",
+      description:
+        "Desde cenas privadas hasta fiestas frente al mar. Ambientes únicos para días inolvidables.",
+      icon: <CakeIcon />,
+      color: "#3498DB", // Coral
+      tags: ["Familiar", "Divertido", "Personalizado"],
+      featured: true,
+    },
+    {
+      title: "Despedidas",
+      description:
+        "Un plan perfecto con playa, música, coctelería y actividades para celebrar con amigos.",
+      icon: <CelebrationIcon />,
+      color: "#4A90E2", // Púrpura
+      tags: ["Fiesta", "Coctelería", "Actividades"],
+    },
+    {
+      title: "Eventos privados",
+      description:
+        "Cenas, reuniones familiares, aniversarios o espacios exclusivos para tu grupo.",
+      icon: <GroupsIcon />,
+      color: "#4A90E2", // Verde
+      tags: ["Exclusivo", "Privado", "Familiar"],
+    },
+    {
+      title: "Eventos corporativos",
+      description:
+        "Reuniones, integración o premiaciones en un entorno que inspira creatividad.",
+      icon: <BusinessIcon />,
+      color: "#3498DB", // Azul corporativo
+      tags: ["Profesional", "Creativo", "Productivo"],
+    },
+  ];
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    // Aquí puedes integrar tu lógica para enviar los datos (API, email, etc.)
-    console.log("Datos enviados:", formValues);
-  };
+  const eventIncludes = [
+    "Espacio frente al mar para ceremonia o celebración, con opción de privacidad",
+    "Staff dedicado para tu evento",
+    "Menú especial para grupos (adaptado a gustos y restricciones)",
+    "Coctelería personalizada",
+    "Música ambiente (opción de DJ o música en vivo)",
+    "Logística y coordinación completa en isla",
+    "Opción de incluir transporte en lancha para tus invitados",
+    "Opciones de hospedaje para grupos en nuestras habitaciones",
+  ];
+
+  const additionalServices = [
+    "Decoración",
+    "Barra libre o coctelería temática",
+    "Menús privados a cargo de nuestro chef",
+    "Fotografía y video profesional",
+    "DJ o música en vivo",
+    "Paseo en bote o actividades acuáticas para el grupo",
+    "Tour por Islas del Rosario antes o después del evento",
+  ];
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <Box className="content-event" component="section">
-        <Box className="container-event">
-          {/* Sección del título y descripción */}
-          <Box
-            sx={{
-              flex: { xs: "1 1 100%", md: "1 1 15%" },
-              display: "flex",
-              flexDirection: "column",
-              alignItems: { xs: "center", md: "flex-start" },
-              justifyContent: { xs: "center", md: "center" },
-              px: { xs: 2, sm: 3, md: 4 },
-              marginTop: { xs: "2rem", md: 0 },
-            }}
-          >
-            <Typography
-              component="h1"
-              className="title-event"
-              sx={{
-                fontSize: {
-                  xs: "2rem",
-                  sm: "2.5rem",
-                  md: "3rem",
-                  lg: "3.5rem",
-                },
-                marginBottom: { xs: "1rem", md: "1.5rem" },
-                width: "100%",
-                textAlign: { xs: "center", md: "left" },
-              }}
-            >
-              Celebra en el paraíso
-            </Typography>
-            <Typography
-              component="p"
-              className="description-event"
-              sx={{
-                fontSize: {
-                  xs: "1rem",
-                  sm: "1.1rem",
-                  md: "1.2rem",
-                  lg: "1.25rem",
-                },
-                width: "100%",
-                textAlign: { xs: "center", md: "left" },
-                maxWidth: { xs: "100%", md: "500px" },
-              }}
-            >
-              Bodas, cumpleaños, despedidas de solter@s y eventos privados en un
-              escenario caribeño único. Creamos experiencias a tu medida.
-            </Typography>
-          </Box>
+    <Container maxWidth="lg" sx={{ py: { xs: 4, md: 6 } }}>
+      {/* Título principal - Más elegante */}
+      <Box sx={{ textAlign: "center", mb: 8, position: "relative" }}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: -20,
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: "60px",
+            height: "4px",
+            background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+            borderRadius: "2px",
+          }}
+        />
+        <EventIcon
+          sx={{
+            fontSize: 50,
+            color: theme.palette.primary.main,
+            mb: 2,
+            background: `linear-gradient(135deg, ${alpha(
+              theme.palette.primary.main,
+              0.1
+            )} 0%, transparent 100%)`,
+            borderRadius: "50%",
+            p: 1,
+          }}
+        />
+        <Typography
+          variant="h2"
+          component="h1"
+          gutterBottom
+          sx={{
+            fontWeight: 800,
+            //     background: `linear-gradient(135deg, ${theme.palette.primary.dark} 30%, ${theme.palette.secondary.dark} 90%)`,
+            backgroundClip: "text",
+            WebkitBackgroundClip: "text",
+            color: "var(--color-theme-dark-blue)",
+            mb: 2,
+            fontSize: { xs: "2rem", md: "2.5rem" },
+          }}
+        >
+          Eventos en Mangata
+        </Typography>
 
-          {/* Sección del formulario */}
-          <Box
-            className="form-container"
+        <Typography
+          variant="h6"
+          color="text.secondary"
+          sx={{
+            maxWidth: "800px",
+            mx: "auto",
+            lineHeight: 1.6,
+            fontWeight: 400,
+          }}
+        >
+          Celebra tus momentos especiales frente al mar con un servicio
+          excepcional y personalizado
+        </Typography>
+      </Box>
+
+      {/* Tipos de eventos - CARDS BONITAS Y COMPACTAS */}
+      <Box sx={{ mb: 10 }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 2,
+            mb: 4,
+          }}
+        >
+          <Typography
+            variant="h4"
+            component="h2"
             sx={{
-              flex: { xs: "1 1 100%", md: "1 1 55%" },
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "flex-start",
-              px: { xs: 2, sm: 3, md: 4 },
+              fontWeight: 700,
+              color: "var(--color-theme-dark-blue)",
             }}
           >
+            Tipos de Eventos
+          </Typography>
+        </Box>
+
+        <Typography
+          variant="subtitle1"
+          align="center"
+          sx={{
+            mb: 6,
+            color: theme.palette.text.secondary,
+            maxWidth: "600px",
+            mx: "auto",
+          }}
+        >
+          Diseñamos experiencias únicas para cada ocasión especial
+        </Typography>
+
+        {/* Contenedor FLEX para las cards */}
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 3,
+            justifyContent: "center",
+            mb: 4,
+          }}
+        >
+          {eventTypes.map((event, index) => (
             <Paper
-              elevation={0}
+              key={index}
+              elevation={2}
               sx={{
-                p: { xs: 3, sm: 4, md: 5, lg: 6 },
-                borderRadius: "16px",
-                backgroundColor: "#f1ece6",
-                width: "100%",
-                maxWidth: { xs: "100%", md: "700px", lg: "800px" },
+                flex: "1 1 300px",
+                maxWidth: "350px",
+                minWidth: "280px",
+                minHeight: "320px",
+                display: "flex",
+                flexDirection: "column",
+                transition: "all 0.3s ease",
+                borderRadius: 3,
+                overflow: "hidden",
+                border: `1px solid ${alpha(theme.palette.grey[200], 0.8)}`,
+                position: "relative",
+                "&:hover": {
+                  transform: "translateY(-8px)",
+                  boxShadow: theme.shadows[8],
+                  borderColor: alpha(event.color, 0.3),
+                  "& .event-icon": {
+                    transform: "scale(1.1) rotate(5deg)",
+                  },
+                },
               }}
             >
+              {/* Header con gradiente */}
               <Box
-                component="form"
-                onSubmit={handleSubmit}
-                noValidate
-                sx={{ mt: { xs: 1, md: 2 } }}
+                sx={{
+                  height: "90px",
+                  background: `linear-gradient(135deg, ${
+                    event.color
+                  } 0%, ${alpha(event.color, 0.8)} 100%)`,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "flex-start",
+                  color: "white",
+                  padding: theme.spacing(3),
+                  position: "relative",
+                  overflow: "hidden",
+                }}
               >
-                <Box
+                <Avatar
+                  className="event-icon"
                   sx={{
-                    display: "grid",
-                    gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" },
-                    gap: { xs: 2.5, sm: 3.5, md: 4 },
+                    width: 50,
+                    height: 50,
+                    backgroundColor: alpha("#ffffff", 0.2),
+                    border: `2px solid ${alpha("#ffffff", 0.3)}`,
+                    transition: "transform 0.3s ease",
+                    mr: 2,
                   }}
                 >
-                  <TextField
-                    fullWidth
-                    required
-                    label="Nombre"
-                    name="nombre"
-                    value={formValues.nombre}
-                    onChange={handleChange}
-                    sx={{
-                      backgroundColor: "#fff",
-                      "& .MuiOutlinedInput-root": {
-                        "&:hover fieldset": {
-                          borderColor: "#2B3D5E",
-                        },
-                        "&.Mui-focused fieldset": {
-                          borderColor: "#2B3D5E",
-                        },
-                      },
-                    }}
-                  />
-                  <TextField
-                    fullWidth
-                    required
-                    label="Teléfono"
-                    name="telefono"
-                    value={formValues.telefono}
-                    onChange={handleChange}
-                    inputMode="tel"
-                    sx={{
-                      backgroundColor: "#fff",
-                      "& .MuiOutlinedInput-root": {
-                        "&:hover fieldset": {
-                          borderColor: "#2B3D5E",
-                        },
-                        "&.Mui-focused fieldset": {
-                          borderColor: "#2B3D5E",
-                        },
-                      },
-                    }}
-                  />
-                </Box>
-
-                <Box
+                  {React.cloneElement(event.icon, {
+                    sx: {
+                      fontSize: 24,
+                      color: "white",
+                    },
+                  })}
+                </Avatar>
+                <Typography
+                  variant="h6"
+                  component="h3"
                   sx={{
-                    mt: { xs: 3, sm: 4, md: 4.5 },
-                    display: "grid",
-                    gap: { xs: 2.5, sm: 3.5, md: 4 },
+                    fontWeight: 700,
+                    fontSize: "1.1rem",
+                    lineHeight: 1.2,
+                    flex: 1,
+                    textShadow: "0 1px 3px rgba(0,0,0,0.2)",
                   }}
                 >
-                  <TextField
-                    fullWidth
-                    required
-                    label="Correo electrónico"
-                    name="correo"
-                    type="email"
-                    value={formValues.correo}
-                    onChange={handleChange}
-                    sx={{
-                      backgroundColor: "#fff",
-                      "& .MuiOutlinedInput-root": {
-                        "&:hover fieldset": {
-                          borderColor: "#2B3D5E",
-                        },
-                        "&.Mui-focused fieldset": {
-                          borderColor: "#2B3D5E",
-                        },
-                      },
-                    }}
-                  />
-                  <TextField
-                    fullWidth
-                    required
-                    multiline
-                    minRows={4}
-                    label="Mensaje"
-                    name="mensaje"
-                    value={formValues.mensaje}
-                    onChange={handleChange}
-                    sx={{
-                      backgroundColor: "#fff",
-                      "& .MuiOutlinedInput-root": {
-                        "&:hover fieldset": {
-                          borderColor: "#2B3D5E",
-                        },
-                        "&.Mui-focused fieldset": {
-                          borderColor: "#2B3D5E",
-                        },
-                      },
-                    }}
-                  />
-                </Box>
+                  {event.title}
+                </Typography>
+              </Box>
 
+              {/* Contenido */}
+              <Box
+                sx={{
+                  flex: 1,
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  p: 3,
+                }}
+              >
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{
+                    lineHeight: 1.6,
+                    fontSize: "0.9rem",
+                    mb: 2,
+                  }}
+                >
+                  {event.description}
+                </Typography>
+
+                {/* Tags */}
                 <Box
                   sx={{
-                    mt: { xs: 4, sm: 5, md: 5.5 },
                     display: "flex",
-                    justifyContent: "center",
-                    width: "100%",
+                    flexWrap: "wrap",
+                    gap: 0.5,
+                    mt: "auto",
                   }}
                 >
-                  <Button
-                    variant="contained"
-                    type="submit"
-                    fullWidth
-                    sx={{
-                      backgroundColor: "var(--color-theme-midnight-black)",
-                      color: "#fff",
-                      paddingInline: { xs: "1.5rem", sm: "2rem" },
-                      paddingBlock: { xs: "0.875rem", sm: "0.75rem" },
-                      fontSize: { xs: "0.95rem", sm: "1rem" },
-                      borderRadius: "0.5rem",
-                      textTransform: "none",
-                      fontWeight: 600,
-                      maxWidth: { xs: "100%", sm: "300px" },
-                      "&:hover": {
-                        transform: "scale(1.02)",
-                      },
-                      transition: "all 0.2s ease",
-                    }}
-                  >
-                    Enviar solicitud
-                  </Button>
+                  {event.tags.map((tag, idx) => (
+                    <Chip
+                      key={idx}
+                      label={tag}
+                      size="small"
+                      sx={{
+                        fontSize: "0.65rem",
+                        height: "20px",
+                        backgroundColor: alpha(event.color, 0.08),
+                        color: event.color,
+                        fontWeight: 500,
+                        border: `1px solid ${alpha(event.color, 0.2)}`,
+                      }}
+                    />
+                  ))}
                 </Box>
               </Box>
             </Paper>
-          </Box>
+          ))}
+        </Box>
+
+        {/* Instrucción visual para scroll horizontal en móviles */}
+        <Box
+          sx={{
+            display: { xs: "flex", md: "none" },
+            alignItems: "center",
+            justifyContent: "center",
+            mt: 2,
+          }}
+        >
+          <Typography variant="caption" color="text.secondary">
+            Desliza para ver más eventos →
+          </Typography>
         </Box>
       </Box>
-      <Footer />
-    </Box>
+
+      {/* Sección de servicios incluidos */}
+      <Box sx={{ mb: 10 }}>
+        <Paper
+          elevation={0}
+          sx={{
+            p: { xs: 3, md: 5 },
+            borderRadius: 4,
+            background: `linear-gradient(135deg, ${alpha(
+              theme.palette.primary.light,
+              0.05
+            )} 0%, ${alpha(theme.palette.secondary.light, 0.05)} 100%)`,
+            border: `1px solid ${alpha(theme.palette.primary.light, 0.2)}`,
+            position: "relative",
+            overflow: "hidden",
+          }}
+        >
+          <Box
+            sx={{
+              position: "absolute",
+              top: 0,
+              right: 0,
+              opacity: 0.1,
+            }}
+          >
+            <WaterIcon
+              sx={{ fontSize: 150, color: theme.palette.primary.main }}
+            />
+          </Box>
+
+          <Box sx={{ textAlign: "center", mb: 5, position: "relative" }}>
+            <CheckIcon
+              sx={{
+                fontSize: 40,
+                color: theme.palette.success.main,
+                mb: 2,
+                background: alpha(theme.palette.success.main, 0.1),
+                borderRadius: "50%",
+                p: 1,
+              }}
+            />
+            <Typography
+              variant="h4"
+              component="h2"
+              sx={{
+                fontWeight: 700,
+                color: theme.palette.primary.dark,
+                mb: 1,
+              }}
+            >
+              Todo incluido en tu evento
+            </Typography>
+            <Typography variant="subtitle1" color="text.secondary">
+              Nos encargamos de cada detalle para que solo te preocupes por
+              disfrutar
+            </Typography>
+          </Box>
+
+          <Grid container spacing={2}>
+            {eventIncludes.map((item, index) => (
+              <Grid item xs={12} md={6} key={index}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "flex-start",
+                    p: 2,
+                    borderRadius: 2,
+                    transition: "all 0.3s",
+                    "&:hover": {
+                      backgroundColor: alpha(theme.palette.primary.light, 0.08),
+                    },
+                  }}
+                >
+                  <ListItemIcon sx={{ minWidth: 40 }}>
+                    <Box
+                      sx={{
+                        width: 24,
+                        height: 24,
+                        borderRadius: "50%",
+                        backgroundColor: alpha(theme.palette.success.main, 0.1),
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <CheckIcon
+                        sx={{
+                          fontSize: 16,
+                          color: theme.palette.success.main,
+                        }}
+                      />
+                    </Box>
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={item}
+                    primaryTypographyProps={{
+                      variant: "body1",
+                      sx: {
+                        fontWeight: 500,
+                        color: theme.palette.text.primary,
+                      },
+                    }}
+                  />
+                </Box>
+              </Grid>
+            ))}
+          </Grid>
+        </Paper>
+      </Box>
+
+      {/* Personaliza tu experiencia */}
+      <Box sx={{ mb: 10 }}>
+        <Box sx={{ textAlign: "center", mb: 6 }}>
+          <PaletteIcon
+            sx={{
+              fontSize: 40,
+              color: theme.palette.secondary.main,
+              mb: 2,
+              background: alpha(theme.palette.secondary.main, 0.1),
+              borderRadius: "50%",
+              p: 1,
+            }}
+          />
+          <Typography
+            variant="h4"
+            component="h2"
+            sx={{
+              fontWeight: 700,
+              color: theme.palette.primary.dark,
+              mb: 1,
+            }}
+          >
+            Personaliza tu experiencia
+          </Typography>
+          <Typography variant="subtitle1" color="text.secondary">
+            Agrega estos servicios para hacer tu evento aún más especial
+          </Typography>
+        </Box>
+
+        <Grid container spacing={2}>
+          {additionalServices.map((service, index) => (
+            <Grid item xs={12} sm={6} md={4} key={index}>
+              <Paper
+                elevation={0}
+                sx={{
+                  p: 3,
+                  display: "flex",
+                  alignItems: "center",
+                  height: "100%",
+                  borderRadius: 3,
+                  border: `1px solid ${alpha(theme.palette.grey[200], 0.8)}`,
+                  transition: "all 0.3s",
+                  "&:hover": {
+                    transform: "translateY(-4px)",
+                    boxShadow: "grey",
+                    borderColor: "grey",
+                    backgroundColor: alpha(theme.palette.secondary.light, 0.05),
+                  },
+                }}
+              >
+                <AddIcon
+                  sx={{
+                    mr: 3,
+                    fontSize: 28,
+                    color: "grey",
+                    flexShrink: 0,
+                  }}
+                />
+                <Typography
+                  variant="body1"
+                  sx={{
+                    fontWeight: 500,
+                    color: theme.palette.text.primary,
+                  }}
+                >
+                  {service}
+                </Typography>
+              </Paper>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+
+      {/* Llamada a la acción */}
+      <Paper
+        elevation={0}
+        sx={{
+          p: { xs: 4, md: 6 },
+          textAlign: "center",
+          background: `linear-gradient(135deg, ${theme.palette.primary.dark} 0%, ${theme.palette.primary.main} 100%)`,
+          color: "white",
+          borderRadius: 3,
+          position: "relative",
+          overflow: "hidden",
+        }}
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            background:
+              "radial-gradient(circle at 30% 30%, rgba(255,255,255,0.1) 0%, transparent 50%)",
+          }}
+        />
+
+        <Typography
+          variant="h4"
+          component="h3"
+          sx={{
+            fontWeight: 800,
+            position: "relative",
+            mb: 2,
+          }}
+        >
+          ¿Listo para celebrar en Mangata?
+        </Typography>
+
+        <Typography
+          variant="h6"
+          sx={{
+            mb: 4,
+            position: "relative",
+            opacity: 0.9,
+            fontWeight: 400,
+          }}
+        >
+          Déjanos acompañarte en tu fecha especial
+        </Typography>
+
+        <Button
+          variant="contained"
+          size="large"
+          startIcon={<EventIcon />}
+          endIcon={<NavigateNextIcon />}
+          sx={{
+            bgcolor: "white",
+            color: theme.palette.primary.dark,
+            fontWeight: 700,
+            px: 5,
+            py: 1.5,
+            borderRadius: "50px",
+            "&:hover": {
+              bgcolor: "grey.50",
+              transform: "scale(1.05)",
+            },
+            position: "relative",
+            transition: "all 0.3s",
+            boxShadow: "0 8px 25px rgba(0,0,0,0.2)",
+          }}
+        >
+          Contactar Ahora
+        </Button>
+      </Paper>
+    </Container>
   );
 };
 
