@@ -54,7 +54,7 @@ const Home = () => {
               color: { xs: "#FFFFFF", md: "var(--color-theme-dark-blue)" },
             }}
           >
-            {t("servicesIncluded")}
+            {t("ourIncluded")}
           </Typography>
           <Box className="d-flex align-items-center justify-content-center flex-wrap flex-row gap-50">
             <Card

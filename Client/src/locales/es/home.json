@@ -11,6 +11,7 @@
         "becomePartner": "Se socio",
         "signIn": "Iniciar sesión",
         "servicesIncluded": "Servicios incluidos",
+        "ourIncluded": "Nuestros Servicios",
         "lunchCarte": "Almuerzo a la carta",
         "roundTrip": "Transporte marítimo ida y regreso.",
         "welcomeGlass": "Copa de champaña de bienvenida o jugo",
@@ -32,5 +33,10 @@
         "IslandsSector": "Islas del Rosario- Isla Grande sector",
         "TitleCardDayTrip": "Tu día perfecto frente al mar",
         "titleCardLoding": "Despierta con el sonido del mar",
-        "titleCardEvents": "Celebra en el paraíso"
+        "titleCardEvents": "Celebra en el paraíso",
+        "titleMenu1": "Sabores del Caribe",
+        "titleMenu2": "frente al mar",
+        "descriptionMenu": "Conoce nuestra carta de comida y coctelería: productos frescos, platos locales y recetas pensadas para disfrutar bajo el sol.",
+        "titleHomeSlider": "Ven y disfruta el caribe colombiano con nosotros",
+        "descriptionHomeSlider": "Mangata es un beach club y hotel frente al mar ubicado en Isla Grande, en el corazón de las Islas del Rosario, a minutos en lancha de Cartagena. Nació para quienes buscan algo más que un simple día de playa: una experiencia completa en el Caribe colombiano, con buen servicio, buena comida y un ambiente relajado pero sofisticado."
 }
