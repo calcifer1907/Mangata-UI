@@ -32,7 +32,7 @@ const DayTrip = () => {
               component="h1"
               className="title-day-trip"
               sx={{
-                fontSize: { xs: "2rem", md: "3.2rem" },
+                fontSize: { xs: "2.5rem", md: "3.2rem" },
               }}
             >
               {t("titleDayTrip1")}
@@ -41,7 +41,7 @@ const DayTrip = () => {
               component="h1"
               className="title-day-trip"
               sx={{
-                fontSize: { xs: "2rem", md: "3.2rem" },
+                fontSize: { xs: "2.5rem", md: "3.2rem" },
               }}
             >
               {t("titleDayTrip2")}

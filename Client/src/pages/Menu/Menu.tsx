@@ -6,7 +6,7 @@ import {
   DialogContent,
   IconButton,
 } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import {
   Close as CloseIcon,
@@ -15,7 +15,7 @@ import {
 } from "@mui/icons-material";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
-import workerUrl from "pdfjs-dist/build/pdf.worker.mjs?url";
+import workerUrl from "react-pdf/node_modules/pdfjs-dist/build/pdf.worker.min.mjs?url";
 
 import "./styleMenu.css";
 import Footer from "../../components/Footer/Footer";
@@ -31,20 +31,35 @@ const Menu = () => {
   const [open, setOpen] = useState(false);
   const [numPages, setNumPages] = useState<number | null>(null);
   const [pageNumber, setPageNumber] = useState(1);
+  const [documentError, setDocumentError] = useState<string | null>(null);
 
-  const handleOpen = () => setOpen(true);
+  useEffect(() => {
+    console.log("PDF worker URL:", workerUrl);
+    console.log(
+      "pdfjs version:",
+      ((pdfjs as any).version || (pdfjs as any).v) ?? "unknown"
+    );
+  }, []);
+
+  const handleOpen = () => {
+    setOpen(true);
+    setDocumentError(null);
+  };
   const handleClose = () => {
     setOpen(false);
     setPageNumber(1);
+    setDocumentError(null);
   };
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
     setNumPages(numPages);
     setPageNumber(1);
+    setDocumentError(null);
   }
 
-  function onDocumentLoadError(error: Error) {
+  function onDocumentLoadError(error: any) {
     console.error("Error al cargar el PDF:", error);
+    setDocumentError(error?.message || String(error));
   }
 
   const goToPrevPage = () => {
@@ -142,8 +157,17 @@ const Menu = () => {
                 <Typography sx={{ color: "error.main", marginBottom: "1rem" }}>
                   Error al cargar el PDF. Por favor, intente nuevamente.
                 </Typography>
+                {documentError && (
+                  <Typography
+                    variant="body2"
+                    sx={{ color: "text.secondary", marginBottom: "0.5rem" }}
+                  >
+                    {documentError}
+                  </Typography>
+                )}
                 <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                  Asegúrese de que el archivo existe en la carpeta public.
+                  Asegúrese de que el archivo existe en la carpeta public y que
+                  el worker de PDF.js está configurado.
                 </Typography>
               </Box>
             }
