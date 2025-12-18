@@ -6,7 +6,7 @@ import {
   DialogContent,
   IconButton,
 } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import {
   Close as CloseIcon,
@@ -33,13 +33,6 @@ const Menu = () => {
   const [pageNumber, setPageNumber] = useState(1);
   const [documentError, setDocumentError] = useState<string | null>(null);
 
-  useEffect(() => {
-    console.log("PDF worker URL:", workerUrl);
-    console.log(
-      "pdfjs version:",
-      ((pdfjs as any).version || (pdfjs as any).v) ?? "unknown"
-    );
-  }, []);
 
   const handleOpen = () => {
     setOpen(true);
