@@ -1,21 +1,16 @@
 .container-day-trip {
-  padding-block: calc(0.25rem * 20);
+  padding-block: calc(0.25rem * 6);
   background-color: transparent;
   background-image: url("/images/MangataBeach.jpg");
   background-repeat: no-repeat;
   width: 100%;
-  object-fit: contain;
-  margin-bottom: 250px;
+  object-fit: cover;
+  /* margin-bottom: 250px; */
 }
 
 .container-day-trip h1,
 p {
   color: white;
-}
-
-.container-day-trip h1 {
-  font-size: 3.2rem;
-  line-height: 1.1;
 }
 
 .button-reservation {
@@ -42,7 +37,6 @@ p {
 }
 
 .title-day-trip {
-  font-size: 1.5rem;
   line-height: 1.1;
   margin-bottom: calc(var(--spacing) * 3);
   text-align: left;
