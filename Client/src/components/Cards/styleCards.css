@@ -1,13 +1,3 @@
-.buttonDiscover {
-  padding-inline: calc(var(--spacing) * 3);
-  padding-block: calc(var(--spacing) * 2);
-  text-decoration: none;
-  font-size: 16px;
-  background-color: var(--color-theme-dark-blue);
-  color: #fff;
-  border-radius: 0.5rem;
-}
-
 .image-card {
   height: 320px;
   border-radius: 10px;

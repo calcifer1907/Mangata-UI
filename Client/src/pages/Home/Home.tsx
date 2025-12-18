@@ -61,19 +61,19 @@ const Home = () => {
               title={t("TitleCardDayTrip")}
               img="/images/MangataBeach.webp"
               button
-              redirectTo="/#/DayTrip"
+              redirectTo="/DayTrip"
             />
             <Card
               title={t("titleCardLoding")}
               img="/images/Hotel.webp"
               button
-              redirectTo="/#/Lodging"
+              redirectTo="/Lodging"
             />
             <Card
               title={t("titleCardEvents")}
               img="/images/Events.webp"
               button
-              redirectTo="/#/events"
+              redirectTo="/events"
             />
           </Box>
         </Box>

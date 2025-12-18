@@ -8,28 +8,29 @@ import { useTranslation } from "react-i18next";
 const sampleImages = [
   {
     id: "1",
-    src: "images/MangataEat.webp",
+    src: "images/Lancha.webp",
     alt: "",
     title: "",
     description: "",
   },
   {
     id: "2",
-    src: "https://images.unsplash.com/photo-1519681393784-d120267933ba",
+    src: "images/MangataEat.webp",
     alt: "",
     title: "",
     description: "",
   },
   {
     id: "3",
-    src: "https://images.unsplash.com/photo-1518837695005-2083093ee35b",
+    src: "images/eventMirred.webp",
     alt: "",
     title: "",
     description: "",
   },
+
   {
     id: "4",
-    src: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e",
+    src: "images/MangataChampagne.webp",
     alt: "",
     title: "",
     description: "",
@@ -48,10 +49,11 @@ const InitialSummary = () => {
       <Box className="initial-summary-image">
         <ImageCarousel
           images={sampleImages}
-          height={400}
-          variant="compact"
+          height={window.innerWidth < 600 ? 500 : 650}
+          variant="full"
           showIndicators={true}
           transition="slide"
+          showControls={false}
         />
       </Box>
       <Box>

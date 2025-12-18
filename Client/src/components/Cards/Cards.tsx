@@ -1,5 +1,6 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { NavLink } from "react-router";
 
 interface IProsp {
   title: string;
@@ -18,17 +19,18 @@ const Cards = ({ title, img, button, redirectTo, buttonTitle }: IProsp) => {
       <Box component="img" src={img} className="wd-100 image-card" />
       <Box className="content-card">
         <Box className="hg-100 d-flex justify-content-evenly align-items-center flex-direction-column">
-          <Typography className="font-weight-600 font-size-22 title-card">
+          <Typography className="font-weight-600 font-size-20 title-card">
             {title}
           </Typography>
           {button && (
-            <Typography
-              component="a"
-              href={redirectTo}
-              className="buttonDiscover"
+            <Button
+              variant="contained"
+              component={NavLink}
+              to={redirectTo ? redirectTo : "/"}
+              className="transition-all duration-200 hover:scale-105 active:scale-95"
             >
               {buttonTitle ? buttonTitle : t("discover")}
-            </Typography>
+            </Button>
           )}
         </Box>
       </Box>

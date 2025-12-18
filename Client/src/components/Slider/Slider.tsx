@@ -11,8 +11,8 @@ import {
   Zoom,
   Grow,
   ButtonGroup,
-  Button,
 } from "@mui/material";
+
 import {
   NavigateBefore,
   NavigateNext,
@@ -41,6 +41,7 @@ interface ImageCarouselProps {
   transition?: "fade" | "slide" | "zoom" | "grow";
   transitionDuration?: number;
   variant?: "full" | "compact" | "card";
+  showCounter?: boolean;
 }
 
 const ImageCarousel: React.FC<ImageCarouselProps> = ({
@@ -48,13 +49,14 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({
   height = 500,
   width = "100%",
   autoPlay = true,
-  autoPlaySpeed = 5000,
+  autoPlaySpeed = 8000,
   showControls = true,
   showIndicators = true,
   showThumbnails = false,
   transition = "fade",
   transitionDuration = 500,
   variant = "full",
+  showCounter = false,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(autoPlay);
@@ -81,7 +83,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({
 
     const interval = setInterval(goToNext, autoPlaySpeed);
     return () => clearInterval(interval);
-  }, [isPlaying, autoPlaySpeed]);
+  }, [isPlaying, autoPlaySpeed, goToNext]);
 
   const renderTransition = (children: React.ReactElement) => {
     const commonProps = {
@@ -275,21 +277,23 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({
       )}
 
       {/* Contador */}
-      <Typography
-        variant="caption"
-        sx={{
-          position: "absolute",
-          bottom: 16,
-          right: 16,
-          bgcolor: "rgba(0,0,0,0.5)",
-          color: "white",
-          px: 1,
-          py: 0.5,
-          borderRadius: 1,
-        }}
-      >
-        {currentIndex + 1} / {images.length}
-      </Typography>
+      {showCounter && (
+        <Typography
+          variant="caption"
+          sx={{
+            position: "absolute",
+            bottom: 16,
+            right: 16,
+            bgcolor: "rgba(0,0,0,0.5)",
+            color: "white",
+            px: 1,
+            py: 0.5,
+            borderRadius: 1,
+          }}
+        >
+          {currentIndex + 1} / {images.length}
+        </Typography>
+      )}
     </Box>
   );
 };
