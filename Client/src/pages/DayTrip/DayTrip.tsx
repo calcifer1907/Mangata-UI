@@ -35,7 +35,7 @@ const DayTrip = () => {
                 fontSize: { xs: "2rem", md: "3.2rem" },
               }}
             >
-              tu día perfecto
+              {t("titleDayTrip1")}
             </Typography>
             <Typography
               component="h1"
@@ -44,12 +44,11 @@ const DayTrip = () => {
                 fontSize: { xs: "2rem", md: "3.2rem" },
               }}
             >
-              frente al mar
+              {t("titleDayTrip2")}
             </Typography>
           </Box>
           <Typography component="p" className="descriotion-day-trip">
-            Disfruta un pasadía completo en Mangata: playa, gastronomía,
-            cocteles y actividades en las Islas del Rosario.
+            {t("titleDayTripDescription")}
           </Typography>
 
           <Button
