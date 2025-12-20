@@ -405,51 +405,50 @@ const Events = () => {
 
           <Grid container spacing={2}>
             {eventIncludes.map((item, index) => (
-              <Grid item xs={12} md={6} key={index}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "flex-start",
-                    p: 2,
-                    borderRadius: 2,
-                    transition: "all 0.3s",
-                    "&:hover": {
-                      backgroundColor: alpha(theme.palette.primary.light, 0.08),
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  p: 2,
+                  borderRadius: 2,
+                  transition: "all 0.3s",
+                  "&:hover": {
+                    backgroundColor: alpha(theme.palette.primary.light, 0.08),
+                  },
+                }}
+                key={index}
+              >
+                <ListItemIcon sx={{ minWidth: 40 }}>
+                  <Box
+                    sx={{
+                      width: 24,
+                      height: 24,
+                      borderRadius: "50%",
+                      backgroundColor: alpha(theme.palette.success.main, 0.1),
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <CheckIcon
+                      sx={{
+                        fontSize: 16,
+                        color: theme.palette.success.main,
+                      }}
+                    />
+                  </Box>
+                </ListItemIcon>
+                <ListItemText
+                  primary={item}
+                  primaryTypographyProps={{
+                    variant: "body1",
+                    sx: {
+                      fontWeight: 500,
+                      color: theme.palette.text.primary,
                     },
                   }}
-                >
-                  <ListItemIcon sx={{ minWidth: 40 }}>
-                    <Box
-                      sx={{
-                        width: 24,
-                        height: 24,
-                        borderRadius: "50%",
-                        backgroundColor: alpha(theme.palette.success.main, 0.1),
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <CheckIcon
-                        sx={{
-                          fontSize: 16,
-                          color: theme.palette.success.main,
-                        }}
-                      />
-                    </Box>
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={item}
-                    primaryTypographyProps={{
-                      variant: "body1",
-                      sx: {
-                        fontWeight: 500,
-                        color: theme.palette.text.primary,
-                      },
-                    }}
-                  />
-                </Box>
-              </Grid>
+                />
+              </Box>
             ))}
           </Grid>
         </Paper>
@@ -486,7 +485,7 @@ const Events = () => {
 
         <Grid container spacing={2}>
           {additionalServices.map((service, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index}>
+            <Box className="d-flex " key={index}>
               <Paper
                 elevation={0}
                 sx={{
@@ -523,7 +522,7 @@ const Events = () => {
                   {service}
                 </Typography>
               </Paper>
-            </Grid>
+            </Box>
           ))}
         </Grid>
       </Box>

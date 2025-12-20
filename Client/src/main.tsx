@@ -5,9 +5,9 @@ import "./i18n";
 import App from "./App";
 
 import { SnackbarProvider } from "notistack";
-import Theme from "./Theme";
+// import Theme from "./Theme";
 
-import { ThemeProvider } from "@mui/material/styles";
+// import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
