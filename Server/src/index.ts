@@ -9,6 +9,7 @@ import reservations from "./routes/reservations.routes";
 import payments from "./routes/payments.routes";
 import exportData from "./routes/exportData.routes";
 import socio from "./routes/socio.routes";
+import emails from "./routes/emails.routes";
 
 import errorHandler from "./middlewares/handleError";
 import { apiCacheControl, clearCache } from "./middlewares/cacheControl";
@@ -111,6 +112,7 @@ app.use("/api", usersRouters);
 app.use("/api", reservations);
 app.use("/api", exportData);
 app.use("/api", socio);
+app.use("/api", emails);
 app.use(payments);
 app.use(errorHandler);
 

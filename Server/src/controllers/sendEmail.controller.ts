@@ -1,8 +1,11 @@
 import nodemailer from "nodemailer";
 
+import fs from "fs";
+import path from "path";
+
 import { pool } from "../Connection";
 import { htmlContent } from "../functions/functionHtml";
-
+import { Request, Response } from "express";
 import { PASSWORD_EMAIL, USER_EMAIL, VITE_URL_UI } from "../configDB";
 
 const transporter = nodemailer.createTransport({
@@ -20,8 +23,6 @@ export const sendEmail = async (payment_id: string) => {
       "SELECT TO_CHAR(CREATED_AT AT TIME ZONE 'UTC', 'YYYY-MM-DD') AS FORMATTED_DATE, EMAIL FROM reservations WHERE PAYMENT_ID = $1",
       [payment_id]
     );
-    console.log("rows: ", rows);
-    console.log("rowCount: ", rowCount);
     if (rowCount) {
       const [resultQuery] = rows;
       const mailOptions = {
@@ -37,7 +38,6 @@ export const sendEmail = async (payment_id: string) => {
           },
         ],
       };
-
       transporter.sendMail(
         mailOptions,
         (error: Error | null, info: nodemailer.SentMessageInfo) => {
@@ -51,5 +51,44 @@ export const sendEmail = async (payment_id: string) => {
     }
   } catch (error) {
     console.error(PASSWORD_EMAIL, USER_EMAIL);
+  }
+};
+
+export const sendContactFormEmail = async (
+  request: Request,
+  response: Response
+) => {
+  try {
+    const { email, name, telephone, message } = request.body;
+    const subject = "Formulario de contacto";
+    const plantillaPath = path.join("./src/html", "htmlTemplateContact.html");
+    let htmlTemplate = fs.readFileSync(plantillaPath, "utf8");
+    const dataUSer = { email, name, telephone, message };
+
+    for (const [key, value] of Object.entries(dataUSer)) {
+      const placeholder = new RegExp(`{{${key}}}`, "g");
+      htmlTemplate = htmlTemplate.replace(placeholder, value);
+    }
+
+    const mailOptions = {
+      from: email,
+      to: USER_EMAIL,
+      subject,
+      html: htmlTemplate,
+    };
+    transporter.sendMail(
+      mailOptions,
+      (error: Error | null, info: nodemailer.SentMessageInfo) => {
+        if (error) {
+          console.log(error);
+          response.status(500);
+          return;
+        }
+        console.log("Correo enviado: " + info.response);
+        response.status(200).json({ status: "success" });
+      }
+    );
+  } catch (error) {
+    console.error("Error al enviar el correo:", error);
   }
 };

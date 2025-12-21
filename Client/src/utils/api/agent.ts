@@ -108,3 +108,6 @@ export const getCharListSales = (body: {
   startDate: string;
   endDate: string;
 }): Promise<ISalesData[]> => requestApis.post("/api/charListSales", body);
+
+export const sendContactofrom = (body: object): Promise<{ status: string }> =>
+  requestApis.post("/api/contactForm", body);

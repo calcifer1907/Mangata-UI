@@ -4,32 +4,90 @@ import { Box, Button, Paper, TextField, Typography } from "@mui/material";
 import "./styleContact.css";
 import Footer from "../../components/Footer/Footer";
 
+/**Apis */
+import { sendContactofrom } from "../../utils/api/agent";
+
+/**Libreries */
+import { useTranslation } from "react-i18next";
+
+/**Methods */
+import { sanitizeEmail, sanitizeInput } from "../../constant/SanatizedInputs";
+import { enqueueSnackbar } from "notistack";
+
+interface IFromContact {
+  name: string;
+  telephone: string;
+  email: string;
+  message: string;
+}
+
+const INITAL_FORM_VALUES: IFromContact = {
+  name: "",
+  telephone: "",
+  email: "",
+  message: "",
+};
+
 const Contact = () => {
-  const [formValues, setFormValues] = useState({
-    nombre: "",
-    telefono: "",
-    correo: "",
-    mensaje: "",
-  });
+  const { t } = useTranslation("home");
+  const [formValues, setFormValues] =
+    useState<IFromContact>(INITAL_FORM_VALUES);
 
   const handleChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = event.target;
-    setFormValues((prev) => ({ ...prev, [name]: value }));
+    const sanitizedValue = name === "email" ? value : sanitizeInput(value);
+    setFormValues((prev) => ({ ...prev, [name]: sanitizedValue }));
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Aquí puedes integrar tu lógica para enviar los datos (API, email, etc.)
-    console.log("Datos enviados:", formValues);
+    formValues.email = sanitizeEmail(formValues.email);
+    if (
+      !formValues.email ||
+      formValues.name === "" ||
+      formValues.message === "" ||
+      formValues.telephone === ""
+    ) {
+      enqueueSnackbar(t("errorEmail"), {
+        variant: "warning",
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "right",
+        },
+      });
+    } else {
+      await sendContactofrom(formValues)
+        .then((response) => {
+          if (response.status === "success") {
+            setFormValues(INITAL_FORM_VALUES);
+            enqueueSnackbar(t("responseSendEmail"), {
+              variant: "success",
+              anchorOrigin: {
+                vertical: "top",
+                horizontal: "right",
+              },
+            });
+          }
+        })
+        .catch((error) => {
+          console.error("Error al enviar el formulario:", error);
+          enqueueSnackbar(t("responseSendEmailError"), {
+            variant: "error",
+            anchorOrigin: {
+              vertical: "top",
+              horizontal: "right",
+            },
+          });
+        });
+    }
   };
 
   return (
     <Box sx={{ width: "100%" }}>
       <Box className="content-event" component="section">
         <Box className="container-event">
-          {/* Sección del título y descripción */}
           <Box
             sx={{
               flex: { xs: "1 1 100%", md: "1 1 15%" },
@@ -133,8 +191,8 @@ const Contact = () => {
                     fullWidth
                     required
                     label="Nombre"
-                    name="nombre"
-                    value={formValues.nombre}
+                    name="name"
+                    value={formValues.name}
                     onChange={handleChange}
                     sx={{
                       backgroundColor: "#fff",
@@ -152,8 +210,8 @@ const Contact = () => {
                     fullWidth
                     required
                     label="Teléfono"
-                    name="telefono"
-                    value={formValues.telefono}
+                    name="telephone"
+                    value={formValues.telephone}
                     onChange={handleChange}
                     inputMode="tel"
                     sx={{
@@ -181,9 +239,9 @@ const Contact = () => {
                     fullWidth
                     required
                     label="Correo electrónico"
-                    name="correo"
+                    name="email"
                     type="email"
-                    value={formValues.correo}
+                    value={formValues.email}
                     onChange={handleChange}
                     sx={{
                       backgroundColor: "#fff",
@@ -203,8 +261,8 @@ const Contact = () => {
                     multiline
                     minRows={4}
                     label="Mensaje"
-                    name="mensaje"
-                    value={formValues.mensaje}
+                    name="message"
+                    value={formValues.message}
                     onChange={handleChange}
                     sx={{
                       backgroundColor: "#fff",
