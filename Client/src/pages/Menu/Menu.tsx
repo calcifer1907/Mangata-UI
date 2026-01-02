@@ -49,9 +49,14 @@ const Menu = () => {
     setDocumentError(null);
   }
 
-  function onDocumentLoadError(error: any) {
-    console.error("Error al cargar el PDF:", error);
-    setDocumentError(error?.message || String(error));
+  function onDocumentLoadError(error: unknown) {
+    if (error instanceof Error) {
+      setDocumentError(error.message);
+    } else if (typeof error === "string") {
+      setDocumentError(error);
+    } else {
+      setDocumentError("Unknown error");
+    }
   }
 
   const goToPrevPage = () => {
