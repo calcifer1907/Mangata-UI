@@ -7,6 +7,7 @@
         "Reserve": "Reserve",
         "discover": "Discover",
         "Events": "Events",
+        "boatRental": "Boat Rental",
         "responseSendEmail": "Form submitted successfully",
         "responseSendEmailError": "Error submitting form",
         "errorEmail": "Incomplete fields",
