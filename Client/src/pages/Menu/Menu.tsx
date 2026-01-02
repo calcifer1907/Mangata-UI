@@ -33,7 +33,6 @@ const Menu = () => {
   const [pageNumber, setPageNumber] = useState(1);
   const [documentError, setDocumentError] = useState<string | null>(null);
 
-
   const handleOpen = () => {
     setOpen(true);
     setDocumentError(null);
@@ -73,6 +72,7 @@ const Menu = () => {
         <Box
           sx={{
             maxWidth: { xs: "90%", md: "80%", lg: "50%" },
+            padding: { xs: "2rem", md: "6rem" },
           }}
         >
           <Box>
@@ -85,7 +85,13 @@ const Menu = () => {
             >
               {t("titleMenu1")}
             </Typography>
-            <Typography component="h1" className="title-day-trip">
+            <Typography
+              component="h1"
+              className="title-day-trip"
+              sx={{
+                fontSize: { xs: "2rem", md: "3.2rem" },
+              }}
+            >
               {t("titleMenu2")}
             </Typography>
           </Box>
@@ -100,6 +106,80 @@ const Menu = () => {
           >
             Ver Menú
           </Button>
+        </Box>
+      </Box>
+
+      <Box className="container-menu-plates" component="section">
+        <Box>
+          <Typography
+            component="h1"
+            className="title-menu-some-plates"
+            sx={{
+              fontSize: { xs: "2rem", md: "3.2rem" },
+            }}
+          >
+            Algunos de nuestros platos
+          </Typography>
+          <Box
+            className="d-flex align-items-center justify-content-around flex-wrap gap-8"
+            sx={{ flexDirection: { xs: "column-reverse", lg: "row" } }}
+          >
+            <Box
+              component="img"
+              src="/images/lunche/FOTOS PLATOS/caribeña_adicional.webp"
+              alt="Platos de Mangata"
+              sx={{
+                width: { xs: "85%", lg: 600 },
+                height: { xs: 500, lg: 800 },
+              }}
+              loading="lazy"
+            />
+            <Box
+              className="d-flex align-items-center justify-content-center flex-direction-column text-align-center content-descrition-plates"
+              sx={{ gap: { xs: 1, lg: 5 } }}
+            >
+              <Typography component="h1">miscela caraibica</Typography>
+              <Typography
+                component="p"
+                sx={{
+                  maxWidth: { xs: "90%", md: "80%", lg: "60%" },
+                }}
+              >
+                exquisita combinación de fritos tradicionales de la región
+                caribe. Arepa de huevo, carimañolas, deditos de queso frito,
+                empanadas y patacones araña.
+              </Typography>
+            </Box>
+          </Box>
+        </Box>
+        <Box>
+          <Box className="d-flex align-items-center justify-content-around flex-wrap gap-8">
+            <Box
+              className="d-flex align-items-center justify-content-center flex-direction-column  text-align-center content-descrition-plates"
+              sx={{ gap: { xs: 1, lg: 5 } }}
+            >
+              <Typography component="h1">fra amici</Typography>
+              <Typography
+                component="p"
+                sx={{
+                  maxWidth: { xs: "90%", md: "80%", lg: "60%" },
+                }}
+              >
+                tradicional ceviche peruano de corvina, pulpo y camarones,
+                acompañado con chips de platano.
+              </Typography>
+            </Box>
+            <Box
+              component="img"
+              src="/images/lunche/FOTOS PLATOS/fra_amici_adicional.webp"
+              alt="Platos de Mangata"
+              sx={{
+                width: { xs: "85%", lg: 600 },
+                height: { xs: 400, lg: 700 },
+              }}
+              loading="lazy"
+            />
+          </Box>
         </Box>
       </Box>
 

@@ -1,0 +1,85 @@
+.container-menu {
+  background: linear-gradient(135deg, #3498db 0%, rgba(52, 152, 219, 0.8) 100%);
+  /* background-image: url("/images/lunche/FOTOS PLATOS/corozo_adicional.webp"); */
+  background-repeat: no-repeat;
+  background-size: cover;
+  object-fit: cover;
+  height: 50%;
+}
+
+.container-menu-plates {
+  padding: 2.5rem 1rem;
+  background: linear-gradient(120deg, #f8fafc 60%, #e0f7fa 100%);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+  align-items: center;
+}
+
+.container-menu-plates img {
+  border-radius: 18px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+  transition: transform 0.3s cubic-bezier(0.4, 2, 0.6, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 2, 0.6, 1);
+  object-fit: cover;
+  filter: brightness(0.98) saturate(1.1);
+}
+.container-menu-plates img:hover {
+  transform: scale(1.04) rotate(-1deg);
+  box-shadow: 0 16px 40px 0 rgba(31, 38, 135, 0.18);
+  filter: brightness(1) saturate(1.2);
+}
+
+.container-menu-plates .title-menu-some-plates {
+  font-weight: 700;
+  margin-bottom: 2.5rem;
+  text-align: center;
+  color: #1a237e;
+  letter-spacing: 0.04em;
+  text-shadow: 0 2px 8px rgba(52, 152, 219, 0.08);
+  text-transform: capitalize;
+  font-size: 2.2rem;
+}
+
+.container-menu-plates .content-descrition-plates p {
+  color: #1976d2;
+  text-transform: capitalize;
+  margin: 0.5rem auto 0 auto;
+  font-size: 1.18rem;
+  line-height: 1.7;
+  padding: 1.1rem 1.5rem;
+}
+
+.content-descrition-plates h1 {
+  text-transform: capitalize;
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: #263238;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 4px rgba(52, 152, 219, 0.07);
+}
+
+/* Responsive improvements */
+@media (max-width: 900px) {
+  .container-menu-plates {
+    padding: 1.2rem 0.2rem;
+    gap: 2.2rem;
+  }
+  .container-menu-plates img {
+    width: 95% !important;
+    height: auto !important;
+    max-width: 420px;
+  }
+  .container-menu-plates .title-menu-some-plates {
+    font-size: 1.5rem !important;
+  }
+  .content-descrition-plates h1 {
+    font-size: 1.3rem !important;
+  }
+  .container-menu-plates .content-descrition-plates p {
+    font-size: 1rem !important;
+    padding: 0.7rem 0.8rem;
+  }
+}
