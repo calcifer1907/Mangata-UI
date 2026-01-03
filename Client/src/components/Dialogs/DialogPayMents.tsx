@@ -10,7 +10,6 @@ import { useEffect, useState } from "react";
 import { Box, Paper } from "@mui/material";
 import { Icon } from "@iconify/react";
 import { enqueueSnackbar } from "notistack";
-import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 import { useTranslation } from "react-i18next";
 
 // import {NavLink} from "react-router-dom"
@@ -20,9 +19,6 @@ import Dialog from "./Dialog";
 import LoadingPage from "../Loading/Loading.tsx";
 
 // import PayMenetMethod from "../../pages/PayMenetMethod";
-
-/**Constant */
-import { VITE_PUBLIC_KEY } from "../../constant/URL.ts";
 
 /**APis */
 import { paymentBold } from "../../utils/api/agent";
@@ -54,29 +50,8 @@ const DialogPayMents = ({
   payment_id,
   email,
 }: IProps) => {
-  // const [clickPSE, setClickPSE] = useState<boolean>(false);
-  const [preferenceId] = useState<string | null>(null);
   const { t } = useTranslation("reserve");
   const [loading, setLoading] = useState<boolean>(false);
-  initMercadoPago(VITE_PUBLIC_KEY);
-
-  // const handlePaymentCreditCard = async () => {
-  //   try {
-  //     console.log(amount);
-  //     const response = await apisMercadoPago.createOrderCreditCard({
-  //       amount,
-  //       payment_id,
-  //     });
-  //     // const { init_point } = response;
-  //     // if (init_point) {
-  //     //   window.location.href = init_point;
-  //     // }
-  //     setPreferenceId(response.id);
-  //     console.log(response);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   const handleBoldPayment = async () => {
     try {
@@ -142,7 +117,6 @@ const DialogPayMents = ({
       fullScreen
       showCancelButton={false}
     >
-      {/* {!clickPSE && ( */}
       <Box
         className="d-flex gap-4 justify-content-center"
         style={{
@@ -152,25 +126,6 @@ const DialogPayMents = ({
           margin: "0 auto",
         }}
       >
-        {/* <Paper
-            component="button"
-            onClick={() => setClickPSE(true)}
-            variant="outlined"
-            sx={stytlePaper}
-          >
-            <img
-              src="/images/logo-pse.png"
-              alt="PSE"
-              style={{ width: "100px" }}
-            />
-            <Typography variant="h6">Pagó PSE</Typography>
-            <Icon
-              icon="solar:alt-arrow-right-outline"
-              width="42"
-              height="64"
-              color="#2B3D5E"
-            />
-          </Paper> */}
         <Paper
           component="div"
           onClick={handleBoldPayment}
@@ -191,58 +146,7 @@ const DialogPayMents = ({
             color="#2B3D5E"
           />
         </Paper>
-        {/* <Paper
-            component="button"
-            variant="outlined"
-            onClick={handlePaymentCreditCard}
-            sx={stytlePaper}
-          >
-            <Icon
-              style={{ marginLeft: "30px" }}
-              icon="solar:card-linear"
-              width="42"
-              height="64"
-              color="#2B3D5E"
-            />
-            <Typography variant="h6">Tarjeta débito y crédito</Typography>
-            <Icon
-              icon="solar:alt-arrow-right-outline"
-              width="42"
-              height="64"
-              color="#2B3D5E"
-            />
-          </Paper> */}
-        {/* <Paper
-            component="button"
-            variant="outlined"
-            onClick={() => setClickPSE(true)}
-            sx={stytlePaper}
-          >
-            <Icon
-              style={{ marginLeft: "30px" }}
-              icon="solar:qr-code-bold"
-              width="42"
-              height="64"
-              color="#2B3D5E"
-            />
-            <Icon
-              icon="solar:alt-arrow-right-outline"
-              width="42"
-              height="64"
-              color="#2B3D5E"
-            />
-          </Paper> */}
       </Box>
-      {/* )} */}
-
-      {/* <PayMenetMethod
-        amount={amount}
-        payment_id={payment_id}
-        name={""}
-        email={email}
-      /> */}
-
-      {preferenceId && <Wallet initialization={{ preferenceId }} />}
     </Dialog>
   );
 };
