@@ -12,6 +12,8 @@ import TextFieldComponent from "../TextField/TextFieldComponent";
 /**Apis */
 import { getIsDayBlocked } from "../../utils/api/agent";
 
+import { addDays } from "date-fns";
+
 import "react-date-range/dist/styles.css"; // Estilos principales
 import "react-date-range/dist/theme/default.css"; // Tema por defectoo de calendario de react-icons
 import { useTranslation } from "react-i18next";
@@ -25,14 +27,14 @@ interface IProps {
 
 const DatePickerWithIcon = ({ callback }: IProps) => {
   const initalDate = () => {
-    return new Date();
+    return addDays(new Date(), 1);
   };
   const { t } = useTranslation("common");
   const [date, setDate] = useState<Date>(initalDate());
   const [showCalendar, setShowCalendar] = useState(false);
   const calendarRef = useRef<HTMLDivElement | null>(null);
 
-  const [isDayBlocked, setIsDayBlocked] = useState<Date[]>([]);
+  const [isDayBlocked, setIsDayBlocked] = useState<Date[]>([new Date()]);
 
   const apiGetIsDayBlocked = useCallback(async () => {
     try {
@@ -41,7 +43,7 @@ const DatePickerWithIcon = ({ callback }: IProps) => {
         const d = new Date(f.valid_date);
         return new Date(d.getFullYear(), d.getMonth(), d.getDate());
       });
-      setIsDayBlocked(setDate);
+      setIsDayBlocked((prev) => [...prev, ...setDate]);
     } catch (error) {
       console.error("Error al obtener el estado del día bloqueado:", error);
     }

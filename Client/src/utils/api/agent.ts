@@ -45,7 +45,8 @@ export const getLIstForTable = {
 };
 
 export const getMinMax = {
-  getListData: (): Promise<IMinMaxResponse> => requestApis.get(`/api/MimMax`),
+  getListData: (typeEvent: string): Promise<IMinMaxResponse> =>
+    requestApis.get(`/api/MimMax/${typeEvent}`),
 };
 
 export const getAdmin = {

@@ -11,6 +11,8 @@
         "cellPhone": "Ingrese tú Celular",
         "fieldRequired": "Este campo es obligatorio",
         "email": "Correo",
+        "telephone": "Teléfono",
+        "totalPatment": "Total a pagar",
         "enterEmail": "Ingrese tú Correo",
         "addPerson": "Agregar persona",
         "standardPackage": "Paquete Estandar",

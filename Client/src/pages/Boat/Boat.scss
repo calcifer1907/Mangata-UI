@@ -1,0 +1,68 @@
+.boat-container {
+  min-height: 100vh;
+  background-color: #f5f7fa;
+  padding: 24px;
+}
+
+.boat-content-wrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.boat-header {
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.boat-title {
+  font-size: 32px;
+  font-weight: 800;
+  color: #2B3D5E;
+  margin-bottom: 16px;
+}
+
+.boat-stepper-container {
+  background-color: #ffffff;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  min-height: 400px;
+  
+  // Asegurar que el Stepper sea visible
+  .MuiStepper-root {
+    width: 100%;
+  }
+  
+  .MuiStepLabel-root {
+    .MuiStepLabel-label {
+      font-size: 16px;
+      font-weight: 600;
+      color: #2B3D5E;
+    }
+  }
+  
+  .MuiStepContent-root {
+    padding-left: 20px;
+    border-left: 2px solid #e0e0e0;
+  }
+}
+
+.boat-form-container {
+  background-color: #f9f9f9;
+  padding: 24px;
+  border-radius: 12px;
+  margin-top: 16px;
+}
+
+.boat-summary {
+  background-color: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.booking-summary-title{
+ color:#666;
+ font-weight:600;
+}

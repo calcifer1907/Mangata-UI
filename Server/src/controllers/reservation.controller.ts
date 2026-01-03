@@ -143,7 +143,11 @@ export const getListSalesAdmin = async (
 
 export const getMinMax = async (_request: Request, response: Response) => {
   try {
-    const result = await pool.query("SELECT MIN,MAX FROM min_max;");
+    const { typeEvent } = _request.params;
+    const result = await pool.query(
+      "SELECT MIN,MAX FROM min_max WHERE TYPE_EVENT = $1;",
+      [typeEvent]
+    );
     response.json(result.rows[0]);
   } catch (error) {
     response.status(500).json({ message: "Something went wrong" });

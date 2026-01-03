@@ -97,7 +97,7 @@ const DayTrip = () => {
       </Box>
       <Box className="p-relative">
         <Box
-          className="background-ligth-blue  margin-top-8 margin-bottom-8"
+          className="background-ligth-blue  margin-top-8 margin-buttom"
           sx={{
             height: { xs: "auto", xl: "400px" },
             paddingBlock: { xs: 2, xl: 0 },
