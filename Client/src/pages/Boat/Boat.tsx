@@ -312,7 +312,7 @@ const Boat: React.FC = () => {
                 marginBottom: 3,
               }}
             >
-              {t("reserveD")} - Alquiler de Bote
+              {t("reserveD")} - {t("boatRental")}
             </Typography>
             <Typography
               variant="body1"
@@ -321,7 +321,7 @@ const Boat: React.FC = () => {
                 marginBottom: 3,
               }}
             >
-              Completa el formulario paso a paso para reservar tu bote.
+              {t("completeForm")}
             </Typography>
           </Box>
 
@@ -492,7 +492,7 @@ const Boat: React.FC = () => {
                           marginBottom: 3,
                         }}
                       >
-                        Resumen de Reserva
+                        {t("bookingSummary")}
                       </Typography>
 
                       <Box className="d-flex gap-16 align-items-center margin-buttom-16  flex-wrap">
@@ -584,14 +584,7 @@ const Boat: React.FC = () => {
                       )}
 
                       {/* Botones de navegación */}
-                      <Box
-                        className="d-flex gap-16 justify-content-space-between flex-wrap"
-                        sx={{
-                          display: "flex",
-                          gap: 2,
-                          justifyContent: "space-between",
-                        }}
-                      >
+                      <Box className="d-flex gap-16 justify-content-space-between flex-wrap">
                         <ButtonComponent
                           title="Anterior"
                           onClick={handleBack}
@@ -652,7 +645,7 @@ const Boat: React.FC = () => {
           <Box sx={{ marginBottom: 3 }}>
             <Box sx={{ marginBottom: 2 }}>
               <Typography variant="body2" sx={{ color: "#666" }}>
-                Código de Reserva
+                {t("reservationCode")}
               </Typography>
               <Typography variant="h6" sx={{ fontWeight: 600 }}>
                 {CODE_RESERVATION}

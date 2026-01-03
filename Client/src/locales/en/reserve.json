@@ -1,5 +1,6 @@
 {
         "reserveD": "Book your day",
+        "boatRental": "Boat Rental",
         "adviser": "Adviser",
         "contactDetails": "Contact details",
         "bookingDetails": "Booking details",
@@ -31,5 +32,8 @@
         "chooseCountry": "Choose a country",
         "enterCountry": "Enter a country",
         "chooseCountryRequired": "Country is required",
-        "notReservation": "Reservations cannot be made at this time."
+        "notReservation": "Reservations cannot be made at this time.",
+        "bookingSummary": "Booking Summary",
+        "completeForm": "Complete the form step by step to book your boat.",
+        "reservationCode": "Reservation Code"
 }

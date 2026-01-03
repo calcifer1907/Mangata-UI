@@ -1,5 +1,6 @@
 {
         "reserveD": "Reserva tu día",
+        "boatRental": "Alquiler de Bote",
         "adviser": "Asesor",
         "contactDetails": "Datos De Contacto",
         "bookingDetails": "Datos De Reserva",
@@ -31,5 +32,8 @@
         "chooseCountry": "Seleccione el País",
         "enterCountry": "Ingrese un País",
         "chooseCountryRequired": "El País es obligatorio",
-        "notReservation": "En este horario no se puede reservas."
+        "notReservation": "En este horario no se puede reservas.",
+        "bookingSummary": "Resumen de Reserva",
+        "completeForm": "Completa el formulario paso a paso para reservar tu bote.",
+        "reservationCode": "Código de Reserva",
 }
