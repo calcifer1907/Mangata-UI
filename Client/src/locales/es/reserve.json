@@ -36,4 +36,8 @@
         "bookingSummary": "Resumen de Reserva",
         "completeForm": "Completa el formulario paso a paso para reservar tu bote.",
         "reservationCode": "Código de Reserva",
+        "back": "atrás",
+        "next": "Siguiente",
+        "nowPayment": "Ahora realiza tu pago.",
+        "selectDate": "Selecciona la fecha de tu reserva."
 }

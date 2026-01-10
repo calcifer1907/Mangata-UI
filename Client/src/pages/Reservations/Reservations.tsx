@@ -5,11 +5,14 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Grid2 from "@mui/material/Grid";
 import Modal from "@mui/material/Modal";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import StepContent from "@mui/material/StepContent";
 
 import "./Reservations.scss";
 
 /**Libreries */
-import { Icon } from "@iconify/react";
 import { useTranslation } from "react-i18next";
 
 /**Components */
@@ -35,6 +38,7 @@ import CountrySelect from "../../components/CountrySelect/CountrySelect";
 
 const NameLunchForm: FC = () => {
   const [isVisibleGrid, setIsVisibleGrid] = useState(false);
+  const [activeStep, setActiveStep] = useState(0);
   const { t } = useTranslation("reserve");
   const {
     optionsLunches,
@@ -45,8 +49,6 @@ const NameLunchForm: FC = () => {
     fields,
     setOpenModal,
     openModal,
-    openDialogPayment,
-    setOpenDialogPayment,
     dataCodeReservation,
     loading,
   } = useContextAccompanist();
@@ -81,6 +83,25 @@ const NameLunchForm: FC = () => {
     };
   }, []);
 
+  const steps = [
+    {
+      label: t("date"),
+      description: t("selectDate"),
+    },
+    {
+      label: t("paymentMethod"),
+      description: t("nowPayment"),
+    },
+  ];
+
+  const handleNext = () => {
+    if (allFields()) setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
   return (
     <Grid2
       spacing={2}
@@ -112,50 +133,106 @@ const NameLunchForm: FC = () => {
               background="background-color-button-dark-blue"
             />
           </Box>
-          <Calendar callback={handleChangeDate} />
-          <Typography className="color-blue-dark title-data-contact">
-            {t("contactDetails")}
-          </Typography>
-          <Box className="d-flex gap-16 flex-wrap flex-dirrection-row">
-            <CountrySelect />
-            <TextFieldComponent
-              value={valueCel}
-              onChange={handleOnchangeCel}
-              label="Celular"
-              placeholder={t("cellPhone")}
-              type="number"
-              iconName="phone-calling-rounded"
-              helperText={t("fieldRequired")}
-            />
-            <TextFieldComponent
-              value={valueEmail}
-              onChange={handleOnChangeEmail}
-              label={t("email")}
-              type="email"
-              placeholder={t("enterEmail")}
-              iconName="letter-opened"
-              helperText={t("fieldRequired")}
-            />
-          </Box>
-          <Box>
-            {fields.map((field, index) => (
-              <Accompanist
-                icon={index !== 0}
-                title={
-                  index === 0
-                    ? t("bookingDetails")
-                    : `${t("accompanist")} ${index}`
-                }
-                key={index}
-                index={index}
-                field={field}
-                errors={errors[index] || { name: false, lunch: false }}
-                onChange={handleChange}
-                onRemove={removeField}
-                lunchOptions={optionsLunches}
-              />
-            ))}
-          </Box>
+
+          <Stepper activeStep={activeStep} orientation="vertical">
+            {/* Paso 1: Datos de Contacto */}
+            <Step>
+              <StepLabel>{steps[0].label}</StepLabel>
+              <StepContent>
+                <Calendar callback={handleChangeDate} />
+                <Typography variant="body2" sx={{ color: "#666", mb: 3 }}>
+                  {steps[1].description}
+                </Typography>
+                <Box className="d-flex gap-16 flex-wrap flex-dirrection-row">
+                  <CountrySelect />
+                  <TextFieldComponent
+                    value={valueCel}
+                    onChange={handleOnchangeCel}
+                    label="Celular"
+                    placeholder={t("cellPhone")}
+                    type="number"
+                    iconName="phone-calling-rounded"
+                    helperText={t("fieldRequired")}
+                  />
+                  <TextFieldComponent
+                    value={valueEmail}
+                    onChange={handleOnChangeEmail}
+                    label={t("email")}
+                    type="email"
+                    placeholder={t("enterEmail")}
+                    iconName="letter-opened"
+                    helperText={t("fieldRequired")}
+                  />
+                </Box>
+                <Box>
+                  {fields.map((field, index) => (
+                    <Accompanist
+                      icon={index !== 0}
+                      title={
+                        index === 0
+                          ? t("bookingDetails")
+                          : `${t("accompanist")} ${index}`
+                      }
+                      key={index}
+                      index={index}
+                      field={field}
+                      errors={errors[index] || { name: false, lunch: false }}
+                      onChange={handleChange}
+                      onRemove={removeField}
+                      lunchOptions={optionsLunches}
+                    />
+                  ))}
+                </Box>
+                <Box
+                  sx={{
+                    mt: 3,
+                    display: "flex",
+                    justifyContent: "end",
+                  }}
+                >
+                  {handleValidHoursMoreTenLessSies ? (
+                    <Button
+                      variant="contained"
+                      onClick={handleNext}
+                      sx={{
+                        backgroundColor: "var(--color-theme-dark-blue)",
+                      }}
+                    >
+                      {t("next")}
+                    </Button>
+                  ) : (
+                    <Typography style={{ color: "red", fontSize: 18 }}>
+                      {t("notReservation")}
+                    </Typography>
+                  )}
+                </Box>
+              </StepContent>
+            </Step>
+
+            {/* Paso 3: Detalles de Reserva */}
+            <Step>
+              <StepLabel>{steps[1].label}</StepLabel>
+              <StepContent>
+                <Typography variant="body2" sx={{ color: "#666", mb: 3 }}>
+                  {steps[1].description}
+                </Typography>
+                <DialogPayMents
+                  amount={calculatePrice()}
+                  payment_id={Number(CODE_RESERVATION)}
+                  name={fields[0].name}
+                  email={valueEmail}
+                />
+                <Box
+                  className="d-flex justify-content-between"
+                  sx={{
+                    mt: 3,
+                  }}
+                >
+                  <Button onClick={handleBack}>{t("back")}</Button>
+                </Box>
+              </StepContent>
+            </Step>
+          </Stepper>
         </Box>
       </Grid2>
       <Grid2
@@ -250,55 +327,6 @@ const NameLunchForm: FC = () => {
               marginBottom={2}
             />
           </Box>
-          {handleValidHoursMoreTenLessSies ? (
-            <Box className="d-flex justify-content-end">
-              <Box
-                className="container-button margin-buttom-16"
-                sx={{
-                  backgroundColor: {
-                    xs: "var(--color-theme-white)",
-                    sm: "var(--color-theme-white)",
-                    md: "var(--color-theme-dark-blue)",
-                  },
-                }}
-              >
-                <Button
-                  className=""
-                  size="small"
-                  sx={{
-                    textTransform: "none",
-                    fontSize: 14,
-                    color: {
-                      xs: "var(--color-theme-dark-blue)",
-                      sm: "var(--color-theme-dark-blue)",
-                      md: "var(--color-theme-white)",
-                    },
-                  }}
-                  onClick={allFields}
-                  startIcon={
-                    <Box
-                      component={Icon}
-                      icon="solar:user-plus-bold-duotone"
-                      className="wd-24 hg-24"
-                      sx={{
-                        color: {
-                          xs: "var(--color-theme-dark-blue)",
-                          sm: "var(--color-theme-dark-blue)",
-                          md: "var(--color-theme-white)",
-                        },
-                      }}
-                    />
-                  }
-                >
-                  {t("reserve")}
-                </Button>
-              </Box>
-            </Box>
-          ) : (
-            <Typography style={{ color: "red", fontSize: 18 }}>
-              {t("notReservation")}
-            </Typography>
-          )}
         </Box>
       </Grid2>
       <Modal
@@ -318,15 +346,6 @@ const NameLunchForm: FC = () => {
               {t("checkReservation")}
             </Typography>
           </Box>
-
-          {/* <Icon
-              className="color-blue-dark"
-              icon="solar:copy-bold-duotone"
-              width="24"
-              height="24"
-              onClick={handleCopy}
-            /> */}
-
           <Box className="d-block color-black-opacity margin-inline">
             <StandardPackage
               title1={t("reservation") + " Cod."}
@@ -360,21 +379,16 @@ const NameLunchForm: FC = () => {
             <ButtonComponent
               background="background-gray"
               iconName=""
-              onClick={() => setOpenModal(false)}
+              onClick={() => {
+                setOpenModal(false);
+                handleBack();
+              }}
               title={t("cancel")}
               colorTitle="black"
             />
           </Box>
         </Box>
       </Modal>
-      <DialogPayMents
-        open={openDialogPayment}
-        setopen={setOpenDialogPayment}
-        amount={calculatePrice()}
-        payment_id={Number(CODE_RESERVATION)}
-        name={fields[0].name}
-        email={valueEmail}
-      />
     </Grid2>
   );
 };

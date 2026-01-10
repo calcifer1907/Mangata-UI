@@ -10,22 +10,14 @@ import { useEffect, useState } from "react";
 import { Box, Paper } from "@mui/material";
 import { Icon } from "@iconify/react";
 import { enqueueSnackbar } from "notistack";
-import { useTranslation } from "react-i18next";
-
-// import {NavLink} from "react-router-dom"
 
 /**Component */
-import Dialog from "./Dialog";
 import LoadingPage from "../Loading/Loading.tsx";
-
-// import PayMenetMethod from "../../pages/PayMenetMethod";
 
 /**APis */
 import { paymentBold } from "../../utils/api/agent";
 
 interface IProps {
-  open: boolean;
-  setopen: (data: boolean) => void;
   amount: number;
   payment_id: number;
   name?: string;
@@ -43,14 +35,10 @@ const stytlePaper = {
   cursor: "pointer",
 };
 
-const DialogPayMents = ({
-  open,
-  setopen,
-  amount,
-  payment_id,
-  email,
-}: IProps) => {
-  const { t } = useTranslation("reserve");
+const SCRIPT_BOLD_URL =
+  "https://bold.co/library/ui-kit.js?target=bold-pagos&layout=horizontal&type=slider";
+
+const DialogPayMents = ({ amount, payment_id, email }: IProps) => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleBoldPayment = async () => {
@@ -82,72 +70,49 @@ const DialogPayMents = ({
 
   useEffect(() => {
     // Verificar si el script ya existe
-    if (
-      !document.querySelector(
-        'script[src="https://bold.co/library/ui-kit.js?target=bold-pagos&layout=horizontal&type=slider"]'
-      ) &&
-      open
-    ) {
+    if (!document.querySelector(`script[src="${SCRIPT_BOLD_URL}"]`)) {
       const script = document.createElement("script");
-      script.src =
-        "https://bold.co/library/ui-kit.js?target=bold-pagos&layout=horizontal&type=slider";
-
-      // Agregar al head
-      document.head.appendChild(script);
+      script.src = SCRIPT_BOLD_URL;
+      document.head.appendChild(script); // Agregar al head
     }
-
     return () => {
       // Opcional: remover el script al desmontar si es necesario
-      const script = document.querySelector(
-        'script[src="https://bold.co/library/ui-kit.js?target=bold-pagos&layout=horizontal&type=slider"]'
-      );
+      const script = document.querySelector(`script[src="${SCRIPT_BOLD_URL}"]`);
       if (script) {
         document.head.removeChild(script);
       }
     };
-  }, [open]);
+  }, []);
 
   if (loading) return <LoadingPage />;
 
   return (
-    <Dialog
-      open={open}
-      setOpenDialog={setopen}
-      tittle={t("paymentMethod")}
-      fullScreen
-      showCancelButton={false}
+    <Box
+      component="section"
+      className="d-flex gap-4 justify-content-center"
+      style={{
+        flexDirection: "column",
+        maxWidth: "400px",
+        width: "100%",
+        margin: "0 auto",
+        overflow: "hidden",
+      }}
     >
-      <Box
-        className="d-flex gap-4 justify-content-center"
-        style={{
-          flexDirection: "column",
-          maxWidth: "400px",
-          width: "100%",
-          margin: "0 auto",
-        }}
+      <Paper
+        component="div"
+        onClick={handleBoldPayment}
+        variant="outlined"
+        sx={stytlePaper}
       >
-        <Paper
-          component="div"
-          onClick={handleBoldPayment}
-          variant="outlined"
-          sx={stytlePaper}
-        >
-          <div id="bold-pagos" key={String(open)}>
-            <img
-              src="https://developers.bold.co/_next/static/media/logo.ac02f303.png"
-              alt="BOLD"
-              style={{ width: "100px" }}
-            />
-          </div>
-          <Icon
-            icon="solar:alt-arrow-right-outline"
-            width="42"
-            height="64"
-            color="#2B3D5E"
-          />
-        </Paper>
-      </Box>
-    </Dialog>
+        <div id="bold-pagos" />
+        <Icon
+          icon="solar:alt-arrow-right-outline"
+          width="42"
+          height="64"
+          color="#2B3D5E"
+        />
+      </Paper>
+    </Box>
   );
 };
 

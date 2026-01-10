@@ -35,5 +35,9 @@
         "notReservation": "Reservations cannot be made at this time.",
         "bookingSummary": "Booking Summary",
         "completeForm": "Complete the form step by step to book your boat.",
-        "reservationCode": "Reservation Code"
+        "reservationCode": "Reservation Code",
+        "back": "back",
+        "next": "next",
+        "nowPayment": "Make your payment now.",
+        "selectDate": "Select your booking date."
 }
