@@ -7,12 +7,14 @@
         "accompanist": "Accompanist",
         "fullName": "Full name",
         "nameRequired": "Name is required",
+        "celphoneRequired": "Cell Phone is required",
         "chooseLunch": "Choose lunch",
         "lunchMandatory": "Lunch is mandatory",
         "cellPhone": "Enter your Cell Phone",
         "fieldRequired": "This field is required",
         "telephone": "telephone",
         "email": "Email",
+        "emailRequired": "Email is required",
         "totalPatment": "Total Payment",
         "enterEmail": "Enter your Email",
         "addPerson": "Add Person",
@@ -39,5 +41,10 @@
         "back": "back",
         "next": "next",
         "nowPayment": "Make your payment now.",
-        "selectDate": "Select your booking date."
+        "selectDate": "Select your booking date.",
+        "confirmAndPay": "Confirm and Pay",
+        "dateAndContactDetails": "Date and Contact Details",
+        "selectDateAndContactDetails": "Select the date and complete your details",
+        "checkReservation1": "Check your reservation and proceed to payment",
+        "selectDateValid": "Please select a valid date."
 }

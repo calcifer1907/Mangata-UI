@@ -2,7 +2,6 @@ import React, { useState, useEffect, useMemo } from "react";
 import {
   Box,
   Typography,
-  Modal,
   Alert,
   Autocomplete,
   TextField,
@@ -38,6 +37,7 @@ import { addDays } from "date-fns";
 
 /**Styles */
 import "./Boat.scss";
+import { sanitizeEmail, sanitizeInput } from "../../constant/SanatizedInputs";
 
 const Boat: React.FC = () => {
   const { t } = useTranslation("reserve");
@@ -53,8 +53,6 @@ const Boat: React.FC = () => {
     null
   );
   const [loading, setLoading] = useState<boolean>(false);
-  const [openModal, setOpenModal] = useState<boolean>(false);
-  const [openDialogPayment, setOpenDialogPayment] = useState<boolean>(false);
   const [systemUserId, setSystemUserId] = useState<number>(-1);
   const [activeStep, setActiveStep] = useState<number>(0);
 
@@ -104,7 +102,7 @@ const Boat: React.FC = () => {
   // Validar campos del paso 1 (fecha y contacto)
   const validateStep1 = (): boolean => {
     if (!dateChange || dateChange === formatDate("", "YYYY-MM-DD")) {
-      enqueueSnackbar("Por favor, selecciona una fecha.", {
+      enqueueSnackbar(t("selectDateValid"), {
         variant: "error",
         anchorOrigin: {
           vertical: "top",
@@ -115,7 +113,7 @@ const Boat: React.FC = () => {
     }
 
     if (!valueName || valueName.trim() === "") {
-      enqueueSnackbar("El nombre es requerido.", {
+      enqueueSnackbar(t("nameRequired"), {
         variant: "error",
         anchorOrigin: {
           vertical: "top",
@@ -126,7 +124,7 @@ const Boat: React.FC = () => {
     }
 
     if (!valueCel || valueCel.trim() === "") {
-      enqueueSnackbar("El número de celular es requerido.", {
+      enqueueSnackbar(t("celphoneRequired"), {
         variant: "error",
         anchorOrigin: {
           vertical: "top",
@@ -137,7 +135,7 @@ const Boat: React.FC = () => {
     }
 
     if (!valueEmail || valueEmail.trim() === "" || !validEmail(valueEmail)) {
-      enqueueSnackbar("El correo electrónico es requerido y debe ser válido.", {
+      enqueueSnackbar(t("emailRequired"), {
         variant: "error",
         anchorOrigin: {
           vertical: "top",
@@ -148,7 +146,7 @@ const Boat: React.FC = () => {
     }
 
     if (!selectedCountry) {
-      enqueueSnackbar("Por favor, selecciona un país.", {
+      enqueueSnackbar(t("chooseCountryRequired"), {
         variant: "error",
         anchorOrigin: {
           vertical: "top",
@@ -173,16 +171,16 @@ const Boat: React.FC = () => {
 
   // Manejar cambio de celular
   const handleOnchangeCel = (value: string) => {
-    if (value.length <= 10) setValueCel(value);
+    if (value.length <= 10) setValueCel(sanitizeInput(value));
   };
 
   // Manejar cambio de email
   const handleOnChangeEmail = (value: string) => {
-    if (value.length < 100) setValueEmail(value);
+    if (value.length < 100) setValueEmail(sanitizeEmail(value));
   };
 
   const handleOnChangeName = (value: string) => {
-    if (value.length < 100) setValueName(value);
+    if (value.length < 100) setValueName(sanitizeInput(value));
   };
 
   // Crear reserva
@@ -217,15 +215,12 @@ const Boat: React.FC = () => {
             horizontal: "right",
           },
         });
-        setOpenModal(false);
-        setOpenDialogPayment(true);
         // Avanzar al paso de pago si aún no está ahí
         if (activeStep < 1) {
           setActiveStep(1);
         }
       }
-    } catch (error) {
-      console.error("Error al crear la reserva:", error);
+    } catch {
       enqueueSnackbar(
         "Error al crear la reserva. Por favor, intenta nuevamente.",
         {
@@ -248,24 +243,14 @@ const Boat: React.FC = () => {
     return !(currentHours >= 22 || currentHours <= 6);
   }, []);
 
-  // Abrir modal de confirmación
-  const handleOpenModal = () => {
-    if (validateFields()) {
-      setOpenModal(true);
-    }
-  };
-
-  // Cerrar modal
-  const handleClose = () => {
-    setOpenModal(false);
-  };
-
   // Manejar siguiente paso
   const handleNext = () => {
     if (activeStep === 0) {
       if (validateStep1()) {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
       }
+    } else {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
   };
 
@@ -288,12 +273,12 @@ const Boat: React.FC = () => {
   // Pasos del stepper
   const steps = [
     {
-      label: "Fecha y Datos de Contacto",
-      description: "Selecciona la fecha y completa tus datos",
+      label: t("dateAndContactDetails"),
+      description: t("selectDateAndContactDetails"),
     },
     {
-      label: "Resumen y Pago",
-      description: "Revisa tu reserva y procede al pago",
+      label: t("bookingSummary"),
+      description: t("checkReservation1"),
     },
   ];
 
@@ -437,9 +422,9 @@ const Boat: React.FC = () => {
                         <TextFieldComponent
                           value={valueName}
                           onChange={handleOnChangeName}
-                          label={t("name")}
+                          label={t("fullName")}
                           type="text"
-                          placeholder={t("enterName")}
+                          placeholder={t("fullName")}
                           iconName="user"
                           helperText={t("fieldRequired")}
                         />
@@ -448,7 +433,7 @@ const Boat: React.FC = () => {
                           onChange={handleOnChangeEmail}
                           label={t("email")}
                           type="email"
-                          placeholder={t("enterEmail")}
+                          placeholder={t("email")}
                           iconName="letter-opened"
                           helperText={t("fieldRequired")}
                         />
@@ -464,7 +449,7 @@ const Boat: React.FC = () => {
                       }}
                     >
                       <ButtonComponent
-                        title="Siguiente"
+                        title={t("next")}
                         onClick={handleNext}
                         iconName="solar:arrow-right-bold-duotone"
                         background="background-harvest-gold"
@@ -586,7 +571,7 @@ const Boat: React.FC = () => {
                       {/* Botones de navegación */}
                       <Box className="d-flex gap-16 justify-content-space-between flex-wrap">
                         <ButtonComponent
-                          title="Anterior"
+                          title={t("back")}
                           onClick={handleBack}
                           iconName="solar:arrow-left-bold-duotone"
                           background="background-gray"
@@ -594,9 +579,11 @@ const Boat: React.FC = () => {
                         />
                         <ButtonComponent
                           title={
-                            loading ? "Reservando..." : "Confirmar y Pagar"
+                            loading
+                              ? t("reservation") + "..."
+                              : t("confirmAndPay")
                           }
-                          onClick={handleOpenModal}
+                          onClick={handleNext}
                           iconName="solar:wallet-money-bold-duotone"
                           background="background-harvest-gold"
                         />
@@ -605,96 +592,29 @@ const Boat: React.FC = () => {
                   </Box>
                 </StepContent>
               </Step>
+
+              <Step>
+                <StepLabel>Pagar</StepLabel>
+                <StepContent>
+                  <DialogPayMents
+                    amount={calculatePrice()}
+                    payment_id={Number(CODE_RESERVATION)}
+                    name={valueName}
+                    email={valueEmail}
+                  />
+                  <ButtonComponent
+                    title={t("back")}
+                    onClick={handleBack}
+                    iconName="solar:arrow-left-bold-duotone"
+                    background="background-gray"
+                    colorTitle="black"
+                  />
+                </StepContent>
+              </Step>
             </Stepper>
           </Box>
         </Box>
       </Box>
-      {/* Modal de confirmación */}
-      <Modal
-        open={openModal}
-        onClose={handleClose}
-        aria-labelledby="confirmation-modal-title"
-        aria-describedby="confirmation-modal-description"
-      >
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: { xs: "90%", sm: 400 },
-            bgcolor: "background.paper",
-            borderRadius: 2,
-            boxShadow: 24,
-            p: 4,
-          }}
-        >
-          <Typography
-            id="confirmation-modal-title"
-            variant="h5"
-            sx={{
-              fontWeight: 700,
-              color: "#2B3D5E",
-              marginBottom: 3,
-              textAlign: "center",
-            }}
-          >
-            {t("checkReservation")}
-          </Typography>
-
-          <Box sx={{ marginBottom: 3 }}>
-            <Box sx={{ marginBottom: 2 }}>
-              <Typography variant="body2" sx={{ color: "#666" }}>
-                {t("reservationCode")}
-              </Typography>
-              <Typography variant="h6" sx={{ fontWeight: 600 }}>
-                {CODE_RESERVATION}
-              </Typography>
-            </Box>
-
-            <Box sx={{ marginBottom: 2 }}>
-              <Typography variant="body2" sx={{ color: "#666" }}>
-                {t("date")}
-              </Typography>
-              <Typography variant="body1" sx={{ fontWeight: 500 }}>
-                {dateChange}
-              </Typography>
-            </Box>
-          </Box>
-
-          <Box
-            sx={{
-              display: "flex",
-              gap: 2,
-              justifyContent: "center",
-            }}
-          >
-            <ButtonComponent
-              background="background-harvest-gold"
-              iconName=""
-              onClick={handleReservation}
-              title={loading ? `${t("save")}...` : t("confirm")}
-            />
-            <ButtonComponent
-              background="background-gray"
-              iconName=""
-              onClick={handleClose}
-              title={t("cancel")}
-              colorTitle="black"
-            />
-          </Box>
-        </Box>
-      </Modal>
-
-      {/* Dialog de pago */}
-      <DialogPayMents
-        open={openDialogPayment}
-        setopen={setOpenDialogPayment}
-        amount={calculatePrice()}
-        payment_id={Number(CODE_RESERVATION)}
-        name={valueName}
-        email={valueEmail}
-      />
     </>
   );
 };

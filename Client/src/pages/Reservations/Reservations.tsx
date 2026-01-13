@@ -136,7 +136,7 @@ const NameLunchForm: FC = () => {
 
           <Stepper activeStep={activeStep} orientation="vertical">
             {/* Paso 1: Datos de Contacto */}
-            <Step>
+            <Step sx={{ marginBottom: 10 }}>
               <StepLabel>{steps[0].label}</StepLabel>
               <StepContent>
                 <Calendar callback={handleChangeDate} />
@@ -208,8 +208,6 @@ const NameLunchForm: FC = () => {
                 </Box>
               </StepContent>
             </Step>
-
-            {/* Paso 3: Detalles de Reserva */}
             <Step>
               <StepLabel>{steps[1].label}</StepLabel>
               <StepContent>
