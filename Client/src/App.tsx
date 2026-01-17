@@ -21,6 +21,7 @@ import Contact from "./pages/Contact/Contact";
 import Events from "./pages/Events/Events";
 import Menu from "./pages/Menu/Menu";
 import Boat from "./pages/Boat/Boat";
+import BoartReservations from "./pages/Boat/BoatReservations";
 
 // import PayMenetMethod from "./pages/PayMenetMethod";
 
@@ -34,7 +35,8 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/CreateUser" element={<CreateUser />} />
             <Route path="/Calendar" element={<CalendarPage />} />
-            <Route path="/BoatRental" element={<Boat />} />
+            <Route path="/Boat" element={<Boat />} />
+            <Route path="/BoatRental" element={<BoartReservations />} />
             <Route
               path="/GenerateReservation"
               element={<GenerateReservation />}
