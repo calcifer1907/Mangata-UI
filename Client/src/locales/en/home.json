@@ -7,7 +7,7 @@
         "Reserve": "Reserve",
         "discover": "Discover",
         "Events": "Events",
-        "boatRental": "Boat Rental",
+        "boatRental": "Reserve Boat",
         "responseSendEmail": "Form submitted successfully",
         "responseSendEmailError": "Error submitting form",
         "errorEmail": "Incomplete fields",
@@ -45,5 +45,8 @@
         "descriptionHomeSlider": "Mangata is a beachfront beach club and hotel located on Isla Grande, in the heart of the Rosario Islands, just a short boat ride from Cartagena. It was created for those seeking more than just a day at the beach: a complete Colombian Caribbean experience, with excellent service, delicious food, and a relaxed yet sophisticated atmosphere.",
         "titleDayTrip1": "Your perfect day",
         "titleDayTrip2": "by the sea",
-        "titleDayTripDescription": "Enjoy a full day trip to Mangata: beach, gastronomy, cocktails and activities in the Rosario Islands."
+        "titleDayTripDescription": "Enjoy a full day trip to Mangata: beach, gastronomy, cocktails and activities in the Rosario Islands.",
+        "titleDayTripDescription2": "Mangata-style sea",
+        "titleDayTripDescription3": "Adventure",
+        "descriptionBoat": "Private boat rental, island tours, snorkeling and customized nautical experiences for groups and couples."
 }

@@ -8,7 +8,7 @@
         "discover": "Descubrir",
         "Lodging": "Hospedaje",
         "Events": "Eventos",
-        "boatRental": "Alquiler de Bote",
+        "boatRental": "Reservar de Bote",
         "responseSendEmail": "Formulario enviado con éxito",
         "responseSendEmailError": "Error al enviar el formulario",
         "errorEmail": "Campos incompletos",
@@ -45,5 +45,8 @@
         "descriptionHomeSlider": "Mangata es un beach club y hotel frente al mar ubicado en Isla Grande, en el corazón de las Islas del Rosario, a minutos en lancha de Cartagena. Nació para quienes buscan algo más que un simple día de playa: una experiencia completa en el Caribe colombiano, con buen servicio, buena comida y un ambiente relajado pero sofisticado.",
         "titleDayTrip1": "tu día perfecto",
         "titleDayTrip2": "frente al mar",
-        "titleDayTripDescription": "Disfruta un pasadía completo en Mangata: playa, gastronomía, cocteles y actividades en las Islas del Rosario."
+        "titleDayTripDescription": "Disfruta un pasadía completo en Mangata: playa, gastronomía, cocteles y actividades en las Islas del Rosario.",
+        "titleDayTripDescription2": "Aventura en el mar al",
+        "titleDayTripDescription3": "Estilo Mangata",
+        "descriptionBoat": "Renta de bote privado, recorridos por la isla, snorkel y experiencias náuticas personalizadas para grupos y parejas."
 }
