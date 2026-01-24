@@ -31,6 +31,7 @@
         "BookingSaving": "Booking was successfully saved",
         "IvalidEmail": "Invalid mail!",
         "paymentMethod": "Payment method",
+        "payment": "Payment",
         "chooseCountry": "Choose a country",
         "enterCountry": "Enter a country",
         "chooseCountryRequired": "Country is required",
@@ -46,5 +47,7 @@
         "dateAndContactDetails": "Date and Contact Details",
         "selectDateAndContactDetails": "Select the date and complete your details",
         "checkReservation1": "Check your reservation and proceed to payment",
-        "selectDateValid": "Please select a valid date."
+        "selectDateValid": "Please select a valid date.",
+        "titleLodging1": "Wake up with the",
+        "titleLodging2": "sound of the sea"
 }

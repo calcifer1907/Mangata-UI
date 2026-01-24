@@ -31,6 +31,7 @@
         "BookingSaving": "Se guardo correctamente la reserva",
         "IvalidEmail": "Correo inválido!",
         "paymentMethod": "Método de pago",
+        "payment": "Pagar",
         "chooseCountry": "Seleccione el País",
         "enterCountry": "Ingrese un País",
         "chooseCountryRequired": "El País es obligatorio",
@@ -45,5 +46,7 @@
         "confirmAndPay": "Confirmar y Pagar",
         "dateAndContactDetails": "Fecha y Datos de Contacto",
         "selectDateAndContactDetails": "Selecciona la fecha y completa tus datos",
-        "checkReservation1": "Revisa tu reserva y procede al pago"
+        "checkReservation1": "Revisa tu reserva y procede al pago",
+        "titleLodging1": "Despierta con el",
+        "titleLodging2": "sonido del mar"
 }
