@@ -18,5 +18,5 @@ export const sanitizeEmail = (email: string) => {
 
   // Validación básica
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(sanitized) ? sanitized : "";
+  return emailRegex.test(sanitized) ? sanitized : sanitized;
 };
