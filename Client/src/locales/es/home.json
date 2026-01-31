@@ -6,6 +6,8 @@
         "reserve": "Reservar",
         "dayTrip": "Pasa Día",
         "Reserve": "Reservar",
+        "page": "Página",
+        "of": "de",
         "moreInformation": "Más Información",
         "discover": "Descubrir",
         "Lodging": "Hospedaje",
@@ -43,6 +45,8 @@
         "titleMenu1": "Sabores del Caribe",
         "titleMenu2": "frente al mar",
         "descriptionMenu": "Enjoy a full day trip to Mangata: beach, gastronomy, cocktails and activities in the Rosario Islands.",
+        "viewMenu": "Ver Menú",
+        "someDises": "Algunos de nuestros platos",
         "titleHomeSlider": "Ven y disfruta el caribe colombiano con nosotros",
         "descriptionHomeSlider": "Mangata es un beach club y hotel frente al mar ubicado en Isla Grande, en el corazón de las Islas del Rosario, a minutos en lancha de Cartagena. Nació para quienes buscan algo más que un simple día de playa: una experiencia completa en el Caribe colombiano, con buen servicio, buena comida y un ambiente relajado pero sofisticado.",
         "titleDayTrip1": "tu día perfecto",
@@ -97,5 +101,9 @@
         "readyForAdventure": "¿Listo para tu Aventura?",
         "bookNowMessage": "Reserva ahora y vive una experiencia inolvidable en el mar",
         "descriptionEvents": "Celebra tus eventos especiales en un entorno único frente al mar, con un servicio personalizado y experiencias inolvidables.",
-        "eventMangata": "Eventos en"
+        "eventMangata": "Eventos en",
+        "errorPDF": "Error al cargar el PDF. Por favor, intente nuevamente.",
+        "ensurePDFExists": "Asegúrese de que el archivo existe en la carpeta public y que el worker de PDF.js está configurado.",
+        "fraAmici": "tradicional ceviche peruano de corvina, pulpo y camarones, acompañado con chips de platano.",
+        "miscela": "exquisita combinación de fritos tradicionales de la región caribe. Arepa de huevo, carimañolas, deditos de queso frito, empanadas y patacones araña."
 }

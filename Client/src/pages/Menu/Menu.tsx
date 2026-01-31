@@ -12,6 +12,9 @@ import {
   NavigateBefore,
   NavigateNext,
 } from "@mui/icons-material";
+
+import { useTranslation } from "react-i18next";
+
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
 import workerUrl from "react-pdf/node_modules/pdfjs-dist/build/pdf.worker.min.mjs?url";
@@ -30,6 +33,8 @@ const Menu = () => {
   const [numPages, setNumPages] = useState<number | null>(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [documentError, setDocumentError] = useState<string | null>(null);
+
+  const { t } = useTranslation("home");
 
   const handleOpen = () => {
     setOpen(true);
@@ -77,6 +82,7 @@ const Menu = () => {
         description="descriptionMenu"
         linkButton="menu"
         onClick={handleOpen}
+        titleButton="viewMenu"
       />
 
       <Box className="container-menu-plates" component="section">
@@ -106,7 +112,7 @@ const Menu = () => {
             />
             <Box
               className="d-flex align-items-center justify-content-center flex-direction-column text-align-center content-descrition-plates"
-              sx={{ gap: { xs: 1, lg: 5 } }}
+              sx={{ gap: { xs: 1, lg: 5 }, width: { xs: "100%", lg: "50%" } }}
             >
               <Typography component="h1">miscela caraibica</Typography>
               <Typography
@@ -115,9 +121,7 @@ const Menu = () => {
                   maxWidth: { xs: "90%", md: "80%", lg: "60%" },
                 }}
               >
-                exquisita combinación de fritos tradicionales de la región
-                caribe. Arepa de huevo, carimañolas, deditos de queso frito,
-                empanadas y patacones araña.
+                {t("miscela")}
               </Typography>
             </Box>
           </Box>
@@ -125,8 +129,8 @@ const Menu = () => {
         <Box>
           <Box className="d-flex align-items-center justify-content-around flex-wrap gap-8">
             <Box
-              className="d-flex align-items-center justify-content-center flex-direction-column  text-align-center content-descrition-plates"
-              sx={{ gap: { xs: 1, lg: 5 } }}
+              className="d-flex align-items-center justify-content-center flex-direction-column text-align-center content-descrition-plates"
+              sx={{ gap: { xs: 1, lg: 5 }, width: { xs: "100%", lg: "50%" } }}
             >
               <Typography component="h1">fra amici</Typography>
               <Typography
@@ -135,8 +139,7 @@ const Menu = () => {
                   maxWidth: { xs: "90%", md: "80%", lg: "60%" },
                 }}
               >
-                tradicional ceviche peruano de corvina, pulpo y camarones,
-                acompañado con chips de platano.
+                {t("fraAmici")}
               </Typography>
             </Box>
             <Box
@@ -175,7 +178,7 @@ const Menu = () => {
             borderBottom: "1px solid #e0e0e0",
           }}
         >
-          <Typography variant="h6">Carta Mangata</Typography>
+          <Typography variant="h6">{t("menu")}</Typography>
           <IconButton onClick={handleClose}>
             <CloseIcon />
           </IconButton>
@@ -198,7 +201,7 @@ const Menu = () => {
             error={
               <Box sx={{ padding: "2rem", textAlign: "center" }}>
                 <Typography sx={{ color: "error.main", marginBottom: "1rem" }}>
-                  Error al cargar el PDF. Por favor, intente nuevamente.
+                  {t("errorPDF")}
                 </Typography>
                 {documentError && (
                   <Typography
@@ -209,8 +212,7 @@ const Menu = () => {
                   </Typography>
                 )}
                 <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                  Asegúrese de que el archivo existe en la carpeta public y que
-                  el worker de PDF.js está configurado.
+                  {t("ensurePDFExists")}
                 </Typography>
               </Box>
             }
@@ -242,7 +244,7 @@ const Menu = () => {
                 <NavigateBefore />
               </IconButton>
               <Typography sx={{ color: "text.secondary" }}>
-                Página {pageNumber} de {numPages}
+                {t("page")} {pageNumber} {t("of")} {numPages}
               </Typography>
               <IconButton
                 onClick={goToNextPage}

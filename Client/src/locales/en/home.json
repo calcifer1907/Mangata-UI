@@ -6,6 +6,8 @@
         "reserve": "Reserve",
         "dayTrip": "Day Trip",
         "Reserve": "Reserve",
+        "page": "Page",
+        "of": "of",
         "moreInformation": "More Information",
         "discover": "Discover",
         "Events": "Events",
@@ -42,6 +44,8 @@
         "titleCardEvents": "Celebrate in paradise",
         "titleMenu1": "Flavors of the Caribbean",
         "titleMenu2": "by the sea",
+        "viewMenu": "View Menu",
+        "someDises": "Some of our dishes",
         "descriptionMenu": "Enjoy a full day trip to Mangata: beach, gastronomy, cocktails and activities in the Rosario Islands.",
         "titleHomeSlider": "Ven y disfruta el caribe colombiano con nosotros",
         "descriptionHomeSlider": "Mangata is a beachfront beach club and hotel located on Isla Grande, in the heart of the Rosario Islands, just a short boat ride from Cartagena. It was created for those seeking more than just a day at the beach: a complete Colombian Caribbean experience, with excellent service, delicious food, and a relaxed yet sophisticated atmosphere.",
@@ -97,5 +101,9 @@
         "readyForAdventure": "Ready for Your Adventure?",
         "bookNowMessage": "Book now and experience an unforgettable adventure at sea",
         "descriptionEvents": "Celebrate your special events in a unique beachfront setting, with personalized service and unforgettable experiences.",
-        "eventMangata": "Events in"
+        "eventMangata": "Events in",
+        "errorPDF": "Error loading the PDF. Please try again.",
+        "ensurePDFExists": "Make sure the file exists in the public folder and that the PDF.js worker is configured.",
+        "fraAmici": "traditional Peruvian ceviche of sea bass, octopus and shrimp, served with plantain chips.",
+        "miscela": "blend of premium coffee beans from Colombia and Central America, roasted to perfection to bring out its rich flavor and aroma."
 }

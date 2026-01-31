@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { getAccompanist, getMinMax, methodUser } from "../../utils/api/agent";
+import { getAccompanist, getMinMax } from "../../utils/api/agent";
 import { enqueueSnackbar } from "notistack";
 import { formatDate } from "../../generalFunctions/formatDate";
 import { generarCodigoReservaUX2 } from "../../generalFunctions/generateCodeReservation";
@@ -11,19 +11,20 @@ import { validEmail } from "../../generalFunctions/generalFunction";
 import { IMinMax } from "../../interfaces/IAccompanist";
 import { CountryType } from "../../interfaces/ICountry";
 
+const BOAT_ID = 30;
+
 const useReservationBoat = () => {
   const [minmax, setMinMax] = useState<IMinMax>({ MIN: 0, MAX: 0 });
   const [valueCel, setValueCel] = useState<string>("");
   const [valueEmail, setValueEmail] = useState<string>("");
   const [valueName, setValueName] = useState<string>("");
   const [dateChange, setDateChange] = useState<string>(
-    formatDate(addDays(new Date(), 1), "YYYY-MM-DD")
+    formatDate(addDays(new Date(), 1), "YYYY-MM-DD"),
   );
   const [selectedCountry, setSelectedCountry] = useState<CountryType | null>(
-    null
+    null,
   );
   const [loading, setLoading] = useState<boolean>(false);
-  const [systemUserId, setSystemUserId] = useState<number>(-1);
   const [activeStep, setActiveStep] = useState<number>(0);
 
   // Código de reserva generado
@@ -37,7 +38,7 @@ const useReservationBoat = () => {
       PRICE_MAX: minmax.MAX,
       PRICE_MIN: minmax.MIN,
     }),
-    [minmax]
+    [minmax],
   );
 
   // Manejar cambio de fecha
@@ -168,7 +169,7 @@ const useReservationBoat = () => {
     try {
       const body = {
         CODE_RESERVATION,
-        ID_EMPLOYEE: systemUserId,
+        ID_EMPLOYEE: BOAT_ID,
         TELEPHONE: `+${selectedCountry?.phone}/${valueCel}`,
         ACCOMPANIST: [{ name: valueName, lunch: { label: "boat", value: 1 } }],
         EMAIL: valueEmail,
@@ -201,7 +202,7 @@ const useReservationBoat = () => {
             vertical: "top",
             horizontal: "right",
           },
-        }
+        },
       );
     } finally {
       setLoading(false);
@@ -215,10 +216,6 @@ const useReservationBoat = () => {
         // Cargar precios min/max
         const { min, max } = await getMinMax.getListData("DAY_TRIP");
         setMinMax({ MIN: Number(min), MAX: Number(max) });
-
-        // Obtener ID de usuario del sistema
-        const resultUserSystem = await methodUser.getUserId({ id: -1 });
-        setSystemUserId(resultUserSystem.id);
       } catch (error) {
         console.error("Error al cargar datos iniciales:", error);
         enqueueSnackbar(
@@ -229,7 +226,7 @@ const useReservationBoat = () => {
               vertical: "top",
               horizontal: "right",
             },
-          }
+          },
         );
       }
     };

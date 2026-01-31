@@ -114,7 +114,10 @@ const BoatReservations: FC = () => {
                       >
                         {t("date")}
                       </Typography>
-                      <Calendar callback={handleChangeDate} />
+                      <Calendar
+                        callback={handleChangeDate}
+                        where="boatReservation"
+                      />
                     </Box>
 
                     {/* Información de contacto */}

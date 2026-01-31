@@ -10,7 +10,7 @@ import { formatDate } from "../../generalFunctions/formatDate";
 import TextFieldComponent from "../TextField/TextFieldComponent";
 
 /**Apis */
-import { getIsDayBlocked } from "../../utils/api/agent";
+import { getIsDayBlocked, boat } from "../../utils/api/agent";
 
 import { addDays } from "date-fns";
 
@@ -23,9 +23,10 @@ const FORMAT_DATE = "YYYY-MM-DD";
 
 interface IProps {
   callback: (date: string) => void;
+  where?: string;
 }
 
-const DatePickerWithIcon = ({ callback }: IProps) => {
+const DatePickerWithIcon = ({ callback, where }: IProps) => {
   const initalDate = () => {
     return addDays(new Date(), 1);
   };
@@ -38,7 +39,15 @@ const DatePickerWithIcon = ({ callback }: IProps) => {
 
   const apiGetIsDayBlocked = useCallback(async () => {
     try {
-      const response = await getIsDayBlocked();
+      let response = [];
+      if (where === "boatReservation") {
+        const today = formatDate(new Date().toISOString(), "YYYY-MM-DD");
+        response = await boat.getBlockCalendar({
+          currentDate: today,
+        });
+      } else {
+        response = await getIsDayBlocked();
+      }
       const setDate = response.map((f) => {
         const d = new Date(f.valid_date);
         return new Date(d.getFullYear(), d.getMonth(), d.getDate());
@@ -47,7 +56,7 @@ const DatePickerWithIcon = ({ callback }: IProps) => {
     } catch (error) {
       console.error("Error al obtener el estado del día bloqueado:", error);
     }
-  }, []);
+  }, [where]);
 
   // Función para manejar el cambio de fecha
   const handleSelect = (date: Date) => {
