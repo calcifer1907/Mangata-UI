@@ -39,43 +39,43 @@ const Events = () => {
       title: "Bodas en la playa",
       description:
         "Ceremonias íntimas y mágicas junto al mar, con la brisa caribeña y el sonido de las olas de fondo.",
+      image: "/images/MangataBeach.webp",
       icon: <BeachIcon />,
       color: "#4A90E2", // Azul playa
-      tags: ["Romántico", "Íntimo", "Natural"],
       featured: true,
     },
     {
       title: "Cumpleaños & celebraciones",
       description:
         "Desde cenas privadas hasta fiestas frente al mar. Ambientes únicos para días inolvidables.",
+      image: "/images/MangataChampagne.webp",
       icon: <CakeIcon />,
       color: "#3498DB", // Coral
-      tags: ["Familiar", "Divertido", "Personalizado"],
       featured: true,
     },
     {
       title: "Despedidas",
       description:
         "Un plan perfecto con playa, música, coctelería y actividades para celebrar con amigos.",
+      image: "/images/MangataFire.jpg",
       icon: <CelebrationIcon />,
       color: "#4A90E2", // Púrpura
-      tags: ["Fiesta", "Coctelería", "Actividades"],
     },
     {
       title: "Eventos privados",
       description:
         "Cenas, reuniones familiares, aniversarios o espacios exclusivos para tu grupo.",
+      image: "/images/MangataPlaces.jpg",
       icon: <GroupsIcon />,
       color: "#4A90E2", // Verde
-      tags: ["Exclusivo", "Privado", "Familiar"],
     },
     {
       title: "Eventos corporativos",
       description:
         "Reuniones, integración o premiaciones en un entorno que inspira creatividad.",
+      image: "/images/Hotel.webp",
       icon: <BusinessIcon />,
       color: "#3498DB", // Azul corporativo
-      tags: ["Profesional", "Creativo", "Productivo"],
     },
   ];
 
@@ -163,7 +163,7 @@ const Events = () => {
                   flex: "1 1 300px",
                   maxWidth: "350px",
                   minWidth: "280px",
-                  minHeight: "320px",
+                  // altura mínima removida para evitar "aire" extra
                   display: "flex",
                   flexDirection: "column",
                   transition: "all 0.3s ease",
@@ -178,66 +178,106 @@ const Events = () => {
                     "& .event-icon": {
                       transform: "scale(1.1) rotate(5deg)",
                     },
+                    "& .event-image": {
+                      transform: "scale(1.06)",
+                    },
                   },
                 }}
               >
-                {/* Header con gradiente */}
-                <Box
-                  sx={{
-                    height: "90px",
-                    background: `linear-gradient(135deg, ${
-                      event.color
-                    } 0%, ${alpha(event.color, 0.8)} 100%)`,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "flex-start",
-                    color: "white",
-                    padding: theme.spacing(3),
-                    position: "relative",
-                    overflow: "hidden",
-                  }}
-                >
-                  <Avatar
-                    className="event-icon"
+                {/* Imagen tipo Home + overlay */}
+                <Box sx={{ position: "relative", height: 240 }}>
+                  <Box
+                    component="img"
+                    src={event.image}
+                    alt={event.title}
+                    className="event-image"
                     sx={{
-                      width: 50,
-                      height: 50,
-                      backgroundColor: alpha("#ffffff", 0.2),
-                      border: `2px solid ${alpha("#ffffff", 0.3)}`,
-                      transition: "transform 0.3s ease",
-                      mr: 2,
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      transition: "transform 0.6s ease",
+                    }}
+                  />
+
+                  {/* Overlay para legibilidad */}
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      inset: 0,
+                      background: `linear-gradient(180deg, ${alpha(
+                        "#000",
+                        0.05,
+                      )} 0%, ${alpha("#000", 0.65)} 100%)`,
+                    }}
+                  />
+
+                  {!!event.featured && (
+                    <Chip
+                      label="Destacado"
+                      size="small"
+                      sx={{
+                        position: "absolute",
+                        top: 12,
+                        right: 12,
+                        fontSize: "0.7rem",
+                        height: 22,
+                        bgcolor: alpha("#ffffff", 0.22),
+                        color: "#fff",
+                        border: `1px solid ${alpha("#ffffff", 0.3)}`,
+                        backdropFilter: "blur(6px)",
+                      }}
+                    />
+                  )}
+
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      left: theme.spacing(2.5),
+                      right: theme.spacing(2.5),
+                      bottom: theme.spacing(2),
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1.5,
                     }}
                   >
-                    {React.cloneElement(event.icon, {
-                      sx: {
-                        fontSize: 24,
-                        color: "white",
-                      },
-                    })}
-                  </Avatar>
-                  <Typography
-                    variant="h6"
-                    component="h3"
-                    sx={{
-                      fontWeight: 700,
-                      fontSize: "1.1rem",
-                      lineHeight: 1.2,
-                      flex: 1,
-                      textShadow: "0 1px 3px rgba(0,0,0,0.2)",
-                    }}
-                  >
-                    {event.title}
-                  </Typography>
+                    <Avatar
+                      className="event-icon"
+                      sx={{
+                        width: 44,
+                        height: 44,
+                        backgroundColor: alpha("#ffffff", 0.22),
+                        border: `1px solid ${alpha("#ffffff", 0.35)}`,
+                        transition: "transform 0.3s ease",
+                        flexShrink: 0,
+                      }}
+                    >
+                      {React.cloneElement(event.icon, {
+                        sx: {
+                          fontSize: 22,
+                          color: "white",
+                        },
+                      })}
+                    </Avatar>
+                    <Typography
+                      variant="h6"
+                      component="h3"
+                      sx={{
+                        fontWeight: 800,
+                        fontSize: "1.1rem",
+                        lineHeight: 1.2,
+                        color: "#fff",
+                        textShadow: "0 2px 10px rgba(0,0,0,0.35)",
+                      }}
+                    >
+                      {event.title}
+                    </Typography>
+                  </Box>
                 </Box>
 
                 {/* Contenido */}
                 <Box
                   sx={{
-                    flex: 1,
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                    p: 3,
+                    p: 2.5,
                   }}
                 >
                   <Typography
@@ -246,37 +286,11 @@ const Events = () => {
                     sx={{
                       lineHeight: 1.6,
                       fontSize: "0.9rem",
-                      mb: 2,
+                      mb: 0,
                     }}
                   >
                     {event.description}
                   </Typography>
-
-                  {/* Tags */}
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexWrap: "wrap",
-                      gap: 0.5,
-                      mt: "auto",
-                    }}
-                  >
-                    {event.tags.map((tag, idx) => (
-                      <Chip
-                        key={idx}
-                        label={tag}
-                        size="small"
-                        sx={{
-                          fontSize: "0.65rem",
-                          height: "20px",
-                          backgroundColor: alpha(event.color, 0.08),
-                          color: event.color,
-                          fontWeight: 500,
-                          border: `1px solid ${alpha(event.color, 0.2)}`,
-                        }}
-                      />
-                    ))}
-                  </Box>
                 </Box>
               </Paper>
             ))}
