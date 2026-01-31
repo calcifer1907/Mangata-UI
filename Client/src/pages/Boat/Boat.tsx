@@ -19,9 +19,7 @@ import Footer from "../../components/Footer/Footer";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router";
 import ImageCarousel from "../../components/Slider/Slider";
-import Card from "../../components/Cards/Cards";
-
-import BoatIcon from "../../assets/icons/Boat.svg";
+import Banner from "../../components/Banner/Banner";
 
 const sampleImages = [
   {
@@ -66,45 +64,12 @@ const Boat = () => {
   const { t } = useTranslation("home");
   return (
     <Box>
-      <Box className="container-menu">
-        <Box
-          sx={{
-            maxWidth: { xs: "90%", md: "80%", lg: "50%" },
-            padding: { xs: "2rem", md: "6rem" },
-          }}
-        >
-          <Box>
-            <Typography
-              component="h1"
-              className="title-day-trip"
-              sx={{
-                fontSize: { xs: "2rem", md: "3.2rem" },
-              }}
-            >
-              {t("titleDayTripDescription2")}
-            </Typography>
-            <Typography
-              component="h1"
-              className="title-day-trip"
-              sx={{
-                fontSize: { xs: "2rem", md: "3.2rem" },
-              }}
-            >
-              {t("titleDayTripDescription3")}
-            </Typography>
-          </Box>
-
-          <Button
-            className="button-reservation transition-all duration-200 hover:scale-105 active:scale-95 margin-top-8"
-            onClick={() => {}}
-            to="/BoatRental"
-            component={NavLink}
-          >
-            {t("Reserve")}
-          </Button>
-        </Box>
-      </Box>
-
+      <Banner
+        title="titleDayTripDescription2"
+        titleTwo="titleDayTripDescription3"
+        description="descriptionBoat"
+        linkButton="BoatRental"
+      />
       <Box>
         <Box className="d-flex align-items-center justify-content-center flex-wrap flex-row gap-8"></Box>
         <Box

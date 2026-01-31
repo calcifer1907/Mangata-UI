@@ -1,6 +1,7 @@
 .container-day-banner {
   padding-block: calc(0.25rem * 6);
   background-color: transparent;
+  background: linear-gradient(135deg, #3498db 0%, rgba(52, 152, 219, 0.8) 100%);
   background-image: url("/images/Banners/IMG_5806.webp");
   background-repeat: no-repeat;
   width: 100%;

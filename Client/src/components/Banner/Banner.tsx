@@ -5,29 +5,29 @@ import { NavLink } from "react-router";
 import "./styleBanner.css";
 
 interface IProps {
-  showButton?: boolean;
-  showDescription?: boolean;
   title: string;
   titleTwo?: string;
   description: string;
   linkButton?: string;
+  titleButton?: string;
+  onClick?: () => void;
 }
 
 const STYLES = {
   CONTAINER: {
     maxWidth: { xs: "90%", md: "80%", lg: "50%" },
-    margin: { xs: "2rem", md: "5rem" },
+    margin: { xs: "2rem", md: "3rem" },
   },
   TITLE: { fontSize: { xs: "2.5rem", md: "3.2rem" } },
 };
 
 const Banner = ({
-  showButton,
-  showDescription,
   title,
   titleTwo = "",
   description,
   linkButton,
+  titleButton,
+  onClick = () => {},
 }: IProps) => {
   const { t } = useTranslation("home");
   return (
@@ -41,7 +41,7 @@ const Banner = ({
           >
             {t(title)}
           </Typography>
-          {showDescription && (
+          {titleTwo && (
             <Typography
               component="h1"
               className="title-day-banner"
@@ -51,16 +51,19 @@ const Banner = ({
             </Typography>
           )}
         </Box>
-        <Typography component="p" className="descriotion-day-banner">
-          {t(description)}
-        </Typography>
-        {showButton && (
+        {description && (
+          <Typography component="p" className="descriotion-day-banner">
+            {t(description)}
+          </Typography>
+        )}
+        {linkButton && (
           <Button
             className="button-reservation transition-all duration-200 hover:scale-105 active:scale-95"
             to={`/${linkButton}`}
             component={NavLink}
+            onClick={onClick}
           >
-            Reservar
+            {t(titleButton || t("reserve"))}
           </Button>
         )}
       </Box>

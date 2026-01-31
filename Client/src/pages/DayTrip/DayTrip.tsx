@@ -20,8 +20,6 @@ const DayTrip = () => {
   return (
     <Box className="content-day-trip" component="section">
       <Banner
-        showButton={true}
-        showDescription={true}
         title="titleDayTrip1"
         titleTwo="titleDayTrip2"
         description="titleDayTripDescription"

@@ -1,7 +1,6 @@
 import {
   Box,
   Typography,
-  Button,
   Dialog,
   DialogContent,
   IconButton,
@@ -20,14 +19,13 @@ import workerUrl from "react-pdf/node_modules/pdfjs-dist/build/pdf.worker.min.mj
 import "./styleMenu.css";
 import Footer from "../../components/Footer/Footer";
 
-import { useTranslation } from "react-i18next";
 import Loading from "../../components/Loading/Loading";
+import Banner from "../../components/Banner/Banner";
 
 // Configurar el worker de PDF.js usando Vite
 pdfjs.GlobalWorkerOptions.workerSrc = workerUrl;
 
 const Menu = () => {
-  const { t } = useTranslation("home");
   const [open, setOpen] = useState(false);
   const [numPages, setNumPages] = useState<number | null>(null);
   const [pageNumber, setPageNumber] = useState(1);
@@ -73,46 +71,13 @@ const Menu = () => {
 
   return (
     <Box>
-      <Box className="container-menu">
-        <Box
-          sx={{
-            maxWidth: { xs: "90%", md: "80%", lg: "50%" },
-            padding: { xs: "2rem", md: "6rem" },
-          }}
-        >
-          <Box>
-            <Typography
-              component="h1"
-              className="title-day-trip"
-              sx={{
-                fontSize: { xs: "2rem", md: "3.2rem" },
-              }}
-            >
-              {t("titleMenu1")}
-            </Typography>
-            <Typography
-              component="h1"
-              className="title-day-trip"
-              sx={{
-                fontSize: { xs: "2rem", md: "3.2rem" },
-              }}
-            >
-              {t("titleMenu2")}
-            </Typography>
-          </Box>
-          <Typography component="p" className="descriotion-day-trip">
-            Disfruta un pasadía completo en Mangata: playa, gastronomía,
-            cocteles y actividades en las Islas del Rosario.
-          </Typography>
-
-          <Button
-            className="button-reservation transition-all duration-200 hover:scale-105 active:scale-95"
-            onClick={handleOpen}
-          >
-            Ver Menú
-          </Button>
-        </Box>
-      </Box>
+      <Banner
+        title="titleMenu1"
+        titleTwo="titleMenu2"
+        description="descriptionMenu"
+        linkButton="menu"
+        onClick={handleOpen}
+      />
 
       <Box className="container-menu-plates" component="section">
         <Box>

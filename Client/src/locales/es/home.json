@@ -3,8 +3,10 @@
         "es": "Español",
         "en": "Ingles",
         "home": "Inicio",
+        "reserve": "Reservar",
         "dayTrip": "Pasa Día",
         "Reserve": "Reservar",
+        "moreInformation": "Más Información",
         "discover": "Descubrir",
         "Lodging": "Hospedaje",
         "Events": "Eventos",
@@ -40,12 +42,11 @@
         "titleCardEvents": "Celebra en el paraíso",
         "titleMenu1": "Sabores del Caribe",
         "titleMenu2": "frente al mar",
-        "descriptionMenu": "Conoce nuestra carta de comida y coctelería: productos frescos, platos locales y recetas pensadas para disfrutar bajo el sol.",
+        "descriptionMenu": "Enjoy a full day trip to Mangata: beach, gastronomy, cocktails and activities in the Rosario Islands.",
         "titleHomeSlider": "Ven y disfruta el caribe colombiano con nosotros",
         "descriptionHomeSlider": "Mangata es un beach club y hotel frente al mar ubicado en Isla Grande, en el corazón de las Islas del Rosario, a minutos en lancha de Cartagena. Nació para quienes buscan algo más que un simple día de playa: una experiencia completa en el Caribe colombiano, con buen servicio, buena comida y un ambiente relajado pero sofisticado.",
         "titleDayTrip1": "tu día perfecto",
         "titleDayTrip2": "frente al mar",
-        "titleDayTripDescription": "Disfruta un pasadía completo en Mangata: playa, gastronomía, cocteles y actividades en las Islas del Rosario.",
         "titleDayTripDescription2": "Aventura en el mar al",
         "titleDayTripDescription3": "Estilo Mangata",
         "descriptionBoat": "Renta de bote privado, recorridos por la isla, snorkel y experiencias náuticas personalizadas para grupos y parejas.",
@@ -94,5 +95,7 @@
         "fishingTour": "Tour de Pesca",
         "fishingTourDesc": "Experiencia de pesca deportiva (opcional)",
         "readyForAdventure": "¿Listo para tu Aventura?",
-        "bookNowMessage": "Reserva ahora y vive una experiencia inolvidable en el mar"
+        "bookNowMessage": "Reserva ahora y vive una experiencia inolvidable en el mar",
+        "descriptionEvents": "Celebra tus eventos especiales en un entorno único frente al mar, con un servicio personalizado y experiencias inolvidables.",
+        "eventMangata": "Eventos en"
 }

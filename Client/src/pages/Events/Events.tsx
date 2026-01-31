@@ -13,6 +13,7 @@ import {
   alpha,
   Avatar,
 } from "@mui/material";
+
 import {
   Celebration as CelebrationIcon,
   BeachAccess as BeachIcon,
@@ -27,6 +28,8 @@ import {
   Water as WaterIcon,
 } from "@mui/icons-material";
 import { NavLink } from "react-router";
+
+import Banner from "../../components/Banner/Banner";
 
 const Events = () => {
   const theme = useTheme();
@@ -99,80 +102,14 @@ const Events = () => {
 
   return (
     <Box>
-      <Box
-        sx={{
-          background:
-            "linear-gradient(135deg, #3498DB 0%, rgba(52, 152, 219, 0.8) 100%)",
-        }}
-      >
-        <Box
-          className="p-relative"
-          sx={{
-            paddingTop: 5,
-            maxWidth: { xs: "90%", md: "80%", lg: "50%" },
-            padding: { xs: "2rem", md: "6rem" },
-          }}
-        >
-          {/* <Box
-            sx={{
-              position: "absolute",
-              top: 20,
-              left: "3%",
-              transform: "translateX(-50%)",
-              width: "60px",
-              height: "4px",
-              background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
-              borderRadius: "2px",
-            }}
-          />
-          <EventIcon
-            sx={{
-              fontSize: 50,
-              color: theme.palette.primary.main,
-              mb: 2,
-              background: `linear-gradient(135deg, ${alpha(
-                theme.palette.primary.main,
-                0.1
-              )} 0%, transparent 100%)`,
-              borderRadius: "50%",
-              p: 1,
-            }}
-          /> */}
-          <Typography
-            variant="h2"
-            component="h1"
-            gutterBottom
-            sx={{
-              fontWeight: 800,
-              //     background: `linear-gradient(135deg, ${theme.palette.primary.dark} 30%, ${theme.palette.secondary.dark} 90%)`,
-              backgroundClip: "text",
-              WebkitBackgroundClip: "text",
-              color: "#ffffffd9",
-              mb: 2,
-              fontSize: { xs: "2rem", md: "2.5rem" },
-            }}
-          >
-            Eventos en Mangata
-          </Typography>
-
-          <Typography
-            variant="h6"
-            sx={{
-              maxWidth: "800px",
-              lineHeight: 1.6,
-              fontWeight: 400,
-              color: "#ffffff",
-            }}
-          >
-            Celebra tus momentos especiales frente al mar con un servicio
-            excepcional y personalizado
-          </Typography>
-        </Box>
-      </Box>
+      <Banner
+        title="eventMangata"
+        titleTwo="Mangata"
+        description="descriptionEvents"
+        titleButton="moreInformation"
+        linkButton="Contact"
+      />
       <Container maxWidth="lg" sx={{ py: { xs: 4, md: 6 } }}>
-        {/* Título principal - Más elegante */}
-
-        {/* Tipos de eventos - CARDS BONITAS Y COMPACTAS */}
         <Box sx={{ mb: 10 }}>
           <Box
             sx={{
@@ -355,7 +292,7 @@ const Events = () => {
               borderRadius: 4,
               background: `linear-gradient(135deg, ${alpha(
                 theme.palette.primary.light,
-                0.05
+                0.05,
               )} 0%, ${alpha(theme.palette.secondary.light, 0.05)} 100%)`,
               border: `1px solid ${alpha(theme.palette.primary.light, 0.2)}`,
               position: "relative",
@@ -502,7 +439,7 @@ const Events = () => {
                       borderColor: "grey",
                       backgroundColor: alpha(
                         theme.palette.secondary.light,
-                        0.05
+                        0.05,
                       ),
                     },
                   }}
