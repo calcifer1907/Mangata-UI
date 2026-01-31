@@ -1,14 +1,13 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 
 import Card from "../../components/Cards/Cards";
 import { useTranslation } from "react-i18next";
 
 import "./DayTrip.css";
-import { NavLink } from "react-router-dom";
 import QuiltedImageList from "../../components/QuiltedImageList/QuiltedImageList";
 import Footer from "../../components/Footer/Footer";
+import Banner from "../../components/Banner/Banner";
 
 import Towel from "../../assets/icons/Towel.svg";
 import hammocks from "../../assets/icons/hammocks.svg";
@@ -20,46 +19,14 @@ const DayTrip = () => {
   const { t } = useTranslation("home");
   return (
     <Box className="content-day-trip" component="section">
-      <Box className="container-day-trip">
-        <Box
-          sx={{
-            maxWidth: { xs: "90%", md: "80%", lg: "50%" },
-            margin: { xs: "2rem", md: "5rem" },
-          }}
-        >
-          <Box>
-            <Typography
-              component="h1"
-              className="title-day-trip"
-              sx={{
-                fontSize: { xs: "2.5rem", md: "3.2rem" },
-              }}
-            >
-              {t("titleDayTrip1")}
-            </Typography>
-            <Typography
-              component="h1"
-              className="title-day-trip"
-              sx={{
-                fontSize: { xs: "2.5rem", md: "3.2rem" },
-              }}
-            >
-              {t("titleDayTrip2")}
-            </Typography>
-          </Box>
-          <Typography component="p" className="descriotion-day-trip">
-            {t("titleDayTripDescription")}
-          </Typography>
-
-          <Button
-            className="button-reservation transition-all duration-200 hover:scale-105 active:scale-95"
-            to="/MangataReservation"
-            component={NavLink}
-          >
-            Reservar
-          </Button>
-        </Box>
-      </Box>
+      <Banner
+        showButton={true}
+        showDescription={true}
+        title="titleDayTrip1"
+        titleTwo="titleDayTrip2"
+        description="titleDayTripDescription"
+        linkButton="MangataReservation"
+      />
       <Box
         className="d-flex align-items-center justify-content-center flex-wrap flex-row gap-16"
         sx={{ paddingBlock: { xs: 2, lg: 0 }, marginBottom: { xs: 0, lg: 25 } }}

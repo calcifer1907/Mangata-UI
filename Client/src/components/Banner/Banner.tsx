@@ -1,0 +1,70 @@
+import { Box, Typography, Button } from "@mui/material";
+import { useTranslation } from "react-i18next";
+import { NavLink } from "react-router";
+
+import "./styleBanner.css";
+
+interface IProps {
+  showButton?: boolean;
+  showDescription?: boolean;
+  title: string;
+  titleTwo?: string;
+  description: string;
+  linkButton?: string;
+}
+
+const STYLES = {
+  CONTAINER: {
+    maxWidth: { xs: "90%", md: "80%", lg: "50%" },
+    margin: { xs: "2rem", md: "5rem" },
+  },
+  TITLE: { fontSize: { xs: "2.5rem", md: "3.2rem" } },
+};
+
+const Banner = ({
+  showButton,
+  showDescription,
+  title,
+  titleTwo = "",
+  description,
+  linkButton,
+}: IProps) => {
+  const { t } = useTranslation("home");
+  return (
+    <Box className="container-day-banner">
+      <Box sx={STYLES.CONTAINER}>
+        <Box>
+          <Typography
+            component="h1"
+            className="title-day-banner"
+            sx={STYLES.TITLE}
+          >
+            {t(title)}
+          </Typography>
+          {showDescription && (
+            <Typography
+              component="h1"
+              className="title-day-banner"
+              sx={STYLES.TITLE}
+            >
+              {t(titleTwo)}
+            </Typography>
+          )}
+        </Box>
+        <Typography component="p" className="descriotion-day-banner">
+          {t(description)}
+        </Typography>
+        {showButton && (
+          <Button
+            className="button-reservation transition-all duration-200 hover:scale-105 active:scale-95"
+            to={`/${linkButton}`}
+            component={NavLink}
+          >
+            Reservar
+          </Button>
+        )}
+      </Box>
+    </Box>
+  );
+};
+export default Banner;

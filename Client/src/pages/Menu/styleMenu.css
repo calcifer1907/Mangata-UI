@@ -21,7 +21,8 @@
 .container-menu-plates img {
   border-radius: 18px;
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
-  transition: transform 0.3s cubic-bezier(0.4, 2, 0.6, 1),
+  transition:
+    transform 0.3s cubic-bezier(0.4, 2, 0.6, 1),
     box-shadow 0.3s cubic-bezier(0.4, 2, 0.6, 1);
   object-fit: cover;
   filter: brightness(0.98) saturate(1.1);
@@ -40,7 +41,7 @@
   letter-spacing: 0.04em;
   text-shadow: 0 2px 8px rgba(52, 152, 219, 0.08);
   text-transform: capitalize;
-  font-size: 2.2rem;
+  font-size: 2.1rem;
 }
 
 .container-menu-plates .content-descrition-plates p {
