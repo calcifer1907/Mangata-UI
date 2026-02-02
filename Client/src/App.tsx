@@ -22,6 +22,8 @@ import Events from "./pages/Events/Events";
 import Menu from "./pages/Menu/Menu";
 import Boat from "./pages/Boat/Boat";
 import BoartReservations from "./pages/Boat/BoatReservations";
+import WhatsAppFloatingButton from "./components/WhatsAppFloatingButton/WhatsAppFloatingButton";
+import ScrollToTopButton from "./components/ScrollToTopButton/ScrollToTopButton";
 
 // import PayMenetMethod from "./pages/PayMenetMethod";
 
@@ -62,6 +64,8 @@ const App = () => {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Box>
+        <ScrollToTopButton />
+        <WhatsAppFloatingButton />
       </ContextUser>
     </Router>
   );
