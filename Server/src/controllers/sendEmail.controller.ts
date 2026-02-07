@@ -22,8 +22,9 @@ export const sendEmail = async (payment_id: string) => {
     );
     console.log("rows: ", rows);
     console.log("rowCount: ", rowCount);
-    if (rowCount) {
+    if (rowCount > 0) {
       const [resultQuery] = rows;
+      console.log(resultQuery)
       const mailOptions = {
         from: USER_EMAIL,
         to: resultQuery.email,
