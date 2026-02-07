@@ -33,7 +33,7 @@ export const paymentBold = async (request: Request, response: Response) => {
     const headers = {
       Authorization: `x-api-key ${BOLD_KEY}`,
       "Content-Type": "application/json",
-      "Accept": "application/json",
+      Accept: "application/json",
       "X-Requested-With": "XMLHttpRequest",
       "User-Agent": "Mangata-UI/1.0",
       "X-Content-Type-Options": "nosniff",
@@ -92,7 +92,7 @@ export const getOrderIdBold = async (request: Request, response: Response) => {
     const headers = {
       Authorization: `x-api-key ${BOLD_KEY}`,
       "Content-Type": "application/json",
-      "Accept": "application/json",
+      Accept: "application/json",
       "X-Requested-With": "XMLHttpRequest",
       "User-Agent": "Mangata-UI/1.0",
       "X-Content-Type-Options": "nosniff",
