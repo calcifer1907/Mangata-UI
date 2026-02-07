@@ -94,7 +94,7 @@ const Menu = () => {
               fontSize: { xs: "2rem", md: "3.2rem" },
             }}
           >
-            Algunos de nuestros platos
+            {t("someDises")}
           </Typography>
           <Box
             className="d-flex align-items-center justify-content-around flex-wrap gap-8"

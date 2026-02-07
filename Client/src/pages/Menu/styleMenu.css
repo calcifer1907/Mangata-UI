@@ -1,11 +1,3 @@
-.container-menu {
-  background: linear-gradient(135deg, #3498db 0%, rgba(52, 152, 219, 0.8) 100%);
-  /* background-image: url("/images/lunche/FOTOS PLATOS/corozo_adicional.webp"); */
-  background-repeat: no-repeat;
-  background-size: cover;
-  object-fit: cover;
-  height: 50%;
-}
 
 .container-menu-plates {
   padding: 2.5rem 1rem;

@@ -1,5 +1,6 @@
 import { FC } from "react";
 
+import { useTranslation } from "react-i18next";
 import {
   Box,
   Typography,
@@ -11,7 +12,7 @@ import {
   StepLabel,
   StepContent,
 } from "@mui/material";
-import { useTranslation } from "react-i18next";
+
 import { Icon } from "@iconify/react";
 
 /**Components */

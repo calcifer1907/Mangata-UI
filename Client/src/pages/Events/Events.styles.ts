@@ -11,7 +11,6 @@ export const createEventsStyles = (theme: Theme) => {
   };
 
   const fullWidthSection: SxProps<Theme> = {
-    mb: { xs: 8, md: 10 },
     width: "100vw",
     ml: "calc(50% - 50vw)",
     mr: "calc(50% - 50vw)",

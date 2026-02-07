@@ -26,6 +26,10 @@ import { NavLink } from "react-router";
 import Footer from "../../components/Footer/Footer";
 
 import Banner from "../../components/Banner/Banner";
+import Merrried from "../../assets/icons/Merrried.svg";
+import Party from "../../assets/icons/Party.svg";
+import Champagne from "../../assets/icons/Champagne.svg";
+
 import { createEventsStyles } from "./Events.styles";
 
 const Events = () => {
@@ -230,8 +234,29 @@ const Events = () => {
           </Grid>
         </Box>
 
+        <Box className="d-flex align-items-center justify-content-center flex-wrap flex-row gap-16">
+          <Box
+            component="img"
+            src={Merrried}
+            alt="Mangata Beach"
+            width={{ xs: 80, lg: 80 }}
+          />
+          <Box
+            component="img"
+            src={Party}
+            alt="Mangata Beach"
+            width={{ xs: 80, lg: 80 }}
+          />
+          <Box
+            component="img"
+            src={Champagne}
+            alt="Mangata Beach"
+            width={{ xs: 80, lg: 80 }}
+          />
+        </Box>
+
         {/* Personaliza tu experiencia */}
-        <Box sx={styles.fullWidthSection}>
+        <Box sx={{ ...styles.fullWidthSection, marginBottom: 4 }}>
           <Grid container sx={styles.splitContainer}>
             {/* Panel izquierdo (imagen) */}
             <Grid size={{ xs: 12, md: 6 }}>
