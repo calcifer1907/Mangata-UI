@@ -46,13 +46,14 @@
         "titleMenu2": "by the sea",
         "viewMenu": "View Menu",
         "someDises": "Some of our dishes",
-        "descriptionMenu": "Enjoy a full day trip to Mangata: beach, gastronomy, cocktails and activities in the Rosario Islands.",
+        "descriptionMenu": "Discover our food and cocktail menu: fresh products, local dishes and recipes designed to be enjoyed in the sun.",
         "titleHomeSlider": "Ven y disfruta el caribe colombiano con nosotros",
         "descriptionHomeSlider": "Mangata is a beachfront beach club and hotel located on Isla Grande, in the heart of the Rosario Islands, just a short boat ride from Cartagena. It was created for those seeking more than just a day at the beach: a complete Colombian Caribbean experience, with excellent service, delicious food, and a relaxed yet sophisticated atmosphere.",
         "titleDayTrip1": "Your perfect day",
         "titleDayTrip2": "by the sea",
         "titleDayTripDescription2": "Mangata-style sea",
         "titleDayTripDescription3": "Adventure",
+        "titleDayTripDescription": "Enjoy a full day trip to Mangata: beach, gastronomy, cocktails and activities in the Rosario Islands.",
         "descriptionBoat": "Private boat rental, island tours, snorkeling and customized nautical experiences for groups and couples.",
         "boatFeatures": "Boat Features",
         "boatCapacity": "Capacity",
@@ -142,5 +143,7 @@
         "errorPDF": "Error loading the PDF. Please try again.",
         "ensurePDFExists": "Make sure the file exists in the public folder and that the PDF.js worker is configured.",
         "fraAmici": "traditional Peruvian ceviche of sea bass, octopus and shrimp, served with plantain chips.",
-        "miscela": "blend of premium coffee beans from Colombia and Central America, roasted to perfection to bring out its rich flavor and aroma."
+        "miscela": "blend of premium coffee beans from Colombia and Central America, roasted to perfection to bring out its rich flavor and aroma.",
+        "titleLodging1": "Wake up with the",
+        "titleLodging2": "sound of the sea"
 }

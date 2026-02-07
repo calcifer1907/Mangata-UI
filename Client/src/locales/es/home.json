@@ -44,7 +44,7 @@
         "titleCardEvents": "Celebra en el paraíso",
         "titleMenu1": "Sabores del Caribe",
         "titleMenu2": "frente al mar",
-        "descriptionMenu": "Enjoy a full day trip to Mangata: beach, gastronomy, cocktails and activities in the Rosario Islands.",
+        "descriptionMenu": "Conoce nuestra carta de comida y coctelería: productos frescos, platos locales y recetas pensadas para disfrutar bajo el sol.",
         "viewMenu": "Ver Menú",
         "someDises": "Algunos de nuestros platos",
         "titleHomeSlider": "Ven y disfruta el caribe colombiano con nosotros",
@@ -53,6 +53,7 @@
         "titleDayTrip2": "frente al mar",
         "titleDayTripDescription2": "Aventura en el mar al",
         "titleDayTripDescription3": "Estilo Mangata",
+        "titleDayTripDescription": "Disfruta un pasadía completo en Mangata: playa, gastronomía, cocteles y actividades en las Islas del Rosario.",
         "descriptionBoat": "Renta de bote privado, recorridos por la isla, snorkel y experiencias náuticas personalizadas para grupos y parejas.",
         "boatFeatures": "Características del Bote",
         "boatCapacity": "Capacidad",
@@ -142,5 +143,7 @@
         "errorPDF": "Error al cargar el PDF. Por favor, intente nuevamente.",
         "ensurePDFExists": "Asegúrese de que el archivo existe en la carpeta public y que el worker de PDF.js está configurado.",
         "fraAmici": "tradicional ceviche peruano de corvina, pulpo y camarones, acompañado con chips de platano.",
-        "miscela": "exquisita combinación de fritos tradicionales de la región caribe. Arepa de huevo, carimañolas, deditos de queso frito, empanadas y patacones araña."
+        "miscela": "exquisita combinación de fritos tradicionales de la región caribe. Arepa de huevo, carimañolas, deditos de queso frito, empanadas y patacones araña.",
+        "titleLodging1": "Despierta con el",
+        "titleLodging2": "sonido del mar"
 }
