@@ -1,4 +1,11 @@
-import { Box, Typography, Button, Paper } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Button,
+  Paper,
+  useTheme,
+  Container,
+} from "@mui/material";
 import Grid2 from "@mui/material/Grid";
 import {
   Groups as GroupsIcon,
@@ -11,15 +18,19 @@ import {
   Security as SecurityIcon,
   CheckCircle as CheckIcon,
   Info as InfoIcon,
+  NavigateNext as NavigateNextIcon,
+  EventAvailable as EventIcon,
 } from "@mui/icons-material";
 
 import "../Menu/styleMenu.css";
+import "./Boat.scss";
 import Footer from "../../components/Footer/Footer";
 
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router";
 import ImageCarousel from "../../components/Slider/Slider";
 import Banner from "../../components/Banner/Banner";
+import { createEventsStyles } from "../Events/Events.styles";
 
 const sampleImages = [
   {
@@ -61,7 +72,9 @@ const sampleImages = [
 ];
 
 const Boat = () => {
+  const theme = useTheme();
   const { t } = useTranslation("home");
+  const styles = createEventsStyles(theme);
   return (
     <Box>
       <Banner
@@ -90,11 +103,10 @@ const Boat = () => {
           <Box className="d-flex align-items-center justify-content-center flex-direction-column  text-align-center content-descrition-plates">
             <Typography
               component="p"
+              className="boat-description-text"
               sx={{
                 maxWidth: { xs: "90%", md: "80%", lg: "60%" },
                 fontSize: { xs: "1rem", md: "1.2rem" },
-                lineHeight: 1.8,
-                marginTop: 2,
               }}
             >
               {t("descriptionBoat")}
@@ -105,49 +117,24 @@ const Boat = () => {
 
       {/* Sección de Características del Bote */}
       <Box
+        className="boat-section-container"
         sx={{
           maxWidth: { xs: "95%", md: "90%", lg: "85%" },
-          margin: "0 auto",
           paddingBlock: { xs: 4, md: 6 },
         }}
       >
         <Typography
-          className="color-blue-dark title-home"
+          className="color-blue-dark title-home boat-section-title"
           sx={{
-            textAlign: "center",
-            marginBottom: 4,
             fontSize: { xs: "1.8rem", md: "2.5rem" },
           }}
         >
           {t("boatFeatures") || "Características del Bote"}
         </Typography>
-        <Grid2 container spacing={3} sx={{ justifyContent: "center" }}>
+        <Grid2 container spacing={3} className="boat-features-grid">
           <Grid2 size={{ xs: 12, sm: 6, md: 3 }}>
-            <Paper
-              elevation={3}
-              sx={{
-                p: 3,
-                textAlign: "center",
-                borderRadius: 3,
-                height: "100%",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                transition: "transform 0.3s, box-shadow 0.3s",
-                "&:hover": {
-                  transform: "translateY(-8px)",
-                  boxShadow: 6,
-                },
-              }}
-            >
-              <GroupsIcon
-                sx={{
-                  fontSize: 48,
-                  color: "var(--color-theme-dark-blue)",
-                  mb: 2,
-                }}
-              />
+            <Paper elevation={3} className="boat-feature-card">
+              <GroupsIcon className="boat-feature-icon" />
               <Typography variant="h6" fontWeight="bold" gutterBottom>
                 {t("boatCapacity") || "Capacidad"}
               </Typography>
@@ -157,31 +144,8 @@ const Boat = () => {
             </Paper>
           </Grid2>
           <Grid2 size={{ xs: 12, sm: 6, md: 3 }}>
-            <Paper
-              elevation={3}
-              sx={{
-                p: 3,
-                textAlign: "center",
-                borderRadius: 3,
-                height: "100%",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                transition: "transform 0.3s, box-shadow 0.3s",
-                "&:hover": {
-                  transform: "translateY(-8px)",
-                  boxShadow: 6,
-                },
-              }}
-            >
-              <TimeIcon
-                sx={{
-                  fontSize: 48,
-                  color: "var(--color-theme-dark-blue)",
-                  mb: 2,
-                }}
-              />
+            <Paper elevation={3} className="boat-feature-card">
+              <TimeIcon className="boat-feature-icon" />
               <Typography variant="h6" fontWeight="bold" gutterBottom>
                 {t("boatDuration") || "Duración"}
               </Typography>
@@ -191,31 +155,8 @@ const Boat = () => {
             </Paper>
           </Grid2>
           <Grid2 size={{ xs: 12, sm: 6, md: 3 }}>
-            <Paper
-              elevation={3}
-              sx={{
-                p: 3,
-                textAlign: "center",
-                borderRadius: 3,
-                height: "100%",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                transition: "transform 0.3s, box-shadow 0.3s",
-                "&:hover": {
-                  transform: "translateY(-8px)",
-                  boxShadow: 6,
-                },
-              }}
-            >
-              <BoatIconMUI
-                sx={{
-                  fontSize: 48,
-                  color: "var(--color-theme-dark-blue)",
-                  mb: 2,
-                }}
-              />
+            <Paper elevation={3} className="boat-feature-card">
+              <BoatIconMUI className="boat-feature-icon" />
               <Typography variant="h6" fontWeight="bold" gutterBottom>
                 {t("boatType") || "Tipo de Bote"}
               </Typography>
@@ -225,31 +166,8 @@ const Boat = () => {
             </Paper>
           </Grid2>
           <Grid2 size={{ xs: 12, sm: 6, md: 3 }}>
-            <Paper
-              elevation={3}
-              sx={{
-                p: 3,
-                textAlign: "center",
-                borderRadius: 3,
-                height: "100%",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                transition: "transform 0.3s, box-shadow 0.3s",
-                "&:hover": {
-                  transform: "translateY(-8px)",
-                  boxShadow: 6,
-                },
-              }}
-            >
-              <SecurityIcon
-                sx={{
-                  fontSize: 48,
-                  color: "var(--color-theme-dark-blue)",
-                  mb: 2,
-                }}
-              />
+            <Paper elevation={3} className="boat-feature-card">
+              <SecurityIcon className="boat-feature-icon" />
               <Typography variant="h6" fontWeight="bold" gutterBottom>
                 {t("boatSafety") || "Seguridad"}
               </Typography>
@@ -264,17 +182,15 @@ const Boat = () => {
 
       {/* Sección de Itinerario */}
       <Box
+        className="boat-section-container"
         sx={{
           maxWidth: { xs: "95%", md: "80%", lg: "70%" },
-          margin: "0 auto",
           paddingBlock: { xs: 4, md: 6 },
         }}
       >
         <Typography
-          className="color-blue-dark title-home"
+          className="color-blue-dark title-home boat-section-title"
           sx={{
-            textAlign: "center",
-            marginBottom: 4,
             fontSize: { xs: "1.8rem", md: "2.5rem" },
           }}
         >
@@ -284,37 +200,33 @@ const Boat = () => {
           <Grid2 size={{ xs: 12, md: 6 }}>
             <Paper
               elevation={2}
-              sx={{
-                p: 3,
-                borderRadius: 3,
-                height: "100%",
-                background: "linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%)",
-              }}
+              className="boat-itinerary-card boat-itinerary-card-morning"
             >
-              <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-                <SunIcon sx={{ fontSize: 32, color: "#1976d2", mr: 2 }} />
+              <Box className="boat-itinerary-header">
+                <SunIcon className="boat-itinerary-icon-morning" />
                 <Typography variant="h6" fontWeight="bold">
                   {t("morningSchedule") || "Mañana"}
                 </Typography>
               </Box>
-              <Box sx={{ pl: 6 }}>
+              <Box className="boat-itinerary-content">
                 <Typography
                   variant="body1"
-                  sx={{ mb: 1.5 }}
-                  className="color-black-opacity"
+                  className="color-black-opacity boat-itinerary-item"
                 >
                   <strong>8:00 AM</strong> -{" "}
                   {t("departureTime") || "Salida desde el muelle"}
                 </Typography>
                 <Typography
                   variant="body1"
-                  sx={{ mb: 1.5 }}
-                  className="color-black-opacity"
+                  className="color-black-opacity boat-itinerary-item"
                 >
                   <strong>9:00 AM</strong> -{" "}
                   {t("islandTour") || "Recorrido por las islas"}
                 </Typography>
-                <Typography variant="body1" className="color-black-opacity">
+                <Typography
+                  variant="body1"
+                  className="color-black-opacity boat-itinerary-item"
+                >
                   <strong>10:00 AM</strong> -{" "}
                   {t("snorkelingActivity") || "Actividad de snorkel"}
                 </Typography>
@@ -324,37 +236,33 @@ const Boat = () => {
           <Grid2 size={{ xs: 12, md: 6 }}>
             <Paper
               elevation={2}
-              sx={{
-                p: 3,
-                borderRadius: 3,
-                height: "100%",
-                background: "linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%)",
-              }}
+              className="boat-itinerary-card boat-itinerary-card-afternoon"
             >
-              <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-                <SunIcon sx={{ fontSize: 32, color: "#f57c00", mr: 2 }} />
+              <Box className="boat-itinerary-header">
+                <SunIcon className="boat-itinerary-icon-afternoon" />
                 <Typography variant="h6" fontWeight="bold">
                   {t("afternoonSchedule") || "Tarde"}
                 </Typography>
               </Box>
-              <Box sx={{ pl: 6 }}>
+              <Box className="boat-itinerary-content">
                 <Typography
                   variant="body1"
-                  sx={{ mb: 1.5 }}
-                  className="color-black-opacity"
+                  className="color-black-opacity boat-itinerary-item"
                 >
                   <strong>12:00 PM</strong> -{" "}
                   {t("lunchBreak") || "Almuerzo en playa"}
                 </Typography>
                 <Typography
                   variant="body1"
-                  sx={{ mb: 1.5 }}
-                  className="color-black-opacity"
+                  className="color-black-opacity boat-itinerary-item"
                 >
                   <strong>2:00 PM</strong> -{" "}
                   {t("relaxTime") || "Tiempo de relajación"}
                 </Typography>
-                <Typography variant="body1" className="color-black-opacity">
+                <Typography
+                  variant="body1"
+                  className="color-black-opacity boat-itinerary-item"
+                >
                   <strong>4:00 PM</strong> -{" "}
                   {t("returnTime") || "Regreso al muelle"}
                 </Typography>
@@ -366,9 +274,9 @@ const Boat = () => {
 
       {/* Sección de Recomendaciones y Qué Traer */}
       <Box
+        className="boat-section-container"
         sx={{
           maxWidth: { xs: "95%", md: "80%", lg: "70%" },
-          margin: "0 auto",
           paddingBlock: { xs: 4, md: 6 },
         }}
       >
@@ -376,20 +284,10 @@ const Boat = () => {
           <Grid2 size={{ xs: 12, md: 6 }}>
             <Paper
               elevation={3}
-              sx={{
-                p: 4,
-                borderRadius: 3,
-                background: "linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%)",
-              }}
+              className="boat-recommendations-card boat-recommendations-card-what-to-bring"
             >
-              <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
-                <InfoIcon
-                  sx={{
-                    fontSize: 32,
-                    color: "var(--color-theme-dark-blue)",
-                    mr: 2,
-                  }}
-                />
+              <Box className="boat-recommendations-header">
+                <InfoIcon className="boat-recommendations-icon" />
                 <Typography
                   variant="h5"
                   fontWeight="bold"
@@ -398,7 +296,7 @@ const Boat = () => {
                   {t("whatToBring") || "Qué Traer"}
                 </Typography>
               </Box>
-              <Box sx={{ pl: 6 }}>
+              <Box className="boat-recommendations-content">
                 {[
                   t("bringSunscreen") || "Protector solar",
                   t("bringHat") || "Gorra o sombrero",
@@ -407,13 +305,8 @@ const Boat = () => {
                   t("bringCamera") || "Cámara o celular",
                   t("bringWater") || "Agua (opcional)",
                 ].map((item, index) => (
-                  <Box
-                    key={index}
-                    sx={{ display: "flex", alignItems: "center", mb: 1.5 }}
-                  >
-                    <CheckIcon
-                      sx={{ color: "#4caf50", mr: 1.5, fontSize: 20 }}
-                    />
+                  <Box key={index} className="boat-recommendations-item">
+                    <CheckIcon className="boat-recommendations-check-icon" />
                     <Typography variant="body1" className="color-black-opacity">
                       {item}
                     </Typography>
@@ -425,23 +318,19 @@ const Boat = () => {
           <Grid2 size={{ xs: 12, md: 6 }}>
             <Paper
               elevation={3}
-              sx={{
-                p: 4,
-                borderRadius: 3,
-                background: "linear-gradient(135deg, #e8f5e9 0%, #ffffff 100%)",
-              }}
+              className="boat-recommendations-card boat-recommendations-card-safety"
             >
-              <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
-                <SecurityIcon sx={{ fontSize: 32, color: "#2e7d32", mr: 2 }} />
+              <Box className="boat-recommendations-header">
+                <SecurityIcon className="boat-recommendations-icon-safety" />
                 <Typography
                   variant="h5"
                   fontWeight="bold"
-                  sx={{ color: "#2e7d32" }}
+                  className="boat-safety-title"
                 >
                   {t("safetyRecommendations") || "Recomendaciones de Seguridad"}
                 </Typography>
               </Box>
-              <Box sx={{ pl: 6 }}>
+              <Box className="boat-recommendations-content">
                 {[
                   t("safetyLifeJacket") || "Chalecos salvavidas incluidos",
                   t("safetyCaptain") || "Capitán certificado y experimentado",
@@ -449,13 +338,8 @@ const Boat = () => {
                   t("safetyFirstAid") || "Botiquín de primeros auxilios",
                   t("safetyCommunication") || "Equipo de comunicación a bordo",
                 ].map((item, index) => (
-                  <Box
-                    key={index}
-                    sx={{ display: "flex", alignItems: "center", mb: 1.5 }}
-                  >
-                    <CheckIcon
-                      sx={{ color: "#4caf50", mr: 1.5, fontSize: 20 }}
-                    />
+                  <Box key={index} className="boat-recommendations-item">
+                    <CheckIcon className="boat-recommendations-check-icon" />
                     <Typography variant="body1" className="color-black-opacity">
                       {item}
                     </Typography>
@@ -469,17 +353,15 @@ const Boat = () => {
 
       {/* Sección de Experiencias Adicionales */}
       <Box
+        className="boat-section-container"
         sx={{
           maxWidth: { xs: "95%", md: "85%" },
-          margin: "0 auto",
           paddingBlock: { xs: 4, md: 6 },
         }}
       >
         <Typography
-          className="color-blue-dark title-home"
+          className="color-blue-dark title-home boat-section-title"
           sx={{
-            textAlign: "center",
-            marginBottom: 4,
             fontSize: { xs: "1.8rem", md: "2.5rem" },
           }}
         >
@@ -516,28 +398,8 @@ const Boat = () => {
             },
           ].map((experience, index) => (
             <Grid2 key={index} size={{ xs: 12, sm: 6, md: 3 }}>
-              <Paper
-                elevation={2}
-                sx={{
-                  p: 3,
-                  textAlign: "center",
-                  borderRadius: 3,
-                  height: "100%",
-                  transition: "transform 0.3s, box-shadow 0.3s",
-                  "&:hover": {
-                    transform: "translateY(-5px)",
-                    boxShadow: 4,
-                  },
-                }}
-              >
-                <Box
-                  sx={{
-                    color: "var(--color-theme-dark-blue)",
-                    mb: 2,
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                >
+              <Paper elevation={2} className="boat-experience-card">
+                <Box className="boat-experience-icon-container">
                   {experience.icon}
                 </Box>
                 <Typography variant="h6" fontWeight="bold" gutterBottom>
@@ -553,56 +415,31 @@ const Boat = () => {
       </Box>
 
       {/* Call to Action Final */}
-      <Box
-        sx={{
-          background:
-            "linear-gradient(135deg, var(--color-theme-dark-blue) 0%, #3498db 100%)",
-          paddingBlock: { xs: 4, md: 6 },
-          marginTop: 4,
-          textAlign: "center",
-        }}
-      >
-        <Typography
-          variant="h4"
-          sx={{
-            color: "#FFFFFF",
-            fontWeight: "bold",
-            marginBottom: 2,
-            fontSize: { xs: "1.8rem", md: "2.5rem" },
-          }}
-        >
-          {t("readyForAdventure") || "¿Listo para tu Aventura?"}
-        </Typography>
-        <Typography
-          variant="h6"
-          sx={{
-            color: "#FFFFFF",
-            marginBottom: 4,
-            opacity: 0.9,
-            fontSize: { xs: "1rem", md: "1.3rem" },
-          }}
-        >
-          {t("bookNowMessage") ||
-            "Reserva ahora y vive una experiencia inolvidable en el mar"}
-        </Typography>
-        <Button
-          className="button-reservation transition-all duration-200 hover:scale-105 active:scale-95"
-          to="/BoatRental"
-          component={NavLink}
-          sx={{
-            backgroundColor: "#FFFFFF",
-            color: "var(--color-theme-dark-blue)",
-            padding: "12px 48px",
-            fontSize: "1.1rem",
-            fontWeight: "bold",
-            "&:hover": {
-              backgroundColor: "#f0f0f0",
-            },
-          }}
-        >
-          {t("Reserve")}
-        </Button>
-      </Box>
+      <Container maxWidth="lg" sx={styles.container}>
+        <Paper elevation={0} sx={styles.ctaPaper}>
+          <Box sx={styles.ctaOverlay} />
+
+          <Typography variant="h4" component="h3" sx={styles.ctaTitle}>
+            {t("readyForAdventure")}
+          </Typography>
+
+          <Typography variant="h6" sx={styles.ctaSubtitle}>
+            {t("bookNowMessage")}
+          </Typography>
+
+          <Button
+            variant="contained"
+            size="large"
+            startIcon={<EventIcon />}
+            endIcon={<NavigateNextIcon />}
+            component={NavLink}
+            to="/BoatRental"
+            sx={styles.ctaButton}
+          >
+            {t("Reserve")}
+          </Button>
+        </Paper>
+      </Container>
 
       <Footer />
     </Box>
