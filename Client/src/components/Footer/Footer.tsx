@@ -8,7 +8,7 @@ const Footer = () => {
       component="footer"
       sx={{
         padding: 2,
-        background: "#cfb57d",
+        background: "linear-gradient(135deg,#2c3e50,#4a6491)",
         textAlign: "center",
       }}
     >
