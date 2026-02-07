@@ -219,6 +219,7 @@ const NameLunchForm: FC = () => {
                   payment_id={Number(CODE_RESERVATION)}
                   name={fields[0].name}
                   email={valueEmail}
+                  titleDescription={`${t("paymentFor")} ${fields[0].name} - ${t("dayPass")}`}
                 />
                 <Box
                   className="d-flex justify-content-between"

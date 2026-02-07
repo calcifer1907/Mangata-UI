@@ -12,6 +12,8 @@
         "discover": "Discover",
         "Events": "Events",
         "boatRental": "Reserve Boat",
+        "paymentFor": "Payment for",
+        "daypass": "Day Pass Mangata",
         "responseSendEmail": "Form submitted successfully",
         "responseSendEmailError": "Error submitting form",
         "errorEmail": "Incomplete fields",

@@ -378,6 +378,7 @@ const BoatReservations: FC = () => {
                     payment_id={Number(CODE_RESERVATION)}
                     name={valueName}
                     email={valueEmail}
+                    titleDescription={`${t("paymentFor")} ${valueName} - ${t("boatRental")}`}
                   />
                 </StepContent>
               </Step>

@@ -22,6 +22,7 @@ interface IProps {
   payment_id: number;
   name?: string;
   email: string;
+  titleDescription: string;
 }
 
 const stytlePaper = {
@@ -38,9 +39,13 @@ const stytlePaper = {
 const SCRIPT_BOLD_URL =
   "https://bold.co/library/ui-kit.js?target=bold-pagos&layout=horizontal&type=slider";
 
-const DialogPayMents = ({ amount, payment_id, email }: IProps) => {
+const DialogPayMents = ({
+  amount,
+  payment_id,
+  email,
+  titleDescription,
+}: IProps) => {
   const [loading, setLoading] = useState<boolean>(false);
-
   const handleBoldPayment = async () => {
     try {
       setLoading(true);
@@ -49,6 +54,7 @@ const DialogPayMents = ({ amount, payment_id, email }: IProps) => {
         currency: "COP",
         total_amount: amount,
         payment_id,
+        description: titleDescription,
       };
       const { data } = await paymentBold(body);
       setLoading(false);

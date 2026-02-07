@@ -16,11 +16,12 @@ initMercadoPago(PAYMENT_TOKEN_PROD_PUBLIC || "");
 
 export const paymentBold = async (request: Request, response: Response) => {
   try {
-    const { email, currency, total_amount, payment_id } = request.body;
+    const { email, currency, total_amount, payment_id, description } =
+      request.body;
 
     const body = {
       amount_type: "CLOSE",
-      description: "Mangata Pasa Día",
+      description,
       callback_url: VITE_URL_UI + "/#/check-reservation",
       payer_email: email,
       payment_methods: ["CREDIT_CARD", "PSE", "BOTON_BANCOLOMBIA", "NEQUI"],

@@ -13,6 +13,8 @@
         "Lodging": "Hospedaje",
         "Events": "Eventos",
         "boatRental": "Reservar de Bote",
+        "paymentFor": "Pago por",
+        "daypass": "Pasa Día Mangata",
         "responseSendEmail": "Formulario enviado con éxito",
         "responseSendEmailError": "Error al enviar el formulario",
         "errorEmail": "Campos incompletos",
