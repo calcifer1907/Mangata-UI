@@ -31,7 +31,7 @@ const Banner = ({
 }: IProps) => {
   const { t } = useTranslation("home");
   return (
-    <Box className="container-day-banner">
+    <Box className={`container-day-banner banner-view-${linkButton}`}>
       <Box sx={STYLES.CONTAINER}>
         <Box>
           <Typography

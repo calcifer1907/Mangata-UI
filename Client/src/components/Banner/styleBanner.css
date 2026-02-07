@@ -1,16 +1,61 @@
 .container-day-banner {
+  position: relative;
   padding-block: calc(0.25rem * 6);
-  background-color: transparent;
-  background: linear-gradient(135deg, #3498db 0%, rgba(52, 152, 219, 0.8) 100%);
-  background-image: url("/images/Banners/IMG_5806.webp");
-  background-repeat: no-repeat;
   width: 100%;
-  object-fit: cover;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
 }
 
+/* Overlay oscuro para mejorar contraste del texto */
+.container-day-banner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.2) 100%,
+    rgba(0, 0, 0, 0.2) 0%
+  );
+  z-index: 1;
+}
+
+/* Asegurar que el contenido esté sobre el overlay */
+.container-day-banner > * {
+  position: relative;
+  z-index: 2;
+}
+
+.banner-view-menu  {
+  background-image: url("/images/Banners/IMG_6076.webp");
+}
+
+.banner-view-Contact  {
+  background-image: url("/images/Banners/IMG_6072.webp");
+}
+
+.banner-view-BoatRental  {
+  background-image: url("/images/Banners/IMG_6074.webp");
+}
+
+.banner-view-MangataReservation  {
+  background-image: url("/images/Banners/IMG_5806.webp");
+}
+
+.banner-view-LodgingReserve  {
+  background-image: url("/images/Banners/IMG_6073.webp");
+}
+
+
 .container-day-banner h1,
-p {
+.container-day-banner p {
   color: white;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5),
+               0 0 20px rgba(0, 0, 0, 0.3);
 }
 
 .button-reservation {
@@ -27,14 +72,16 @@ p {
 }
 
 .title-day-banner {
-  line-height: 1.1;
   margin-bottom: calc(var(--spacing) * 3);
   text-align: left;
   text-transform: capitalize;
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-weight: 700;
-  color: oklch(93.2% 0.032 255.585);
+  color: #ffffff;
   line-height: calc(2 / 1.5);
+  text-shadow: 3px 3px 12px rgba(0, 0, 0, 0.7),
+               0 0 30px rgba(0, 0, 0, 0.5),
+               1px 1px 2px rgba(0, 0, 0, 0.8);
 }
 
 .descriotion-day-banner {
