@@ -33,6 +33,11 @@ export const paymentBold = async (request: Request, response: Response) => {
     const headers = {
       Authorization: `x-api-key ${BOLD_KEY}`,
       "Content-Type": "application/json",
+      "Accept": "application/json",
+      "X-Requested-With": "XMLHttpRequest",
+      "User-Agent": "Mangata-UI/1.0",
+      "X-Content-Type-Options": "nosniff",
+      "Referrer-Policy": "strict-origin-when-cross-origin",
     };
 
     const { payload } = await requestApis.post("/online/link/v1", body, {
@@ -87,6 +92,11 @@ export const getOrderIdBold = async (request: Request, response: Response) => {
     const headers = {
       Authorization: `x-api-key ${BOLD_KEY}`,
       "Content-Type": "application/json",
+      "Accept": "application/json",
+      "X-Requested-With": "XMLHttpRequest",
+      "User-Agent": "Mangata-UI/1.0",
+      "X-Content-Type-Options": "nosniff",
+      "Referrer-Policy": "strict-origin-when-cross-origin",
     };
     const responseBold = await requestApis.get(`/online/link/v1/${order_id}`, {
       headers,
