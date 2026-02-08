@@ -37,7 +37,7 @@ export const paymentBold = async (request: Request, response: Response) => {
       "X-Requested-With": "XMLHttpRequest",
       "User-Agent": "Mangata-UI/1.0",
       "X-Content-Type-Options": "nosniff",
-      "Referrer-Policy": "strict-origin-when-cross-origin",
+      // "Referrer-Policy": "strict-origin-when-cross-origin",
     };
 
     const { payload } = await requestApis.post("/online/link/v1", body, {
@@ -63,15 +63,22 @@ export const webhookBold = async (request: Request, response: Response) => {
 
     // Primero obtenemos el estado actual de la reservación
     const { rows } = await pool.query(
-      "SELECT STATUS_RESERVATION,EMAIL FROM reservations WHERE PAYMENT_ID = $1",
+      "SELECT STATUS_RESERVATION,EMAIL,ID_EMPLOYEE FROM reservations WHERE PAYMENT_ID = $1",
       [payment_id],
     );
     const currentStatus = rows[0]?.status_reservation;
+    console.log("currentStatus", currentStatus, "status", status);
     // Solo actualizamos si el estado es diferente
     if (currentStatus && currentStatus !== status) {
       await pool.query(
         "UPDATE reservations SET STATUS_RESERVATION = $1 WHERE PAYMENT_ID = $2",
         [status, payment_id],
+      );
+      console.log(
+        "Updated status for payment_id:",
+        payment_id,
+        "to status:",
+        status,
       );
       // Solo enviamos el correo si el nuevo estado es "approved"
       if (status === "approved") {
@@ -109,7 +116,7 @@ export const getOrderIdBold = async (request: Request, response: Response) => {
 // esto es para probar
 export const testEmail = async (_request: Request, response: Response) => {
   try {
-    await sendEmail("LNK_WRINX89U58");
+    await sendEmail("LNK_3F6RX7ZQGF");
     response.status(200).json({ mesagge: "Send email test" });
   } catch (error) {
     response.status(500);
