@@ -18,13 +18,13 @@ export const sendEmail = async (payment_id: string) => {
     const subject = "Bienvenido a Mangata Beach Club";
     const { rows, rowCount } = await pool.query(
       "SELECT TO_CHAR(CREATED_AT AT TIME ZONE 'UTC', 'YYYY-MM-DD') AS FORMATTED_DATE, EMAIL FROM reservations WHERE PAYMENT_ID = $1",
-      [payment_id]
+      [payment_id],
     );
     console.log("rows: ", rows);
     console.log("rowCount: ", rowCount);
-    if (rowCount > 0) {
+    if (rowCount) {
       const [resultQuery] = rows;
-      console.log(resultQuery)
+      console.log(resultQuery);
       const mailOptions = {
         from: USER_EMAIL,
         to: resultQuery.email,
@@ -47,7 +47,7 @@ export const sendEmail = async (payment_id: string) => {
             return;
           }
           console.log("Correo enviado: " + info.response);
-        }
+        },
       );
     }
   } catch (error) {
