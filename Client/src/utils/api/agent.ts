@@ -51,11 +51,6 @@ export const getAdmin = {
     requestApis.put(`/api/updatePaymentEmployee`, body),
 };
 
-export const getMinMax = {
-  getListData: (typeEvent: string): Promise<IMinMaxResponse> =>
-    requestApis.get(`/api/MimMax/${typeEvent}`),
-};
-
 export const apisMercadoPago = {
   createOrderPSE: (body: object): Promise<unknown> =>
     requestApis.post("/PSEPayment", body),
@@ -71,6 +66,10 @@ export const requestExportData = {
     }),
 };
 
+export const getMinMax = {
+  getListData: (typeEvent: string): Promise<IMinMaxResponse> =>
+    requestApis.get(`/api/MimMax/${typeEvent}`),
+};
 export const checkReservation = {
   statusReservation: (body: object): Promise<IBodyStatusReservation> =>
     requestApis.post(`/api/check-reservation`, body),
