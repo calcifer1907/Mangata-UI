@@ -44,16 +44,16 @@ export const getLIstForTable = {
     requestApis.post(`/api/${uri}`, body),
 };
 
-export const getMinMax = {
-  getListData: (typeEvent: string): Promise<IMinMaxResponse> =>
-    requestApis.get(`/api/MimMax/${typeEvent}`),
-};
-
 export const getAdmin = {
   changeStatus: (body: IBodyChangeStatus): Promise<IResponseApi> =>
     requestApis.post(`/api/changeStatusReservation`, body),
   paymentUpdate: (body: object): Promise<IResponseApi> =>
     requestApis.put(`/api/updatePaymentEmployee`, body),
+};
+
+export const getMinMax = {
+  getListData: (typeEvent: string): Promise<IMinMaxResponse> =>
+    requestApis.get(`/api/MimMax/${typeEvent}`),
 };
 
 export const apisMercadoPago = {
