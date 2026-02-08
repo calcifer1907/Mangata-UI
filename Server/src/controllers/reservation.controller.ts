@@ -10,7 +10,7 @@ import { ICountPersonReservation } from "../interfaces/IReservation";
 
 export const createReservation = async (
   request: Request,
-  response: Response
+  response: Response,
 ) => {
   const {
     CODE_RESERVATION,
@@ -35,18 +35,18 @@ export const createReservation = async (
         AGREED_PRICE,
         CREATED_AT,
         CREATED_ON,
-      ]
+      ],
     );
 
     const idsReservation = ACCOMPANIST.map(() => CODE_RESERVATION);
     const namesAccompanist = ACCOMPANIST.map((items: any) => items.name);
     const idsLunches = ACCOMPANIST.map((items: any) =>
-      items.lunch.value.toString()
+      items.lunch.value.toString(),
     );
 
     await pool.query(
       "INSERT INTO accompanist(ID_RESERVATION,NAME_ACCOMPANIST,ID_LUNCHES) SELECT * FROM UNNEST($1::text[], $2::text[], $3::int[]);",
-      [idsReservation, namesAccompanist, idsLunches]
+      [idsReservation, namesAccompanist, idsLunches],
     );
     response.json({ id: result.rowCount, message: "success" });
     // sendEmail(CODE_RESERVATION);
@@ -58,24 +58,24 @@ export const createReservation = async (
 
 export const getListSalesEmployee = async (
   request: Request,
-  response: Response
+  response: Response,
 ) => {
   try {
     const { startDate, endDate, id_employee } = request.body;
     const resultReservations = await pool.query(
       `SELECT CODE_RESERVATION, ID_EMPLOYEE, STATUS_RESERVATION, CREATED_AT FROM reservations  
       WHERE TO_CHAR(CREATED_AT AT TIME ZONE 'UTC', 'YYYY-MM-DD') BETWEEN  $1 AND $2 AND ID_EMPLOYEE = $3 ORDER BY CREATED_AT`,
-      [startDate, endDate, id_employee]
+      [startDate, endDate, id_employee],
     );
 
     const codeReservations = resultReservations.rows.map(
-      (values) => values.code_reservation
+      (values) => values.code_reservation,
     );
 
     const resultAccompanist = await pool.query(
       `SELECT ac.NAME_ACCOMPANIST, lun.DESCRIPTION, ac.ID_RESERVATION,ac.ID FROM  
       accompanist ac INNER JOIN lunches lun ON lun.ID = ac.ID_LUNCHES WHERE ac.ID_RESERVATION = ANY($1::text[]) `,
-      [codeReservations]
+      [codeReservations],
     );
     const diff = resultReservations.rows.map((values: any, index: number) => ({
       ...values,
@@ -98,26 +98,26 @@ const findEmployeeById = (users: any, idEmployee: string) => {
 
 export const getListSalesAdmin = async (
   request: Request,
-  response: Response
+  response: Response,
 ) => {
   try {
     const { startDate, endDate } = request.body;
     const resultReservations = await pool.query(
       `SELECT CODE_RESERVATION, ID_EMPLOYEE, STATUS_RESERVATION, COMMISSION_EMPLOYEE, CURRENT_COMMISSION,PAY,EMAIL,TELEPHONE,
        TO_CHAR(CREATED_AT AT TIME ZONE 'UTC', 'YYYY-MM-DD') AS CREATED_AT,CREATED_ON FROM reservations  WHERE TO_CHAR(CREATED_AT AT TIME ZONE 'UTC', 'YYYY-MM-DD') BETWEEN  $1 AND $2 ORDER BY CREATED_AT`,
-      [startDate, endDate]
+      [startDate, endDate],
     );
     const codeReservations = resultReservations.rows.map(
-      (values) => values.code_reservation
+      (values) => values.code_reservation,
     );
     const resultAccompanist = await pool.query(
       `SELECT ac.ID,ac.NAME_ACCOMPANIST, lun.DESCRIPTION, ac.ID_RESERVATION FROM  
       accompanist ac INNER JOIN lunches lun ON lun.ID = ac.ID_LUNCHES WHERE ac.ID_RESERVATION = ANY($1::text[])`,
-      [codeReservations]
+      [codeReservations],
     );
 
     const dataUser = await pool.query(
-      "SELECT ID,CONCAT(FIRST_NAME,' ',LAST_NAME) AS USER_NAME,BANK_ACCOUNT FROM users WHERE ROLE_ID=2 OR ROLE_ID=3;"
+      "SELECT ID,CONCAT(FIRST_NAME,' ',LAST_NAME) AS USER_NAME,BANK_ACCOUNT FROM users WHERE ROLE_ID=2 OR ROLE_ID=3;",
     );
 
     const diff = resultReservations.rows.map((values, index) => {
@@ -143,7 +143,12 @@ export const getListSalesAdmin = async (
 
 export const getMinMax = async (_request: Request, response: Response) => {
   try {
-    const result = await pool.query("SELECT MIN,MAX FROM min_max;");
+    const { typeEvent } = _request.params;
+    console.log(typeEvent);
+    const result = await pool.query(
+      "SELECT MIN,MAX FROM min_max WHERE TYPE_EVENT ILIKE $1;",
+      [typeEvent],
+    );
     response.json(result.rows[0]);
   } catch (error) {
     response.status(500).json({ message: "Something went wrong" });
@@ -153,14 +158,14 @@ export const getMinMax = async (_request: Request, response: Response) => {
 export const checkReservation = async (
   req: any,
   res: any,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<void> => {
   const { payment_id } = req.body;
   try {
     if (payment_id) {
       const resultReservations = await pool.query(
         `SELECT CODE_RESERVATION, STATUS_RESERVATION, COMMISSION_EMPLOYEE ,EMAIL,CREATED_AT FROM reservations  WHERE PAYMENT_ID = $1`,
-        [payment_id]
+        [payment_id],
       );
       if (resultReservations.rowCount === 0) {
         res.status(404).json({ message: "Reservation not found" });
@@ -175,7 +180,7 @@ export const checkReservation = async (
 
         const resultAccompanist = await pool.query(
           `SELECT COUNT(ID_RESERVATION) AS TOTAL_PERSONS  FROM accompanist  WHERE ID_RESERVATION = $1`,
-          [code_reservation]
+          [code_reservation],
         );
 
         if (resultAccompanist.rowCount === 0) {
@@ -201,14 +206,13 @@ export const checkReservation = async (
 class ReservationController {
   async saveCodeReservation(
     request: Request,
-    response: Response
+    response: Response,
   ): Promise<void> {
     try {
       const { code } = request.body;
       const values = request.body;
-      const code_saved = await reservationRepository.saveCodeReservation(
-        values
-      );
+      const code_saved =
+        await reservationRepository.saveCodeReservation(values);
       if (code_saved) {
         const res = { status: 201, code, id: null };
         response.json(res);
@@ -232,7 +236,7 @@ class ReservationController {
 
   async getCodeReservation(
     request: Request,
-    response: Response
+    response: Response,
   ): Promise<void> {
     try {
       const { code } = request.body;
@@ -289,17 +293,17 @@ class ReservationController {
       const { startDate, endDate } = request.body;
       const result = await reservationRepository.chartListSalesEmployee(
         startDate,
-        endDate
+        endDate,
       );
       const codeReservations = result.map((values) => values.code_reservation);
       const countPerson =
         await reservationRepository.countNumberPersonReservation(
-          codeReservations
+          codeReservations,
         );
       const resultCharList = result.map((values) => {
         const findCount = countPerson.find(
           ({ id_reservation }: ICountPersonReservation) =>
-            id_reservation === values.code_reservation
+            id_reservation === values.code_reservation,
         );
         return {
           ...values,

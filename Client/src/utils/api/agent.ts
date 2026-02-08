@@ -45,7 +45,8 @@ export const getLIstForTable = {
 };
 
 export const getMinMax = {
-  getListData: (): Promise<IMinMaxResponse> => requestApis.get(`/api/MimMax`),
+  getListData: (typeEvent: string): Promise<IMinMaxResponse> =>
+    requestApis.get(`/api/MimMax/${typeEvent}`),
 };
 
 export const getAdmin = {
@@ -83,7 +84,7 @@ export const getSumCommission = (id_employee: number): Promise<ICommission> =>
   requestApis.get(`/api/commission/${id_employee}`);
 
 export const saveGenerateCode = (
-  body: ISaveCodeGenerate
+  body: ISaveCodeGenerate,
 ): Promise<ISaveCodeGenerate> =>
   requestApis.post("/api/saveGenerateCode", body);
 
