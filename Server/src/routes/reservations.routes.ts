@@ -45,6 +45,6 @@ router.put(
 
 router.get("/isDayBlocked", ReservationController.getIsBlockDay);
 router.get("/lunches", ReservationController.getLunches);
-router.get("/MimMax/:typeEvent", getMinMax);
+router.get("/MimMax", getMinMax);
 
 export default router;

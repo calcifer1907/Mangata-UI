@@ -143,8 +143,8 @@ export const getListSalesAdmin = async (
 
 export const getMinMax = async (_request: Request, response: Response) => {
   try {
-    const { typeEvent } = _request.params;
-    console.log(typeEvent);
+    // const { typeEvent } = _request.params;
+    const typeEvent = "DAY_TRIP";
     const result = await pool.query(
       "SELECT MIN,MAX FROM min_max WHERE TYPE_EVENT ILIKE $1;",
       [typeEvent],
