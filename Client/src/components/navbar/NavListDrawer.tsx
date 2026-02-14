@@ -14,10 +14,14 @@ import { useTranslation } from "react-i18next";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 
+import "./styleNavbar.css";
+
 interface IProps {
   handleDrawerToggle: () => void;
   navItems: { title: string; path: string }[];
   token: string;
+  activeMenu: string;
+  handleMenuClick: (menu: string) => void;
   changeLanguage: (lng: string) => void;
 }
 
@@ -26,6 +30,8 @@ const NavListDrawer = ({
   navItems,
   token,
   changeLanguage,
+  activeMenu,
+  handleMenuClick,
 }: IProps) => {
   const { t } = useTranslation("home");
   const [open, setOpen] = useState(false);
@@ -70,7 +76,7 @@ const NavListDrawer = ({
                 <ListItemButton
                   component={NavLink}
                   to={item.path}
-                  className="onClickListItem "
+                  className="onClickListItem font-family-uppercase navegation-a"
                 >
                   <ListItemText primary={item.title} />
                 </ListItemButton>
@@ -80,7 +86,7 @@ const NavListDrawer = ({
               <ListItemButton
                 component={NavLink}
                 to="/Logout"
-                className="onClickListItem font-family-uppercase"
+                className="onClickListItem font-family-uppercase navegation-a"
               >
                 <ListItemText primary="Cerrar sesión" />
               </ListItemButton>
@@ -93,7 +99,8 @@ const NavListDrawer = ({
                 <ListItemButton
                   component={NavLink}
                   to={item.path}
-                  className="onClickListItem font-family-uppercase"
+                  className={`onClickListItem font-family-uppercase navegation-a ${activeMenu === item.title ? " active-menu" : ""}`}
+                  onClick={() => handleMenuClick(item.title)}
                 >
                   <ListItemText primary={t(item.title)} />
                 </ListItemButton>
@@ -104,7 +111,7 @@ const NavListDrawer = ({
         <ListItemButton onClick={handleClick}>
           <ListItemText
             primary={t("changeLanguage")}
-            className="font-family-uppercase"
+            className="font-family-uppercase navegation-a"
           />
           {open ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
@@ -113,14 +120,14 @@ const NavListDrawer = ({
             <ListItemButton
               sx={{ pl: 4 }}
               onClick={() => changeLanguage("es")}
-              className="font-family-uppercase"
+              className="font-family-uppercase navegation-a"
             >
               <ListItemText primary={t("es")} />
             </ListItemButton>
             <ListItemButton
               sx={{ pl: 4 }}
               onClick={() => changeLanguage("en")}
-              className="font-family-uppercase"
+              className="font-family-uppercase navegation-a"
             >
               <ListItemText primary={t("en")} />
             </ListItemButton>

@@ -55,6 +55,10 @@
 }
 
 .font-family-uppercase {
-  font-family: Jost;
   text-transform: uppercase;
+}
+
+.active-menu {
+  color: #1b7fcccc;
+  font-weight: 600;
 }

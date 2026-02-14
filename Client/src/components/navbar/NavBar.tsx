@@ -60,7 +60,7 @@ const Navbar = (props: Props) => {
     const root = document.getElementById("root");
     root?.style.setProperty(
       "overflow",
-      location.pathname.includes("MangataReservation") ? "hidden" : "auto"
+      location.pathname.includes("MangataReservation") ? "hidden" : "auto",
     );
   }, [location]);
 
@@ -68,6 +68,12 @@ const Navbar = (props: Props) => {
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
+  };
+
+  const [activeMenu, setActiveMenu] = useState("home");
+
+  const handleMenuClick = (menu: string) => {
+    setActiveMenu(menu);
   };
 
   return (
@@ -163,12 +169,15 @@ const Navbar = (props: Props) => {
                       <Button
                         key={item.path}
                         className={
-                          itemsNav.length - 1 === index
-                            ? "navegation-a"
-                            : "navegation-a navegation-a-content"
+                          `${
+                            itemsNav.length - 1 === index
+                              ? "navegation-a"
+                              : "navegation-a navegation-a-content"
+                          }` + (activeMenu === item.title ? " active-menu" : "")
                         }
                         to={item.path}
                         component={NavLink}
+                        onClick={() => handleMenuClick(item.title)}
                       >
                         {t(item.title)}
                       </Button>
@@ -243,6 +252,8 @@ const Navbar = (props: Props) => {
             navItems={userInfo.MENU}
             token={userInfo.TOKEN}
             changeLanguage={changeLanguage}
+            handleMenuClick={handleMenuClick}
+            activeMenu={activeMenu}
           />
         </Drawer>
       </nav>

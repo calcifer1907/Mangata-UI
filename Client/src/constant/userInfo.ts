@@ -5,11 +5,12 @@ export const initialUserInfo = {
 };
 
 export const itemsNav = [
+  { title: "home", path: "/" },
   { title: "dayTrip", path: "/DayTrip" },
-  { title: "Lodging", path: "/Lodging" },
+  // { title: "Lodging", path: "/Lodging" },
   { title: "Menu", path: "/Menu" },
   { title: "Events", path: "/Events" },
   { title: "boatRental", path: "/Boat" },
   { title: "Contact", path: "/Contact" },
-  { title: "signIn", path: "/Login" },
+  // { title: "signIn", path: "/Login" },
 ];

@@ -65,12 +65,6 @@ const DayTrip = () => {
           alt="Mangata Beach"
           width={{ xs: 64, lg: 128 }}
         />
-        <Box
-          component="img"
-          src={Wifi}
-          alt="Mangata Beach"
-          width={{ xs: 64, lg: 128 }}
-        />
       </Box>
       <Box className="p-relative">
         <Box
