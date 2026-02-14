@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Box, Button, Paper, TextField, Typography } from "@mui/material";
 
 import "./styleContact.css";
@@ -34,7 +34,7 @@ const Contact = () => {
     useState<IFromContact>(INITAL_FORM_VALUES);
 
   const handleChange = (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = event.target;
     const sanitizedValue = name === "email" ? value : sanitizeInput(value);
@@ -83,6 +83,10 @@ const Contact = () => {
         });
     }
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <Box sx={{ width: "100%" }}>

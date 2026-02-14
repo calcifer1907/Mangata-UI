@@ -5,7 +5,7 @@ import {
   DialogContent,
   IconButton,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import {
   Close as CloseIcon,
@@ -73,6 +73,10 @@ const Menu = () => {
       setPageNumber(pageNumber + 1);
     }
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <Box>

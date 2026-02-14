@@ -53,7 +53,7 @@ const InitialSummary = () => {
           variant="full"
           showIndicators={true}
           transition="slide"
-          showControls={false}
+          showControls
         />
       </Box>
       <Box>

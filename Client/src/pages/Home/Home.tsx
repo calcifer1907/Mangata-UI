@@ -97,8 +97,8 @@ const Home = () => {
           <Box sx={{ width: { xs: "100%", md: "50%" } }}>
             <Box
               component="img"
-              src="/images/MangataPlaces.jpg"
-              sx={{ width: "100%", height: "400px", objectFit: "cover" }}
+              src="/images/IMG_5002.webp"
+              sx={{ width: "100%", height: "600px", objectFit: "cover" }}
             />
           </Box>
           <Box

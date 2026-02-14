@@ -31,8 +31,16 @@ import { NavLink } from "react-router";
 import ImageCarousel from "../../components/Slider/Slider";
 import Banner from "../../components/Banner/Banner";
 import { createEventsStyles } from "../Events/Events.styles";
+import { useEffect } from "react";
 
 const sampleImages = [
+  {
+    id: "3",
+    src: "images/Boat/IMG-03.jpg",
+    alt: "",
+    title: "",
+    description: "",
+  },
   {
     id: "1",
     src: "images/Boat/IMG-01.jpg",
@@ -47,14 +55,6 @@ const sampleImages = [
     title: "",
     description: "",
   },
-  {
-    id: "3",
-    src: "images/Boat/IMG-03.jpg",
-    alt: "",
-    title: "",
-    description: "",
-  },
-
   {
     id: "4",
     src: "images/Boat/IMG-04.jpg",
@@ -75,6 +75,10 @@ const Boat = () => {
   const theme = useTheme();
   const { t } = useTranslation("home");
   const styles = createEventsStyles(theme);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <Box>
       <Banner
@@ -96,7 +100,7 @@ const Boat = () => {
               variant="full"
               showIndicators={true}
               transition="slide"
-              showControls={false}
+              showControls
               autoPlaySpeed={4000}
             />
           </Box>

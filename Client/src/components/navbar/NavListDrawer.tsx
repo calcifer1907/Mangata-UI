@@ -48,7 +48,17 @@ const NavListDrawer = ({
 
   return (
     <Box sx={{ textAlign: "center" }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
+      <Typography
+        component={NavLink}
+        to="/"
+        sx={{
+          my: 2,
+          textDecoration: "none",
+          color: "inherit",
+          fontWeight: "bold",
+          fontSize: "1.5rem",
+        }}
+      >
         Mangata
       </Typography>
       <Divider />

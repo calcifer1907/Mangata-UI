@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
@@ -17,6 +18,11 @@ import Wifi from "../../assets/icons/Wifi.svg";
 
 const DayTrip = () => {
   const { t } = useTranslation("home");
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <Box className="content-day-trip" component="section">
       <Banner
@@ -50,6 +56,12 @@ const DayTrip = () => {
         <Box
           component="img"
           src={hammocks}
+          alt="Mangata Beach"
+          width={{ xs: 64, lg: 128 }}
+        />
+        <Box
+          component="img"
+          src={Wifi}
           alt="Mangata Beach"
           width={{ xs: 64, lg: 128 }}
         />
