@@ -270,6 +270,10 @@ body {
   gap: 16px;
 }
 
+.gap-24 {
+  gap: 24px;
+}
+
 .gap-50 {
   gap: 50px;
 }

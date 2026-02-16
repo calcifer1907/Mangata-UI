@@ -30,7 +30,7 @@ export const createEventsStyles = (theme: Theme) => {
     minHeight: { md: 520 },
     backgroundImage: `linear-gradient(180deg, ${alpha(
       "#000",
-      0.08
+      0.08,
     )} 0%, ${alpha("#000", 0.18)} 100%), url(${imageUrl})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
@@ -49,7 +49,7 @@ export const createEventsStyles = (theme: Theme) => {
     color: "#fff",
     background: `linear-gradient(180deg, ${alpha(opts.from, 0.92)} 0%, ${alpha(
       opts.to,
-      0.86
+      0.86,
     )} 100%)`,
     position: "relative",
     overflow: "hidden",
@@ -140,7 +140,7 @@ export const createEventsStyles = (theme: Theme) => {
       inset: 0,
       background: `linear-gradient(180deg, ${alpha("#000", 0.03)} 0%, ${alpha(
         "#000",
-        0.62
+        0.62,
       )} 100%)`,
     } satisfies SxProps<Theme>,
     featuredChip: {
@@ -294,7 +294,7 @@ export const createEventsStyles = (theme: Theme) => {
       fontWeight: 700,
       px: 5,
       py: 1.5,
-      borderRadius: "50px",
+      borderRadius: "0.5rem",
       "&:hover": {
         bgcolor: "grey.50",
         transform: "scale(1.05)",

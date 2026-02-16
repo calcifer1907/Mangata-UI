@@ -11,13 +11,11 @@ import {
   Groups as GroupsIcon,
   AccessTime as TimeIcon,
   DirectionsBoat as BoatIconMUI,
-  Pool as SnorkelingIcon,
   LocalBar as BarIcon,
   MusicNote as MusicIcon,
   WbSunny as SunIcon,
   Security as SecurityIcon,
   CheckCircle as CheckIcon,
-  Info as InfoIcon,
   NavigateNext as NavigateNextIcon,
   EventAvailable as EventIcon,
 } from "@mui/icons-material";
@@ -273,52 +271,6 @@ const Boat = () => {
               </Box>
             </Paper>
           </Grid2>
-        </Grid2>
-      </Box>
-
-      {/* Sección de Recomendaciones y Qué Traer */}
-      <Box
-        className="boat-section-container"
-        sx={{
-          maxWidth: { xs: "95%", md: "80%", lg: "70%" },
-          paddingBlock: { xs: 4, md: 6 },
-        }}
-      >
-        <Grid2 container spacing={4}>
-          <Grid2 size={{ xs: 12, md: 6 }}>
-            <Paper
-              elevation={3}
-              className="boat-recommendations-card boat-recommendations-card-what-to-bring"
-            >
-              <Box className="boat-recommendations-header">
-                <InfoIcon className="boat-recommendations-icon" />
-                <Typography
-                  variant="h5"
-                  fontWeight="bold"
-                  className="color-blue-dark"
-                >
-                  {t("whatToBring") || "Qué Traer"}
-                </Typography>
-              </Box>
-              <Box className="boat-recommendations-content">
-                {[
-                  t("bringSunscreen") || "Protector solar",
-                  t("bringHat") || "Gorra o sombrero",
-                  t("bringSwimsuit") || "Traje de baño",
-                  t("bringTowel") || "Toalla",
-                  t("bringCamera") || "Cámara o celular",
-                  t("bringWater") || "Agua (opcional)",
-                ].map((item, index) => (
-                  <Box key={index} className="boat-recommendations-item">
-                    <CheckIcon className="boat-recommendations-check-icon" />
-                    <Typography variant="body1" className="color-black-opacity">
-                      {item}
-                    </Typography>
-                  </Box>
-                ))}
-              </Box>
-            </Paper>
-          </Grid2>
           <Grid2 size={{ xs: 12, md: 6 }}>
             <Paper
               elevation={3}
@@ -338,7 +290,6 @@ const Boat = () => {
                 {[
                   t("safetyLifeJacket") || "Chalecos salvavidas incluidos",
                   t("safetyCaptain") || "Capitán certificado y experimentado",
-                  t("safetyWeather") || "Monitoreo de condiciones climáticas",
                   t("safetyFirstAid") || "Botiquín de primeros auxilios",
                   t("safetyCommunication") || "Equipo de comunicación a bordo",
                 ].map((item, index) => (
@@ -371,21 +322,12 @@ const Boat = () => {
         >
           {t("additionalExperiences") || "Experiencias Adicionales"}
         </Typography>
-        <Grid2 container spacing={3}>
+        <Grid2 container spacing={4}>
           {[
-            {
-              icon: <SnorkelingIcon />,
-              title: t("snorkelingTour") || "Tour de Snorkel",
-              description:
-                t("snorkelingTourDesc") ||
-                "Explora los arrecifes de coral y la vida marina",
-            },
             {
               icon: <BarIcon />,
               title: t("sunsetTour") || "Tour al Atardecer",
-              description:
-                t("sunsetTourDesc") ||
-                "Disfruta de un atardecer mágico en el mar",
+              description: t("sunsetTourDesc"),
             },
             {
               icon: <MusicIcon />,
@@ -395,13 +337,11 @@ const Boat = () => {
             },
             {
               icon: <BoatIconMUI />,
-              title: t("fishingTour") || "Tour de Pesca",
-              description:
-                t("fishingTourDesc") ||
-                "Experiencia de pesca deportiva (opcional)",
+              title: t("IslasTour"),
+              description: t("IslasTourDesc"),
             },
           ].map((experience, index) => (
-            <Grid2 key={index} size={{ xs: 12, sm: 6, md: 3 }}>
+            <Grid2 key={index} size={{ xs: 12, sm: 6, md: 4 }}>
               <Paper elevation={2} className="boat-experience-card">
                 <Box className="boat-experience-icon-container">
                   {experience.icon}

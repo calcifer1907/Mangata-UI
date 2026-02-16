@@ -99,8 +99,8 @@ const NavListDrawer = ({
                 <ListItemButton
                   component={NavLink}
                   to={item.path}
-                  className={`onClickListItem font-family-uppercase navegation-a ${activeMenu === item.title ? " active-menu" : ""}`}
-                  onClick={() => handleMenuClick(item.title)}
+                  className={`onClickListItem font-family-uppercase navegation-a ${activeMenu === item.path.split("/")[1] ? " active-menu" : ""}`}
+                  onClick={() => handleMenuClick(item.path.split("/")[1])}
                 >
                   <ListItemText primary={t(item.title)} />
                 </ListItemButton>

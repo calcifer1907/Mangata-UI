@@ -70,7 +70,9 @@ const Navbar = (props: Props) => {
     i18n.changeLanguage(lng);
   };
 
-  const [activeMenu, setActiveMenu] = useState("home");
+  const [activeMenu, setActiveMenu] = useState(
+    location.pathname.split("/")[1] || "home",
+  );
 
   const handleMenuClick = (menu: string) => {
     setActiveMenu(menu);
@@ -173,11 +175,14 @@ const Navbar = (props: Props) => {
                             itemsNav.length - 1 === index
                               ? "navegation-a"
                               : "navegation-a navegation-a-content"
-                          }` + (activeMenu === item.title ? " active-menu" : "")
+                          }` +
+                          (activeMenu === item.path.split("/")[1]
+                            ? " active-menu"
+                            : "")
                         }
                         to={item.path}
                         component={NavLink}
-                        onClick={() => handleMenuClick(item.title)}
+                        onClick={() => handleMenuClick(item.path.split("/")[1])}
                       >
                         {t(item.title)}
                       </Button>
