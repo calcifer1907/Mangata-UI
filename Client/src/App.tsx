@@ -25,12 +25,24 @@ import BoartReservations from "./pages/Boat/BoatReservations";
 import WhatsAppFloatingButton from "./components/WhatsAppFloatingButton/WhatsAppFloatingButton";
 import ScrollToTopButton from "./components/ScrollToTopButton/ScrollToTopButton";
 
-// import PayMenetMethod from "./pages/PayMenetMethod";
+import { useLocation } from 'react-router-dom';
+import { useEffect } from "react";
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 
 const App = () => {
   return (
     <Router>
       <ContextUser>
+         <ScrollToTop />
         <MyNavbar />
         <Box sx={{ flex: 1, position: "relative" }} id="contentPrimary">
           <Routes>

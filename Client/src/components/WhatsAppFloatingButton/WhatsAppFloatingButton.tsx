@@ -1,5 +1,6 @@
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import { Fab, Tooltip } from "@mui/material";
+import { buildWhatsAppUrl } from "../../generalFunctions/generalFunction";
 
 type WhatsAppFloatingButtonProps = {
   /**
@@ -22,18 +23,6 @@ const DEFAULT_PHONE_NUMBER =
   import.meta.env.VITE_WHATSAPP_NUMBER ?? "573126056467";
 const DEFAULT_MESSAGE =
   import.meta.env.VITE_WHATSAPP_MESSAGE ?? "Hola, quiero más información.";
-
-function normalizePhoneNumber(phoneNumber: string) {
-  return phoneNumber.replace(/[^\d]/g, "");
-}
-
-function buildWhatsAppUrl(phoneNumber: string, message?: string) {
-  const phone = normalizePhoneNumber(phoneNumber);
-  const params = new URLSearchParams();
-  if (message?.trim()) params.set("text", message.trim());
-  const query = params.toString();
-  return `https://wa.me/${phone}${query ? `?${query}` : ""}`;
-}
 
 export default function WhatsAppFloatingButton({
   phoneNumber = DEFAULT_PHONE_NUMBER,
@@ -67,4 +56,3 @@ export default function WhatsAppFloatingButton({
     </Tooltip>
   );
 }
-

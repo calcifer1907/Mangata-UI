@@ -1,17 +1,17 @@
-import {
-  Box,
-  Typography,
-  Dialog,
-  DialogContent,
-  IconButton,
-} from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import Fab from "@mui/material/Fab";
+import IconButton from "@mui/material/IconButton";
+
 import { Document, Page, pdfjs } from "react-pdf";
-import {
-  Close as CloseIcon,
-  NavigateBefore,
-  NavigateNext,
-} from "@mui/icons-material";
+import NavigateBefore from "@mui/icons-material/NavigateBefore";
+import NavigateNext from "@mui/icons-material/NavigateNext";
+import CloseIcon from "@mui/icons-material/Close";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
 import { useTranslation } from "react-i18next";
 
@@ -24,6 +24,7 @@ import Footer from "../../components/Footer/Footer";
 
 import Loading from "../../components/Loading/Loading";
 import Banner from "../../components/Banner/Banner";
+import { buildWhatsAppUrl } from "../../generalFunctions/generalFunction";
 
 // Configurar el worker de PDF.js usando Vite
 pdfjs.GlobalWorkerOptions.workerSrc = workerUrl;
@@ -33,6 +34,14 @@ const Menu = () => {
   const [numPages, setNumPages] = useState<number | null>(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [documentError, setDocumentError] = useState<string | null>(null);
+
+  const DEFAULT_PHONE_NUMBER =
+    import.meta.env.VITE_WHATSAPP_NUMBER ?? "573126056467";
+
+  const DEFAULT_MESSAGE =
+    import.meta.env.VITE_WHATSAPP_MESSAGE ?? "Hola, quiero más información.";
+
+  const href = buildWhatsAppUrl(DEFAULT_PHONE_NUMBER, DEFAULT_MESSAGE);
 
   const { t } = useTranslation("home");
 
@@ -74,10 +83,6 @@ const Menu = () => {
     }
   };
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   return (
     <Box>
       <Banner
@@ -90,6 +95,56 @@ const Menu = () => {
       />
 
       <Box className="container-menu-plates" component="section">
+        <Box
+          sx={{
+            textAlign: "center",
+            padding: "2rem",
+            background:
+              "linear-gradient(180deg, rgba(21, 101, 192, 0.92) 0%, rgba(21, 101, 192, 0.86) 100%)",
+            borderRadius: "0.5rem",
+          }}
+        >
+          <Typography
+            component="h1"
+            sx={{
+              fontSize: { xs: "1.5rem", md: "2rem" },
+              marginBottom: "2rem",
+              color: "#fff",
+            }}
+          >
+            {t("privateVessel")}
+          </Typography>
+
+          <Fab
+            component="a"
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={DEFAULT_PHONE_NUMBER}
+            sx={{
+              borderRadius: "0.5rem",
+              backgroundColor: "#fff",
+              padding: "0.5rem 1rem",
+              width: "fit-content",
+            }}
+          >
+            <Box className="d-flex align-items-center justify-content-center gap-1">
+              <Typography
+                variant="body2"
+                sx={{
+                  marginRight: "0.5rem",
+                  fontSize: { xs: "1rem", md: "1.2rem" },
+                  textTransform: "uppercase",
+                  color: "#1672d2",
+                  fontWeight: "bold",
+                }}
+              >
+                {t("reservePrivate")}
+              </Typography>
+              <WhatsAppIcon sx={{ color: "#25D366" }} />
+            </Box>
+          </Fab>
+        </Box>
         <Box>
           <Typography
             component="h1"
