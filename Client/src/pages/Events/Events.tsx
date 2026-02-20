@@ -9,6 +9,7 @@ import {
   Chip,
   useTheme,
   Avatar,
+  alpha,
 } from "@mui/material";
 
 import {
@@ -53,7 +54,15 @@ const Events = () => {
     {
       titleKey: "events_type_birthdays_title",
       descriptionKey: "events_type_birthdays_desc",
-      image: "/images/MangataChampagne.webp",
+      image: "/images/Events/IMG_02.webp",
+      icon: <CakeIcon />,
+      color: "#FF6B6B", // Coral suave
+      featured: true,
+    },
+    {
+      titleKey: "events_type_marriage_proposal_title",
+      descriptionKey: "events_type_marriage_proposal_desc",
+      image: "/images/Events/IMG_05.webp",
       icon: <CakeIcon />,
       color: "#FF6B6B", // Coral suave
       featured: true,
@@ -61,21 +70,21 @@ const Events = () => {
     {
       titleKey: "events_type_farewells_title",
       descriptionKey: "events_type_farewells_desc",
-      image: "/images/MangataFire.jpg",
+      image: "/images/Events/IMG_03.webp",
       icon: <CelebrationIcon />,
       color: "#8E44AD", // Púrpura
     },
     {
       titleKey: "events_type_private_title",
       descriptionKey: "events_type_private_desc",
-      image: "/images/MangataPlaces.jpg",
+      image: "/images/Events/IMG_01.webp",
       icon: <GroupsIcon />,
       color: "#27AE60", // Verde
     },
     {
       titleKey: "events_type_corporate_title",
       descriptionKey: "events_type_corporate_desc",
-      image: "/images/Hotel.webp",
+      image: "/images/Events/IMG_01.webp",
       icon: <BusinessIcon />,
       color: "#34495E", // Azul corporativo (gris azulado)
     },
@@ -218,7 +227,13 @@ const Events = () => {
 
                   <Grid container spacing={{ xs: 1.5, sm: 2 }}>
                     {eventIncludes.map((item) => (
-                      <Grid key={item} size={{ xs: 12, sm: 6 }}>
+                      <Grid
+                        key={item}
+                        size={{ xs: 12, sm: 6 }}
+                        sx={{
+                          borderBottom: `1px solid ${alpha("#fff", 0.12)}`,
+                        }}
+                      >
                         <Box sx={styles.splitListRow}>
                           <Typography variant="body1" sx={styles.splitListText}>
                             {t(item)}
@@ -285,7 +300,13 @@ const Events = () => {
 
                   <Grid container spacing={{ xs: 1.5, sm: 2 }}>
                     {additionalServices.map((service) => (
-                      <Grid key={service} size={{ xs: 12, sm: 6 }}>
+                      <Grid
+                        key={service}
+                        size={{ xs: 12, sm: 6 }}
+                        sx={{
+                          borderBottom: `1px solid ${alpha("#fff", 0.12)}`,
+                        }}
+                      >
                         <Box sx={styles.splitListRow}>
                           <Typography variant="body1" sx={styles.splitListText}>
                             {t(service)}
