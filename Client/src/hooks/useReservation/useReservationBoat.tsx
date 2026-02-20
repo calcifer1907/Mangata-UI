@@ -3,29 +3,27 @@ import { getAccompanist, getMinMax } from "../../utils/api/agent";
 import { enqueueSnackbar } from "notistack";
 import { formatDate } from "../../generalFunctions/formatDate";
 import { generarCodigoReservaUX2 } from "../../generalFunctions/generateCodeReservation";
-import { addDays } from "date-fns";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 import { sanitizeInput, sanitizeEmail } from "../../constant/SanatizedInputs";
 import { formatPrice } from "../../generalFunctions/formaters";
 import { validEmail } from "../../generalFunctions/generalFunction";
-import { IMinMax } from "../../interfaces/IAccompanist";
+import { IMinMaxResponse } from "../../interfaces/IAccompanist";
 import { CountryType } from "../../interfaces/ICountry";
 
 const BOAT_ID = 30;
 
 const useReservationBoat = () => {
-  const [minmax, setMinMax] = useState<IMinMax>({ MIN: 0, MAX: 0 });
+  const [minmax, setMinMax] = useState<IMinMaxResponse[]>([{ min: 0, max: 0 }]);
   const [valueCel, setValueCel] = useState<string>("");
   const [valueEmail, setValueEmail] = useState<string>("");
   const [valueName, setValueName] = useState<string>("");
-  const [dateChange, setDateChange] = useState<string>(
-    formatDate(addDays(new Date(), 1), "YYYY-MM-DD"),
-  );
+  const [dateChange, setDateChange] = useState<string>("");
   const [selectedCountry, setSelectedCountry] = useState<CountryType | null>(
     null,
   );
   const [loading, setLoading] = useState<boolean>(false);
   const [activeStep, setActiveStep] = useState<number>(0);
+  const { t } = useTranslation("reserve");
 
   // Código de reserva generado
   const CODE_RESERVATION = useMemo(() => {
@@ -35,8 +33,8 @@ const useReservationBoat = () => {
   // Precios
   const PRICES = useMemo(
     () => ({
-      PRICE_MAX: minmax.MAX,
-      PRICE_MIN: minmax.MIN,
+      PRICE_MAX: minmax[0]?.max || 0,
+      PRICE_MIN: minmax[0]?.min || 0,
     }),
     [minmax],
   );
@@ -71,7 +69,11 @@ const useReservationBoat = () => {
 
   // Manejar siguiente paso
   const handleNext = () => {
-    if (activeStep === 0) {
+    if (activeStep === 0 && validDate()) {
+      return;
+    }
+
+    if (activeStep === 1) {
       if (validateStep1()) {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
       }
@@ -95,21 +97,24 @@ const useReservationBoat = () => {
     const newPrice = calculatePrice();
     return formatPrice(newPrice);
   };
-  // Validar campos del paso 1 (fecha y contacto)
-  const validateStep1 = (): boolean => {
-    if (!dateChange || dateChange === formatDate("", "YYYY-MM-DD")) {
-      enqueueSnackbar(t("selectDateValid"), {
+
+  const validDate = (): boolean => {
+    if (!dateChange) {
+      enqueueSnackbar(t("requiredDate"), {
         variant: "error",
         anchorOrigin: {
           vertical: "top",
           horizontal: "right",
         },
       });
-      return false;
+      return true;
     }
-
-    if (!valueName || valueName.trim() === "") {
-      enqueueSnackbar(t("nameRequired"), {
+    return false;
+  };
+  // Validar campos del paso 1 (fecha y contacto)
+  const validateStep1 = (): boolean => {
+    if (!selectedCountry) {
+      enqueueSnackbar(t("chooseCountryRequired"), {
         variant: "error",
         anchorOrigin: {
           vertical: "top",
@@ -130,8 +135,8 @@ const useReservationBoat = () => {
       return false;
     }
 
-    if (!valueEmail || valueEmail.trim() === "" || !validEmail(valueEmail)) {
-      enqueueSnackbar(t("emailRequired"), {
+    if (!valueName || valueName.trim() === "") {
+      enqueueSnackbar(t("nameRequired"), {
         variant: "error",
         anchorOrigin: {
           vertical: "top",
@@ -141,8 +146,8 @@ const useReservationBoat = () => {
       return false;
     }
 
-    if (!selectedCountry) {
-      enqueueSnackbar(t("chooseCountryRequired"), {
+    if (!valueEmail || valueEmail.trim() === "" || !validEmail(valueEmail)) {
+      enqueueSnackbar(t("emailRequired"), {
         variant: "error",
         anchorOrigin: {
           vertical: "top",
@@ -214,10 +219,9 @@ const useReservationBoat = () => {
     const loadInitialData = async () => {
       try {
         // Cargar precios min/max
-        const { min, max } = await getMinMax.getListData("DAY_TRIP");
-        setMinMax({ MIN: Number(min), MAX: Number(max) });
-      } catch (error) {
-        console.error("Error al cargar datos iniciales:", error);
+        const response = await getMinMax.getListData("BOAT_RESERVE");
+        setMinMax(response);
+      } catch {
         enqueueSnackbar(
           "Error al cargar datos. Por favor, recarga la página.",
           {
@@ -250,6 +254,7 @@ const useReservationBoat = () => {
     valueCel,
     valueEmail,
     dateChange,
+    setDateChange,
     selectedCountry,
     handleValidHours,
     handleOnChangeName,
