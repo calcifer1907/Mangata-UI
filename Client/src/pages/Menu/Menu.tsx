@@ -237,7 +237,7 @@ const Menu = () => {
             borderBottom: "1px solid #e0e0e0",
           }}
         >
-          <Typography variant="h6">{t("menu")}</Typography>
+          <Typography variant="h6">{t("Menu")}</Typography>
           <IconButton onClick={handleClose}>
             <CloseIcon />
           </IconButton>
