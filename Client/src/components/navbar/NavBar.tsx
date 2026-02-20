@@ -69,9 +69,8 @@ const Navbar = (props: Props) => {
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
   };
-
   const [activeMenu, setActiveMenu] = useState(
-    location.pathname.split("/")[1] || "home",
+    location.pathname.split("/")[1] ?? "home",
   );
 
   const handleMenuClick = (menu: string) => {
