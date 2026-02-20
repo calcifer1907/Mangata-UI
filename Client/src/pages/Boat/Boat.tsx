@@ -225,13 +225,6 @@ const Boat = () => {
                   <strong>9:00 AM</strong> -{" "}
                   {t("islandTour") || "Recorrido por las islas"}
                 </Typography>
-                <Typography
-                  variant="body1"
-                  className="color-black-opacity boat-itinerary-item"
-                >
-                  <strong>10:00 AM</strong> -{" "}
-                  {t("snorkelingActivity") || "Actividad de snorkel"}
-                </Typography>
               </Box>
             </Paper>
           </Grid2>
