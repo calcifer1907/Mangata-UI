@@ -13,10 +13,14 @@ i18n
     lng: "es", // Idioma por defecto
     ns: ["common", "home"], // Espacio de nombres para la carga de archivos JSON
     fallbackLng: "es",
+    fallbackNS: "home",
     debug: false,
     interpolation: {
       escapeValue: false,
     },
+    // Para evitar errores 404
+    returnNull: false,
+    returnEmptyString: false,
     saveMissing: true,
     saveMissingTo: "all",
     backend: {
