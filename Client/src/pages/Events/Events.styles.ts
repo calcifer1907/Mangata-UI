@@ -223,7 +223,7 @@ export const createEventsStyles = (theme: Theme) => {
       alignItems: "flex-start",
       gap: 1.5,
       py: 1.5,
-      borderBottom: `1px solid ${alpha("#fff", 0.12)}`,
+
       boxShadow: "none",
     } satisfies SxProps<Theme>,
     splitListIconCircle: {
