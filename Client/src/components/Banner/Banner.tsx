@@ -63,7 +63,7 @@ const Banner = ({
             component={NavLink}
             onClick={onClick}
           >
-            {t(titleButton || t("reserve"))}
+            {t(titleButton ?? "Reserve")}
           </Button>
         )}
       </Box>
