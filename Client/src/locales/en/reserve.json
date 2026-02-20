@@ -47,5 +47,6 @@
         "dateAndContactDetails": "Date and Contact Details",
         "selectDateAndContactDetails": "Select the date and complete your details",
         "checkReservation1": "Check your reservation and proceed to payment",
-        "selectDateValid": "Please select a valid date."
+        "selectDateValid": "Please select a valid date.",
+        "requiredDate": "Date is required"
 }

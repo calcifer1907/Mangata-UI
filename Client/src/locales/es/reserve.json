@@ -46,5 +46,6 @@
         "confirmAndPay": "Confirmar y Pagar",
         "dateAndContactDetails": "Fecha y Datos de Contacto",
         "selectDateAndContactDetails": "Selecciona la fecha y completa tus datos",
-        "checkReservation1": "Revisa tu reserva y procede al pago"
+        "checkReservation1": "Revisa tu reserva y procede al pago",
+        "requiredDate": "La fecha es obligatoria"
 }

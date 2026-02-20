@@ -3,7 +3,8 @@
         "es": "Spanish",
         "en": "English",
         "home": "Home",
-        "reserve": "Reserve",
+        "Contact": "Contact",
+        "Menu": "Menu",
         "dayTrip": "Day Trip",
         "Reserve": "Reserve",
         "page": "Page",
@@ -13,6 +14,7 @@
         "Events": "Events",
         "boatRental": "Reserve Boat",
         "paymentFor": "Payment for",
+        "dateRental": "Date of Rental",
         "daypass": "Day Pass Mangata",
         "responseSendEmail": "Form submitted successfully",
         "responseSendEmailError": "Error submitting form",
@@ -27,6 +29,7 @@
         "welcomeGlass": "Welcome glass of champagne or juice.",
         "airConditioned": "Air-conditioned or open-air restaurant",
         "waterSports": "Water sports: Snorkelling, Kayak, Paddle Board",
+        "bicycle": "Bicycle",
         "enjoyYourLunch": "Enjoy your lunch near the sea",
         "with8": "with 8 options of dishes available",
         "useOfFacilities": "Use of facilities",
@@ -110,6 +113,8 @@
         "events_type_weddings_title": "Beach weddings",
         "events_type_weddings_desc": "Intimate, magical ceremonies by the sea, with the Caribbean breeze and the sound of the waves.",
         "events_type_birthdays_title": "Birthdays & celebrations",
+        "events_type_marriage_proposal_title": "Marriage Proposal",
+        "events_type_marriage_proposal_desc": "A romantic and unique experience to propose marriage on the beach.",
         "events_type_birthdays_desc": "From private dinners to beachfront parties. Unique settings for unforgettable days.",
         "events_type_farewells_title": "Farewell parties",
         "events_type_farewells_desc": "A perfect plan with beach, music, cocktails and activities to celebrate with friends.",
@@ -147,5 +152,6 @@
         "titleLodging1": "Wake up with the",
         "titleLodging2": "sound of the sea",
         "reservePrivate": "Reserve private",
-        "privateVessel": "Reserve your lunch when you come on a private boat"
+        "privateVessel": "Reserve your lunch when you come on a private boat",
+        "selectDatePlaceholder": "Select a date"
 }
