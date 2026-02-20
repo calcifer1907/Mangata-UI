@@ -47,6 +47,7 @@ const BoatReservations: FC = () => {
     valueCel,
     valueEmail,
     dateChange,
+    setDateChange,
     selectedCountry,
     handleValidHours,
     handleOnChangeName,
@@ -54,6 +55,14 @@ const BoatReservations: FC = () => {
 
   // Pasos del stepper
   const steps = [
+    {
+      label: t("dateRental"),
+      description: "",
+    },
+    {
+      label: t("select"),
+      description: t("selectDateAndContactDetails"),
+    },
     {
       label: t("dateAndContactDetails"),
       description: t("selectDateAndContactDetails"),
@@ -63,6 +72,28 @@ const BoatReservations: FC = () => {
       description: t("checkReservation1"),
     },
   ];
+
+  const handleNextStep = (back = false) => (
+    <Box className="d-flex gap-16 justify-content-between flex-wrap">
+      {back ? (
+        <ButtonComponent
+          title={t("back")}
+          onClick={handleBack}
+          iconName="solar:arrow-left-bold-duotone"
+          background="background-gray"
+          colorTitle="black"
+        />
+      ) : (
+        <div></div>
+      )}
+      <ButtonComponent
+        title={t("next")}
+        onClick={handleNext}
+        iconName="solar:arrow-right-bold-duotone"
+        background="background-blue-dark"
+      />
+    </Box>
+  );
 
   return (
     <>
@@ -95,32 +126,41 @@ const BoatReservations: FC = () => {
           {/* Stepper */}
           <Box className="boat-stepper-container">
             <Stepper activeStep={activeStep} orientation="vertical">
-              {/* Paso 1: Fecha y Datos de Contacto */}
               <Step>
                 <StepLabel>{steps[0].label}</StepLabel>
+                <StepContent>
+                  {/* Selector de fecha */}
+                  <Box sx={{ marginBottom: 3, maxWidth: 250 }}>
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        fontWeight: 600,
+                        color: "#2B3D5E",
+                        marginBottom: 2,
+                      }}
+                    >
+                      {t("selectDatePlaceholder")}
+                    </Typography>
+                    <Calendar
+                      callback={handleChangeDate}
+                      where="boatReservation"
+                      returnDate={(currenDate: string) => {
+                        setDateChange(currenDate);
+                      }}
+                    />
+                  </Box>
+                  {handleNextStep()}
+                </StepContent>
+              </Step>
+
+              {/* Paso 1: Fecha y Datos de Contacto */}
+              <Step>
+                <StepLabel>{steps[1].label}</StepLabel>
                 <StepContent>
                   <Typography variant="body2" sx={{ color: "#666", mb: 3 }}>
                     {steps[0].description}
                   </Typography>
                   <Box className="boat-form-container">
-                    {/* Selector de fecha */}
-                    <Box sx={{ marginBottom: 3 }}>
-                      <Typography
-                        variant="h6"
-                        sx={{
-                          fontWeight: 600,
-                          color: "#2B3D5E",
-                          marginBottom: 2,
-                        }}
-                      >
-                        {t("date")}
-                      </Typography>
-                      <Calendar
-                        callback={handleChangeDate}
-                        where="boatReservation"
-                      />
-                    </Box>
-
                     {/* Información de contacto */}
                     <Box sx={{ marginBottom: 3 }}>
                       <Typography
@@ -226,30 +266,17 @@ const BoatReservations: FC = () => {
                     </Box>
 
                     {/* Botón siguiente */}
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "flex-end",
-                        mt: 3,
-                      }}
-                    >
-                      <ButtonComponent
-                        title={t("next")}
-                        onClick={handleNext}
-                        iconName="solar:arrow-right-bold-duotone"
-                        background="background-harvest-gold"
-                      />
-                    </Box>
+                    {handleNextStep(true)}
                   </Box>
                 </StepContent>
               </Step>
 
               {/* Paso 2: Resumen y Pago */}
               <Step>
-                <StepLabel>{steps[1].label}</StepLabel>
+                <StepLabel>{steps[2].label}</StepLabel>
                 <StepContent>
                   <Typography variant="body2" sx={{ color: "#666", mb: 3 }}>
-                    {steps[1].description}
+                    {steps[2].description}
                   </Typography>
                   <Box className="boat-form-container">
                     {/* Resumen de reserva */}
@@ -362,7 +389,7 @@ const BoatReservations: FC = () => {
                           }
                           onClick={handleReservation}
                           iconName="solar:wallet-money-bold-duotone"
-                          background="background-harvest-gold"
+                          background="background-blue-dark"
                         />
                       </Box>
                     </Box>
@@ -378,7 +405,7 @@ const BoatReservations: FC = () => {
                     payment_id={Number(CODE_RESERVATION)}
                     name={valueName}
                     email={valueEmail}
-                    titleDescription={`${t("paymentFor")} ${valueName} - ${t("boatRental")}`}
+                    titleDescription={`${t("paymentFor", "Pago por")} ${valueName} - ${t("boatRental", "Reservar de Bote")}`}
                   />
                 </StepContent>
               </Step>
