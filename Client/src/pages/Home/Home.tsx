@@ -75,7 +75,7 @@ const Home = () => {
                 " " +
                 t("titleDayTripDescription3")
               }
-              img="/images/MangataBoat.webp"
+              img="/images/DayTrip/MangataBoat.webp"
               button
               redirectTo="/Boat"
             />

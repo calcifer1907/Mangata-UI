@@ -41,7 +41,7 @@ const AccompanistContext: FC<AccompanistContextProps> = (props) => {
   const [valueEmail, setValueEmail] = useState<string>("");
   const [errors, setErrors] = useState<IErrorFieldAccompanist[]>([]);
   const [selectedCountry, setSelectedCountry] = useState<CountryType | null>(
-    null
+    null,
   );
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -69,8 +69,11 @@ const AccompanistContext: FC<AccompanistContextProps> = (props) => {
   }, []);
 
   const getMax = useCallback(async () => {
-    const { min, max } = await getMinMax.getListData("DAY_TRIP");
-    setMinMax({ MIN: Number(min), MAX: Number(max) });
+    const response = await getMinMax.getListData("DAY_TRIP");
+    if (response.length > 0) {
+      const { min, max } = response[0];
+      setMinMax({ MIN: Number(min), MAX: Number(max) });
+    }
   }, []);
 
   useEffect(() => {
@@ -123,7 +126,7 @@ const AccompanistContext: FC<AccompanistContextProps> = (props) => {
       openModal,
       openDialogPayment,
       selectedCountry,
-    ]
+    ],
   );
 
   return (
