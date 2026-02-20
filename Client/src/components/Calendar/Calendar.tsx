@@ -24,9 +24,10 @@ const FORMAT_DATE = "YYYY-MM-DD";
 interface IProps {
   callback: (date: string) => void;
   where?: string;
+  returnDate?: (date: string) => void;
 }
 
-const DatePickerWithIcon = ({ callback, where }: IProps) => {
+const DatePickerWithIcon = ({ callback, where, returnDate }: IProps) => {
   const initalDate = () => {
     return addDays(new Date(), 1);
   };
@@ -37,6 +38,25 @@ const DatePickerWithIcon = ({ callback, where }: IProps) => {
 
   const [isDayBlocked, setIsDayBlocked] = useState<Date[]>([new Date()]);
 
+  const handleRecursiveBlockedDates = useCallback(
+    (response: string[], days = 1): void => {
+      const currentDate = formatDate(addDays(new Date(), days), "YYYY/MM/DD");
+
+      const findDate = response.includes(currentDate);
+
+      if (findDate) {
+        const newDays = days + 1;
+        handleRecursiveBlockedDates(response, newDays);
+      } else {
+        setDate(new Date(currentDate));
+        if (returnDate) {
+          returnDate(currentDate);
+        }
+      }
+    },
+    [returnDate],
+  );
+
   const apiGetIsDayBlocked = useCallback(async () => {
     try {
       let response = [];
@@ -45,6 +65,10 @@ const DatePickerWithIcon = ({ callback, where }: IProps) => {
         response = await boat.getBlockCalendar({
           currentDate: today,
         });
+        const dates = response.map((item) => item.valid_date);
+        if (response.length > 0) {
+          handleRecursiveBlockedDates(dates);
+        }
       } else {
         response = await getIsDayBlocked();
       }
@@ -56,7 +80,7 @@ const DatePickerWithIcon = ({ callback, where }: IProps) => {
     } catch (error) {
       console.error("Error al obtener el estado del día bloqueado:", error);
     }
-  }, [where]);
+  }, [where, handleRecursiveBlockedDates]);
 
   // Función para manejar el cambio de fecha
   const handleSelect = (date: Date) => {
