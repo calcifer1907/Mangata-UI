@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { getAccompanist, getMinMax } from "../../utils/api/agent";
 import { enqueueSnackbar } from "notistack";
 import { formatDate } from "../../generalFunctions/formatDate";
@@ -13,11 +13,14 @@ import { CountryType } from "../../interfaces/ICountry";
 const BOAT_ID = 30;
 
 const useReservationBoat = () => {
-  const [minmax, setMinMax] = useState<IMinMaxResponse[]>([{ min: 0, max: 0 }]);
+  const [minmax, setMinMax] = useState<IMinMaxResponse[]>([
+    { min: 0, max: 0, description: "" },
+  ]);
   const [valueCel, setValueCel] = useState<string>("");
   const [valueEmail, setValueEmail] = useState<string>("");
   const [valueName, setValueName] = useState<string>("");
   const [dateChange, setDateChange] = useState<string>("");
+  const [valueRadio, setValueRadio] = useState<string>("");
   const [selectedCountry, setSelectedCountry] = useState<CountryType | null>(
     null,
   );
@@ -30,14 +33,9 @@ const useReservationBoat = () => {
     return generarCodigoReservaUX2();
   }, []);
 
-  // Precios
-  const PRICES = useMemo(
-    () => ({
-      PRICE_MAX: minmax[0]?.max || 0,
-      PRICE_MIN: minmax[0]?.min || 0,
-    }),
-    [minmax],
-  );
+  const handleOnChengeRadio = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValueRadio(event.target.value);
+  };
 
   // Manejar cambio de fecha
   const handleChangeDate = (date: string) => {
@@ -73,7 +71,7 @@ const useReservationBoat = () => {
       return;
     }
 
-    if (activeStep === 1) {
+    if (activeStep === 2) {
       if (validateStep1()) {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
       }
@@ -87,15 +85,9 @@ const useReservationBoat = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  // Calcular precio total
-  const calculatePrice = (): number => {
-    return Number(PRICES.PRICE_MAX);
-  };
-
   // Formatear precio
-  const handleFormatPrice = (): string => {
-    const newPrice = calculatePrice();
-    return formatPrice(newPrice);
+  const handleFormatPrice = (price: number): string => {
+    return formatPrice(Number(price));
   };
 
   const validDate = (): boolean => {
@@ -178,8 +170,8 @@ const useReservationBoat = () => {
         TELEPHONE: `+${selectedCountry?.phone}/${valueCel}`,
         ACCOMPANIST: [{ name: valueName, lunch: { label: "boat", value: 1 } }],
         EMAIL: valueEmail,
-        AGREED_PRICE: Number(PRICES.PRICE_MAX),
-        MIN_PRICE: Number(PRICES.PRICE_MIN),
+        AGREED_PRICE: valueRadio,
+        MIN_PRICE: valueRadio,
         CREATED_AT: dateChange,
         CREATED_ON: formatDate(""),
       };
@@ -194,7 +186,7 @@ const useReservationBoat = () => {
           },
         });
         // Avanzar al paso de pago si aún no está ahí
-        if (activeStep === 1) {
+        if (activeStep === 3) {
           handleNext();
         }
       }
@@ -214,29 +206,31 @@ const useReservationBoat = () => {
     }
   };
 
+  const loadInitialData = useCallback(async () => {
+    try {
+      // Cargar precios min/max
+      const response = await getMinMax.getListData("BOAT_RESERVE");
+
+      if (response.length > 0) {
+        setValueRadio(response[0].max.toString());
+      }
+      setMinMax(response);
+    } catch {
+      enqueueSnackbar("Error al cargar datos. Por favor, recarga la página.", {
+        variant: "error",
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "right",
+        },
+      });
+    }
+  }, []);
+
   // Cargar datos iniciales
   useEffect(() => {
-    const loadInitialData = async () => {
-      try {
-        // Cargar precios min/max
-        const response = await getMinMax.getListData("BOAT_RESERVE");
-        setMinMax(response);
-      } catch {
-        enqueueSnackbar(
-          "Error al cargar datos. Por favor, recarga la página.",
-          {
-            variant: "error",
-            anchorOrigin: {
-              vertical: "top",
-              horizontal: "right",
-            },
-          },
-        );
-      }
-    };
-
     loadInitialData();
-  }, []);
+  }, [loadInitialData]);
+
   return {
     CODE_RESERVATION,
     handleReservation,
@@ -245,19 +239,21 @@ const useReservationBoat = () => {
     handleOnChangeEmail,
     handleChangeDate,
     handleFormatPrice,
-    calculatePrice,
     activeStep,
     handleNext,
     handleBack,
     valueName,
     setSelectedCountry,
     valueCel,
+    minmax,
     valueEmail,
+    valueRadio,
     dateChange,
     setDateChange,
     selectedCountry,
     handleValidHours,
     handleOnChangeName,
+    handleOnChengeRadio,
   };
 };
 
