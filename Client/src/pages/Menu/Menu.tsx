@@ -135,7 +135,7 @@ const Menu = () => {
                   marginRight: "0.5rem",
                   fontSize: { xs: "1rem", md: "1.2rem" },
                   textTransform: "uppercase",
-                  color: "#1672d2",
+                  color: "#1b7fcccc",
                   fontWeight: "bold",
                 }}
               >
