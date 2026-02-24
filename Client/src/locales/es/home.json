@@ -153,5 +153,9 @@
         "titleLodging2": "sonido del mar",
         "privateVessel": "Reserva tu almuerzo cuando vienes en embarcación privada",
         "reservePrivate": "Reserva privada",
-        "selectDatePlaceholder": "Selecciona una fecha"
+        "selectDatePlaceholder": "Selecciona una fecha",
+        "selectYourexperience": "Selecciona tu experiencia",
+        "selectYourexperienceDescription": "Selecciona la experiencia que deseas vivir en el mar",
+        "descritionPrice1": "Recorrido bahia atardecer - una hora",
+        "descritionPrice2": "Tour Islas del Rosario"
 }

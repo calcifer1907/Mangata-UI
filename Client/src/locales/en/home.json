@@ -153,5 +153,9 @@
         "titleLodging2": "sound of the sea",
         "reservePrivate": "Reserve private",
         "privateVessel": "Reserve your lunch when you come on a private boat",
-        "selectDatePlaceholder": "Select a date"
+        "selectDatePlaceholder": "Select a date",
+        "selectYourexperience": "Select your experience",
+        "selectYourexperienceDescription": "Select the experience you want to live at sea",
+        "descritionPrice1": "Sunset bay tour - one hour",
+        "descritionPrice2": "Rosario Islands tour"
 }
