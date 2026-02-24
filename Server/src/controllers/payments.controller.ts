@@ -6,13 +6,9 @@ import { pool } from "../Connection";
 
 import { sendEmail } from "./sendEmail.controller";
 
-import { initMercadoPago } from "@mercadopago/sdk-react";
-
-import { PAYMENT_TOKEN_PROD_PUBLIC, BOLD_KEY, VITE_URL_UI } from "../configDB";
+import { BOLD_KEY, VITE_URL_UI } from "../configDB";
 
 import { STATUS_BOLD } from "../functions/generalFunctions";
-
-initMercadoPago(PAYMENT_TOKEN_PROD_PUBLIC || "");
 
 export const paymentBold = async (request: Request, response: Response) => {
   try {
@@ -49,8 +45,7 @@ export const paymentBold = async (request: Request, response: Response) => {
       [payload.payment_link, payment_id],
     );
     response.json({ massage: "success", data: payload });
-  } catch (error) {
-    console.log(error);
+  } catch {
     response.status(500).json({ message: "Someting went wrong! " });
   }
 };

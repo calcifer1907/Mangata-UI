@@ -145,7 +145,7 @@ export const getMinMax = async (_request: Request, response: Response) => {
   try {
     const { typeEvent } = _request.params;
     const { rows } = await pool.query(
-      "SELECT MIN,MAX FROM min_max WHERE TYPE_EVENT LIKE $1;",
+      "SELECT MIN,MAX,DESCRIPTION FROM min_max WHERE TYPE_EVENT LIKE $1;",
       [typeEvent],
     );
     response.json(rows);
