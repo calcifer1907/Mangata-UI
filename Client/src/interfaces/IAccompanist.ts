@@ -38,4 +38,5 @@ export interface IMinMax {
 export interface IMinMaxResponse {
   min: number;
   max: number;
+  description: string;
 }
