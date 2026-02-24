@@ -68,6 +68,10 @@ const DatePickerWithIcon = ({ callback, where, returnDate }: IProps) => {
         const dates = response.map((item) => item.valid_date);
         if (response.length > 0) {
           handleRecursiveBlockedDates(dates);
+        } else {
+          if (returnDate) {
+            returnDate(formatDate(date, FORMAT_DATE));
+          }
         }
       } else {
         response = await getIsDayBlocked();
@@ -80,7 +84,7 @@ const DatePickerWithIcon = ({ callback, where, returnDate }: IProps) => {
     } catch (error) {
       console.error("Error al obtener el estado del día bloqueado:", error);
     }
-  }, [where, handleRecursiveBlockedDates]);
+  }, [where, handleRecursiveBlockedDates, returnDate, date]);
 
   // Función para manejar el cambio de fecha
   const handleSelect = (date: Date) => {
