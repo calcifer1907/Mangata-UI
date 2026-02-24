@@ -1,17 +1,18 @@
-import { FC } from "react";
-
 import { useTranslation } from "react-i18next";
-import {
-  Box,
-  Typography,
-  Alert,
-  Autocomplete,
-  TextField,
-  Stepper,
-  Step,
-  StepLabel,
-  StepContent,
-} from "@mui/material";
+
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Alert from "@mui/material/Alert";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import StepContent from "@mui/material/StepContent";
+import RadioGroup from "@mui/material/RadioGroup";
+import Radio from "@mui/material/Radio";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
 
 import { Icon } from "@iconify/react";
 
@@ -27,7 +28,7 @@ import useReservationBoat from "../../hooks/useReservation/useReservationBoat";
 /**Styles */
 import "./Boat.scss";
 
-const BoatReservations: FC = () => {
+const BoatReservations = () => {
   const { t } = useTranslation("reserve");
 
   const {
@@ -38,11 +39,12 @@ const BoatReservations: FC = () => {
     handleOnChangeEmail,
     handleChangeDate,
     handleFormatPrice,
-    calculatePrice,
     activeStep,
     handleNext,
     handleBack,
     valueName,
+    valueRadio,
+    minmax,
     setSelectedCountry,
     valueCel,
     valueEmail,
@@ -51,6 +53,7 @@ const BoatReservations: FC = () => {
     selectedCountry,
     handleValidHours,
     handleOnChangeName,
+    handleOnChengeRadio,
   } = useReservationBoat();
 
   // Pasos del stepper
@@ -60,8 +63,8 @@ const BoatReservations: FC = () => {
       description: "",
     },
     {
-      label: t("select"),
-      description: t("selectDateAndContactDetails"),
+      label: t("selectYourexperience"),
+      description: t("selectYourexperienceDescription"),
     },
     {
       label: t("dateAndContactDetails"),
@@ -74,7 +77,7 @@ const BoatReservations: FC = () => {
   ];
 
   const handleNextStep = (back = false) => (
-    <Box className="d-flex gap-16 justify-content-between flex-wrap">
+    <Box className="d-flex gap-16 justify-content-between">
       {back ? (
         <ButtonComponent
           title={t("back")}
@@ -153,12 +156,54 @@ const BoatReservations: FC = () => {
                 </StepContent>
               </Step>
 
-              {/* Paso 1: Fecha y Datos de Contacto */}
               <Step>
                 <StepLabel>{steps[1].label}</StepLabel>
                 <StepContent>
                   <Typography variant="body2" sx={{ color: "#666", mb: 3 }}>
-                    {steps[0].description}
+                    {steps[1].description}
+                  </Typography>
+                  <Box sx={{ marginBottom: 3, maxWidth: 250 }}>
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        fontWeight: 600,
+                        color: "#2B3D5E",
+                        marginBottom: 2,
+                      }}
+                    >
+                      {t("")}
+                    </Typography>
+                    <Box>
+                      {minmax.map((item) => (
+                        <FormControl>
+                          <RadioGroup
+                            aria-labelledby="demo-controlled-radio-buttons-group"
+                            name="controlled-radio-buttons-group"
+                            value={valueRadio}
+                            onChange={handleOnChengeRadio}
+                            sx={{ marginBottom: 3 }}
+                          >
+                            <FormControlLabel
+                              value={item.max.toString()}
+                              control={<Radio />}
+                              label={`${handleFormatPrice(item.max)} - ${t(item.description)}`}
+                              labelPlacement="end"
+                            />
+                          </RadioGroup>
+                        </FormControl>
+                      ))}
+                    </Box>
+                  </Box>
+                  {handleNextStep(true)}
+                </StepContent>
+              </Step>
+
+              {/* Paso 1: Fecha y Datos de Contacto */}
+              <Step>
+                <StepLabel>{steps[2].label}</StepLabel>
+                <StepContent>
+                  <Typography variant="body2" sx={{ color: "#666", mb: 3 }}>
+                    {steps[2].description}
                   </Typography>
                   <Box className="boat-form-container">
                     {/* Información de contacto */}
@@ -273,10 +318,10 @@ const BoatReservations: FC = () => {
 
               {/* Paso 2: Resumen y Pago */}
               <Step>
-                <StepLabel>{steps[2].label}</StepLabel>
+                <StepLabel>{steps[3].label}</StepLabel>
                 <StepContent>
                   <Typography variant="body2" sx={{ color: "#666", mb: 3 }}>
-                    {steps[2].description}
+                    {steps[3].description}
                   </Typography>
                   <Box className="boat-form-container">
                     {/* Resumen de reserva */}
@@ -292,7 +337,7 @@ const BoatReservations: FC = () => {
                         {t("bookingSummary")}
                       </Typography>
 
-                      <Box className="d-flex gap-16 align-items-center margin-buttom-16  flex-wrap">
+                      <Box className="d-flex gap-16 align-items-center margin-buttom-16 flex-wrap">
                         <Typography variant="body2" sx={{ color: "#666" }}>
                           {t("name")}:
                         </Typography>
@@ -362,7 +407,7 @@ const BoatReservations: FC = () => {
                           variant="h5"
                           sx={{ fontWeight: 700, color: "#2B3D5E" }}
                         >
-                          {handleFormatPrice()}
+                          {handleFormatPrice(Number(valueRadio))}
                         </Typography>
                       </Box>
 
@@ -382,14 +427,11 @@ const BoatReservations: FC = () => {
                           colorTitle="black"
                         />
                         <ButtonComponent
-                          title={
-                            loading
-                              ? t("reservation") + "..."
-                              : t("confirmAndPay")
-                          }
+                          title={t("confirmAndPay")}
+                          loading={loading}
                           onClick={handleReservation}
                           iconName="solar:wallet-money-bold-duotone"
-                          background="background-blue-dark"
+                          background="background-harvest-gold"
                         />
                       </Box>
                     </Box>
@@ -401,7 +443,7 @@ const BoatReservations: FC = () => {
                 <StepLabel>{t("payment")}</StepLabel>
                 <StepContent>
                   <DialogPayMents
-                    amount={calculatePrice()}
+                    amount={Number(valueRadio)}
                     payment_id={Number(CODE_RESERVATION)}
                     name={valueName}
                     email={valueEmail}
