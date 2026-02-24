@@ -10,6 +10,8 @@ import QuiltedImageList from "../../components/QuiltedImageList/QuiltedImageList
 import Footer from "../../components/Footer/Footer";
 import Banner from "../../components/Banner/Banner";
 
+import { images } from "../../constant/ImagesGrid";
+
 import Towel from "../../assets/icons/Towel.svg";
 import hammocks from "../../assets/icons/hammocks.svg";
 import Champagne from "../../assets/icons/Champagne.svg";
@@ -136,7 +138,9 @@ const DayTrip = () => {
         >
           {t("enjoyYourLunch")} <b>{t("with8")}:</b>
         </Typography>
-        <QuiltedImageList />
+        <Box sx={{ bgcolor: "background.paper", p: 2, borderRadius: 2 }}>
+          <QuiltedImageList images={images} />
+        </Box>
       </Box>
       <Box className="noInclude">
         <Typography>{t("noInclude")}</Typography>

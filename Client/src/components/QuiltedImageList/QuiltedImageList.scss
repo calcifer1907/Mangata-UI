@@ -1,0 +1,67 @@
+.container-quilted {
+  height: auto;
+  margin: 0px;
+}
+
+.ImageListItem {
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 1px;
+}
+
+.ImageListItem:hover img {
+  transform: scale(1.05);
+  transition: transform 0.3s ease-in-out;
+}
+
+.transition-image {
+  transition: transform 0.3s ease-in-out;
+  object-fit: cover;
+}
+
+.container-buttons {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  outline: none;
+  background-color: transparent;
+}
+
+.icon-button-grid {
+  top: -40px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+.icon-button-close:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.icon-button-back {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.icon-button-grid:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.img-grid {
+  max-width: 100%;
+  max-height: 70vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.information-image {
+  margin-top: 16px;
+  padding: 16px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 4px;
+  color: white;
+  text-align: center;
+  max-width: 100%;
+}
