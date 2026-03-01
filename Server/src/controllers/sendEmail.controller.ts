@@ -14,6 +14,10 @@ const transporter = nodemailer.createTransport({
     user: USER_EMAIL,
     pass: PASSWORD_EMAIL,
   },
+  tls: {
+    rejectUnauthorized: true,
+    minVersion: "TLSv1.2",
+  },
 });
 
 export const sendEmail = async (payment_id: string) => {
