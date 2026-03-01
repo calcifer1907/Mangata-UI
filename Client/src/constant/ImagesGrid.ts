@@ -9,17 +9,18 @@ export const images = [
   },
   {
     id: 2,
-    img: "/images/lunche/nuggets de pollo.webp",
-    description: "Nuggets de pollo",
-    titleEN: "Chicken nuggets",
-    rows: 2,
-    cols: 1,
-  },
-  {
-    id: 3,
     img: "/images/lunche/pasta boloñesa.webp",
     description: "Pasta boloñesa",
     titleEN: "Bolonese pasta",
+    rows: 2,
+    cols: 1,
+  },
+
+  {
+    id: 3,
+    img: "/images/lunche/pescado frito.webp",
+    description: "Pescado frito",
+    titleEN: "Fried fish",
     rows: 4,
     cols: 2,
   },
@@ -31,15 +32,15 @@ export const images = [
     rows: 2,
     cols: 1,
   },
-
   {
     id: 5,
-    img: "/images/lunche/pescado frito.webp",
-    description: "Pescado frito",
-    titleEN: "Fried fish",
+    img: "/images/lunche/nuggets de pollo.webp",
+    description: "Nuggets de pollo",
+    titleEN: "Chicken nuggets",
     rows: 2,
     cols: 1,
   },
+
   {
     id: 6,
     img: "/images/lunche/risoto.webp",
