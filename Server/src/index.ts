@@ -12,6 +12,8 @@ import socio from "./routes/socio.routes";
 import emails from "./routes/emails.routes";
 import boat from "./routes/boat.routes";
 
+import { securityHeaders } from "./headers.config";
+
 import errorHandler from "./middlewares/handleError";
 import { apiCacheControl, clearCache } from "./middlewares/cacheControl";
 import {
@@ -24,6 +26,7 @@ import { cacheManager, scheduleAutoCleanup } from "./utils/cacheManager";
 const app = express();
 
 app.use(helmet());
+app.disable("x-powered-by"); // Oculta información del servidor
 
 // Middlewares de optimización y rendimiento
 app.use(performanceOptimizer);
@@ -118,30 +121,7 @@ app.use("/api", boat);
 app.use(payments);
 app.use(errorHandler);
 
-app.use((req, res, next) => {
-  // res.setHeader(
-  //   "Content-Security-Policy",
-  //   "default-src 'self'; " +
-  //     "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://apis.google.com; " +
-  //     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
-  //     "connect-src 'self' https://mangatabeachclub.com; " +
-  //     "frame-src 'self' https://www.youtube.com; " +
-  //     "object-src 'none'; " +
-  //     "base-uri 'self'; " +
-  //     "form-action 'self';"
-  // );
-
-  // HSTS
-  res.setHeader(
-    "Strict-Transport-Security",
-    "max-age=63072000; includeSubDomains; preload",
-  );
-
-  // X-Content-Type-Options
-  res.setHeader("X-Content-Type-Options", "nosniff");
-
-  next();
-});
+app.use(securityHeaders); // Middleware para configurar encabezados de seguridad
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
