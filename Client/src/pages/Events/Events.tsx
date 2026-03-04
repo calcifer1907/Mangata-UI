@@ -77,14 +77,14 @@ const Events = () => {
     {
       titleKey: "events_type_private_title",
       descriptionKey: "events_type_private_desc",
-      image: "/images/Events/IMG_01.webp",
+      image: "/images/Events/IMG_5511.webp",
       icon: <GroupsIcon />,
       color: "#27AE60", // Verde
     },
     {
       titleKey: "events_type_corporate_title",
       descriptionKey: "events_type_corporate_desc",
-      image: "/images/Events/IMG_01.webp",
+      image: "/images/Events/IMG_5511.webp",
       icon: <BusinessIcon />,
       color: "#34495E", // Azul corporativo (gris azulado)
     },
