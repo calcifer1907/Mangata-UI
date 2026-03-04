@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Confirmación de Alquiler de Yate</title>
+        <style>
+                /* Estilos generales */
+                * {
+                        margin: 0;
+                        padding: 0;
+                        box-sizing: border-box;
+                        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                }
+
+                body {
+                        background-color: #f5f7fa;
+                        color: #333;
+                        line-height: 1.6;
+                        padding: 20px;
+                }
+
+                .email-container {
+                        max-width: 650px;
+                        width: 100%;
+                        margin: 0 auto;
+                        background-color: #ffffff;
+                        border-radius: 10px;
+                        overflow: hidden;
+                        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+                }
+
+                /* Cabecera */
+                .header {
+                        background: linear-gradient(135deg, #1a4b8c, #0a7e8c);
+                        color: white;
+                        padding: 30px 20px;
+                        text-align: center;
+                }
+
+                .header h1 {
+                        font-size: 26px;
+                        margin-bottom: 10px;
+                        font-weight: 600;
+                }
+
+                .header p {
+                        font-size: 16px;
+                        opacity: 0.9;
+                }
+
+                .company-logo {
+                        font-size: 32px;
+                        margin-bottom: 15px;
+                        display: inline-block;
+                        background-color: rgba(255, 255, 255, 0.15);
+                        width: 60px;
+                        height: 60px;
+                        line-height: 60px;
+                        border-radius: 50%;
+                }
+
+                /* Contenido principal */
+                .content {
+                        padding: 35px 30px;
+                }
+
+                .intro-text {
+                        font-size: 16px;
+                        margin-bottom: 30px;
+                        color: #555;
+                        text-align: center;
+                        border-bottom: 1px solid #eee;
+                        padding-bottom: 20px;
+                }
+
+                /* Estilos para los datos del usuario */
+                .data-section {
+                        margin-bottom: 25px;
+                }
+
+                .section-title {
+                        font-size: 18px;
+                        color: #1a4b8c;
+                        margin-bottom: 15px;
+                        padding-bottom: 8px;
+                        border-bottom: 2px solid #f0f0f0;
+                        font-weight: 600;
+                }
+
+                .data-grid {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+
+                }
+
+                .data-item {
+                        background-color: #f9fafc;
+                        padding: 18px;
+                        border-radius: 8px;
+                        border-left: 4px solid #0a7e8c;
+                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+                        margin-bottom: 30px;
+                }
+
+                .data-label {
+                        font-size: 14px;
+                        color: #7b8a8b;
+                        margin-bottom: 5px;
+                        font-weight: 500;
+                        text-transform: uppercase;
+                        letter-spacing: 0.5px;
+                }
+
+                .data-value {
+                        font-size: 16px;
+                        color: #1a4b8c;
+                        font-weight: 600;
+                        word-break: break-word;
+                }
+
+                /* Estilos para detalles del yate */
+                .yacht-details {
+                        background-color: #e8f4fd;
+                        padding: 20px;
+                        border-radius: 8px;
+                        margin-top: 10px;
+                        border: 1px solid #b8d9f5;
+                }
+
+                .yacht-name {
+                        font-size: 20px;
+                        color: #1a4b8c;
+                        font-weight: 700;
+                        margin-bottom: 10px;
+                }
+
+                .detail-row {
+                        display: flex;
+                        justify-content: space-between;
+                        padding: 8px 0;
+                        border-bottom: 1px dashed #ccc;
+                }
+
+                .detail-label {
+                        font-weight: 600;
+                        color: #555;
+                }
+
+                .detail-value {
+                        color: #1a4b8c;
+                        font-weight: 500;
+                }
+
+                /* Estilos para el mensaje */
+                .message-container {
+                        background-color: #f9fafc;
+                        padding: 20px;
+                        border-radius: 8px;
+                        margin-top: 10px;
+                        border: 1px solid #eaeaea;
+                }
+
+                .message-content {
+                        font-size: 15px;
+                        color: #333;
+                        line-height: 1.7;
+                        white-space: pre-line;
+                }
+
+                /* Estilos para total */
+                .total-price {
+                        background-color: #1a4b8c;
+                        color: white;
+                        padding: 15px;
+                        border-radius: 8px;
+                        text-align: center;
+                        font-size: 18px;
+                        margin-top: 20px;
+                }
+
+                .total-price span {
+                        font-size: 24px;
+                        font-weight: 700;
+                }
+
+                /* Pie del email */
+                .footer {
+                        background-color: #f8f9fa;
+                        padding: 25px 30px;
+                        text-align: center;
+                        border-top: 1px solid #eee;
+                        color: #666;
+                        font-size: 14px;
+                }
+
+                .footer p {
+                        margin-bottom: 10px;
+                }
+
+                .timestamp {
+                        font-size: 13px;
+                        color: #888;
+                        margin-top: 15px;
+                        font-style: italic;
+                }
+
+                .action-button {
+                        display: inline-block;
+                        margin-top: 20px;
+                        background-color: #0a7e8c;
+                        color: #ffffff !important;
+                        padding: 12px 25px;
+                        text-decoration: none;
+                        border-radius: 5px;
+                        font-weight: 500;
+                        transition: background-color 0.3s;
+                }
+
+                .action-button:hover {
+                        background-color: #1a4b8c;
+                }
+
+                /* Responsividad */
+                @media (max-width: 600px) {
+                        .email-container {
+                                border-radius: 0;
+                        }
+
+                        .content,
+                        .footer {
+                                padding: 20px;
+                        }
+
+                        .data-grid {
+                                grid-template-columns: 1fr;
+                        }
+
+                        .header h1 {
+                                font-size: 22px;
+                        }
+                }
+        </style>
+</head>
+
+<body>
+        <div class="email-container">
+                <div class="header">
+                        <div class="company-logo">⛵</div>
+                        <h1>¡Confirmación de Reserva!</h1>
+                        <p>Tu aventura en el mar está lista</p>
+                </div>
+
+                <div class="content">
+                        <p class="intro-text">
+                                Hola <strong>{{clientName}}</strong>, gracias por confiar en nosotros. Aquí están los
+                                detalles de tu reserva:
+                        </p>
+
+                        <div class="data-section">
+                                <h2 class="section-title">Información del Cliente</h2>
+                                <div class="data-grid">
+                                        <div class="data-item">
+                                                <div class="data-label">Nombre Completo</div>
+                                                <div class="data-value">{{clientName}}</div>
+                                        </div>
+
+                                        <div class="data-item">
+                                                <div class="data-label">Correo Electrónico</div>
+                                                <div class="data-value">{{clientEmail}}</div>
+                                        </div>
+
+                                        <!-- <div class="data-item">
+                                                <div class="data-label">Teléfono de Contacto</div>
+                                                <div class="data-value">{{clientPhone}}</div>
+                                        </div> -->
+                                </div>
+                        </div>
+
+                        <!-- <div class="data-section">
+                                <h2 class="section-title">Detalles del Yate</h2>
+                                <div class="yacht-details">
+                                        <div class="yacht-name">{{yachtName}}</div>
+
+                                        <div class="detail-row">
+                                                <span class="detail-label">Modelo:</span>
+                                                <span class="detail-value">{{yachtModel}}</span>
+                                        </div>
+
+                                        <div class="detail-row">
+                                                <span class="detail-label">Eslora:</span>
+                                                <span class="detail-value">{{yachtLength}} metros</span>
+                                        </div>
+
+                                        <div class="detail-row">
+                                                <span class="detail-label">Capacidad:</span>
+                                                <span class="detail-value">{{yachtCapacity}} personas</span>
+                                        </div>
+
+                                        <div class="detail-row">
+                                                <span class="detail-label">Año:</span>
+                                                <span class="detail-value">{{yachtYear}}</span>
+                                        </div>
+
+                                        <div class="detail-row">
+                                                <span class="detail-label">Tripulación:</span>
+                                                <span class="detail-value">{{yachtCrew}}</span>
+                                        </div>
+                                </div>
+                        </div> -->
+
+                        <div class="data-section">
+                                <h2 class="section-title">Detalles del Alquiler</h2>
+                                <div class="yacht-details">
+                                        <div class="detail-row">
+                                                <span class="detail-label">Fecha de Salida:</span>
+                                                <span class="detail-value">{{startDate}}</span>
+                                        </div>
+
+                                        <div class="detail-row">
+                                                <span class="detail-label">Fecha de Regreso:</span>
+                                                <span class="detail-value">{{endDate}}</span>
+                                        </div>
+
+                                        <!-- <div class="detail-row">
+                                                <span class="detail-label">Duración:</span>
+                                                <span class="detail-value">{{duration}} días</span>
+                                        </div> -->
+
+                                        <div class="detail-row">
+                                                <span class="detail-label">Puerto de Salida:</span>
+                                                <span class="detail-value">{{departurePort}}</span>
+                                        </div>
+
+
+                                </div>
+                        </div>
+
+
+                        <div class="total-price">
+                                Total de la reserva: <span>{{totalPrice}}</span>
+                        </div>
+                </div>
+
+                <div class="footer">
+                        <p>
+                                ¡Esperamos que disfrutes de esta increíble experiencia en el mar!
+                        </p>
+                        <a href="https://wa.me/573126056467?text=Hola%2C+quiero+m%C3%A1s+informaci%C3%B3n."
+                                target="_blank" class="action-button">Contactar con Nosotros</a>
+
+                </div>
+        </div>
+</body>
+
+</html>
