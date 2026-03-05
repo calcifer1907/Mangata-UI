@@ -73,7 +73,7 @@ export const sendEmail = async (payment_id: string) => {
           ? "htmlTemplateReservationBoat.html"
           : "htmlTemplateDayPass.html";
 
-      const plantillaPath = path.join(__dirname, "html", TEMPLATE);
+      const plantillaPath = path.resolve(__dirname, "html", TEMPLATE);
       let htmlTemplate = fs.readFileSync(plantillaPath, "utf8");
       htmlTemplate = replacePlaceholders(htmlTemplate, boat);
       const mailOptions = {
@@ -112,7 +112,7 @@ export const sendContactFormEmail = async (
   try {
     const { email, name, telephone, message } = request.body;
     const subject = "Formulario de contacto";
-    const plantillaPath = path.join(
+    const plantillaPath = path.resolve(
       __dirname,
       "html",
       "htmlTemplateContact.html",

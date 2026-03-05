@@ -6,11 +6,15 @@
                         "config": {
                                 "distDir": "dist"
                         }
+                },
+                {
+                        "src": "src/html/**/*.html",
+                        "use": "@vercel/static"
                 }
         ],
         "rewrites": [
                 {
-                        "source": "/((?!assets/).*)",
+                        "source": "/((?!assets/|api/).*)",
                         "destination": "/index.html"
                 }
         ],
