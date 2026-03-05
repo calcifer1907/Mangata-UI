@@ -6,17 +6,15 @@
                         "config": {
                                 "distDir": "dist"
                         }
-                }
-        ],
-        "routes": [
+                },
                 {
-                        "src": "/(.*)",
-                        "dest": "/index.html"
+                        "src": "src/html/**/*.html",
+                        "use": "@vercel/static"
                 }
         ],
         "rewrites": [
                 {
-                        "source": "/((?!assets/).*)",
+                        "source": "/((?!assets/|api/).*)",
                         "destination": "/index.html"
                 }
         ],
