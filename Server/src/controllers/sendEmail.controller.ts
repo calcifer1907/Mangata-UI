@@ -57,7 +57,9 @@ export const sendEmail = async (payment_id: string) => {
         maximumFractionDigits: 0, // Evitar decimales adicionales
       }).format(current_commission);
 
-      if (id_employee === "30") {
+      let TEMPLATE = "htmlTemplateDayPass.html";
+
+      if (id_employee === "30" || id_employee === 30) {
         const QUERY_NAME_CLIENT =
           "SELECT NAME_ACCOMPANIST FROM accompanist WHERE ID_RESERVATION = $1";
         const { rows: rowsNameClient } = await pool.query(QUERY_NAME_CLIENT, [
@@ -66,12 +68,8 @@ export const sendEmail = async (payment_id: string) => {
         if (rowsNameClient.length > 0) {
           boat.clientName = rowsNameClient[0].name_accompanist;
         }
+        TEMPLATE = "htmlTemplateReservationBoat.html";
       }
-
-      const TEMPLATE =
-        id_employee === "30"
-          ? "htmlTemplateReservationBoat.html"
-          : "htmlTemplateDayPass.html";
 
       const plantillaPath = path.resolve(__dirname, "../html", TEMPLATE);
       let htmlTemplate = fs.readFileSync(plantillaPath, "utf8");

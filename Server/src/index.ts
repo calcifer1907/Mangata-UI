@@ -29,7 +29,7 @@ app.use(helmet());
 app.disable("x-powered-by"); // Oculta información del servidor
 
 // Middlewares de optimización y rendimiento
-app.use(performanceOptimizer);
+// app.use(performanceOptimizer);
 // app.use(responseTimeMonitor);
 app.use(memoryOptimizer);
 app.use(basicRateLimit);
