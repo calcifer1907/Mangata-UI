@@ -63,13 +63,13 @@ const RoomCard: React.FC<RoomCardProps> = ({
 
   const handleNextImage = () => {
     setSelectedImageIndex((prevIndex) =>
-      prevIndex === images.length - 1 ? 0 : prevIndex + 1
+      prevIndex === images.length - 1 ? 0 : prevIndex + 1,
     );
   };
 
   const handlePrevImage = () => {
     setSelectedImageIndex((prevIndex) =>
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1,
     );
   };
 
@@ -178,7 +178,7 @@ const RoomCard: React.FC<RoomCardProps> = ({
               </Typography>
               <Grid container spacing={1}>
                 {images.slice(1, 4).map((image, index) => (
-                  <Grid item xs={4} key={image.id}>
+                  <Grid key={image.id}>
                     <CardMedia
                       component="img"
                       image={image.url}

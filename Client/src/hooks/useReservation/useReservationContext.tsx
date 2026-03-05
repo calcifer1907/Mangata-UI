@@ -69,9 +69,9 @@ const AccompanistContext: FC<AccompanistContextProps> = (props) => {
   }, []);
 
   const getMax = useCallback(async () => {
-    const response = await getMinMax.getListData("DAY_TRIP");
-    if (response.length > 0) {
-      const { min, max } = response[0];
+    const [response] = await getMinMax.getListData("DAY_TRIP");
+    if (response) {
+      const { min, max } = response;
       setMinMax({ MIN: Number(min), MAX: Number(max) });
     }
   }, []);

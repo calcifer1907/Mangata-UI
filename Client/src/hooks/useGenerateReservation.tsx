@@ -23,12 +23,12 @@ const useGenerateReservation = () => {
   const { USER_INFO } = userInfo;
 
   const funcMinMax = useCallback(async () => {
-    const response = await getMinMax.getListData("DAY_TRIP");
-    if(response.length > 0){
-      const { min, max } = response[0];
+    const [response] = await getMinMax.getListData("DAY_TRIP");
+    if (response) {
+      const { min, max } = response;
       setMinMax({ MIN: Number(min), MAX: Number(max) });
       setValueSlider(Number(max));
-    }   
+    }
   }, []);
 
   useEffect(() => {
