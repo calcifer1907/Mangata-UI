@@ -55,7 +55,7 @@ export const webhookBold = async (request: Request, response: Response) => {
     const { data, type } = request.body;
     const status = STATUS_BOLD[type as keyof typeof STATUS_BOLD];
     const payment_id = data.metadata.reference;
-
+  console.log(data,type)
     // Primero obtenemos el estado actual de la reservación
     const { rows } = await pool.query(
       "SELECT STATUS_RESERVATION,EMAIL,ID_EMPLOYEE FROM reservations WHERE PAYMENT_ID = $1",

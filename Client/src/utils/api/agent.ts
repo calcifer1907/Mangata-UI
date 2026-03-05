@@ -45,7 +45,7 @@ export const getLIstForTable = {
 };
 
 export const getMinMax = {
-  getListData: (typeEvent: string): Promise<IMinMaxResponse[]> =>
+  getListData: (typeEvent: string): Promise<IMinMaxResponse> =>
     requestApis.get(`/api/MimMax/${typeEvent}`),
 };
 
@@ -71,6 +71,10 @@ export const requestExportData = {
     }),
 };
 
+export const getMinMax = {
+  getListData: (typeEvent: string): Promise<IMinMaxResponse> =>
+    requestApis.get(`/api/MimMax/${typeEvent}`),
+};
 export const checkReservation = {
   statusReservation: (body: object): Promise<IBodyStatusReservation> =>
     requestApis.post(`/api/check-reservation`, body),

@@ -23,24 +23,24 @@ router.post("/getCodeReservation", ReservationController.getCodeReservation);
 router.post(
   "/charListSales",
   authenticate,
-  ReservationController.getCharListSalesAdmin
+  ReservationController.getCharListSalesAdmin,
 );
 router.post(
   "/changeStatusReservation",
   authenticate,
-  ReservationController.changeStatusReservation
+  ReservationController.changeStatusReservation,
 );
 
 router.post(
   "/saveGenerateCode",
   authenticate,
-  ReservationController.saveCodeReservation
+  ReservationController.saveCodeReservation,
 );
 
 router.put(
   "/updatePaymentEmployee",
   authenticate,
-  ReservationController.updatePaymentEmployee
+  ReservationController.updatePaymentEmployee,
 );
 
 router.get("/isDayBlocked", ReservationController.getIsBlockDay);
