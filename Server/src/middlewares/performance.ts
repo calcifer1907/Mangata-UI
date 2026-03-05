@@ -7,7 +7,7 @@ import { Request, Response, NextFunction } from "express";
 export const performanceOptimizer = (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   // Limitar el tamaño del body para evitar ataques
   if (req.headers["content-length"]) {
@@ -40,7 +40,7 @@ export const performanceOptimizer = (
 export const responseTimeMonitor = (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const start = Date.now();
 
@@ -51,14 +51,14 @@ export const responseTimeMonitor = (
     // Log solo si la respuesta es lenta (> 1 segundo)
     if (duration > 1000) {
       console.warn(
-        `⚠️  Respuesta lenta: ${req.method} ${req.path} - ${duration}ms - Status: ${status}`
+        `⚠️  Respuesta lenta: ${req.method} ${req.path} - ${duration}ms - Status: ${status}`,
       );
     }
 
     // Log para respuestas muy lentas (> 5 segundos)
     if (duration > 5000) {
       console.error(
-        `🚨 Respuesta muy lenta: ${req.method} ${req.path} - ${duration}ms - Status: ${status}`
+        `🚨 Respuesta muy lenta: ${req.method} ${req.path} - ${duration}ms - Status: ${status}`,
       );
     }
   });
@@ -72,7 +72,7 @@ export const responseTimeMonitor = (
 export const memoryOptimizer = (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   // Forzar garbage collection en desarrollo (solo si está disponible)
   if (process.env.NODE_ENV === "development" && global.gc) {
@@ -93,11 +93,11 @@ const requestCounts = new Map<string, { count: number; resetTime: number }>();
 export const basicRateLimit = (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const clientIP = req.ip || req.connection.remoteAddress || "unknown";
   const now = Date.now();
-  const windowMs = 15 * 60 * 1000; // 15 minutos
+  const windowMs = 60 * 60 * 1000; // 15 minutos
   const maxRequests = 100; // máximo 100 requests por ventana
 
   const clientData = requestCounts.get(clientIP);

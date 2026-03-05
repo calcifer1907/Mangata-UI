@@ -17,10 +17,10 @@ import NavListDrawer from "./NavListDrawer";
 import { useContextUser } from "../../hooks/useContextUser";
 import { itemsNav } from "../../constant/userInfo";
 import { Avatar, Menu, MenuItem, Tooltip } from "@mui/material";
-import Fade from "@mui/material/Fade";
 import { useTranslation } from "react-i18next";
 import "../../i18n"; // Importa la configuración de i18n
-import ExpandMore from "@mui/icons-material/ExpandMore";
+
+import "./styleNavbar.css";
 
 interface Props {
   /**
@@ -37,16 +37,13 @@ const Navbar = (props: Props) => {
   const location = useLocation();
 
   const { userInfo } = useContextUser();
-  const [language, setLanguage] = useState<string>("es");
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const container =
     window !== undefined ? () => window().document.body : undefined;
   const [mobileOpen, setMobileOpen] = useState(false);
   const drawerWidth = 240;
 
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -63,155 +60,179 @@ const Navbar = (props: Props) => {
     const root = document.getElementById("root");
     root?.style.setProperty(
       "overflow",
-      location.pathname.includes("MangataReservation") ? "hidden" : "auto"
+      location.pathname.includes("MangataReservation") ? "hidden" : "auto",
     );
   }, [location]);
 
   const { i18n, t } = useTranslation("home");
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
   const changeLanguage = (lng: string) => {
-    setLanguage(lng);
     i18n.changeLanguage(lng);
-    handleClose();
   };
+  const [activeMenu, setActiveMenu] = useState(
+    location.pathname.split("/")[1] ?? "home",
+  );
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
+  const handleMenuClick = (menu: string) => {
+    setActiveMenu(menu);
   };
 
   return (
-    <>
-      <AppBar
-        component="nav"
-        sx={{ background: "#FCF8FF", height: 64 }}
-        position="sticky"
-      >
-        <Toolbar disableGutters>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ m: 2, display: { xs: "flex", sm: "flex", md: "none" } }}
-          >
-            <Icon
-              icon="solar:hamburger-menu-bold-duotone"
-              width="32"
-              height="32"
-              style={{ color: "#2B3D5E" }}
-            />
-          </IconButton>
-
-          <Box
-            sx={{
-              flexGrow: 1,
-              display: { xs: "none", md: "flex" },
-              paddingInlineEnd: 4,
-              justifyContent: userInfo.TOKEN ? "space-between" : "flex-end",
-              alignItems: "center",
-            }}
-          >
-            <div></div>
-            <Box>
-              {userInfo.TOKEN ? (
-                userInfo.MENU.map((item) => (
-                  <Button
-                    key={item.title}
-                    sx={{ color: "#1C1B21" }}
-                    to={`/${item.path}`}
-                    component={NavLink}
-                  >
-                    {item.title}
-                  </Button>
-                ))
-              ) : (
-                <>
-                  {itemsNav.map((item) => (
-                    <Button
-                      key={item.path}
-                      sx={{ color: "#1C1B21" }}
-                      to={item.path}
-                      component={NavLink}
-                    >
-                      {t(item.title)}
-                    </Button>
-                  ))}
-                </>
-              )}
-            </Box>
-
-            <Box className="d-flex align-items-center ">
-              {userInfo.TOKEN && (
-                <Box>
-                  <Tooltip title="Configuraciónes">
-                    <IconButton onClick={handleOpenUserMenu}>
-                      <Avatar alt={userInfo.USER_INFO.USER_NAME} />
-                    </IconButton>
-                  </Tooltip>
-                  <Menu
-                    sx={{ mt: "45px" }}
-                    id="menu-appbar"
-                    anchorEl={anchorElUser}
-                    anchorOrigin={{
-                      vertical: "top",
-                      horizontal: "right",
-                    }}
-                    keepMounted
-                    transformOrigin={{
-                      vertical: "top",
-                      horizontal: "right",
-                    }}
-                    open={Boolean(anchorElUser)}
-                    onClose={handleCloseUserMenu}
-                  >
-                    {settings.map((setting) => (
-                      <MenuItem key={setting}>
-                        <Button
-                          key={setting}
-                          sx={{ color: "#1C1B21" }}
-                          to="/logout"
-                          component={NavLink}
-                        >
-                          {setting}
-                        </Button>
-                      </MenuItem>
-                    ))}
-                  </Menu>
-                </Box>
-              )}
-              <Box sx={{ height: "100%" }}>
-                <Button
-                  id="fade-button"
-                  aria-controls={open ? "fade-menu" : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={open ? "true" : undefined}
-                  onClick={handleClick}
-                  className="color-theme-black"
-                  endIcon={<ExpandMore />}
-                >
-                  {language}
-                </Button>
-                <Menu
-                  id="fade-menu"
-                  MenuListProps={{
-                    "aria-labelledby": "fade-button",
-                  }}
-                  anchorEl={anchorEl}
-                  open={open}
-                  onClose={handleClose}
-                  TransitionComponent={Fade}
-                >
-                  <MenuItem onClick={() => changeLanguage("es")}>ES</MenuItem>
-                  <MenuItem onClick={() => changeLanguage("en")}>EN</MenuItem>
-                </Menu>
-              </Box>
+    <Box component="header">
+      <Box className="bar-language">
+        <Box className="top-bar d-flex justify-content-between align-items-center px-3  hg-100 width-nav-80">
+          <Box className="languages">
+            <ul className="d-flex justify-content-center align-items-center gap-8 li-language">
+              <li
+                className="color-theme-white"
+                onClick={() => changeLanguage("es")}
+              >
+                {t("es")}
+              </li>
+              <li
+                className="color-theme-white"
+                onClick={() => changeLanguage("en")}
+              >
+                {t("en")}
+              </li>
+            </ul>
+          </Box>
+          <Box className="container-social-media">
+            <Box className="d-flex justify-content-center align-items-center gap-8">
+              <a
+                href="https://www.instagram.com/mangatacartagena"
+                target="_blank"
+                rel="noreferrer"
+                className="icon-social"
+              >
+                <img src="/images/instagram.svg" width={28} />
+              </a>
+              <a
+                href="https://www.tiktok.com/@mangatacartagena"
+                target="_blank"
+                rel="noreferrer"
+                className="icon-social"
+              >
+                <img src="/images/TikTok.svg" width={22} />
+              </a>
             </Box>
           </Box>
-        </Toolbar>
+        </Box>
+      </Box>
+      <AppBar
+        component="nav"
+        sx={{ background: "#f1ece6", height: 80, width: "100%" }}
+        position="sticky"
+      >
+        <Box className="width-nav-80">
+          <Toolbar disableGutters>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ display: { xs: "flex", sm: "flex", md: "none" } }}
+            >
+              <Icon
+                icon="solar:hamburger-menu-bold-duotone"
+                width="32"
+                height="32"
+                style={{ color: "#1C1B21" }}
+              />
+            </IconButton>
+
+            <Box
+              className=" align-items-center justify-content-between wd-100 hg-100"
+              sx={{
+                display: { xs: "none", md: "flex", height: 90 },
+              }}
+            >
+              <Box className="title-mangta">
+                <h1>
+                  <a href="/#/">mangata</a>
+                </h1>
+              </Box>
+              <Box className="d-flex align-items-center list-menu-nav">
+                {userInfo.TOKEN ? (
+                  userInfo.MENU.map((item) => (
+                    <Button
+                      key={item.title}
+                      to={`/${item.path}`}
+                      component={NavLink}
+                      className="navegation-a navegation-a-content"
+                    >
+                      {item.title}
+                    </Button>
+                  ))
+                ) : (
+                  <>
+                    {itemsNav.map((item, index) => (
+                      <Button
+                        key={item.path}
+                        className={
+                          `${
+                            itemsNav.length - 1 === index
+                              ? "navegation-a"
+                              : "navegation-a navegation-a-content"
+                          }` +
+                          (activeMenu === item.path.split("/")[1]
+                            ? " active-menu"
+                            : "")
+                        }
+                        to={item.path}
+                        component={NavLink}
+                        onClick={() => handleMenuClick(item.path.split("/")[1])}
+                      >
+                        {t(item.title)}
+                      </Button>
+                    ))}
+                  </>
+                )}
+
+                <Box className="d-flex align-items-center ">
+                  {userInfo.TOKEN && (
+                    <Box>
+                      <Tooltip title="Configuraciónes">
+                        <IconButton onClick={handleOpenUserMenu}>
+                          <Avatar alt={userInfo.USER_INFO.USER_NAME} />
+                        </IconButton>
+                      </Tooltip>
+                      <Menu
+                        sx={{ mt: "45px" }}
+                        id="menu-appbar"
+                        anchorEl={anchorElUser}
+                        anchorOrigin={{
+                          vertical: "top",
+                          horizontal: "right",
+                        }}
+                        keepMounted
+                        transformOrigin={{
+                          vertical: "top",
+                          horizontal: "right",
+                        }}
+                        open={Boolean(anchorElUser)}
+                        onClose={handleCloseUserMenu}
+                      >
+                        {settings.map((setting) => (
+                          <MenuItem key={setting}>
+                            <Button
+                              key={setting}
+                              sx={{ color: "#1d1d1d", fontFamily: "Jost" }}
+                              to="/logout"
+                              component={NavLink}
+                            >
+                              {setting}
+                            </Button>
+                          </MenuItem>
+                        ))}
+                      </Menu>
+                    </Box>
+                  )}
+                </Box>
+              </Box>
+            </Box>
+          </Toolbar>
+        </Box>
       </AppBar>
       <nav>
         <Drawer
@@ -235,10 +256,12 @@ const Navbar = (props: Props) => {
             navItems={userInfo.MENU}
             token={userInfo.TOKEN}
             changeLanguage={changeLanguage}
+            handleMenuClick={handleMenuClick}
+            activeMenu={activeMenu}
           />
         </Drawer>
       </nav>
-    </>
+    </Box>
   );
 };
 

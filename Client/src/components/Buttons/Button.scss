@@ -1,22 +1,20 @@
-.container-button{
-        height: 40px;
-        width: max-content;
-        padding-inline: 16px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 100px;
-        gap: 8px;
-        .button{
-                text-transform: none;
-                font-size: 14px;
-                font-weight: 400;
-        }
-                
+.container-button {
+  height: 40px;
+  width: max-content;
+  padding-inline: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  gap: 8px;
+  .button {
+    text-transform: none;
+    font-size: 14px;
+    font-weight: 400;
+  }
 }
 
-
-.background-color-button-dark-blue{
-        background-color: var(--color-theme-dark-blue);
-        color:var(--color-theme-white)
-} 
+.background-color-button-dark-blue {
+  background-color: var(--color-theme-dark-blue);
+  color: var(--color-theme-white);
+}

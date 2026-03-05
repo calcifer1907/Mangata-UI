@@ -1,120 +1,194 @@
-import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
+import React, { useEffect, useState } from "react";
+import {
+  ImageList,
+  ImageListItem,
+  Modal,
+  Box,
+  IconButton,
+  Typography,
+  useTheme,
+} from "@mui/material";
+import {
+  Close as CloseIcon,
+  NavigateBefore as PrevIcon,
+  NavigateNext as NextIcon,
+} from "@mui/icons-material";
 
-import LazyImage from "../LazyImage/LazyImage";
+import "./QuiltedImageList.scss";
 
-function srcset(image: string, size: number, rows = 1, cols = 1) {
-  return {
-    src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
-    srcSet: `${image}?w=${size * cols}&h=${
-      size * rows
-    }&fit=crop&auto=format&dpr=2 2x`,
+// Interfaz para el tipo de imagen
+interface ImageItem {
+  id: number | string;
+  img: string;
+  description: string;
+  titleEN?: string;
+  cols?: number;
+  rows?: number;
+}
+
+interface ImageGalleryProps {
+  images: ImageItem[];
+}
+
+const ImageGalleryWithLightbox: React.FC<ImageGalleryProps> = ({ images }) => {
+  const theme = useTheme();
+  const [open, setOpen] = useState<boolean>(false);
+  const [selectedImage, setSelectedImage] = useState<ImageItem>(images[0]);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+
+  const handleOpen = (index: number): void => {
+    setCurrentIndex(index);
+    setSelectedImage(images[index]);
+    setOpen(true);
   };
-}
 
-export default function QuiltedImageList() {
+  const handleClose = (): void => {
+    setOpen(false);
+  };
+
+  const handleNext = (): void => {
+    const newIndex = (currentIndex + 1) % images.length;
+    setCurrentIndex(newIndex);
+    setSelectedImage(images[newIndex]);
+  };
+
+  const handlePrev = (): void => {
+    const newIndex = (currentIndex - 1 + images.length) % images.length;
+    setCurrentIndex(newIndex);
+    setSelectedImage(images[newIndex]);
+  };
+
+  // Manejar teclas de navegación
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (!open) {
+        return;
+      }
+
+      if (event.key === "ArrowRight") {
+        handleNext();
+      } else if (event.key === "ArrowLeft") {
+        handlePrev();
+      } else if (event.key === "Escape") {
+        handleClose();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [open, currentIndex]);
+
   return (
-    <ImageList
-      sx={{ width: "100%", height: "auto", margin: "0 auto" }}
-      variant="quilted"
-      cols={4}
-      rowHeight={121}
-    >
-      {itemData.map((item) => (
-        <ImageListItem
-          style={{ position: "relative" }}
-          key={item.img}
-          cols={item.cols || 1}
-          rows={item.rows || 1}
-        >
-          <LazyImage {...srcset(item.img, 121, item.rows, item.cols)}>
-            <div
-              style={{
-                position: "absolute",
-                bottom: 0,
-                left: 0,
-                width: "100%",
-                height: "auto",
-                paddingBlock: "8px",
-                background: "rgba(0,0,0, 0.5 )",
-              }}
-            >
-              <p
-                style={{
-                  color: "#fff",
-                  marginInline: "12%",
-                  borderBottom: "1px solid #FFF",
-                }}
-              >
-                {item.title}
-              </p>
-              <p style={{ color: "#fff", marginInline: "12%" }}>
-                {item.titleEN}
-              </p>
-            </div>
-          </LazyImage>
-        </ImageListItem>
-      ))}
-    </ImageList>
+    <>
+      <ImageList
+        variant="quilted"
+        cols={4}
+        gap={8}
+        className="container-quilted wd-100"
+      >
+        {images.map((item, index) => (
+          <ImageListItem
+            key={item.id}
+            cols={item.cols}
+            rows={item.rows}
+            className="ImageListItem"
+            onClick={() => handleOpen(index)}
+          >
+            <img
+              src={`${item.img}?w=248&h=248&fit=crop&auto=format`}
+              srcSet={`${item.img}?w=248&h=248&fit=crop&auto=format&dpr=2 2x`}
+              alt={item.description}
+              loading="lazy"
+              className="wd-100 hg-100 transition-image"
+            />
+          </ImageListItem>
+        ))}
+      </ImageList>
+
+      <Modal
+        open={open}
+        onClose={handleClose}
+        className="d-flex align-items-center justify-content-center"
+      >
+        <Box className="container-buttons">
+          {/* Botón cerrar */}
+          <IconButton
+            onClick={handleClose}
+            className="p-absolute icon-button-grid"
+            sx={{
+              top: { xs: -40, sm: -50 },
+              right: { xs: 0, sm: -50 },
+            }}
+            aria-label="Cerrar"
+          >
+            <CloseIcon />
+          </IconButton>
+
+          {/* Botón anterior */}
+          <IconButton
+            onClick={handlePrev}
+            className="p-absolute icon-button-grid icon-button-back"
+            sx={{
+              left: { xs: 0, sm: -60 },
+              display: { xs: images.length > 1 ? "flex" : "none", sm: "flex" },
+            }}
+            aria-label="Imagen anterior"
+          >
+            <PrevIcon />
+          </IconButton>
+
+          {/* Botón siguiente */}
+          <IconButton
+            onClick={handleNext}
+            className="p-absolute icon-button-grid icon-button-back"
+            sx={{
+              right: { xs: 0, sm: -60 },
+              display: { xs: images.length > 1 ? "flex" : "none", sm: "flex" },
+            }}
+            aria-label="Imagen siguiente"
+          >
+            <NextIcon />
+          </IconButton>
+
+          {/* Contenedor de la imagen */}
+          <Box
+            className="d-flex flex-direction-column align-items-center justify-content-center"
+            sx={{
+              maxWidth: "80vw",
+              maxHeight: "80vh",
+            }}
+          >
+            <img
+              src={selectedImage?.img}
+              alt={selectedImage?.description}
+              className="img-grid"
+            />
+
+            {/* Información de la imagen */}
+            {selectedImage && (
+              <Box className="information-image">
+                <Typography variant="h6" gutterBottom>
+                  {selectedImage.description}
+                </Typography>
+                {selectedImage.description && (
+                  <Typography variant="body2" sx={{ opacity: 0.9 }}>
+                    {selectedImage.titleEN ? `(${selectedImage.titleEN})` : ""}
+                  </Typography>
+                )}
+                <Typography
+                  variant="caption"
+                  display="block"
+                  sx={{ mt: 1, opacity: 0.7 }}
+                >
+                  {currentIndex + 1} / {images.length}
+                </Typography>
+              </Box>
+            )}
+          </Box>
+        </Box>
+      </Modal>
+    </>
   );
-}
+};
 
-const itemData = [
-  {
-    img: "/images/lunche/filete de pescado apanado.webp",
-    title: "Filete de pescado apanado",
-    titleEN: "Breadded fish fillet",
-    rows: 2,
-    cols: 2,
-  },
-  {
-    img: "/images/lunche/nuggets de pollo.webp",
-    title: "Nuggets de pollo",
-    titleEN: "Chicken nuggets",
-    cols: 2,
-    rows: 4,
-  },
-  {
-    img: "/images/lunche/pasta boloñesa.webp",
-    title: "Pasta boloñesa",
-    titleEN: "Bolonese pasta",
-    rows: 4,
-    cols: 2,
-  },
-  {
-    img: "/images/lunche/pasta vegetariana.webp",
-    title: "Pasta vegetariana",
-    titleEN: "Vegetarian pasta",
-    rows: 4,
-    cols: 2,
-  },
-
-  {
-    img: "/images/lunche/pescado frito.webp",
-    title: "Pescado frito",
-    titleEN: "Fried fish",
-    rows: 4,
-    cols: 2,
-  },
-  {
-    img: "/images/lunche/risoto.webp",
-    title: "Risoto",
-    titleEN: "Risoto",
-    rows: 3,
-    cols: 2,
-  },
-  {
-    img: "/images/lunche/pechuga a la plancha.webp",
-    title: "pechuga a la plancha",
-    titleEN: "Grilled chicken breast",
-    rows: 3,
-    cols: 2,
-  },
-  {
-    img: "/images/lunche/pizza1.webp",
-    title: "Pizza",
-    titleEN: "Pizza",
-    rows: 2,
-    cols: 2,
-  },
-];
+export default ImageGalleryWithLightbox;

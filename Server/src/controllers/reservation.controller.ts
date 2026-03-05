@@ -143,13 +143,12 @@ export const getListSalesAdmin = async (
 
 export const getMinMax = async (_request: Request, response: Response) => {
   try {
-    // const { typeEvent } = _request.params;
-    const typeEvent = "DAY_TRIP";
-    const result = await pool.query(
-      "SELECT MIN,MAX FROM min_max WHERE TYPE_EVENT ILIKE $1;",
+    const { typeEvent } = _request.params;
+    const { rows } = await pool.query(
+      "SELECT MIN,MAX,DESCRIPTION FROM min_max WHERE TYPE_EVENT LIKE $1;",
       [typeEvent],
     );
-    response.json(result.rows[0]);
+    response.json(rows);
   } catch (error) {
     response.status(500).json({ message: "Something went wrong" });
   }

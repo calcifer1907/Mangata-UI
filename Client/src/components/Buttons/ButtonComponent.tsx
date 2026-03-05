@@ -14,6 +14,7 @@ interface IButton {
   background: string;
   onClick: () => void;
   colorTitle?: string;
+  loading?: boolean;
 }
 
 const ButtonComponent: React.FC<IButton> = ({
@@ -22,10 +23,12 @@ const ButtonComponent: React.FC<IButton> = ({
   iconName,
   background,
   colorTitle = "white",
+  loading = false,
 }) => {
   return (
     <Box className={`container-button ${background}`}>
       <Button
+        loading={loading}
         className={`button color-theme-${colorTitle}`}
         size="medium"
         onClick={onClick}

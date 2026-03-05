@@ -10,7 +10,9 @@ import { formatDate } from "../../generalFunctions/formatDate";
 import TextFieldComponent from "../TextField/TextFieldComponent";
 
 /**Apis */
-import { getIsDayBlocked } from "../../utils/api/agent";
+import { getIsDayBlocked, boat } from "../../utils/api/agent";
+
+import { addDays } from "date-fns";
 
 import "react-date-range/dist/styles.css"; // Estilos principales
 import "react-date-range/dist/theme/default.css"; // Tema por defectoo de calendario de react-icons
@@ -21,31 +23,68 @@ const FORMAT_DATE = "YYYY-MM-DD";
 
 interface IProps {
   callback: (date: string) => void;
+  where?: string;
+  returnDate?: (date: string) => void;
 }
 
-const DatePickerWithIcon = ({ callback }: IProps) => {
+const DatePickerWithIcon = ({ callback, where, returnDate }: IProps) => {
   const initalDate = () => {
-    return new Date();
+    return addDays(new Date(), 1);
   };
   const { t } = useTranslation("common");
   const [date, setDate] = useState<Date>(initalDate());
   const [showCalendar, setShowCalendar] = useState(false);
   const calendarRef = useRef<HTMLDivElement | null>(null);
 
-  const [isDayBlocked, setIsDayBlocked] = useState<Date[]>([]);
+  const [isDayBlocked, setIsDayBlocked] = useState<Date[]>([new Date()]);
+
+  const handleRecursiveBlockedDates = useCallback(
+    (response: string[], days = 1): void => {
+      const currentDate = formatDate(addDays(new Date(), days), "YYYY/MM/DD");
+
+      const findDate = response.includes(currentDate);
+
+      if (findDate) {
+        const newDays = days + 1;
+        handleRecursiveBlockedDates(response, newDays);
+      } else {
+        setDate(new Date(currentDate));
+        if (returnDate) {
+          returnDate(currentDate);
+        }
+      }
+    },
+    [returnDate],
+  );
 
   const apiGetIsDayBlocked = useCallback(async () => {
     try {
-      const response = await getIsDayBlocked();
+      let response = [];
+      if (where === "boatReservation") {
+        const today = formatDate(new Date().toISOString(), "YYYY-MM-DD");
+        response = await boat.getBlockCalendar({
+          currentDate: today,
+        });
+        const dates = response.map((item) => item.valid_date);
+        if (response.length > 0) {
+          handleRecursiveBlockedDates(dates);
+        } else {
+          if (returnDate) {
+            returnDate(formatDate(date, FORMAT_DATE));
+          }
+        }
+      } else {
+        response = await getIsDayBlocked();
+      }
       const setDate = response.map((f) => {
         const d = new Date(f.valid_date);
         return new Date(d.getFullYear(), d.getMonth(), d.getDate());
       });
-      setIsDayBlocked(setDate);
+      setIsDayBlocked((prev) => [...prev, ...setDate]);
     } catch (error) {
       console.error("Error al obtener el estado del día bloqueado:", error);
     }
-  }, []);
+  }, [where, handleRecursiveBlockedDates, returnDate, date]);
 
   // Función para manejar el cambio de fecha
   const handleSelect = (date: Date) => {

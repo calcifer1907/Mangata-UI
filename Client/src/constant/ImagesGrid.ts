@@ -1,0 +1,68 @@
+export const images = [
+  {
+    id: 1,
+    img: "/images/lunche/filete de pescado apanado.webp",
+    description: "Filete de pescado apanado",
+    titleEN: "Breadded fish fillet",
+    rows: 2,
+    cols: 1,
+  },
+  {
+    id: 2,
+    img: "/images/lunche/pasta boloñesa.webp",
+    description: "Pasta boloñesa",
+    titleEN: "Bolonese pasta",
+    rows: 2,
+    cols: 1,
+  },
+
+  {
+    id: 3,
+    img: "/images/lunche/pescado frito.webp",
+    description: "Pescado frito",
+    titleEN: "Fried fish",
+    rows: 4,
+    cols: 2,
+  },
+  {
+    id: 4,
+    img: "/images/lunche/pasta vegetariana.webp",
+    description: "Pasta vegetariana",
+    titleEN: "Vegetarian pasta",
+    rows: 2,
+    cols: 1,
+  },
+  {
+    id: 5,
+    img: "/images/lunche/nuggets de pollo.webp",
+    description: "Nuggets de pollo",
+    titleEN: "Chicken nuggets",
+    rows: 2,
+    cols: 1,
+  },
+
+  {
+    id: 6,
+    img: "/images/lunche/risoto.webp",
+    description: "Risoto",
+    titleEN: "Risoto",
+    rows: 1,
+    cols: 1,
+  },
+  {
+    id: 7,
+    img: "/images/lunche/pechuga a la plancha.webp",
+    description: "pechuga a la plancha",
+    titleEN: "Grilled chicken breast",
+    rows: 1,
+    cols: 2,
+  },
+  {
+    id: 8,
+    img: "/images/lunche/pizza1.webp",
+    description: "Pizza",
+    titleEN: "Pizza",
+    rows: 1,
+    cols: 1,
+  },
+];

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Nuevo message de Contacto</title>
+        <style>
+                /* Estilos generales */
+                * {
+                        margin: 0;
+                        padding: 0;
+                        box-sizing: border-box;
+                        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                }
+
+                body {
+                        background-color: #f5f7fa;
+                        color: #333;
+                        line-height: 1.6;
+                        padding: 20px;
+                }
+
+                .email-container {
+                        max-width: 650px;
+                        width: 100%;
+                        margin: 0 auto;
+                        background-color: #ffffff;
+                        border-radius: 10px;
+                        overflow: hidden;
+                        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+                }
+
+                /* Cabecera */
+                .header {
+                        background: linear-gradient(135deg, #2c3e50, #4a6491);
+                        color: white;
+                        padding: 30px 20px;
+                        text-align: center;
+                }
+
+                .header h1 {
+                        font-size: 26px;
+                        margin-bottom: 10px;
+                        font-weight: 600;
+                }
+
+                .header p {
+                        font-size: 16px;
+                        opacity: 0.9;
+                }
+
+                .company-logo {
+                        font-size: 32px;
+                        margin-bottom: 15px;
+                        display: inline-block;
+                        background-color: rgba(255, 255, 255, 0.15);
+                        width: 60px;
+                        height: 60px;
+                        line-height: 60px;
+                        border-radius: 50%;
+                }
+
+                /* Contenido principal */
+                .content {
+                        padding: 35px 30px;
+                }
+
+                .intro-text {
+                        font-size: 16px;
+                        margin-bottom: 30px;
+                        color: #555;
+                        text-align: center;
+                        border-bottom: 1px solid #eee;
+                        padding-bottom: 20px;
+                }
+
+                /* Estilos para los datos del usuario */
+                .data-section {
+                        margin-bottom: 25px;
+                }
+
+                .section-title {
+                        font-size: 18px;
+                        color: #2c3e50;
+                        margin-bottom: 15px;
+                        padding-bottom: 8px;
+                        border-bottom: 2px solid #f0f0f0;
+                        font-weight: 600;
+                }
+
+                .data-grid {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+
+                }
+
+                .data-item {
+                        background-color: #f9fafc;
+                        padding: 18px;
+                        border-radius: 8px;
+                        border-left: 4px solid #4a6491;
+                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+                        margin-bottom: 30px;
+                }
+
+                .data-label {
+                        font-size: 14px;
+                        color: #7b8a8b;
+                        margin-bottom: 5px;
+                        font-weight: 500;
+                        text-transform: uppercase;
+                        letter-spacing: 0.5px;
+                }
+
+                .data-value {
+                        font-size: 16px;
+                        color: #2c3e50;
+                        font-weight: 600;
+                        word-break: break-word;
+                }
+
+                /* Estilos para el message */
+                .message-container {
+                        background-color: #f9fafc;
+                        padding: 20px;
+                        border-radius: 8px;
+                        margin-top: 10px;
+                        border: 1px solid #eaeaea;
+                }
+
+                .message-content {
+                        font-size: 15px;
+                        color: #333;
+                        line-height: 1.7;
+                        white-space: pre-line;
+                }
+
+                /* Pie del email */
+                .footer {
+                        background-color: #f8f9fa;
+                        padding: 25px 30px;
+                        text-align: center;
+                        border-top: 1px solid #eee;
+                        color: #666;
+                        font-size: 14px;
+                }
+
+                .footer p {
+                        margin-bottom: 10px;
+                }
+
+                .timestamp {
+                        font-size: 13px;
+                        color: #888;
+                        margin-top: 15px;
+                        font-style: italic;
+                }
+
+                .action-button {
+                        display: inline-block;
+                        margin-top: 20px;
+                        background-color: #4a6491;
+                        color: #ffffff !important;
+                        padding: 12px 25px;
+                        text-decoration: none;
+                        border-radius: 5px;
+                        font-weight: 500;
+                        transition: background-color 0.3s;
+                }
+
+                .action-button:hover {
+                        background-color: #2c3e50;
+                }
+
+                /* Responsividad */
+                @media (max-width: 600px) {
+                        .email-container {
+                                border-radius: 0;
+                        }
+
+                        .content,
+                        .footer {
+                                padding: 20px;
+                        }
+
+                        .data-grid {
+                                grid-template-columns: 1fr;
+                        }
+
+                        .header h1 {
+                                font-size: 22px;
+                        }
+                }
+        </style>
+</head>
+
+<body>
+        <div class="email-container">
+                <div class="header">
+                        <div class="company-logo">📧</div>
+                        <h1>Nuevo mensaje de Contacto</h1>
+                        <p>Un cliente potencial se ha puesto en contacto con tu empresa</p>
+                </div>
+
+                <div class="content">
+                        <p class="intro-text">
+                                Se ha recibido un nuevo mensaje a través del formulario de contacto de
+                                tu sitio <a href="https://mangatabeachclub.com/#/Contact">aquí</a>. Aquí están
+                                los detalles:
+                        </p>
+
+                        <div class="data-section">
+                                <h2 class="section-title">Información del Contacto</h2>
+                                <div class="data-grid">
+                                        <div class="data-item">
+                                                <div class="data-label">Nombre Completo</div>
+                                                <div class="data-value" id="user-name">{{name}}</div>
+                                        </div>
+
+                                        <div class="data-item">
+                                                <div class="data-label">Correo Electrónico</div>
+                                                <div class="data-value" id="user-email">{{email}}</div>
+                                        </div>
+
+                                        <div class="data-item">
+                                                <div class="data-label">Número de Teléfono</div>
+                                                <div class="data-value" id="user-phone">{{telephone}}</div>
+                                        </div>
+                                </div>
+                        </div>
+
+                        <div class="data-section">
+                                <h2 class="section-title">Mensaje</h2>
+                                <div class="message-container">
+                                        <div class="message-content" id="user-message">{{message}}</div>
+                                </div>
+                        </div>
+                </div>
+
+                <div class="footer">
+                        <p>
+                                Este mensaje fue enviado a través del formulario de contacto de tu
+                                sitio web.
+                        </p>
+                        <p>
+                                Puedes responder directamente a este email para contactar al cliente.
+                        </p>
+                        <a href="mailto:{{email}}" class="action-button">Responder al Cliente</a>
+
+                </div>
+        </div>
+
+
+</body>
+
+</html>

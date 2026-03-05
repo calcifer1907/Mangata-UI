@@ -1,0 +1,18 @@
+.noInclude {
+  padding: 2rem;
+  text-align: center;
+  height: 150px;
+  align-content: center;
+}
+
+.noInclude p {
+  color: var(--color-theme-dark-blue);
+  font-weight: 600;
+  padding-bottom: 16px;
+  font-size: 1.5rem;
+}
+
+.noInclude p:last-child {
+  font-size: 1.2rem;
+  font-weight: 400;
+}

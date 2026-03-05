@@ -1,6 +1,64 @@
-.fixed-navbar {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 1030;
-      }
+.bar-language {
+  background-color: #1b7fcccc;
+  height: 42px;
+}
+
+.container-social-media a {
+  width: 26px;
+  height: 26px;
+}
+
+.li-language li {
+  cursor: pointer;
+  list-style: none;
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+}
+
+.title-mangta {
+  text-transform: uppercase;
+  letter-spacing: 0.7em;
+  font-family: Jost;
+  cursor: pointer;
+}
+
+.title-mangta a {
+  text-decoration: none;
+  color: #1c1b21;
+}
+
+.navegation-a {
+  color: #1d1d1d;
+  font-family: Jost !important;
+  font-size: 14px;
+  letter-spacing: 3px;
+  border-radius: 0px;
+  line-height: 16px;
+  list-style: none;
+}
+
+.list-menu-nav .navegation-a-content::after {
+  content: "|";
+  margin: 0 20px;
+  color: #cbcbcb;
+  font-family: Jost;
+}
+
+.list-menu-nav .navegation-a::after:last-child {
+  content: "";
+  margin: 0;
+}
+
+.width-nav-80 {
+  width: 80%;
+  margin: auto;
+}
+
+.font-family-uppercase {
+  text-transform: uppercase;
+}
+
+.active-menu {
+  color: #1b7fcccc;
+  font-weight: 600;
+}

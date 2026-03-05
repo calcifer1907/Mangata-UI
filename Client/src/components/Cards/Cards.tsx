@@ -1,45 +1,38 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
+import { NavLink } from "react-router";
 
 interface IProsp {
   title: string;
   img: string;
+  button?: boolean;
+  redirectTo?: string;
+  buttonTitle?: string;
 }
 
-const Cards = ({ title, img }: IProsp) => {
+import "./styleCards.css";
+
+const Cards = ({ title, img, button, redirectTo, buttonTitle }: IProsp) => {
+  const { t } = useTranslation("home");
   return (
-    <Box sx={{ width: "25%", maxWidth: "15%", minWidth: "280px" }}>
-      <Box
-        component="img"
-        src={img}
-        sx={{
-          width: "100%",
-          height: "320px",
-          borderRadius: "10px",
-          objectFit: "cover",
-        }}
-      />
-      <Box
-        sx={{
-          background: "#FFFFFF",
-          height: "120px",
-          borderRadius: " 10px 10px ",
-        }}
-      >
-        <Typography
-          sx={{
-            fontSize: 16,
-            color: "#4672a5",
-            textAlign: "center",
-            display: "flex",
-            height: "100%",
-            justifyContent: "center",
-            alignItems: "center",
-            paddingInline: 5,
-            fontWeight: 600,
-          }}
-        >
-          {title}
-        </Typography>
+    <Box className="container-cards">
+      <Box component="img" src={img} className="wd-100 image-card" />
+      <Box className="content-card">
+        <Box className="hg-100 d-flex justify-content-evenly align-items-center flex-direction-column">
+          <Typography className="font-weight-600 font-size-20 title-card">
+            {title}
+          </Typography>
+          {button && (
+            <Button
+              variant="contained"
+              component={NavLink}
+              to={redirectTo ? redirectTo : "/"}
+              className="transition-all duration-200 hover:scale-105 active:scale-95"
+            >
+              {buttonTitle ? buttonTitle : t("discover")}
+            </Button>
+          )}
+        </Box>
       </Box>
     </Box>
   );

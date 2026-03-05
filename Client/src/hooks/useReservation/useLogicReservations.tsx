@@ -97,8 +97,13 @@ const useLogicReservations = () => {
           horizontal: "right",
         },
       });
+      return false;
     }
-    if (isValidForm && isValidEmail) setOpenModal(true);
+    if (isValidForm && isValidEmail) {
+      setOpenModal(true);
+      return true;
+    }
+    return false;
   };
 
   // Valida que todos los campos estén llenos

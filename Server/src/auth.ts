@@ -5,11 +5,13 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const JWT_SECRET = process.env.JWT_SECRET || "mangata.cartagena.2025";
-const JWT_EXPIRATION = process.env.JWT_EXPIRATION || "1h";
+const JWT_EXPIRATION: string | number = process.env.JWT_EXPIRATION || "1h";
 
 export const createToken = (userId: string, username: string) => {
+  const expiresIn = JWT_EXPIRATION as jwt.SignOptions["expiresIn"];
   return jwt.sign({ userId, username }, JWT_SECRET, {
-    expiresIn: JWT_EXPIRATION,
+    expiresIn: expiresIn,
+    algorithm: "RS256",
   });
 };
 

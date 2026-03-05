@@ -1,0 +1,246 @@
+.boat-container {
+  min-height: 100vh;
+  background-color: #f5f7fa;
+  padding: 24px;
+}
+
+.boat-content-wrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.boat-header {
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.boat-title {
+  font-size: 32px;
+  font-weight: 800;
+  color: #2B3D5E;
+  margin-bottom: 16px;
+}
+
+.boat-stepper-container {
+  background-color: #ffffff;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  min-height: 400px;
+  
+  // Asegurar que el Stepper sea visible
+  .MuiStepper-root {
+    width: 100%;
+  }
+  
+  .MuiStepLabel-root {
+    .MuiStepLabel-label {
+      font-size: 16px;
+      font-weight: 600;
+      color: #2B3D5E;
+    }
+  }
+  
+  .MuiStepContent-root {
+    padding-left: 20px;
+    border-left: 2px solid #e0e0e0;
+  }
+}
+
+.boat-form-container {
+  background-color: #f9f9f9;
+  padding: 24px;
+  border-radius: 12px;
+  margin-top: 16px;
+}
+
+.boat-summary {
+  background-color: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.booking-summary-title{
+ color:#666;
+ font-weight:600;
+}
+
+.container-boat{
+  padding: 2rem 1rem;
+  margin: 2rem auto;
+  flex-wrap: wrap;
+}
+
+
+.container-boat .content-descrition-plates p {
+  color: #1976d2;
+  text-transform: capitalize;
+  margin: 0.5rem auto 0 auto;
+  font-size: 1.18rem;
+  line-height: 1.7;
+  padding: 1.1rem 1.5rem;
+}
+
+.container-boat h1 {
+  text-transform: capitalize;
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: #263238;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 4px rgba(52, 152, 219, 0.07);
+}
+
+// Estilos extraídos de Boat.tsx
+.boat-description-text {
+  line-height: 1.8;
+  margin-top: 16px;
+}
+
+.boat-section-container {
+  margin: 0 auto;
+}
+
+.boat-section-title {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.boat-features-grid {
+  justify-content: center;
+}
+
+.boat-feature-card {
+  padding: 24px;
+  text-align: center;
+  border-radius: 24px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.boat-feature-icon {
+  font-size: 48px;
+  color: var(--color-theme-dark-blue);
+  margin-bottom: 16px;
+}
+
+.boat-itinerary-card {
+  padding: 24px;
+  border-radius: 24px;
+  height: 100%;
+}
+
+.boat-itinerary-card-morning {
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+}
+
+.boat-itinerary-card-afternoon {
+  background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+}
+
+.boat-itinerary-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.boat-itinerary-icon-morning {
+  font-size: 32px;
+  color: #1976d2;
+  margin-right: 16px;
+}
+
+.boat-itinerary-icon-afternoon {
+  font-size: 32px;
+  color: #f57c00;
+  margin-right: 16px;
+}
+
+.boat-itinerary-content {
+  padding-left: 48px;
+}
+
+.boat-itinerary-item {
+  margin-bottom: 12px;
+}
+
+.boat-recommendations-card {
+  padding: 32px;
+  border-radius: 24px;
+}
+
+.boat-recommendations-card-what-to-bring {
+  background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+}
+
+.boat-recommendations-card-safety {
+  background: linear-gradient(135deg, #e8f5e9 0%, #ffffff 100%);
+}
+
+.boat-recommendations-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.boat-recommendations-icon {
+  font-size: 32px;
+  color: var(--color-theme-dark-blue);
+  margin-right: 16px;
+}
+
+.boat-recommendations-icon-safety {
+  font-size: 32px;
+  color: #2e7d32;
+  margin-right: 16px;
+}
+
+.boat-recommendations-content {
+  padding-left: 48px;
+}
+
+.boat-recommendations-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.boat-recommendations-check-icon {
+  color: #4caf50;
+  margin-right: 12px;
+  font-size: 20px;
+}
+
+.boat-safety-title {
+  color: #2e7d32;
+}
+
+.boat-experience-card {
+  padding: 24px;
+  text-align: center;
+  border-radius: 24px;
+  height: 100%;
+  transition: transform 0.3s, box-shadow 0.3s;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.boat-experience-icon-container {
+  color: var(--color-theme-dark-blue);
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: center;
+}

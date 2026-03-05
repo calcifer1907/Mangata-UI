@@ -1,0 +1,13 @@
+.title-home {
+  font-size: 22px;
+  font-weight: 600;
+  margin-block: 2rem;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 2px;
+}
+
+.container-facilities {
+  margin-block: 2rem;
+  min-height: 400px;
+}

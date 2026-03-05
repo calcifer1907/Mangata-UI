@@ -21,10 +21,21 @@ export const handleCopy = async () => {
       document.body.removeChild(textarea);
     }
   } catch (error) {
-    console.log("Error al copiar el codigo de reserva", error);
     enqueueSnackbar(JSON.stringify(error), {
       variant: "error",
       anchorOrigin: { vertical: "top", horizontal: "right" },
     });
   }
+};
+
+export const normalizePhoneNumber = (phoneNumber: string) => {
+  return phoneNumber.replace(/[^\d]/g, "");
+};
+
+export const buildWhatsAppUrl = (phoneNumber: string, message?: string) => {
+  const phone = normalizePhoneNumber(phoneNumber);
+  const params = new URLSearchParams();
+  if (message?.trim()) params.set("text", message.trim());
+  const query = params.toString();
+  return `https://wa.me/${phone}${query ? `?${query}` : ""}`;
 };
