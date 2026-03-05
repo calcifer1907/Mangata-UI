@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 
-import "./styleInitialSummary.css";
+import "./styleInitialsummary.css";
 
 import ImageCarousel from "../Slider/Slider";
 import { useTranslation } from "react-i18next";
