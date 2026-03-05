@@ -108,6 +108,8 @@ app.use(express.json());
 app.use(morgan("dev"));
 app.use(cors(corsOptions));
 
+app.use(securityHeaders); // Middleware para configurar encabezados de seguridad
+
 // Aplicar control de caché específico para APIs
 app.use(apiCacheControl);
 
@@ -120,8 +122,6 @@ app.use("/api", emails);
 app.use("/api", boat);
 app.use(payments);
 app.use(errorHandler);
-
-app.use(securityHeaders); // Middleware para configurar encabezados de seguridad
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
