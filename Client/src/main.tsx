@@ -32,9 +32,7 @@ const emotionCache = createCache({
 
 const container = document.getElementById("root");
 if (!container) throw new Error("Root element not found");
-
 const root = createRoot(container);
-
 // Orden correcto de providers para React 19:
 // 1. CacheProvider (Emotion) - debe estar en el nivel más externo
 // 2. ThemeProvider (MUI) - requiere CacheProvider
