@@ -73,7 +73,7 @@ export const sendEmail = async (payment_id: string) => {
           ? "htmlTemplateReservationBoat.html"
           : "htmlTemplateDayPass.html";
 
-      const plantillaPath = path.join(process.cwd(), "../html", TEMPLATE);
+      const plantillaPath = path.join(process.cwd(), "src/html", TEMPLATE);
       let htmlTemplate = fs.readFileSync(plantillaPath, "utf8");
       htmlTemplate = replacePlaceholders(htmlTemplate, boat);
       const mailOptions = {
@@ -114,9 +114,10 @@ export const sendContactFormEmail = async (
     const subject = "Formulario de contacto";
     const plantillaPath = path.join(
       process.cwd(),
-      "../html",
+      "src/html",
       "htmlTemplateContact.html",
     );
+
     let htmlTemplate = fs.readFileSync(plantillaPath, "utf8");
     const dataUSer = { email, name, telephone, message };
     htmlTemplate = replacePlaceholders(htmlTemplate, dataUSer);
