@@ -24,10 +24,10 @@ import "./index.css";
 // prepend: true asegura que los estilos de MUI tengan prioridad
 const emotionCache = createCache({
   key: "mui",
-  prepend: true, // 是否插入到 <head> 开头
-  stylisPlugins: [], // Stylis 插件
-  speedy: false, // 在生产环境中是否使用 speedy 模式
-  nonce: "your-nonce-here", // CSP nonce
+  prepend: true,
+  stylisPlugins: [],
+  speedy: false,
+  nonce: "your-nonce-here",
 });
 
 const container = document.getElementById("root");
@@ -59,5 +59,5 @@ root.render(
         <App />
       </SnackbarProvider>
     </CacheProvider>
-  </StrictMode>
+  </StrictMode>,
 );
