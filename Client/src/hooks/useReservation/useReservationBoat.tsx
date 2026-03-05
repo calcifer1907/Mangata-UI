@@ -211,7 +211,7 @@ const useReservationBoat = () => {
       // Cargar precios min/max
       const response = await getMinMax.getListData("BOAT_RESERVE");
 
-      if (response.length > 0) {
+      if (response) {
         setValueRadio(response[0].max.toString());
       }
       setMinMax(response);

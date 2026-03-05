@@ -6,7 +6,6 @@ import {
   Box,
   IconButton,
   Typography,
-  useTheme,
 } from "@mui/material";
 import {
   Close as CloseIcon,
@@ -31,7 +30,6 @@ interface ImageGalleryProps {
 }
 
 const ImageGalleryWithLightbox: React.FC<ImageGalleryProps> = ({ images }) => {
-  const theme = useTheme();
   const [open, setOpen] = useState<boolean>(false);
   const [selectedImage, setSelectedImage] = useState<ImageItem>(images[0]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
