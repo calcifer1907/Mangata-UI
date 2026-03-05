@@ -20,6 +20,7 @@ import {
   Business as BusinessIcon,
   NavigateNext as NavigateNextIcon,
   EventAvailable as EventIcon,
+  JoinInner as JoinInnerIcon,
 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router";
@@ -27,9 +28,10 @@ import { NavLink } from "react-router";
 import Footer from "../../components/Footer/Footer";
 
 import Banner from "../../components/Banner/Banner";
-import Merrried from "../../assets/icons/Merrried.svg";
-import Party from "../../assets/icons/Party.svg";
-import Champagne from "../../assets/icons/Champagne.svg";
+
+import Merrried from "../../assets/Icons/Merrried.svg";
+import Party from "../../assets/Icons/Party.svg";
+import Champagne from "../../assets/Icons/Champagne.svg";
 
 import { createEventsStyles } from "./Events.styles";
 
@@ -63,7 +65,7 @@ const Events = () => {
       titleKey: "events_type_marriage_proposal_title",
       descriptionKey: "events_type_marriage_proposal_desc",
       image: "/images/Events/IMG_05.webp",
-      icon: <CakeIcon />,
+      icon: <JoinInnerIcon />,
       color: "#FF6B6B", // Coral suave
       featured: true,
     },
@@ -77,7 +79,7 @@ const Events = () => {
     {
       titleKey: "events_type_private_title",
       descriptionKey: "events_type_private_desc",
-      image: "/images/Events/IMG_5511.webp",
+      image: "/images/Events/IMG_5512.webp",
       icon: <GroupsIcon />,
       color: "#27AE60", // Verde
     },
