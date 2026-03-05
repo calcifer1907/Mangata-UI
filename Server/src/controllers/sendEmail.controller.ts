@@ -23,9 +23,9 @@ const transporter = nodemailer.createTransport({
 const boat = {
   clientName: "",
   clientEmail: "",
-  clientPhone: "+57 312 6056467",
-  startDate: "15/06/2024",
-  endDate: "18/06/2024",
+  clientPhone: "",
+  startDate: "",
+  endDate: "",
   duration: "3",
   departurePort: "Muelle Todo Mar",
   totalPrice: "",
