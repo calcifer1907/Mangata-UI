@@ -52,7 +52,6 @@ root.render(
           vertical: "bottom",
           horizontal: "right",
         }}
-        // Configuración optimizada para React 19
         dense={false}
         preventDuplicate={true}
       >
