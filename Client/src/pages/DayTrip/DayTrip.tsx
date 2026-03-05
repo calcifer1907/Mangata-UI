@@ -12,11 +12,11 @@ import Banner from "../../components/Banner/Banner";
 
 import { images } from "../../constant/ImagesGrid";
 
-import Towel from "../../assets/icons/Towel.svg";
-import hammocks from "../../assets/icons/hammocks.svg";
-import Champagne from "../../assets/icons/Champagne.svg";
-import SpeedBoat from "../../assets/icons/SpeedBoat.svg";
-import Wifi from "../../assets/icons/Wifi.svg";
+import Towel from "../../assets/Icons/Towel.svg";
+import hammocks from "../../assets/Icons/hammocks.svg";
+import Champagne from "../../assets/Icons/Champagne.svg";
+import SpeedBoat from "../../assets/Icons/SpeedBoat.svg";
+import Wifi from "../../assets/Icons/Wifi.svg";
 
 const DayTrip = () => {
   const { t } = useTranslation("home");
