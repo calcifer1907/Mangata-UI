@@ -1,5 +1,4 @@
-import express, { Request, Response, NextFunction } from "express";
-import { TLSSocket } from "tls";
+import { Request, Response, NextFunction } from "express";
 
 // headers.config.js
 export const securityHeaders = (
@@ -11,7 +10,6 @@ export const securityHeaders = (
   res.setHeader("X-Content-Type-Options", "nosniff");
   res.setHeader("X-Frame-Options", "DENY");
   res.setHeader("X-XSS-Protection", "1; mode=block");
-  const socket = req.socket as TLSSocket;
   // CSP robusta
   res.setHeader(
     "Content-Security-Policy",
