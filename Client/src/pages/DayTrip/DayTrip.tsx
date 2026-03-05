@@ -13,7 +13,7 @@ import Banner from "../../components/Banner/Banner";
 import { images } from "../../constant/ImagesGrid";
 
 import Towel from "../../assets/Icons/Towel.svg";
-import hammocks from "../../assets/Icons/hammocks.svg";
+import hammocks from "../../assets/Icons/Hammocks.svg";
 import Champagne from "../../assets/Icons/Champagne.svg";
 import SpeedBoat from "../../assets/Icons/SpeedBoat.svg";
 import Wifi from "../../assets/Icons/Wifi.svg";
