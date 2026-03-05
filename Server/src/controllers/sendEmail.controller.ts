@@ -56,7 +56,9 @@ export const sendEmail = async (payment_id: string) => {
         minimumFractionDigits: 0, // Evitar mostrar los decimales
         maximumFractionDigits: 0, // Evitar decimales adicionales
       }).format(current_commission);
+
       let TEMPLATE = "htmlTemplateDayPass.html";
+
       if (id_employee === "30" || id_employee === 30) {
         const QUERY_NAME_CLIENT =
           "SELECT NAME_ACCOMPANIST FROM accompanist WHERE ID_RESERVATION = $1";
