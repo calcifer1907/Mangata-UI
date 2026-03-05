@@ -47,8 +47,5 @@
                                 }
                         ]
                 }
-        ],
-        "workbox": {
-                "maximumFileSizeToCacheInBytes": 3000000
-        }
+        ]
 }
