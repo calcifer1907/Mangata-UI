@@ -58,12 +58,17 @@ export const webhookBold = async (request: Request, response: Response) => {
     const payment_id = data.metadata.reference;
     // Primero obtenemos el estado actual de la reservación
     const { rows } = await pool.query(
-      "SELECT STATUS_RESERVATION,EMAIL,ID_EMPLOYEE FROM reservations WHERE PAYMENT_ID = $1",
+      "SELECT STATUS_RESERVATION FROM reservations WHERE PAYMENT_ID = $1",
       [payment_id],
     );
-    const currentStatus = rows[0]?.status_reservation;
+    if (rows.length === 0) {
+      throw new Error(
+        `No se encontró una reservación con el payment_id: ${payment_id}`,
+      );
+    }
+    const [currentStatus] = rows;
     // Solo actualizamos si el estado es diferente
-    if (currentStatus && currentStatus !== status) {
+    if (currentStatus.status_reservation !== status) {
       await pool.query(
         "UPDATE reservations SET STATUS_RESERVATION = $1 WHERE PAYMENT_ID = $2",
         [status, payment_id],
