@@ -1,8 +1,9 @@
 import nodemailer from "nodemailer";
 
-import fs from "fs";
+import fs, { read } from "fs";
 import path from "path";
 
+import { leerArchivoHtml } from "../functions/readFile";
 import { pool } from "../Connection";
 import { replacePlaceholders } from "../functions/functionHtml";
 import { Request, Response } from "express";
@@ -69,11 +70,8 @@ export const sendEmail = async (payment_id: string) => {
           boat.clientName = rowsNameClient[0].name_accompanist;
         }
         TEMPLATE = "htmlTemplateReservationBoat.html";
-        TEMPLATE = "htmlTemplateReservationBoat.html";
       }
-
-      const plantillaPath = path.resolve(__dirname, "../html", TEMPLATE);
-      let htmlTemplate = fs.readFileSync(plantillaPath, "utf8");
+      let htmlTemplate = await leerArchivoHtml(TEMPLATE);
       htmlTemplate = replacePlaceholders(htmlTemplate, boat);
       const mailOptions = {
         from: USER_EMAIL,
@@ -111,13 +109,7 @@ export const sendContactFormEmail = async (
   try {
     const { email, name, telephone, message } = request.body;
     const subject = "Formulario de contacto";
-    const plantillaPath = path.resolve(
-      __dirname,
-      "../html",
-      "htmlTemplateContact.html",
-    );
-
-    let htmlTemplate = fs.readFileSync(plantillaPath, "utf8");
+    let htmlTemplate = await leerArchivoHtml("htmlTemplateContact.html");
     const dataUSer = { email, name, telephone, message };
     htmlTemplate = replacePlaceholders(htmlTemplate, dataUSer);
     const mailOptions = {
