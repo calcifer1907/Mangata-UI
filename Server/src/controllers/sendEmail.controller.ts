@@ -69,6 +69,7 @@ export const sendEmail = async (payment_id: string) => {
           boat.clientName = rowsNameClient[0].name_accompanist;
         }
         TEMPLATE = "htmlTemplateReservationBoat.html";
+        TEMPLATE = "htmlTemplateReservationBoat.html";
       }
 
       const plantillaPath = path.resolve(__dirname, "../html", TEMPLATE);

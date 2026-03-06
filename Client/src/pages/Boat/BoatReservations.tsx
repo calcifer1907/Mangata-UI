@@ -175,7 +175,7 @@ const BoatReservations = () => {
                     </Typography>
                     <Box>
                       {minmax.map((item) => (
-                        <FormControl>
+                        <FormControl key={item.description}>
                           <RadioGroup
                             aria-labelledby="demo-controlled-radio-buttons-group"
                             name="controlled-radio-buttons-group"
@@ -198,7 +198,7 @@ const BoatReservations = () => {
                 </StepContent>
               </Step>
 
-              {/* Paso 1: Fecha y Datos de Contacto */}
+              {/* Paso 3: Fecha y Datos de Contacto */}
               <Step>
                 <StepLabel>{steps[2].label}</StepLabel>
                 <StepContent>

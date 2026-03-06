@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { getAccompanist, getMinMax } from "../../utils/api/agent";
-import { enqueueSnackbar } from "notistack";
 import { formatDate } from "../../generalFunctions/formatDate";
 import { generarCodigoReservaUX2 } from "../../generalFunctions/generateCodeReservation";
 import { useTranslation } from "react-i18next";
@@ -9,6 +8,8 @@ import { formatPrice } from "../../generalFunctions/formaters";
 import { validEmail } from "../../generalFunctions/generalFunction";
 import { IMinMaxResponse } from "../../interfaces/IAccompanist";
 import { CountryType } from "../../interfaces/ICountry";
+
+import { messageSnackbar } from "../../generalFunctions/message";
 
 const BOAT_ID = 30;
 
@@ -72,12 +73,11 @@ const useReservationBoat = () => {
     }
 
     if (activeStep === 2) {
-      if (validateStep1()) {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      if (!validateStep1()) {
+        return;
       }
-    } else {
-      setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
   // Manejar paso anterior
@@ -92,13 +92,7 @@ const useReservationBoat = () => {
 
   const validDate = (): boolean => {
     if (!dateChange) {
-      enqueueSnackbar(t("requiredDate"), {
-        variant: "error",
-        anchorOrigin: {
-          vertical: "top",
-          horizontal: "right",
-        },
-      });
+      messageSnackbar(t("requiredDate"), "error");
       return true;
     }
     return false;
@@ -106,46 +100,26 @@ const useReservationBoat = () => {
   // Validar campos del paso 1 (fecha y contacto)
   const validateStep1 = (): boolean => {
     if (!selectedCountry) {
-      enqueueSnackbar(t("chooseCountryRequired"), {
-        variant: "error",
-        anchorOrigin: {
-          vertical: "top",
-          horizontal: "right",
-        },
-      });
+      messageSnackbar(t("chooseCountryRequired"), "error");
+
       return false;
     }
 
-    if (!valueCel || valueCel.trim() === "") {
-      enqueueSnackbar(t("celphoneRequired"), {
-        variant: "error",
-        anchorOrigin: {
-          vertical: "top",
-          horizontal: "right",
-        },
-      });
+    if (!valueCel || valueCel.trim() === "" || !validCelphone()) {
+      messageSnackbar(t("celphoneRequired"), "error");
+
       return false;
     }
 
     if (!valueName || valueName.trim() === "") {
-      enqueueSnackbar(t("nameRequired"), {
-        variant: "error",
-        anchorOrigin: {
-          vertical: "top",
-          horizontal: "right",
-        },
-      });
+      messageSnackbar(t("nameRequired"), "error");
+
       return false;
     }
 
     if (!valueEmail || valueEmail.trim() === "" || !validEmail(valueEmail)) {
-      enqueueSnackbar(t("emailRequired"), {
-        variant: "error",
-        anchorOrigin: {
-          vertical: "top",
-          horizontal: "right",
-        },
-      });
+      messageSnackbar(t("emailRequired"), "error");
+
       return false;
     }
 
@@ -157,6 +131,13 @@ const useReservationBoat = () => {
     return validateStep1();
   };
 
+  const validPrice = useMemo((): boolean => {
+    const findPrice = minmax.find((item) => item.max.toString() === valueRadio);
+    return !!findPrice && Number(valueRadio) > 0;
+  }, [valueRadio]);
+
+  const validCelphone = (): boolean => valueCel.length === 10;
+
   const handleReservation = async () => {
     setLoading(true);
     if (!validateFields()) {
@@ -164,43 +145,37 @@ const useReservationBoat = () => {
       return;
     }
     try {
-      const body = {
-        CODE_RESERVATION,
-        ID_EMPLOYEE: BOAT_ID,
-        TELEPHONE: `+${selectedCountry?.phone}/${valueCel}`,
-        ACCOMPANIST: [{ name: valueName, lunch: { label: "boat", value: 1 } }],
-        EMAIL: valueEmail,
-        AGREED_PRICE: valueRadio,
-        MIN_PRICE: valueRadio,
-        CREATED_AT: dateChange,
-        CREATED_ON: formatDate(""),
-      };
+      if (!validPrice) {
+        throw new Error("Invalid price");
+      }
+      if (!validCelphone) {
+        messageSnackbar(t("celphoneRequired"), "error");
+      } else {
+        const body = {
+          CODE_RESERVATION,
+          ID_EMPLOYEE: BOAT_ID,
+          TELEPHONE: `+${selectedCountry?.phone}/${valueCel}`,
+          ACCOMPANIST: [
+            { name: valueName, lunch: { label: "boat", value: 1 } },
+          ],
+          EMAIL: valueEmail,
+          AGREED_PRICE: valueRadio,
+          MIN_PRICE: valueRadio,
+          CREATED_AT: dateChange,
+          CREATED_ON: formatDate(""),
+        };
 
-      const data = await getAccompanist.saveReservation(body);
-      if (data.message === "success") {
-        enqueueSnackbar("¡Reserva creada exitosamente!", {
-          variant: "success",
-          anchorOrigin: {
-            vertical: "top",
-            horizontal: "right",
-          },
-        });
-        // Avanzar al paso de pago si aún no está ahí
-        if (activeStep === 3) {
-          handleNext();
+        const data = await getAccompanist.saveReservation(body);
+        if (data.message === "success") {
+          messageSnackbar(t("successMessage"), "success");
+          // Avanzar al paso de pago si aún no está ahí
+          if (activeStep === 3) {
+            handleNext();
+          }
         }
       }
     } catch {
-      enqueueSnackbar(
-        "Error al crear la reserva. Por favor, intenta nuevamente.",
-        {
-          variant: "error",
-          anchorOrigin: {
-            vertical: "top",
-            horizontal: "right",
-          },
-        },
-      );
+      messageSnackbar(t("errorMessage"), "error");
     } finally {
       setLoading(false);
     }
@@ -208,21 +183,13 @@ const useReservationBoat = () => {
 
   const loadInitialData = useCallback(async () => {
     try {
-      // Cargar precios min/max
       const response = await getMinMax.getListData("BOAT_RESERVE");
-
       if (response) {
         setValueRadio(response[0].max.toString());
       }
       setMinMax(response);
     } catch {
-      enqueueSnackbar("Error al cargar datos. Por favor, recarga la página.", {
-        variant: "error",
-        anchorOrigin: {
-          vertical: "top",
-          horizontal: "right",
-        },
-      });
+      messageSnackbar(t("loadingError"), "error");
     }
   }, []);
 

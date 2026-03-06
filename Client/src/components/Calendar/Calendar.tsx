@@ -54,7 +54,7 @@ const DatePickerWithIcon = ({ callback, where, returnDate }: IProps) => {
         }
       }
     },
-    [returnDate],
+    [],
   );
 
   const apiGetIsDayBlocked = useCallback(async () => {
@@ -84,7 +84,7 @@ const DatePickerWithIcon = ({ callback, where, returnDate }: IProps) => {
     } catch (error) {
       console.error("Error al obtener el estado del día bloqueado:", error);
     }
-  }, [where, returnDate, handleRecursiveBlockedDates]);
+  }, [where, handleRecursiveBlockedDates]);
 
   // Función para manejar el cambio de fecha
   const handleSelect = (date: Date) => {
