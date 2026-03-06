@@ -1,4 +1,4 @@
-import nodemailer from "nodemailer";
+import nodemailer, { SendMailOptions } from "nodemailer";
 import { Request, Response } from "express";
 
 import { leerArchivoHtml } from "../functions/readFile";
@@ -17,13 +17,6 @@ const transporter = nodemailer.createTransport({
     minVersion: "TLSv1.2",
   },
   pool: true, // Usar pool de conexiones
-  maxConnections: 1,
-  rateDelta: 20000, // Tiempo entre intentos
-  rateLimit: 5, // Número de intentos
-  // Timeouts
-  connectionTimeout: 30000, // 30 segundos
-  greetingTimeout: 30000,
-  socketTimeout: 60000,
 });
 
 interface IEmailData {
@@ -78,11 +71,8 @@ const optionsEmail = async (
   clientEmail: string,
 ) => {
   const subject = "Welcome to Mangata Beach Club";
-  console.log("leerArchivoHtml Before");
   let htmlTemplate = await leerArchivoHtml(template);
-  console.log("leerArchivoHtml after");
   htmlTemplate = replacePlaceholders(htmlTemplate, boat);
-  console.log("replacePlaceholders after");
   const mailOptions: IEmailData = {
     from: USER_EMAIL ?? "",
     to: clientEmail,
@@ -92,13 +82,13 @@ const optionsEmail = async (
       "X-Priority": "1",
       "X-MSMail-Priority": "High",
     },
-    // attachments: [
-    //   {
-    //     filename: "logo.png",
-    //     path: VITE_URL_UI + "/images/MangataWhite.png",
-    //     cid: "logo",
-    //   },
-    // ],
+    attachments: [
+      {
+        filename: "logo.png",
+        path: VITE_URL_UI + "/images/MangataWhite.png",
+        cid: "logo",
+      },
+    ],
   };
   return mailOptions;
 };
@@ -119,32 +109,38 @@ export const sendEmail = async (payment_id: string) => {
       TEMPLATE = "htmlTemplateReservationBoat.html";
     }
     const mailOptions = await optionsEmail(TEMPLATE, boat, email);
-    await verifyTransporter();
-    transporter.sendMail(
-      mailOptions,
-      (error: Error | null, info: nodemailer.SentMessageInfo) => {
-        if (error) {
-          console.log(error);
-          return;
-        }
-        console.log("Correo enviado: " + info.response);
-      },
-    );
-    console.log("end transporter");
+
+    await sendEmailAttemps(mailOptions);
   } catch (error) {
     console.error("Error al enviar el correo:", error);
   }
 };
 
-// Verificar configuración al inicio
-const verifyTransporter = async () => {
-  try {
-    await transporter.verify();
-    console.log("Transporter verificado correctamente");
-    return true;
-  } catch (error) {
-    console.error("Error verificando transporter:", error);
-    return false;
+const sendEmailAttemps = async (mailOptions: SendMailOptions) => {
+  let attempts = 0;
+  const maxAttempts = 3;
+
+  while (attempts < maxAttempts) {
+    try {
+      attempts++;
+      console.log(`Intento ${attempts} de envío de email`);
+
+      const info = await transporter.sendMail(mailOptions);
+      console.log("Email enviado:", info.messageId);
+      return { success: true, info };
+    } catch (error) {
+      console.error(`Error en intento ${attempts}:`, (error as Error).message);
+
+      if (attempts === maxAttempts) {
+        throw new Error(
+          `Fallo después de ${maxAttempts} intentos: ${(error as Error).message}`,
+        );
+      }
+
+      // Esperar antes de reintentar (backoff exponencial)
+      const waitTime = Math.min(1000 * Math.pow(2, attempts), 8000);
+      await new Promise((resolve) => setTimeout(resolve, waitTime));
+    }
   }
 };
 
