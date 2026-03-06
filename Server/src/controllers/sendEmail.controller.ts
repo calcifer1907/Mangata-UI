@@ -16,6 +16,14 @@ const transporter = nodemailer.createTransport({
     rejectUnauthorized: true,
     minVersion: "TLSv1.2",
   },
+  pool: true, // Usar pool de conexiones
+  maxConnections: 1,
+  rateDelta: 20000, // Tiempo entre intentos
+  rateLimit: 5, // Número de intentos
+  // Timeouts
+  connectionTimeout: 30000, // 30 segundos
+  greetingTimeout: 30000,
+  socketTimeout: 60000,
 });
 
 interface IEmailData {
@@ -23,6 +31,7 @@ interface IEmailData {
   to: string;
   subject: string;
   html: string;
+  headers?: Record<string, string>;
   attachments?: {
     filename: string;
     path: string;
@@ -69,20 +78,27 @@ const optionsEmail = async (
   clientEmail: string,
 ) => {
   const subject = "Welcome to Mangata Beach Club";
+  console.log("leerArchivoHtml Before");
   let htmlTemplate = await leerArchivoHtml(template);
+  console.log("leerArchivoHtml after");
   htmlTemplate = replacePlaceholders(htmlTemplate, boat);
+  console.log("replacePlaceholders after");
   const mailOptions: IEmailData = {
     from: USER_EMAIL ?? "",
     to: clientEmail,
     subject,
     html: htmlTemplate,
-    attachments: [
-      {
-        filename: "logo.png",
-        path: VITE_URL_UI + "/images/MangataWhite.png",
-        cid: "logo",
-      },
-    ],
+    headers: {
+      "X-Priority": "1",
+      "X-MSMail-Priority": "High",
+    },
+    // attachments: [
+    //   {
+    //     filename: "logo.png",
+    //     path: VITE_URL_UI + "/images/MangataWhite.png",
+    //     cid: "logo",
+    //   },
+    // ],
   };
   return mailOptions;
 };
@@ -103,8 +119,9 @@ export const sendEmail = async (payment_id: string) => {
       boat.clientName = clientName;
       TEMPLATE = "htmlTemplateReservationBoat.html";
     }
+    console.log("optionsEmail before", email);
     const mailOptions = await optionsEmail(TEMPLATE, boat, email);
-    console.log(mailOptions);
+    console.log("optionsEmail after", email);
     transporter.sendMail(
       mailOptions,
       (error: Error | null, info: nodemailer.SentMessageInfo) => {

@@ -49,7 +49,7 @@ export async function leerArchivoSimple(
 
       for (const ruta of rutasParaVercel) {
         try {
-          console.log(`Intentando leer desde: ${ruta}`);
+          //   console.log(`Intentando leer desde: ${ruta}`);
           return await fs.readFile(ruta, "utf-8");
         } catch (error) {
           errores.push(
@@ -69,7 +69,7 @@ export async function leerArchivoSimple(
       try {
         const htmlPath = path.join(process.cwd(), "html");
         const files = await fs.readdir(htmlPath);
-        console.log(`Archivos en carpeta html: ${files.join(", ")}`);
+        // console.log(`Archivos en carpeta html: ${files.join(", ")}`);
 
         // Buscar el archivo por nombre (ignorando la ruta)
         const nombreArchivo = path.basename(archivo);
@@ -101,20 +101,20 @@ export async function leerArchivoSimple(
 
   try {
     const metodoActual: MetodoLectura = metodos[intento];
-    console.log(
-      `Intentando método ${intento + 1} para leer: ${archivo} desde carpeta html`,
-    );
+    //     console.log(
+    //       `Intentando método ${intento + 1} para leer: ${archivo} desde carpeta html`,
+    //     );
     return await metodoActual();
   } catch (error) {
-    if (error instanceof Error) {
-      console.log(
-        `⚠️ Método ${intento + 1} falló: ${error.message}, probando siguiente...`,
-      );
-    } else {
-      console.log(
-        `⚠️ Método ${intento + 1} falló con error desconocido, probando siguiente...`,
-      );
-    }
+    //     if (error instanceof Error) {
+    //       console.log(
+    //         `⚠️ Método ${intento + 1} falló: ${error.message}, probando siguiente...`,
+    //       );
+    //     } else {
+    //       console.log(
+    //         `⚠️ Método ${intento + 1} falló con error desconocido, probando siguiente...`,
+    //       );
+    //     }
     return leerArchivoSimple(archivo, intento + 1);
   }
 }
@@ -130,23 +130,23 @@ export async function leerDesdeCarpetaHtml(archivo: string): Promise<string> {
   ];
 
   // Información de depuración
-  console.log("=== DEBUG LECTURA DESDE CARPETA HTML ===");
-  console.log("process.cwd():", process.cwd());
-  console.log("__dirname:", __dirname);
-  console.log("Archivo buscado:", archivo);
-  console.log("Rutas a intentar:", rutasHtml);
+  //   console.log("=== DEBUG LECTURA DESDE CARPETA HTML ===");
+  //   console.log("process.cwd():", process.cwd());
+  //   console.log("__dirname:", __dirname);
+  //   console.log("Archivo buscado:", archivo);
+  //   console.log("Rutas a intentar:", rutasHtml);
 
   for (const ruta of rutasHtml) {
     try {
-      console.log(`Intentando leer: ${ruta}`);
+      //       console.log(`Intentando leer: ${ruta}`);
       const contenido = await fs.readFile(ruta, "utf-8");
       console.log(`✅ Éxito leyendo desde: ${ruta}`);
       return contenido;
-    } catch (error) {
-      console.log(
-        `❌ Falló ruta ${ruta}:`,
-        error instanceof Error ? error.message : "error desconocido",
-      );
+    } catch {
+      //       console.log(
+      //         `❌ Falló ruta ${ruta}:`,
+      //         error instanceof Error ? error.message : "error desconocido",
+      //       );
     }
   }
 
