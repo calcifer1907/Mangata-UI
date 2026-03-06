@@ -47,5 +47,8 @@
         "dateAndContactDetails": "Fecha y Datos de Contacto",
         "selectDateAndContactDetails": "Selecciona la fecha y completa tus datos",
         "checkReservation1": "Revisa tu reserva y procede al pago",
-        "requiredDate": "La fecha es obligatoria"
+        "requiredDate": "La fecha es obligatoria",
+        "successMessage": "¡Reserva creada exitosamente!",
+        "errorMessage": "Error al crear la reserva. Por favor, intenta nuevamente.",
+        "loadingError": "Error al cargar datos. Por favor, recarga la página."
 }

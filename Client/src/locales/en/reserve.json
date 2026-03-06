@@ -48,5 +48,8 @@
         "selectDateAndContactDetails": "Select the date and complete your details",
         "checkReservation1": "Check your reservation and proceed to payment",
         "selectDateValid": "Please select a valid date.",
-        "requiredDate": "Date is required"
+        "requiredDate": "Date is required",
+        "successMessage": "Reservation created successfully!",
+        "errorMessage": "Error creating reservation. Please try again.",
+        "loadingError": "Error loading data. Please reload the page."
 }

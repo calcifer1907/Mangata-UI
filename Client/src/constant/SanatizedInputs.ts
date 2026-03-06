@@ -5,7 +5,7 @@ export const sanitizeInput = (texto: string) => {
   if (typeof texto !== "string") return "";
 
   // Eliminar caracteres peligrosos para inyección SQL y XSS
-  return texto.replace(/[<>"'`;\\/&|+*=$%(){}[\]]/g, "");
+  return texto.replace(/[<>"'`;\\/&|+*=?¿¡$%(){}_[\]]/g, "");
 };
 
 /**
