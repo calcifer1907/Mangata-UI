@@ -1,8 +1,5 @@
 import nodemailer from "nodemailer";
 
-import fs, { read } from "fs";
-import path from "path";
-
 import { leerArchivoHtml } from "../functions/readFile";
 import { pool } from "../Connection";
 import { replacePlaceholders } from "../functions/functionHtml";
@@ -32,6 +29,18 @@ const boat = {
   totalPrice: "",
 };
 
+interface IEmailData {
+  from: string;
+  to: string;
+  subject: string;
+  html: string;
+  attachments?: {
+    filename: string;
+    path: string;
+    cid: string;
+  }[];
+}
+
 export const sendEmail = async (payment_id: string) => {
   try {
     const subject = "Welcome to Mangata Beach Club";
@@ -59,7 +68,12 @@ export const sendEmail = async (payment_id: string) => {
       }).format(current_commission);
 
       let TEMPLATE = "htmlTemplateDayPass.html";
-
+      const mailOptions: IEmailData = {
+        from: USER_EMAIL ?? "",
+        to: email,
+        subject,
+        html: "",
+      };
       if (id_employee === "30" || id_employee === 30) {
         const QUERY_NAME_CLIENT =
           "SELECT NAME_ACCOMPANIST FROM accompanist WHERE ID_RESERVATION = $1";
@@ -70,22 +84,19 @@ export const sendEmail = async (payment_id: string) => {
           boat.clientName = rowsNameClient[0].name_accompanist;
         }
         TEMPLATE = "htmlTemplateReservationBoat.html";
-      }
-      let htmlTemplate = await leerArchivoHtml(TEMPLATE);
-      htmlTemplate = replacePlaceholders(htmlTemplate, boat);
-      const mailOptions = {
-        from: USER_EMAIL,
-        to: email,
-        subject,
-        html: htmlTemplate,
-        attachments: [
+      } else {
+        mailOptions.attachments = [
           {
             filename: "logo.png",
             path: VITE_URL_UI + "/images/MangataWhite.png",
             cid: "logo",
           },
-        ],
-      };
+        ];
+      }
+      console.log(boat);
+      let htmlTemplate = await leerArchivoHtml(TEMPLATE);
+      htmlTemplate = replacePlaceholders(htmlTemplate, boat);
+      mailOptions.html = htmlTemplate;
       transporter.sendMail(
         mailOptions,
         (error: Error | null, info: nodemailer.SentMessageInfo) => {
