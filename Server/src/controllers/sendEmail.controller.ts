@@ -1,12 +1,10 @@
 import nodemailer from "nodemailer";
+import { Request, Response } from "express";
 
 import { leerArchivoHtml } from "../functions/readFile";
-import { pool } from "../Connection";
 import { replacePlaceholders } from "../functions/functionHtml";
-import { Request, Response } from "express";
-import { PASSWORD_EMAIL, USER_EMAIL, VITE_URL_UI } from "../configDB";
-
 import { dataSendEmail } from "../repository/sendEmailRepository";
+import { PASSWORD_EMAIL, USER_EMAIL, VITE_URL_UI } from "../configDB";
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
