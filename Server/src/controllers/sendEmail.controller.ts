@@ -110,7 +110,6 @@ export const sendEmail = async (payment_id: string) => {
       throw new Error("No se encontraron datos para el payment_id:");
     }
     const { id_employee, email, clientName } = dataEmail;
-    console.log(dataEmail);
     const boat = await assignValuesBoatData(dataEmail);
 
     let TEMPLATE = "htmlTemplateDayPass.html";
@@ -119,9 +118,8 @@ export const sendEmail = async (payment_id: string) => {
       boat.clientName = clientName;
       TEMPLATE = "htmlTemplateReservationBoat.html";
     }
-    console.log("optionsEmail before", email);
     const mailOptions = await optionsEmail(TEMPLATE, boat, email);
-    console.log("optionsEmail after", email);
+    await verifyTransporter();
     transporter.sendMail(
       mailOptions,
       (error: Error | null, info: nodemailer.SentMessageInfo) => {
@@ -132,8 +130,21 @@ export const sendEmail = async (payment_id: string) => {
         console.log("Correo enviado: " + info.response);
       },
     );
+    console.log("end transporter");
   } catch (error) {
     console.error("Error al enviar el correo:", error);
+  }
+};
+
+// Verificar configuración al inicio
+const verifyTransporter = async () => {
+  try {
+    await transporter.verify();
+    console.log("Transporter verificado correctamente");
+    return true;
+  } catch (error) {
+    console.error("Error verificando transporter:", error);
+    return false;
   }
 };
 
