@@ -9,6 +9,7 @@ import { sendEmail } from "./sendEmail.controller";
 import { BOLD_KEY, VITE_URL_UI } from "../configDB";
 
 import { STATUS_BOLD } from "../functions/generalFunctions";
+import { request } from "http";
 
 export const paymentBold = async (request: Request, response: Response) => {
   try {
@@ -101,9 +102,12 @@ export const getOrderIdBold = async (request: Request, response: Response) => {
   }
 };
 // esto es para probar
-export const testEmail = async (_request: Request, response: Response) => {
+export const testEmail = async (request: Request, response: Response) => {
   try {
-    await sendEmail("LNK_3F6RX7ZQGF");
+    const key = Array.isArray(request.params.key)
+      ? request.params.key[0]
+      : request.params.key;
+    await sendEmail(key);
     response.status(200).json({ mesagge: "Send email test" });
   } catch (error) {
     response.status(500);

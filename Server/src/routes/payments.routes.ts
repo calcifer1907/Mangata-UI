@@ -22,7 +22,7 @@ router.post("/api/webhook-bold", webhookBold);
 
 router.post("/api/getOrderId", getOrderIdBold);
 
-router.get("/testemail", testEmail);
+router.get("/testemail/:key", testEmail);
 
 router.get("/success", (req: any, res: any) => {
   console.log(req);
