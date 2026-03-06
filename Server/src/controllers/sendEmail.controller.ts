@@ -19,9 +19,12 @@ const transporter = nodemailer.createTransport({
   pool: true, // Usar pool de conexiones
 });
 
+const MAIL_MANGATA = "mangata.cartagena.2022@gmail.com";
+
 interface IEmailData {
   from: string;
   to: string;
+  cc: string;
   subject: string;
   html: string;
   headers?: Record<string, string>;
@@ -51,7 +54,7 @@ interface IBoatDataEmail {
 }
 
 const assignValuesBoatData = async (dataEmail: IBoatDataEmail) => {
-  const boat = {} as IBoatData;
+  const boat = { departurePort: "Muelle Todo Mar" } as IBoatData;
   const { formatted_date, email, current_commission } = dataEmail;
   boat.clientEmail = email;
   boat.startDate = formatted_date;
@@ -76,6 +79,7 @@ const optionsEmail = async (
   const mailOptions: IEmailData = {
     from: USER_EMAIL ?? "",
     to: clientEmail,
+    cc: MAIL_MANGATA,
     subject,
     html: htmlTemplate,
     headers: {
@@ -157,6 +161,7 @@ export const sendContactFormEmail = async (
     const mailOptions = {
       from: email,
       to: USER_EMAIL,
+      cc: MAIL_MANGATA,
       subject,
       html: htmlTemplate,
     };
