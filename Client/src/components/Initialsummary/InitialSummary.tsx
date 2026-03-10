@@ -22,7 +22,7 @@ const sampleImages = [
   },
   {
     id: "3",
-    src: "images/eventMirred.webp",
+    src: "images/IMG_6285.webp",
     alt: "",
     title: "",
     description: "",
