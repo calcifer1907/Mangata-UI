@@ -74,12 +74,32 @@ const NameLunchForm: FC = () => {
 
   useEffect(() => {
     const body = document.getElementById("body");
-    body?.style.setProperty("overflow-y", "hidden");
+    const isMobile = window.innerWidth < 900;
+
+    // Solo establecer overflow hidden en desktop
+    if (!isMobile) {
+      body?.style.setProperty("overflow-y", "hidden");
+    }
+
     const heightContainer =
       document.getElementById("contentPrimary")?.offsetHeight;
     setMaxHeight(heightContainer || 0);
+
+    // Listener para cambios de ventana
+    const handleResize = () => {
+      const newIsMobile = window.innerWidth < 900;
+      if (newIsMobile) {
+        body?.style.setProperty("overflow-y", "auto");
+      } else {
+        body?.style.setProperty("overflow-y", "hidden");
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
     return () => {
       body?.style.setProperty("overflow-y", "auto");
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
