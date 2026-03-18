@@ -1,4 +1,9 @@
-import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  HashRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 import Box from "@mui/material/Box";
 
 import ContextUser from "./hooks/useContextUser";
@@ -17,6 +22,7 @@ import NotFound from "./pages/NotFound";
 import CalendarPage from "./components/Calendar/CalendarPage/CalendarPage";
 import DayTrip from "./pages/DayTrip/DayTrip";
 import Lodging from "./pages/Lodging/Lodging";
+import RoomDetail from "./pages/Lodging/RoomDetail";
 import Contact from "./pages/Contact/Contact";
 import Events from "./pages/Events/Events";
 import Menu from "./pages/Menu/Menu";
@@ -25,7 +31,6 @@ import BoartReservations from "./pages/Boat/BoatReservations";
 import WhatsAppFloatingButton from "./components/WhatsAppFloatingButton/WhatsAppFloatingButton";
 import ScrollToTopButton from "./components/ScrollToTopButton/ScrollToTopButton";
 
-import { useLocation } from 'react-router-dom';
 import { useEffect } from "react";
 
 function ScrollToTop() {
@@ -42,7 +47,7 @@ const App = () => {
   return (
     <Router>
       <ContextUser>
-         <ScrollToTop />
+        <ScrollToTop />
         <MyNavbar />
         <Box sx={{ flex: 1, position: "relative" }} id="contentPrimary">
           <Routes>
@@ -60,6 +65,7 @@ const App = () => {
             <Route path="/Events" element={<Events />} />
             <Route path="/Contact" element={<Contact />} />
             <Route path="/Lodging" element={<Lodging />} />
+            <Route path="/Lodging/rooms/:roomId" element={<RoomDetail />} />
             <Route path="/Menu" element={<Menu />} />
             <Route
               path="/MyCommissions"

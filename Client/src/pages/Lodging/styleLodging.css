@@ -1,3 +1,20 @@
 .container-loading {
   background-image: url("/images/IMG_4312.jpg");
 }
+
+
+.arena-granulada {
+  background-color: #f1ece6;
+  background-image: 
+    repeating-linear-gradient(45deg, 
+      rgba(200, 170, 140, 0.1) 0px, 
+      rgba(200, 170, 140, 0.1) 2px,
+      transparent 2px, 
+      transparent 4px),
+    repeating-linear-gradient(135deg, 
+      rgba(180, 140, 100, 0.08) 0px, 
+      rgba(180, 140, 100, 0.08) 1px,
+      transparent 1px, 
+      transparent 3px);
+  background-size: 30px 30px, 20px 20px;
+}
