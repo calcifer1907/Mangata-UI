@@ -1,9 +1,8 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Card,
   CardMedia,
-  CardContent,
-  CardActions,
   Typography,
   Button,
   Box,
@@ -14,7 +13,6 @@ import {
   DialogTitle,
   useTheme,
   useMediaQuery,
-  Grid,
 } from "@mui/material";
 import {
   Close as CloseIcon,
@@ -22,31 +20,26 @@ import {
   ArrowForwardIos,
 } from "@mui/icons-material";
 
-interface RoomImage {
-  id: number;
-  url: string;
-  alt: string;
-}
+import "./RoomCard.css";
 
 interface RoomCardProps {
+  id: string;
   title: string;
-  roomCount: number;
   maxCapacity: number;
   size: string;
-  description: string;
   price: string;
-  images: RoomImage[];
+  images: { id: number; url: string; alt: string }[];
 }
 
 const RoomCard: React.FC<RoomCardProps> = ({
+  id,
   title,
-  roomCount,
   maxCapacity,
   size,
-  description,
   price,
   images,
 }) => {
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const theme = useTheme();
@@ -76,154 +69,93 @@ const RoomCard: React.FC<RoomCardProps> = ({
   return (
     <>
       <Card
+        className="roomCard"
+        onClick={() => navigate(`/Lodging/rooms/${id}`)}
         sx={{
-          maxWidth: 400,
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-          transition: "transform 0.3s, box-shadow 0.3s",
-          "&:hover": {
-            transform: "translateY(-8px)",
-            boxShadow: 6,
-          },
+          height: { xs: 420, md: 520 },
         }}
       >
-        {/* Imagen principal */}
+        {/* Imagen principal con overlay de información */}
         <Box
-          sx={{ position: "relative", cursor: "pointer" }}
-          onClick={() => handleOpen(0)}
+          className="roomCardMediaWrap"
+          sx={{ height: "calc(100% - 56px)" }}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleOpen(0);
+          }}
         >
           <CardMedia
             component="img"
-            height="200"
             image={images[0]?.url || ""}
             alt={images[0]?.alt || title}
-            sx={{
-              objectFit: "cover",
-              "&:hover": {
-                opacity: 0.9,
-              },
-            }}
+            className="roomCardMedia"
           />
+
+          {/* Capa oscura inferior para destacar el texto */}
+          <Box className="roomCardGradient" />
+
+          {/* Contenido principal: nombre y precio */}
+          <Box
+            className="roomCardOverlayContent"
+            sx={{
+              left: { xs: 16, md: 24 },
+              right: { xs: 16, md: 24 },
+              bottom: { xs: 16, md: 72 },
+            }}
+          >
+            <Typography
+              variant="h6"
+              component="h2"
+              className="roomCardTitle"
+            >
+              {title}
+            </Typography>
+
+            <Typography
+              variant="subtitle2"
+              className="roomCardSubtitle"
+            >
+              Desde <span className="roomCardSubtitlePrice">{price}</span>
+            </Typography>
+
+            {/* Capacidad y tamaño, sin mostrar número de habitaciones */}
+            <Box
+              className="roomCardMetaRow"
+            >
+              <Box className="roomCardMetaItem">
+                <Typography variant="body2">{maxCapacity}</Typography>
+                <Typography variant="body2">personas</Typography>
+              </Box>
+
+              <Box className="roomCardMetaItem">
+                <Typography variant="body2">{size}</Typography>
+              </Box>
+            </Box>
+          </Box>
+
           {images.length > 1 && (
             <Chip
               label={`+${images.length - 1} más`}
               size="small"
-              sx={{
-                position: "absolute",
-                bottom: 8,
-                right: 8,
-                backgroundColor: "rgba(0, 0, 0, 0.7)",
-                color: "white",
-                fontWeight: "bold",
-              }}
+              className="roomCardMoreChip"
             />
           )}
         </Box>
 
-        <CardContent sx={{ flexGrow: 1 }}>
-          {/* Título */}
-          <Typography
-            variant="h6"
-            component="h2"
-            gutterBottom
-            fontWeight="bold"
+        {/* Botón de detalle fijo al fondo para mantener mismo alto */}
+        <Box className="roomCardFooter">
+          <Button
+            variant="outlined"
+            size="small"
+            className="roomCardDetailButton"
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate(`/Lodging/rooms/${id}`);
+            }}
           >
-            {title}
-          </Typography>
-
-          {/* Características principales */}
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
-            <Chip
-              label={`${roomCount} HABITACIONES`}
-              size="small"
-              color="primary"
-              variant="outlined"
-            />
-            <Typography variant="body2" color="text.secondary">
-              •
-            </Typography>
-            <Chip
-              label={`${maxCapacity} PERSONAS`}
-              size="small"
-              color="primary"
-              variant="outlined"
-            />
-            <Typography variant="body2" color="text.secondary">
-              •
-            </Typography>
-            <Chip
-              label={size}
-              size="small"
-              color="primary"
-              variant="outlined"
-            />
-          </Box>
-
-          {/* Descripción */}
-          <Typography variant="body2" color="text.secondary" paragraph>
-            {description}
-          </Typography>
-
-          {/* Miniaturas de imágenes adicionales */}
-          {images.length > 1 && (
-            <Box sx={{ mt: 2, mb: 1 }}>
-              <Typography
-                variant="caption"
-                color="text.secondary"
-                display="block"
-                gutterBottom
-              >
-                Ver más imágenes:
-              </Typography>
-              <Grid container spacing={1}>
-                {images.slice(1, 4).map((image, index) => (
-                  <Grid key={image.id}>
-                    <CardMedia
-                      component="img"
-                      image={image.url}
-                      alt={image.alt}
-                      sx={{
-                        height: 60,
-                        width: "100%",
-                        objectFit: "cover",
-                        borderRadius: 1,
-                        cursor: "pointer",
-                        "&:hover": {
-                          opacity: 0.8,
-                        },
-                      }}
-                      onClick={() => handleOpen(index + 1)}
-                    />
-                  </Grid>
-                ))}
-              </Grid>
-            </Box>
-          )}
-        </CardContent>
-
-        <CardActions sx={{ justifyContent: "space-between", p: 2, pt: 0 }}>
-          <Box>
-            <Typography variant="body2" color="text.secondary">
-              Desde
-            </Typography>
-            <Typography variant="h6" color="primary" fontWeight="bold">
-              {price}
-            </Typography>
-          </Box>
-          <Box>
-            {/* <Button 
-              variant="outlined" 
-              size="small"
-              sx={{ mr: 1 }}
-            >
-              INFO
-            </Button> */}
-            <Button variant="contained" size="small" color="primary">
-              RESERVAR
-            </Button>
-          </Box>
-        </CardActions>
+            Ver detalle
+          </Button>
+        </Box>
       </Card>
 
       {/* Dialog para vista previa de imágenes */}
@@ -317,9 +249,9 @@ const RoomCard: React.FC<RoomCardProps> = ({
                 borderRadius: 2,
               }}
             >
-              {images.map((_, index) => (
+              {images.map((image, index) => (
                 <Box
-                  key={index}
+                  key={image.id}
                   sx={{
                     width: 8,
                     height: 8,

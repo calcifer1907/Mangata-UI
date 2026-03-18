@@ -1,0 +1,99 @@
+.roomCard {
+  max-width: 420px;
+  width: 100%;
+  border-radius: 0;
+  box-shadow: none;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+
+.roomCardMediaWrap {
+  position: relative;
+}
+
+.roomCardMedia {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  transform: scale(1.02);
+}
+
+.roomCardGradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.2) 40%,
+    transparent 70%
+  );
+}
+
+.roomCardOverlayContent {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #ffffff;
+}
+
+.roomCardTitle {
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.roomCardSubtitle {
+  font-weight: 400;
+  opacity: 0.9;
+}
+
+.roomCardSubtitlePrice {
+  font-weight: 700;
+}
+
+.roomCardMetaRow {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: 8px;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.roomCardMetaItem {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.roomCardMoreChip {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.roomCardFooter {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 16px;
+  background-color: #1b1b1b;
+}
+
+.roomCardDetailButton {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.roomCardDetailButton:hover {
+  border-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.08);
+}
