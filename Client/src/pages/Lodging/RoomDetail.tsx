@@ -19,6 +19,11 @@ import RoomCard from "./RoomCard";
 import Footer from "../../components/Footer/Footer";
 import "./RoomDetail.css";
 
+import wifiIcon from "../../assets/Icons/wifi.svg";
+import bedIcon from "../../assets/Icons/Bed.svg";
+import towelIcon from "../../assets/Icons/Towel.svg";
+import showerIcon from "../../assets/Icons/Shower.svg";
+
 const RoomDetail = () => {
   const navigate = useNavigate();
   const { roomId } = useParams<{ roomId: string }>();
@@ -154,11 +159,7 @@ const RoomDetail = () => {
               {room.title}
             </Typography>
 
-            <Stack
-              direction="row"
-              spacing={1}
-              className="roomDetailChips"
-            >
+            <Stack direction="row" spacing={1} className="roomDetailChips">
               <Chip
                 label={`${room.roomCount} HABITACIONES`}
                 variant="outlined"
@@ -166,6 +167,33 @@ const RoomDetail = () => {
               <Chip label={`${room.maxCapacity} PERSONAS`} variant="outlined" />
               <Chip label={room.size} variant="outlined" />
             </Stack>
+
+            <Box className="roomDetailAmenities" aria-label="Amenidades">
+              <Box className="roomDetailAmenity">
+                <img
+                  src={wifiIcon}
+                  alt="WiFi"
+                  className="roomDetailAmenityIcon"
+                />
+                <Typography variant="body2">WiFi</Typography>
+              </Box>
+              <Box className="roomDetailAmenity">
+                <img
+                  src={towelIcon}
+                  alt="Ducha"
+                  className="roomDetailAmenityIcon"
+                />
+                <Typography variant="body2">Ducha</Typography>
+              </Box>
+              <Box className="roomDetailAmenity">
+                <img
+                  src={bedIcon}
+                  alt="Cama"
+                  className="roomDetailAmenityIcon"
+                />
+                <Typography variant="body2">Cama</Typography>
+              </Box>
+            </Box>
 
             <Typography
               variant="body1"
