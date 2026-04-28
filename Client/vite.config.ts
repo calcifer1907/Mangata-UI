@@ -9,6 +9,9 @@ export default defineConfig({
   plugins: [
     react({
       jsxRuntime: "automatic", // Compatible con React 19
+      babel: {
+        plugins: [],
+      },
     }),
     viteStaticCopy({
       targets: [
@@ -35,19 +38,9 @@ export default defineConfig({
     outDir: "dist",
     rollupOptions: {
       output: {
-        manualChunks(id: string) {
-          if (id.includes("node_modules")) {
-            if (id.includes("react") || id.includes("react-dom")) {
-              return "vendor-react";
-            }
-            if (id.includes("lodash")) {
-              return "vendor-lodash";
-            }
-            return "vendor";
-          }
-          if (id.includes("/utils/")) {
-            return "utils";
-          }
+        manualChunks: {
+          vendor: ["react", "react-dom"],
+          utils: ["lodash", "axios"],
         },
       },
     },
