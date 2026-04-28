@@ -9,9 +9,6 @@ export default defineConfig({
   plugins: [
     react({
       jsxRuntime: "automatic", // Compatible con React 19
-      babel: {
-        plugins: [],
-      },
     }),
     viteStaticCopy({
       targets: [
