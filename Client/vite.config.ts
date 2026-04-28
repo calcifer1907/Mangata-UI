@@ -38,9 +38,19 @@ export default defineConfig({
     outDir: "dist",
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ["react", "react-dom"],
-          utils: ["lodash", "axios"],
+        manualChunks(id: string) {
+          if (id.includes("node_modules")) {
+            if (id.includes("react") || id.includes("react-dom")) {
+              return "vendor-react";
+            }
+            if (id.includes("lodash")) {
+              return "vendor-lodash";
+            }
+            return "vendor";
+          }
+          if (id.includes("/utils/")) {
+            return "utils";
+          }
         },
       },
     },
