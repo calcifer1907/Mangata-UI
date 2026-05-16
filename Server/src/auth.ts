@@ -24,9 +24,9 @@ export const verifyToken = (token: string) => {
 };
 
 export const hashPassword = (password: string) => {
-  return bcrypt.hashSync(password, 10);
+  return bcrypt.hash(password, 10);
 };
 
 export const comparePassword = (password: string, hash: string) => {
-  return bcrypt.compareSync(password, hash);
+  return bcrypt.compare(password, hash);
 };

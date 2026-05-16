@@ -75,10 +75,6 @@ const App = () => {
             <Route path="/check-reservation" element={<CheckReservation />} />
             <Route path="/Login" element={<Login />} />
             <Route path="/Logout" element={<Logout />} />
-            {/* <Route
-              path="/PayMenetMethod"
-              element={<PayMenetMethod amount={10} payment_id={12} />}
-            /> */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Box>

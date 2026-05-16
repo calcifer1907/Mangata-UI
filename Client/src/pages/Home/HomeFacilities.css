@@ -1,0 +1,309 @@
+.home-facilities-section {
+  position: relative;
+  padding: clamp(1.5rem, 8vw, 4rem) 1.25rem;
+  overflow: hidden;
+}
+
+.home-facilities-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      ellipse 80% 60% at 10% 20%,
+      rgba(100, 144, 199, 0.12) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 70% 50% at 90% 80%,
+      rgba(185, 151, 52, 0.1) 0%,
+      transparent 50%
+    ),
+    linear-gradient(
+      180deg,
+      #fafbfd 0%,
+      #f3f7fc 45%,
+      var(--color-theme-sand-light) 100%
+    );
+  z-index: 0;
+}
+
+.home-facilities-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+/* Header */
+.home-facilities-header {
+  text-align: center;
+  margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.home-facilities-overline {
+  display: block;
+  font-size: 0.7rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-theme-harvest-gold) !important;
+  margin-bottom: 0.75rem !important;
+}
+
+.home-facilities-title {
+  font-size: clamp(1.5rem, 3.5vw, 2rem) !important;
+  font-weight: 700 !important;
+  color: var(--color-theme-dark-blue) !important;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1.25 !important;
+  margin: 0 !important;
+}
+
+.home-facilities-title-accent {
+  width: 56px;
+  height: 3px;
+  margin: 1rem auto 1.25rem;
+  border-radius: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-theme-harvest-gold),
+    transparent
+  );
+}
+
+.home-facilities-lead {
+  max-width: 520px;
+  margin: 0 auto !important;
+  font-size: 1rem !important;
+  line-height: 1.65 !important;
+  color: var(--color-theme-midnight-black) !important;
+  opacity: 0.78;
+}
+
+/* Main panel */
+.home-facilities-panel {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  background: var(--color-theme-white);
+  border-radius: 24px;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  box-shadow:
+    0 4px 6px rgba(43, 61, 94, 0.04),
+    0 24px 64px rgba(43, 61, 94, 0.1);
+  border: 1px solid rgba(43, 61, 94, 0.06);
+}
+
+@media (min-width: 900px) {
+  .home-facilities-panel {
+    grid-template-columns: 1fr 1.05fr;
+    gap: 2rem;
+    padding: 2rem;
+    align-items: stretch;
+  }
+}
+
+/* Image side */
+.home-facilities-visual {
+  position: relative;
+  min-height: 280px;
+}
+
+@media (min-width: 900px) {
+  .home-facilities-visual {
+    min-height: 100%;
+  }
+}
+
+
+
+.home-facilities-frame--front {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  min-height: 280px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(43, 61, 94, 0.18);
+}
+
+@media (min-width: 900px) {
+  .home-facilities-frame--front {
+    min-height: 480px;
+  }
+}
+
+.home-facilities-photo {
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+@media (min-width: 900px) {
+  .home-facilities-photo {
+    min-height: 480px;
+  }
+}
+
+.home-facilities-visual:hover .home-facilities-photo {
+  transform: scale(1.03);
+}
+
+.home-facilities-photo-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    0deg,
+    rgba(43, 61, 94, 0.75) 0%,
+    rgba(43, 61, 94, 0.15) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.home-facilities-photo-caption {
+  position: absolute !important;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.5rem 1.25rem !important;
+  color: var(--color-theme-white) !important;
+  font-size: 0.85rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  z-index: 2;
+}
+
+/* Content side */
+.home-facilities-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0.5rem 0;
+}
+
+@media (min-width: 900px) {
+  .home-facilities-content {
+    padding: 1rem 0.5rem 1rem 1rem;
+  }
+}
+
+.home-facilities-intro {
+  color: var(--color-theme-dark-blue) !important;
+  font-size: 1.05rem !important;
+  line-height: 1.8 !important;
+  margin-bottom: 1.75rem !important;
+  padding-left: 1rem;
+  border-left: 3px solid var(--color-theme-harvest-gold);
+}
+
+.home-facilities-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+@media (min-width: 520px) {
+  .home-facilities-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.85rem;
+  }
+}
+
+/* Facility cards */
+.home-facility-card {
+  --facility-accent: var(--color-theme-dark-blueLigth);
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.15rem;
+  border-radius: 14px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(243, 247, 252, 0.9) 100%
+  );
+  border: 1px solid rgba(43, 61, 94, 0.08);
+  box-shadow: 0 2px 8px rgba(43, 61, 94, 0.04);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+  overflow: hidden;
+}
+
+.home-facility-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--facility-accent);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.home-facility-card:hover {
+  transform: translateX(4px);
+  border-color: rgba(43, 61, 94, 0.14);
+  box-shadow: 0 8px 24px rgba(43, 61, 94, 0.1);
+}
+
+.home-facility-card:hover::before {
+  opacity: 1;
+}
+
+.home-facility-card-index {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.75rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--facility-accent);
+  opacity: 0.35;
+}
+
+.home-facility-card-icon-wrap {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--facility-accent) 18%, white),
+    color-mix(in srgb, var(--facility-accent) 8%, white)
+  );
+  border: 1px solid color-mix(in srgb, var(--facility-accent) 22%, transparent);
+  transition: transform 0.25s ease;
+}
+
+.home-facility-card:hover .home-facility-card-icon-wrap {
+  transform: scale(1.06);
+}
+
+.home-facility-card-icon {
+  color: var(--facility-accent) !important;
+  font-size: 1.35rem !important;
+}
+
+.home-facility-card-label {
+  flex: 1;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  color: var(--color-theme-dark-blue) !important;
+  line-height: 1.35 !important;
+  letter-spacing: 0.01em;
+}

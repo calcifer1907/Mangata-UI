@@ -1,178 +1,158 @@
-// import { useContextUser } from "../hooks/useContextUser";
-
-/**Libraries */
-import { Box, Typography } from "@mui/material";
-
-/**Component */
-import Card from "../../components/Cards/Cards";
-import YouTubeEmbed from "../../components/YouTubeEmbed/YouTubeEmbed";
-
-/** */
+import { Box, Container, Grid, Paper, Stack, Typography } from "@mui/material";
+import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
+import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import { useTranslation } from "react-i18next";
+
+import Card from "../../components/Cards/Cards";
 import Footer from "../../components/Footer/Footer";
 import InitialSummary from "../../components/Initialsummary/InitialSummary";
+import YouTubeEmbed from "../../components/YouTubeEmbed/YouTubeEmbed";
+import HomeFacilities from "./HomeFacilities";
 
 import "./styleHome.css";
 
+const MAP_EMBED_URL =
+  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1700.452588924178!2d-75.74653340145481!3d10.18260159812736!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e587d182be4842b%3A0x6b4b5e8abb065bdb!2sMangata!5e0!3m2!1ses!2sco!4v1744051915629!5m2!1ses!2sco";
+
+const serviceCards = [
+  {
+    titleKey: "TitleCardDayTrip",
+    img: "/images/MangataBeach.webp",
+    redirectTo: "/DayTrip",
+  },
+  {
+    titleKey: "titleCardLoding",
+    img: "/images/Hotel.webp",
+    redirectTo: "/Lodging",
+  },
+  {
+    titleKey: "titleCardBoat",
+    img: "/images/DayTrip/MangataBoat.webp",
+    redirectTo: "/Boat",
+  },
+  {
+    titleKey: "titleCardEvents",
+    img: "/images/Events.webp",
+    redirectTo: "/events",
+  },
+] as const;
+
 const Home = () => {
-  // const { userInfo } = useContextUser();
-  //   <a href="https://api.whatsapp.com/send?phone=573128198146&text=Hola como estas">
-  //   click me
-  // </a>
   const { t } = useTranslation("home");
+
   return (
-    <>
+    <Box component="main">
       <Box
         className="video-background-container"
-        sx={{
-          display: { xs: "none", md: "block", lg: "block" },
-        }}
+        sx={{ display: { xs: "none", md: "block" } }}
       >
         <YouTubeEmbed />
       </Box>
+
       <InitialSummary />
-      <Box
-        className="background-ligth-blue"
-        sx={{
-          height: { xs: "auto", xl: "400px" },
-          paddingBlock: { xs: 2, xl: 0 },
-          position: "relative",
-          marginBottom: 8,
-        }}
-      >
-        <Box
-          sx={{
-            position: { xs: "inherit", xl: "absolute" },
-            top: { xs: 0, lg: "-200px" },
-            width: "100%",
-            margin: "0 auto",
-          }}
-        >
+
+      <Box className="home-services-section background-ligth-blue">
+        <Container maxWidth="xl" className="home-services-container">
           <Typography
-            className="title-home"
+            component="h2"
+            className="title-home home-section-title"
             sx={{
               color: { xs: "#FFFFFF", md: "var(--color-theme-dark-blue)" },
             }}
           >
             {t("ourIncluded")}
           </Typography>
-          <Box className="d-flex align-items-center justify-content-center flex-wrap flex-row gap-50">
-            <Card
-              title={t("TitleCardDayTrip")}
-              img="/images/MangataBeach.webp"
-              button
-              redirectTo="/DayTrip"
-            />
-            <Card
-              title={t("titleCardLoding")}
-              img="/images/Hotel.webp"
-              button
-              redirectTo="/Lodging"
-            />
-            <Card
-              title={
-                t("titleDayTripDescription2") +
-                " " +
-                t("titleDayTripDescription3")
-              }
-              img="/images/DayTrip/MangataBoat.webp"
-              button
-              redirectTo="/Boat"
-            />
-            <Card
-              title={t("titleCardEvents")}
-              img="/images/Events.webp"
-              button
-              redirectTo="/events"
-            />
-          </Box>
-        </Box>
-      </Box>
-
-      <Box>
-        <Typography component="h2" className="color-blue-dark title-home">
-          {t("useOfFacilities")}
-        </Typography>
-        <Box className="d-flex flex-wrap gap-16 container-facilities">
-          <Box sx={{ width: { xs: "100%", md: "50%" } }}>
-            <Box
-              component="img"
-              src="/images/IMG_5002.webp"
-              sx={{ width: "100%", height: "600px", objectFit: "cover" }}
-            />
-          </Box>
-          <Box
+          <Typography
+            className="home-section-subtitle"
             sx={{
-              width: { xs: "100%", md: "45%" },
-              alignContent: "center",
-              padding: 3,
+              color: {
+                xs: "rgba(255,255,255,0.9)",
+                md: "var(--color-theme-dark-blue)",
+              },
             }}
           >
-            <Typography
-              sx={{
-                color: "var(--color-theme-dark-blue)",
-                fontWeight: "normal",
-                marginBlock: 2,
-              }}
-            >
-              {t("inOurClub")}{" "}
-            </Typography>
-            <Box
-              sx={{
-                color: "var(--color-theme-dark-blue)",
-                paddingInlineStart: 4,
-              }}
-            >
-              <ul>
-                <li>{t("SunbathingChairs")}</li>
-                <li>{t("Hammocks")} </li>
-                <li>{t("BalineseBeds")} </li>
-                <li>{t("Freshwater")} </li>
-                <li>{t("towelService")} </li>
-              </ul>
-            </Box>
+            {t("homeServicesSubtitle")}
+          </Typography>
+          <Box className="home-cards-grid">
+            {serviceCards.map(({ titleKey, img, redirectTo }) => (
+              <Card
+                key={redirectTo}
+                title={t(titleKey)}
+                img={img}
+                button
+                redirectTo={redirectTo}
+              />
+            ))}
           </Box>
-        </Box>
+        </Container>
       </Box>
 
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1700.452588924178!2d-75.74653340145481!3d10.18260159812736!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e587d182be4842b%3A0x6b4b5e8abb065bdb!2sMangata!5e0!3m2!1ses!2sco!4v1744051915629!5m2!1ses!2sco"
-        width="100%"
-        height="550"
-        style={{ border: 0 }}
-        allowFullScreen
-        loading="lazy"
-        referrerPolicy="no-referrer-when-downgrade"
-      />
-
-      <Box
-        sx={{
-          background: "var(--color-theme-sand-light)",
-          color: "var(--color-theme-dark-blue)",
-          padding: { xs: 2, md: 4, lg: 6 },
-          textAlign: "center",
-          height: "auto",
-          alignContent: "center",
-        }}
-      >
-        <Typography
-          sx={{
-            fontWeight: 600,
-            paddingBottom: 2,
-            fontSize: { xs: "1.2rem", md: "1.5rem" },
-          }}
-        >
-          {t("arrivalTime")}: 7:30 a.m.
-        </Typography>
-        <Typography
-          sx={{ fontWeight: 600, fontSize: { xs: "1.2rem", md: "1.5rem" } }}
-        >
-          {t("dockReturn")} 4:00 p.m.
-        </Typography>
+      <HomeFacilities />
+      <Box className="home-schedule">
+        <Container maxWidth="md">
+          <Typography component="h2" className="home-schedule-heading">
+            {t("homeScheduleTitle")}
+          </Typography>
+          <Grid container spacing={3} justifyContent="center">
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <Paper elevation={0} className="home-schedule-card">
+                <AccessTimeOutlinedIcon className="home-schedule-icon" />
+                <Typography className="home-schedule-label">
+                  {t("arrivalTime")}
+                </Typography>
+                <Typography className="home-schedule-time">
+                  7:30 a.m.
+                </Typography>
+              </Paper>
+            </Grid>
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <Paper elevation={0} className="home-schedule-card">
+                <AccessTimeOutlinedIcon className="home-schedule-icon" />
+                <Typography className="home-schedule-label">
+                  {t("dockReturn")}
+                </Typography>
+                <Typography className="home-schedule-time">
+                  4:00 p.m.
+                </Typography>
+              </Paper>
+            </Grid>
+          </Grid>
+        </Container>
+      </Box>
+      <Box className="home-map-section">
+        <Container maxWidth="lg">
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="center"
+            spacing={1}
+            className="home-map-header"
+          >
+            <PlaceOutlinedIcon className="home-map-icon" />
+            <Typography component="h2" className="title-home color-blue-dark">
+              {t("homeLocationTitle")}
+            </Typography>
+          </Stack>
+          <Typography className="home-map-subtitle" textAlign="center">
+            {t("IslandsSector")} · Zaragoza, Colombia
+          </Typography>
+        </Container>
+        <Box className="home-map-frame">
+          <iframe
+            title={t("homeLocationTitle")}
+            src={MAP_EMBED_URL}
+            width="100%"
+            height="450"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+        </Box>
       </Box>
 
       <Footer />
-    </>
+    </Box>
   );
 };
 

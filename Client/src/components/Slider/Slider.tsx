@@ -3,7 +3,6 @@ import {
   Box,
   IconButton,
   Typography,
-  Card,
   CardMedia,
   Stack,
   Fade,
@@ -42,6 +41,7 @@ interface ImageCarouselProps {
   transitionDuration?: number;
   variant?: "full" | "compact" | "card";
   showCounter?: boolean;
+  indicatorVariant?: "default" | "light";
 }
 
 const ImageCarousel: React.FC<ImageCarouselProps> = ({
@@ -57,7 +57,15 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({
   transitionDuration = 500,
   variant = "full",
   showCounter = false,
+  indicatorVariant = "default",
 }) => {
+  const activeIndicatorColor =
+    indicatorVariant === "light"
+      ? "var(--color-theme-harvest-gold)"
+      : "primary.main";
+  const inactiveIndicatorColor =
+    indicatorVariant === "light" ? "rgba(255, 255, 255, 0.45)" : "grey.400";
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(autoPlay);
   const [direction, setDirection] = useState<"left" | "right">("right");
@@ -111,11 +119,24 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({
   };
 
   return (
-    <Box sx={{ width, position: "relative", overflow: "hidden" }}>
-      {/* Contenedor principal */}
-      <Box sx={{ height, position: "relative" }}>
+    <Box
+      sx={{
+        width,
+        position: "relative",
+        overflow: "hidden",
+        boxShadow: "none",
+      }}
+    >
+      <Box sx={{ height, position: "relative", boxShadow: "none" }}>
         {renderTransition(
-          <Card sx={{ height: "100%", width: "100%", position: "absolute" }}>
+          <Box
+            sx={{
+              height: "100%",
+              width: "100%",
+              position: "absolute",
+              boxShadow: "none",
+            }}
+          >
             <CardMedia
               component="img"
               image={images[currentIndex].src}
@@ -124,6 +145,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({
                 height: "100%",
                 width: "100%",
                 objectFit: variant === "card" ? "contain" : "cover",
+                display: "block",
               }}
             />
 
@@ -153,7 +175,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({
                 )}
               </Box>
             )}
-          </Card>
+          </Box>
         )}
 
         {/* Controles de reproducción */}
@@ -227,8 +249,12 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({
             >
               <FiberManualRecord
                 sx={{
-                  fontSize: 12,
-                  color: index === currentIndex ? "primary.main" : "grey.400",
+                  fontSize: index === currentIndex ? 14 : 10,
+                  color:
+                    index === currentIndex
+                      ? activeIndicatorColor
+                      : inactiveIndicatorColor,
+                  transition: "all 0.25s ease",
                 }}
               />
             </IconButton>

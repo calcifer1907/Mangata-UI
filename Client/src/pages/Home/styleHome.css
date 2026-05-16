@@ -1,13 +1,135 @@
-.title-home {
-  font-size: 22px;
-  font-weight: 600;
-  margin-block: 2rem;
-  text-transform: uppercase;
-  text-align: center;
-  letter-spacing: 2px;
+.home-section {
+  padding: 3rem 1rem 4rem;
 }
 
-.container-facilities {
-  margin-block: 2rem;
-  min-height: 400px;
+.home-section-title {
+  margin-top: 0 !important;
+}
+
+.home-section-subtitle {
+  text-align: center;
+  max-width: 560px;
+  margin: -1rem auto 2rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  opacity: 0.92;
+}
+
+.home-services-section {
+  position: relative;
+  padding: 2rem 0 3rem;
+}
+
+.home-services-container {
+  position: relative;
+  top: 0;
+}
+
+@media (min-width: 1280px) {
+  .home-services-section {
+    padding-bottom: 5rem;
+  }
+
+  .home-services-container {
+    top: -180px;
+  }
+}
+
+.home-cards-grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: center;
+  gap: 2rem;
+  padding: 0 0.5rem;
+}
+
+.home-map-section {
+  background: #f5f8fc;
+}
+
+.home-map-header {
+  padding-top: 2.5rem;
+}
+
+.home-map-icon {
+  color: var(--color-theme-dark-blueLigth) !important;
+  font-size: 1.75rem !important;
+}
+
+.home-map-subtitle {
+  color: var(--color-theme-midnight-black) !important;
+  opacity: 0.8;
+  margin-bottom: 1.5rem !important;
+  font-size: 0.95rem !important;
+}
+
+.home-map-frame {
+  overflow: hidden;
+  line-height: 0;
+}
+
+.home-map-frame iframe {
+  display: block;
+  min-height: 380px;
+}
+
+@media (min-width: 768px) {
+  .home-map-frame iframe {
+    min-height: 450px;
+  }
+}
+
+.home-schedule {
+  background: var(--color-theme-sand-light);
+  padding: 3rem 1rem;
+}
+
+.home-schedule-heading {
+  text-align: center;
+  color: var(--color-theme-dark-blue) !important;
+  font-weight: 600 !important;
+  font-size: 1.25rem !important;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 2rem !important;
+}
+
+.home-schedule-card {
+  padding: 1.75rem 1.5rem !important;
+  text-align: center;
+  border-radius: 16px !important;
+  background: var(--color-theme-white) !important;
+  border: 1px solid rgba(43, 61, 94, 0.08);
+  height: 100%;
+}
+
+.home-schedule-icon {
+  color: var(--color-theme-harvest-gold) !important;
+  font-size: 2rem !important;
+  margin-bottom: 0.5rem;
+}
+
+.home-schedule-label {
+  color: var(--color-theme-dark-blue) !important;
+  font-size: 0.9rem !important;
+  font-weight: 500 !important;
+  line-height: 1.4 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.home-schedule-time {
+  color: var(--color-theme-dark-blue) !important;
+  font-size: 1.5rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em;
+}
+
+.title-home {
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  font-weight: 600;
+  margin-block: 2rem 1rem;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 0.12em;
 }
