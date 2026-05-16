@@ -19,7 +19,7 @@ import RoomCard from "./RoomCard";
 import Footer from "../../components/Footer/Footer";
 import "./RoomDetail.css";
 
-import wifiIcon from "../../assets/Icons/wifi.svg";
+import wifiIcon from "../../assets/Icons/Wifi.svg";
 import bedIcon from "../../assets/Icons/Bed.svg";
 import towelIcon from "../../assets/Icons/Towel.svg";
 
