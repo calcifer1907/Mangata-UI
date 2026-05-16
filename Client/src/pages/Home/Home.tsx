@@ -23,7 +23,7 @@ const serviceCards = [
   {
     titleKey: "titleCardLoding",
     img: "/images/Hotel.webp",
-    redirectTo: "/Lodging",
+    redirectTo: "https://engine.ayenda.co/mangata-beach-9a99c4fa-disabled-sale",
   },
   {
     titleKey: "titleCardBoat",
