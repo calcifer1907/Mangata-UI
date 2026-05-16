@@ -22,7 +22,6 @@ import "./RoomDetail.css";
 import wifiIcon from "../../assets/Icons/wifi.svg";
 import bedIcon from "../../assets/Icons/Bed.svg";
 import towelIcon from "../../assets/Icons/Towel.svg";
-import showerIcon from "../../assets/Icons/Shower.svg";
 
 const RoomDetail = () => {
   const navigate = useNavigate();
