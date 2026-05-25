@@ -1,12 +1,4 @@
-import {
-  Box,
-  Typography,
-  Button,
-  Paper,
-  useTheme,
-  Container,
-} from "@mui/material";
-import Grid2 from "@mui/material/Grid";
+import { Box, Typography, Button } from "@mui/material";
 import {
   Groups as GroupsIcon,
   AccessTime as TimeIcon,
@@ -18,9 +10,10 @@ import {
   CheckCircle as CheckIcon,
   NavigateNext as NavigateNextIcon,
   EventAvailable as EventIcon,
+  Anchor as AnchorIcon,
+  WaterDrop as WaterIcon,
 } from "@mui/icons-material";
 
-import "../Menu/styleMenu.css";
 import "./Boat.scss";
 import Footer from "../../components/Footer/Footer";
 
@@ -28,7 +21,10 @@ import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router";
 import ImageCarousel from "../../components/Slider/Slider";
 import Banner from "../../components/Banner/Banner";
-import { createEventsStyles } from "../Events/Events.styles";
+import {
+  useScrollReveal,
+  useScrollRevealMany,
+} from "../../hooks/useScrollReveal";
 import { useEffect } from "react";
 
 const sampleImages = [
@@ -69,314 +65,364 @@ const sampleImages = [
   },
 ];
 
+const features = [
+  {
+    icon: <GroupsIcon />,
+    titleKey: "boatCapacity",
+    fallback: "Capacidad",
+    descKey: "boatCapacityDescription",
+    descFallback: "Hasta 12 personas",
+  },
+  {
+    icon: <TimeIcon />,
+    titleKey: "boatDuration",
+    fallback: "Duración",
+    descKey: "boatDurationDescription",
+    descFallback: "4-8 horas personalizables",
+  },
+  {
+    icon: <BoatIconMUI />,
+    titleKey: "boatType",
+    fallback: "Tipo de Bote",
+    descKey: "boatTypeDescription",
+    descFallback: "Lancha rápida privada",
+  },
+  {
+    icon: <SecurityIcon />,
+    titleKey: "boatSafety",
+    fallback: "Seguridad",
+    descKey: "boatSafetyDescription",
+    descFallback: "Capitán experimentado y equipo de seguridad",
+  },
+];
+
+const experiences = [
+  {
+    icon: <BarIcon sx={{ fontSize: 24, color: "#fff" }} />,
+    titleKey: "sunsetTour",
+    fallback: "Tour al Atardecer",
+    descKey: "sunsetTourDesc",
+    descFallback: "Disfruta de un paseo al atardecer con vistas únicas",
+    image: "images/Boat/IMG-01.jpg",
+  },
+  {
+    icon: <MusicIcon sx={{ fontSize: 24, color: "#fff" }} />,
+    titleKey: "partyBoat",
+    fallback: "Bote Fiesta",
+    descKey: "partyBoatDesc",
+    descFallback: "Celebra con música, bebidas y diversión",
+    image: "images/Boat/IMG-04.jpg",
+  },
+  {
+    icon: <BoatIconMUI sx={{ fontSize: 24, color: "#fff" }} />,
+    titleKey: "IslasTour",
+    fallback: "Tour por las Islas",
+    descKey: "IslasTourDesc",
+    descFallback: "Explora las islas más hermosas de la región",
+    image: "images/Boat/IMG-05.jpg",
+  },
+];
+
 const Boat = () => {
-  const theme = useTheme();
   const { t } = useTranslation("home");
-  const styles = createEventsStyles(theme);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const { ref: introRef, isVisible: introVisible } = useScrollReveal();
+  const { ref: carouselRef, isVisible: carouselVisible } = useScrollReveal({
+    threshold: 0.1,
+  });
+  const { ref: featuresHeaderRef, isVisible: featuresHeaderVisible } =
+    useScrollReveal();
+  const { setRef: setFeatureRef, visible: featureVisible } =
+    useScrollRevealMany(features.length);
+  const { ref: itineraryRef, isVisible: itineraryVisible } = useScrollReveal();
+  const { ref: morningRef, isVisible: morningVisible } = useScrollReveal();
+  const { ref: afternoonRef, isVisible: afternoonVisible } = useScrollReveal();
+  const { ref: safetyImageRef, isVisible: safetyImageVisible } =
+    useScrollReveal({ threshold: 0.1 });
+  const { ref: safetyTextRef, isVisible: safetyTextVisible } = useScrollReveal({
+    threshold: 0.1,
+  });
+  const { ref: expHeaderRef, isVisible: expHeaderVisible } = useScrollReveal();
+  const { setRef: setExpRef, visible: expVisible } = useScrollRevealMany(
+    experiences.length,
+  );
+  const { ref: ctaRef, isVisible: ctaVisible } = useScrollReveal();
+
   return (
-    <Box>
+    <Box className="boat-page">
       <Banner
         title="titleDayTripDescription2"
         titleTwo="titleDayTripDescription3"
         description="descriptionBoat"
         linkButton="BoatRental"
       />
-      <Box>
-        <Box className="d-flex align-items-center justify-content-center flex-wrap flex-row gap-8"></Box>
+
+      {/* ── Intro Section ── */}
+      <Box
+        ref={introRef}
+        className={`boat-intro events-scroll-reveal ${introVisible ? "revealed" : ""}`}
+        component="section"
+      >
+        <span className="boat-intro-overline">
+          <AnchorIcon sx={{ fontSize: 14 }} />
+          {t("boatExperience") || "Experiencia Náutica"}
+        </span>
+        <Typography component="h2">{t("descriptionBoat")}</Typography>
+      </Box>
+
+      {/* ── Image Carousel ── */}
+      <Box
+        ref={carouselRef}
+        className={`boat-carousel-section events-scroll-reveal-scale ${carouselVisible ? "revealed" : ""}`}
+      >
+        <Box className="boat-carousel-wrapper">
+          <ImageCarousel
+            images={sampleImages}
+            height={window.innerWidth < 600 ? 420 : 560}
+            variant="full"
+            showIndicators
+            transition="slide"
+            showControls
+            autoPlaySpeed={4000}
+          />
+        </Box>
+      </Box>
+
+      {/* ── Features Section ── */}
+      <Box className="boat-features-section" component="section">
         <Box
-          className="d-flex align-items-center justify-content-center container-boat"
-          component="section"
+          ref={featuresHeaderRef}
+          className={`boat-section-header events-scroll-reveal ${featuresHeaderVisible ? "revealed" : ""}`}
         >
-          <Box className="initial-summary-image">
-            <ImageCarousel
-              images={sampleImages}
-              height={window.innerWidth < 600 ? 500 : 650}
-              variant="full"
-              showIndicators={true}
-              transition="slide"
-              showControls
-              autoPlaySpeed={4000}
-            />
-          </Box>
-          <Box className="d-flex align-items-center justify-content-center flex-direction-column  text-align-center content-descrition-plates">
-            <Typography
-              component="p"
-              className="boat-description-text"
-              sx={{
-                maxWidth: { xs: "90%", md: "80%", lg: "60%" },
-                fontSize: { xs: "1rem", md: "1.2rem" },
-              }}
+          <Typography component="h2">
+            {t("boatFeatures") || "Características del Bote"}
+          </Typography>
+          <Box className="boat-section-divider" />
+        </Box>
+
+        <Box className="boat-features-grid">
+          {features.map((feat, i) => (
+            <Box
+              key={feat.titleKey}
+              ref={setFeatureRef(i)}
+              className={`boat-feature-item events-scroll-reveal ${featureVisible[i] ? "revealed" : ""}`}
+              sx={{ transitionDelay: `${i * 0.1}s` }}
             >
-              {t("descriptionBoat")}
-            </Typography>
+              <Box className="boat-feature-icon-circle">{feat.icon}</Box>
+              <Typography component="h3">
+                {t(feat.titleKey) || feat.fallback}
+              </Typography>
+              <Typography component="p">
+                {t(feat.descKey) || feat.descFallback}
+              </Typography>
+            </Box>
+          ))}
+        </Box>
+      </Box>
+
+      {/* ── Itinerary Section ── */}
+      <Box className="boat-itinerary-section" component="section">
+        <Box
+          ref={itineraryRef}
+          className={`boat-section-header events-scroll-reveal ${itineraryVisible ? "revealed" : ""}`}
+        >
+          <Typography component="h2">
+            {t("boatItinerary") || "Itinerario Sugerido"}
+          </Typography>
+          <Box className="boat-section-divider" />
+        </Box>
+
+        <Box className="boat-timeline">
+          <Box className="boat-timeline-line" />
+
+          <Box
+            ref={morningRef}
+            className={`boat-timeline-block events-scroll-reveal-left ${morningVisible ? "revealed" : ""}`}
+          >
+            <Box className="boat-timeline-dot morning" />
+            <Box className="boat-timeline-card morning">
+              <Box className="boat-timeline-card-header">
+                <SunIcon />
+                <Typography component="h3">
+                  {t("morningSchedule") || "Mañana"}
+                </Typography>
+              </Box>
+              <Box className="boat-timeline-items">
+                <Box className="boat-timeline-entry">
+                  <span className="boat-time">8:00 AM</span>
+                  <span className="boat-activity">
+                    {t("departureTime") || "Salida desde el muelle"}
+                  </span>
+                </Box>
+                <Box className="boat-timeline-entry">
+                  <span className="boat-time">9:00 AM</span>
+                  <span className="boat-activity">
+                    {t("islandTour") || "Recorrido por las islas"}
+                  </span>
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+
+          <Box
+            ref={afternoonRef}
+            className={`boat-timeline-block right events-scroll-reveal-right ${afternoonVisible ? "revealed" : ""}`}
+          >
+            <Box className="boat-timeline-dot afternoon" />
+            <Box className="boat-timeline-card afternoon">
+              <Box className="boat-timeline-card-header">
+                <SunIcon />
+                <Typography component="h3">
+                  {t("afternoonSchedule") || "Tarde"}
+                </Typography>
+              </Box>
+              <Box className="boat-timeline-items">
+                <Box className="boat-timeline-entry">
+                  <span className="boat-time">12:00 PM</span>
+                  <span className="boat-activity">
+                    {t("lunchBreak") || "Almuerzo en playa"}
+                  </span>
+                </Box>
+                <Box className="boat-timeline-entry">
+                  <span className="boat-time">2:00 PM</span>
+                  <span className="boat-activity">
+                    {t("relaxTime") || "Tiempo de relajación"}
+                  </span>
+                </Box>
+                <Box className="boat-timeline-entry">
+                  <span className="boat-time">4:00 PM</span>
+                  <span className="boat-activity">
+                    {t("returnTime") || "Regreso al muelle"}
+                  </span>
+                </Box>
+              </Box>
+            </Box>
           </Box>
         </Box>
       </Box>
 
-      {/* Sección de Características del Bote */}
-      <Box
-        className="boat-section-container"
-        sx={{
-          maxWidth: { xs: "95%", md: "90%", lg: "85%" },
-          paddingBlock: { xs: 4, md: 6 },
-        }}
-      >
-        <Typography
-          className="color-blue-dark title-home boat-section-title"
-          sx={{
-            fontSize: { xs: "1.8rem", md: "2.5rem" },
-          }}
-        >
-          {t("boatFeatures") || "Características del Bote"}
-        </Typography>
-        <Grid2 container spacing={3} className="boat-features-grid">
-          <Grid2 size={{ xs: 12, sm: 6, md: 3 }}>
-            <Paper elevation={3} className="boat-feature-card">
-              <GroupsIcon className="boat-feature-icon" />
-              <Typography variant="h6" fontWeight="bold" gutterBottom>
-                {t("boatCapacity") || "Capacidad"}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {t("boatCapacityDescription") || "Hasta 12 personas"}
-              </Typography>
-            </Paper>
-          </Grid2>
-          <Grid2 size={{ xs: 12, sm: 6, md: 3 }}>
-            <Paper elevation={3} className="boat-feature-card">
-              <TimeIcon className="boat-feature-icon" />
-              <Typography variant="h6" fontWeight="bold" gutterBottom>
-                {t("boatDuration") || "Duración"}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {t("boatDurationDescription") || "4-8 horas personalizables"}
-              </Typography>
-            </Paper>
-          </Grid2>
-          <Grid2 size={{ xs: 12, sm: 6, md: 3 }}>
-            <Paper elevation={3} className="boat-feature-card">
-              <BoatIconMUI className="boat-feature-icon" />
-              <Typography variant="h6" fontWeight="bold" gutterBottom>
-                {t("boatType") || "Tipo de Bote"}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {t("boatTypeDescription") || "Lancha rápida privada"}
-              </Typography>
-            </Paper>
-          </Grid2>
-          <Grid2 size={{ xs: 12, sm: 6, md: 3 }}>
-            <Paper elevation={3} className="boat-feature-card">
-              <SecurityIcon className="boat-feature-icon" />
-              <Typography variant="h6" fontWeight="bold" gutterBottom>
-                {t("boatSafety") || "Seguridad"}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {t("boatSafetyDescription") ||
-                  "Capitán experimentado y equipo de seguridad"}
-              </Typography>
-            </Paper>
-          </Grid2>
-        </Grid2>
-      </Box>
-
-      {/* Sección de Itinerario */}
-      <Box
-        className="boat-section-container"
-        sx={{
-          maxWidth: { xs: "95%", md: "80%", lg: "70%" },
-          paddingBlock: { xs: 4, md: 6 },
-        }}
-      >
-        <Typography
-          className="color-blue-dark title-home boat-section-title"
-          sx={{
-            fontSize: { xs: "1.8rem", md: "2.5rem" },
-          }}
-        >
-          {t("boatItinerary") || "Itinerario Sugerido"}
-        </Typography>
-        <Grid2 container spacing={3}>
-          <Grid2 size={{ xs: 12, md: 6 }}>
-            <Paper
-              elevation={2}
-              className="boat-itinerary-card boat-itinerary-card-morning"
-            >
-              <Box className="boat-itinerary-header">
-                <SunIcon className="boat-itinerary-icon-morning" />
-                <Typography variant="h6" fontWeight="bold">
-                  {t("morningSchedule") || "Mañana"}
-                </Typography>
-              </Box>
-              <Box className="boat-itinerary-content">
-                <Typography
-                  variant="body1"
-                  className="color-black-opacity boat-itinerary-item"
-                >
-                  <strong>8:00 AM</strong> -{" "}
-                  {t("departureTime") || "Salida desde el muelle"}
-                </Typography>
-                <Typography
-                  variant="body1"
-                  className="color-black-opacity boat-itinerary-item"
-                >
-                  <strong>9:00 AM</strong> -{" "}
-                  {t("islandTour") || "Recorrido por las islas"}
-                </Typography>
-              </Box>
-            </Paper>
-          </Grid2>
-          <Grid2 size={{ xs: 12, md: 6 }}>
-            <Paper
-              elevation={2}
-              className="boat-itinerary-card boat-itinerary-card-afternoon"
-            >
-              <Box className="boat-itinerary-header">
-                <SunIcon className="boat-itinerary-icon-afternoon" />
-                <Typography variant="h6" fontWeight="bold">
-                  {t("afternoonSchedule") || "Tarde"}
-                </Typography>
-              </Box>
-              <Box className="boat-itinerary-content">
-                <Typography
-                  variant="body1"
-                  className="color-black-opacity boat-itinerary-item"
-                >
-                  <strong>12:00 PM</strong> -{" "}
-                  {t("lunchBreak") || "Almuerzo en playa"}
-                </Typography>
-                <Typography
-                  variant="body1"
-                  className="color-black-opacity boat-itinerary-item"
-                >
-                  <strong>2:00 PM</strong> -{" "}
-                  {t("relaxTime") || "Tiempo de relajación"}
-                </Typography>
-                <Typography
-                  variant="body1"
-                  className="color-black-opacity boat-itinerary-item"
-                >
-                  <strong>4:00 PM</strong> -{" "}
-                  {t("returnTime") || "Regreso al muelle"}
-                </Typography>
-              </Box>
-            </Paper>
-          </Grid2>
-          <Grid2 size={{ xs: 12, md: 6 }}>
-            <Paper
-              elevation={3}
-              className="boat-recommendations-card boat-recommendations-card-safety"
-            >
-              <Box className="boat-recommendations-header">
-                <SecurityIcon className="boat-recommendations-icon-safety" />
-                <Typography
-                  variant="h5"
-                  fontWeight="bold"
-                  className="boat-safety-title"
-                >
-                  {t("safetyRecommendations") || "Recomendaciones de Seguridad"}
-                </Typography>
-              </Box>
-              <Box className="boat-recommendations-content">
-                {[
-                  t("safetyLifeJacket") || "Chalecos salvavidas incluidos",
-                  t("safetyCaptain") || "Capitán certificado y experimentado",
-                  t("safetyFirstAid") || "Botiquín de primeros auxilios",
-                  t("safetyCommunication") || "Equipo de comunicación a bordo",
-                ].map((item, index) => (
-                  <Box key={index} className="boat-recommendations-item">
-                    <CheckIcon className="boat-recommendations-check-icon" />
-                    <Typography variant="body1" className="color-black-opacity">
-                      {item}
-                    </Typography>
-                  </Box>
-                ))}
-              </Box>
-            </Paper>
-          </Grid2>
-        </Grid2>
-      </Box>
-
-      {/* Sección de Experiencias Adicionales */}
-      <Box
-        className="boat-section-container"
-        sx={{
-          maxWidth: { xs: "95%", md: "85%" },
-          paddingBlock: { xs: 4, md: 6 },
-        }}
-      >
-        <Typography
-          className="color-blue-dark title-home boat-section-title"
-          sx={{
-            fontSize: { xs: "1.8rem", md: "2.5rem" },
-          }}
-        >
-          {t("additionalExperiences") || "Experiencias Adicionales"}
-        </Typography>
-        <Grid2 container spacing={4}>
-          {[
-            {
-              icon: <BarIcon />,
-              title: t("sunsetTour") || "Tour al Atardecer",
-              description: t("sunsetTourDesc"),
-            },
-            {
-              icon: <MusicIcon />,
-              title: t("partyBoat") || "Bote Fiesta",
-              description:
-                t("partyBoatDesc") || "Celebra con música, bebidas y diversión",
-            },
-            {
-              icon: <BoatIconMUI />,
-              title: t("IslasTour"),
-              description: t("IslasTourDesc"),
-            },
-          ].map((experience, index) => (
-            <Grid2 key={index} size={{ xs: 12, sm: 6, md: 4 }}>
-              <Paper elevation={2} className="boat-experience-card">
-                <Box className="boat-experience-icon-container">
-                  {experience.icon}
-                </Box>
-                <Typography variant="h6" fontWeight="bold" gutterBottom>
-                  {experience.title}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {experience.description}
-                </Typography>
-              </Paper>
-            </Grid2>
-          ))}
-        </Grid2>
-      </Box>
-
-      {/* Call to Action Final */}
-      <Container maxWidth="lg" sx={styles.container}>
-        <Paper elevation={0} sx={styles.ctaPaper}>
-          <Box sx={styles.ctaOverlay} />
-
-          <Typography variant="h4" component="h3" sx={styles.ctaTitle}>
-            {t("readyForAdventure")}
-          </Typography>
-
-          <Typography variant="h6" sx={styles.ctaSubtitle}>
-            {t("bookNowMessage")}
-          </Typography>
-
-          <Button
-            variant="contained"
-            size="large"
-            startIcon={<EventIcon />}
-            endIcon={<NavigateNextIcon />}
-            component={NavLink}
-            to="/BoatRental"
-            sx={styles.ctaButton}
+      {/* ── Safety Split Section ── */}
+      <Box className="boat-fullwidth-section">
+        <Box className="boat-split-container">
+          <Box
+            ref={safetyImageRef}
+            className={`boat-split-image events-scroll-reveal-left ${safetyImageVisible ? "revealed" : ""}`}
           >
-            {t("Reserve")}
-          </Button>
-        </Paper>
-      </Container>
+            <Box
+              component="img"
+              src="images/Boat/IMG-02.jpg"
+              alt="Boat Safety"
+              loading="lazy"
+            />
+          </Box>
+
+          <Box
+            ref={safetyTextRef}
+            className={`boat-split-text events-scroll-reveal-right ${safetyTextVisible ? "revealed" : ""}`}
+          >
+            <span className="boat-split-overline">
+              <SecurityIcon sx={{ fontSize: 14 }} />
+              {t("safetyRecommendations") || "Seguridad"}
+            </span>
+            <Typography component="h2">
+              {t("safetyRecommendations") || "Recomendaciones de Seguridad"}
+            </Typography>
+            <Typography component="p" className="boat-split-subtitle">
+              {t("boatSafetyDescription") ||
+                "Tu seguridad es nuestra prioridad. Navegamos con los más altos estándares."}
+            </Typography>
+            <Box className="boat-safety-list">
+              {[
+                t("safetyLifeJacket") || "Chalecos salvavidas incluidos",
+                t("safetyCaptain") || "Capitán certificado y experimentado",
+                t("safetyFirstAid") || "Botiquín de primeros auxilios",
+                t("safetyCommunication") || "Equipo de comunicación a bordo",
+              ].map((item, index) => (
+                <Box key={index} className="boat-safety-item">
+                  <CheckIcon />
+                  <span>{item}</span>
+                </Box>
+              ))}
+            </Box>
+          </Box>
+        </Box>
+      </Box>
+
+      {/* ── Experiences Section ── */}
+      <Box className="boat-experiences-section" component="section">
+        <Box
+          ref={expHeaderRef}
+          className={`boat-section-header events-scroll-reveal ${expHeaderVisible ? "revealed" : ""}`}
+        >
+          <span className="boat-intro-overline">
+            <WaterIcon sx={{ fontSize: 14 }} />
+            {t("additionalExperiences") || "Experiencias"}
+          </span>
+          <Typography component="h2">
+            {t("additionalExperiences") || "Experiencias Adicionales"}
+          </Typography>
+          <Box className="boat-section-divider" />
+        </Box>
+
+        <Box className="boat-experiences-track">
+          {experiences.map((exp, i) => (
+            <Box
+              key={exp.titleKey}
+              ref={setExpRef(i)}
+              className={`boat-experience-showcase ${i % 2 !== 0 ? "reverse" : ""} ${
+                i % 2 === 0
+                  ? "events-scroll-reveal-left"
+                  : "events-scroll-reveal-right"
+              } ${expVisible[i] ? "revealed" : ""}`}
+              sx={{ transitionDelay: `${i * 0.05}s` }}
+            >
+              <Box className="boat-experience-image">
+                <Box
+                  component="img"
+                  src={exp.image}
+                  alt={t(exp.titleKey) || exp.fallback}
+                  loading="lazy"
+                />
+                <Box className="boat-experience-icon-badge">{exp.icon}</Box>
+              </Box>
+
+              <Box className="boat-experience-content">
+                <Box className="boat-experience-line" />
+                <Typography component="h3">
+                  {t(exp.titleKey) || exp.fallback}
+                </Typography>
+                <Typography component="p">
+                  {t(exp.descKey) || exp.descFallback}
+                </Typography>
+              </Box>
+            </Box>
+          ))}
+        </Box>
+      </Box>
+
+      {/* ── CTA Section ── */}
+      <Box
+        ref={ctaRef}
+        className={`boat-cta events-scroll-reveal-scale ${ctaVisible ? "revealed" : ""}`}
+        component="section"
+      >
+        <Typography component="h3">{t("readyForAdventure")}</Typography>
+        <Typography component="p">{t("bookNowMessage")}</Typography>
+        <Button
+          component={NavLink}
+          to="/BoatRental"
+          className="boat-cta-btn"
+          disableRipple
+        >
+          <EventIcon sx={{ fontSize: 20 }} />
+          <span>{t("Reserve")}</span>
+          <NavigateNextIcon sx={{ fontSize: 20 }} />
+        </Button>
+      </Box>
 
       <Footer />
     </Box>

@@ -28,8 +28,8 @@ import Events from "./pages/Events/Events";
 import Menu from "./pages/Menu/Menu";
 import Boat from "./pages/Boat/Boat";
 import BoartReservations from "./pages/Boat/BoatReservations";
-import WhatsAppFloatingButton from "./components/WhatsAppFloatingButton/WhatsAppFloatingButton";
 import ScrollToTopButton from "./components/ScrollToTopButton/ScrollToTopButton";
+import ChatBot from "./components/ChatBot/ChatBot";
 
 import { useEffect } from "react";
 
@@ -79,7 +79,7 @@ const App = () => {
           </Routes>
         </Box>
         <ScrollToTopButton />
-        <WhatsAppFloatingButton />
+        <ChatBot />
       </ContextUser>
     </Router>
   );

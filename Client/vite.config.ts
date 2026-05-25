@@ -40,7 +40,7 @@ export default defineConfig({
       output: {
         manualChunks: {
           vendor: ["react", "react-dom"],
-          utils: ["lodash", "axios"],
+          utils: ["axios"],
         },
       },
     },
