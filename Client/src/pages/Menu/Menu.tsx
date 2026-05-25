@@ -4,7 +4,6 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
-import Fab from "@mui/material/Fab";
 import IconButton from "@mui/material/IconButton";
 
 import { Document, Page, pdfjs } from "react-pdf";
@@ -25,9 +24,55 @@ import Footer from "../../components/Footer/Footer";
 import Loading from "../../components/Loading/Loading";
 import Banner from "../../components/Banner/Banner";
 import { buildWhatsAppUrl } from "../../generalFunctions/generalFunction";
+import {
+  useScrollReveal,
+  useScrollRevealMany,
+} from "../../hooks/useScrollReveal";
 
-// Configurar el worker de PDF.js usando Vite
 pdfjs.GlobalWorkerOptions.workerSrc = workerUrl;
+
+interface DishData {
+  name: string;
+  descKey: string;
+  image: string;
+  label: string;
+}
+
+const FEATURED_DISHES: DishData[] = [
+  {
+    name: "miscela caraibica",
+    descKey: "miscela",
+    image: "/images/lunche/FOTOS PLATOS/caribeña_adicional.webp",
+    label: "Specialità",
+  },
+  {
+    name: "fra amici",
+    descKey: "fraAmici",
+    image: "/images/lunche/FOTOS PLATOS/fra_amici_adicional.webp",
+    label: "Classico",
+  },
+];
+
+const GRID_DISHES: DishData[] = [
+  {
+    name: "delizia del mare",
+    descKey: "dish5811",
+    image: "/images/lunche/FOTOS PLATOS/IMG_5811.webp",
+    label: "Dal Mare",
+  },
+  {
+    name: "sapore tropicale",
+    descKey: "dish5812",
+    image: "/images/lunche/FOTOS PLATOS/IMG_5812.webp",
+    label: "Tropicale",
+  },
+  {
+    name: "brezza caraibica",
+    descKey: "dish5813",
+    image: "/images/lunche/FOTOS PLATOS/IMG_5813.webp",
+    label: "Tradizionale",
+  },
+];
 
 const Menu = () => {
   const [open, setOpen] = useState(false);
@@ -44,6 +89,17 @@ const Menu = () => {
   const href = buildWhatsAppUrl(DEFAULT_PHONE_NUMBER, DEFAULT_MESSAGE);
 
   const { t } = useTranslation("home");
+
+  const { ref: ctaRef, isVisible: ctaVisible } = useScrollReveal();
+  const { ref: sectionTitleRef, isVisible: sectionTitleVisible } =
+    useScrollReveal();
+  const { ref: highlightRef, isVisible: highlightVisible } = useScrollReveal();
+  const { setRef: setDishRef, visible: dishVisible } = useScrollRevealMany(
+    FEATURED_DISHES.length,
+  );
+  const { setRef: setGridRef, visible: gridVisible } = useScrollRevealMany(
+    GRID_DISHES.length,
+  );
 
   const handleOpen = () => {
     setOpen(true);
@@ -72,15 +128,11 @@ const Menu = () => {
   }
 
   const goToPrevPage = () => {
-    if (pageNumber > 1) {
-      setPageNumber(pageNumber - 1);
-    }
+    if (pageNumber > 1) setPageNumber(pageNumber - 1);
   };
 
   const goToNextPage = () => {
-    if (numPages && pageNumber < numPages) {
-      setPageNumber(pageNumber + 1);
-    }
+    if (numPages && pageNumber < numPages) setPageNumber(pageNumber + 1);
   };
 
   return (
@@ -95,126 +147,121 @@ const Menu = () => {
       />
 
       <Box className="container-menu-plates" component="section">
+        {/* ── Private Vessel CTA ── */}
         <Box
-          sx={{
-            textAlign: "center",
-            padding: "2rem",
-            background:
-              "linear-gradient(180deg, rgba(21, 101, 192, 0.92) 0%, rgba(21, 101, 192, 0.86) 100%)",
-            borderRadius: "0.5rem",
-          }}
+          ref={ctaRef}
+          className={`private-vessel-cta scroll-reveal ${ctaVisible ? "revealed" : ""}`}
         >
           <Typography
-            component="h1"
+            component="h2"
             sx={{
-              fontSize: { xs: "1.5rem", md: "2rem" },
-              marginBottom: "2rem",
+              fontSize: { xs: "1.4rem", md: "2rem" },
+              fontWeight: 300,
               color: "#fff",
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              mb: 3,
+              position: "relative",
+              zIndex: 1,
             }}
           >
             {t("privateVessel")}
           </Typography>
-
-          <Fab
-            component="a"
+          <a
+            className="private-vessel-btn"
             href={href}
             target="_blank"
             rel="noopener noreferrer"
             aria-label={DEFAULT_PHONE_NUMBER}
-            sx={{
-              borderRadius: "0.5rem",
-              backgroundColor: "#fff",
-              padding: "0.5rem 1rem",
-              width: "fit-content",
-            }}
           >
-            <Box className="d-flex align-items-center justify-content-center gap-1">
-              <Typography
-                variant="body2"
-                sx={{
-                  marginRight: "0.5rem",
-                  fontSize: { xs: "1rem", md: "1.2rem" },
-                  textTransform: "uppercase",
-                  color: "#1b7fcccc",
-                  fontWeight: "bold",
-                }}
-              >
-                {t("reservePrivate")}
-              </Typography>
-              <WhatsAppIcon sx={{ color: "#25D366" }} />
-            </Box>
-          </Fab>
+            <span>{t("reservePrivate")}</span>
+            <WhatsAppIcon sx={{ color: "#25D366", fontSize: 22 }} />
+          </a>
         </Box>
-        <Box>
-          <Typography
-            component="h1"
-            className="title-menu-some-plates"
-            sx={{
-              fontSize: { xs: "2rem", md: "3.2rem" },
-            }}
-          >
-            {t("someDises")}
-          </Typography>
+
+        {/* ── Featured Dishes — Sticky Section ── */}
+        <Box className="dishes-sticky-section" component="section">
           <Box
-            className="d-flex align-items-center justify-content-around flex-wrap gap-8"
-            sx={{ flexDirection: { xs: "column-reverse", lg: "row" } }}
+            ref={sectionTitleRef}
+            className={`dishes-sticky-header scroll-reveal ${sectionTitleVisible ? "revealed" : ""}`}
           >
-            <Box
-              component="img"
-              src="/images/lunche/FOTOS PLATOS/caribeña_adicional.webp"
-              alt="Platos de Mangata"
-              sx={{
-                width: { xs: "85%", lg: 600 },
-                height: { xs: 500, lg: 800 },
-              }}
-              loading="lazy"
-            />
-            <Box
-              className="d-flex align-items-center justify-content-center flex-direction-column text-align-center content-descrition-plates"
-              sx={{ gap: { xs: 1, lg: 5 }, width: { xs: "100%", lg: "50%" } }}
+            <Typography
+              component="h2"
+              className="title-menu-some-plates"
+              sx={{ fontSize: { xs: "2rem", md: "2.8rem" } }}
             >
-              <Typography component="h1">miscela caraibica</Typography>
-              <Typography
-                component="p"
-                sx={{
-                  maxWidth: { xs: "90%", md: "80%", lg: "60%" },
-                }}
+              {t("someDises")}
+            </Typography>
+            <Box className="menu-section-divider" />
+          </Box>
+
+          <Box className="dishes-scroll-track">
+            {FEATURED_DISHES.map((dish, i) => (
+              <Box
+                key={dish.descKey}
+                ref={setDishRef(i)}
+                className={`dish-showcase ${i % 2 !== 0 ? "reverse" : ""} scroll-reveal ${dishVisible[i] ? "revealed" : ""}`}
+                sx={{ transitionDelay: `${i * 0.08}s` }}
               >
-                {t("miscela")}
-              </Typography>
-            </Box>
+                <Box className="dish-image-wrapper">
+                  <Box
+                    component="img"
+                    src={dish.image}
+                    alt={dish.name}
+                    loading="lazy"
+                  />
+                </Box>
+                <Box className="dish-content">
+                  <span className="dish-label">{dish.label}</span>
+                  <Typography component="h3">{dish.name}</Typography>
+                  <Typography component="p">{t(dish.descKey)}</Typography>
+                </Box>
+              </Box>
+            ))}
           </Box>
         </Box>
-        <Box>
-          <Box className="d-flex align-items-center justify-content-around flex-wrap gap-8">
+
+        {/* ── Highlight band ── */}
+        <Box
+          ref={highlightRef}
+          className={`menu-highlight-band scroll-reveal ${highlightVisible ? "revealed" : ""}`}
+        >
+          <Typography component="h2" className="highlight-title">
+            {t("menuHighlightTitle")}
+          </Typography>
+          <Typography component="p" className="highlight-subtitle">
+            {t("menuHighlightSubtitle")}
+          </Typography>
+        </Box>
+
+        {/* ── More Dishes Grid ── */}
+        <Box className="dishes-grid-section" component="section">
+          {GRID_DISHES.map((dish, i) => (
             <Box
-              className="d-flex align-items-center justify-content-center flex-direction-column text-align-center content-descrition-plates"
-              sx={{ gap: { xs: 1, lg: 5 }, width: { xs: "100%", lg: "50%" } }}
+              key={dish.descKey}
+              ref={setGridRef(i)}
+              className={`dish-grid-card scroll-reveal ${gridVisible[i] ? "revealed" : ""}`}
+              sx={{ transitionDelay: `${i * 0.1}s` }}
             >
-              <Typography component="h1">fra amici</Typography>
-              <Typography
-                component="p"
-                sx={{
-                  maxWidth: { xs: "90%", md: "80%", lg: "60%" },
-                }}
-              >
-                {t("fraAmici")}
-              </Typography>
+              <Box className="dish-grid-image">
+                <Box
+                  component="img"
+                  src={dish.image}
+                  alt={dish.name}
+                  loading="lazy"
+                />
+                <span className="dish-grid-label">{dish.label}</span>
+              </Box>
+              <Box className="dish-grid-body">
+                <Typography component="h3">{dish.name}</Typography>
+                <Typography component="p">{t(dish.descKey)}</Typography>
+              </Box>
             </Box>
-            <Box
-              component="img"
-              src="/images/lunche/FOTOS PLATOS/fra_amici_adicional.webp"
-              alt="Platos de Mangata"
-              sx={{
-                width: { xs: "85%", lg: 600 },
-                height: { xs: 400, lg: 700 },
-              }}
-              loading="lazy"
-            />
-          </Box>
+          ))}
         </Box>
       </Box>
 
+      {/* ── PDF Menu Dialog ── */}
       <Dialog
         open={open}
         onClose={handleClose}
@@ -225,18 +272,12 @@ const Menu = () => {
             maxHeight: "90vh",
             display: "flex",
             flexDirection: "column",
+            borderRadius: "16px",
+            overflow: "hidden",
           },
         }}
       >
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            padding: "1rem",
-            borderBottom: "1px solid #e0e0e0",
-          }}
-        >
+        <Box className="menu-dialog-header">
           <Typography variant="h6">{t("Menu")}</Typography>
           <IconButton onClick={handleClose}>
             <CloseIcon />
@@ -250,6 +291,7 @@ const Menu = () => {
             overflow: "auto",
             padding: "2rem",
             minHeight: 600,
+            background: "#fafbfd",
           }}
         >
           <Document
@@ -259,13 +301,13 @@ const Menu = () => {
             loading={<Loading />}
             error={
               <Box sx={{ padding: "2rem", textAlign: "center" }}>
-                <Typography sx={{ color: "error.main", marginBottom: "1rem" }}>
+                <Typography sx={{ color: "error.main", mb: 1 }}>
                   {t("errorPDF")}
                 </Typography>
                 {documentError && (
                   <Typography
                     variant="body2"
-                    sx={{ color: "text.secondary", marginBottom: "0.5rem" }}
+                    sx={{ color: "text.secondary", mb: 0.5 }}
                   >
                     {documentError}
                   </Typography>
@@ -276,7 +318,14 @@ const Menu = () => {
               </Box>
             }
           >
-            <Box sx={{ marginBottom: "1rem" }}>
+            <Box
+              sx={{
+                mb: 1,
+                borderRadius: "8px",
+                overflow: "hidden",
+                boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
+              }}
+            >
               <Page
                 pageNumber={pageNumber}
                 width={Math.min(800, window.innerWidth - 100)}
@@ -287,28 +336,26 @@ const Menu = () => {
             </Box>
           </Document>
           {numPages && numPages > 1 && (
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: "1rem",
-                marginTop: "1rem",
-              }}
-            >
+            <Box className="menu-pdf-nav">
               <IconButton
                 onClick={goToPrevPage}
                 disabled={pageNumber <= 1}
                 aria-label="Página anterior"
+                size="small"
               >
                 <NavigateBefore />
               </IconButton>
-              <Typography sx={{ color: "text.secondary" }}>
+              <Typography
+                variant="body2"
+                sx={{ color: "text.secondary", fontWeight: 500 }}
+              >
                 {t("page")} {pageNumber} {t("of")} {numPages}
               </Typography>
               <IconButton
                 onClick={goToNextPage}
                 disabled={pageNumber >= numPages}
                 aria-label="Página siguiente"
+                size="small"
               >
                 <NavigateNext />
               </IconButton>
