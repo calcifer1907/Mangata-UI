@@ -1,16 +1,6 @@
 import React, { useEffect } from "react";
-import {
-  Container,
-  Typography,
-  Grid,
-  Box,
-  Paper,
-  Button,
-  Chip,
-  useTheme,
-  Avatar,
-  alpha,
-} from "@mui/material";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 
 import {
   Celebration as CelebrationIcon,
@@ -18,27 +8,29 @@ import {
   Cake as CakeIcon,
   Groups as GroupsIcon,
   Business as BusinessIcon,
-  NavigateNext as NavigateNextIcon,
   EventAvailable as EventIcon,
+  NavigateNext as NavigateNextIcon,
   JoinInner as JoinInnerIcon,
 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router";
 
 import Footer from "../../components/Footer/Footer";
-
 import Banner from "../../components/Banner/Banner";
 
 import Merrried from "../../assets/Icons/Merrried.svg";
 import Party from "../../assets/Icons/Party.svg";
 import Champagne from "../../assets/Icons/Champagne.svg";
 
-import { createEventsStyles } from "./Events.styles";
+import {
+  useScrollReveal,
+  useScrollRevealMany,
+} from "../../hooks/useScrollReveal";
+
+import "./styleEvents.css";
 
 const Events = () => {
-  const theme = useTheme();
   const { t } = useTranslation("home");
-  const styles = createEventsStyles(theme);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -49,46 +41,43 @@ const Events = () => {
       titleKey: "events_type_weddings_title",
       descriptionKey: "events_type_weddings_desc",
       image: "/images/MangataBeach.webp",
-      icon: <BeachIcon />,
-      color: "#2E86DE", // Azul mar
+      icon: <BeachIcon sx={{ fontSize: 24, color: "#fff" }} />,
       featured: true,
     },
     {
       titleKey: "events_type_birthdays_title",
       descriptionKey: "events_type_birthdays_desc",
       image: "/images/Events/IMG_02.webp",
-      icon: <CakeIcon />,
-      color: "#FF6B6B", // Coral suave
+      icon: <CakeIcon sx={{ fontSize: 24, color: "#fff" }} />,
       featured: true,
     },
     {
       titleKey: "events_type_marriage_proposal_title",
       descriptionKey: "events_type_marriage_proposal_desc",
       image: "/images/Events/IMG_05.webp",
-      icon: <JoinInnerIcon />,
-      color: "#FF6B6B", // Coral suave
+      icon: <JoinInnerIcon sx={{ fontSize: 24, color: "#fff" }} />,
       featured: true,
     },
     {
       titleKey: "events_type_farewells_title",
       descriptionKey: "events_type_farewells_desc",
       image: "/images/Events/IMG_03.webp",
-      icon: <CelebrationIcon />,
-      color: "#8E44AD", // Púrpura
+      icon: <CelebrationIcon sx={{ fontSize: 24, color: "#fff" }} />,
+      featured: false,
     },
     {
       titleKey: "events_type_private_title",
       descriptionKey: "events_type_private_desc",
       image: "/images/Events/IMG_5512.webp",
-      icon: <GroupsIcon />,
-      color: "#27AE60", // Verde
+      icon: <GroupsIcon sx={{ fontSize: 24, color: "#fff" }} />,
+      featured: false,
     },
     {
       titleKey: "events_type_corporate_title",
       descriptionKey: "events_type_corporate_desc",
       image: "/images/Events/IMG_5511.webp",
-      icon: <BusinessIcon />,
-      color: "#34495E", // Azul corporativo (gris azulado)
+      icon: <BusinessIcon sx={{ fontSize: 24, color: "#fff" }} />,
+      featured: false,
     },
   ];
 
@@ -113,11 +102,25 @@ const Events = () => {
     "events_additional_7",
   ];
 
-  const eventIncludesImage = "/images/MangataBeach.webp";
-  const additionalServicesImage = "/images/MangataChampagne.webp";
+  const { ref: introRef, isVisible: introVisible } = useScrollReveal();
+  const { ref: stickyHeaderRef, isVisible: stickyHeaderVisible } =
+    useScrollReveal();
+  const { setRef: setEventRef, visible: eventVisible } = useScrollRevealMany(
+    eventTypes.length,
+  );
+  const { ref: iconsRef, isVisible: iconsVisible } = useScrollReveal();
+  const { ref: allInclusiveImageRef, isVisible: allInclusiveImageVisible } =
+    useScrollReveal({ threshold: 0.1 });
+  const { ref: allInclusiveTextRef, isVisible: allInclusiveTextVisible } =
+    useScrollReveal({ threshold: 0.1 });
+  const { ref: customizeImageRef, isVisible: customizeImageVisible } =
+    useScrollReveal({ threshold: 0.1 });
+  const { ref: customizeTextRef, isVisible: customizeTextVisible } =
+    useScrollReveal({ threshold: 0.1 });
+  const { ref: ctaRef, isVisible: ctaVisible } = useScrollReveal();
 
   return (
-    <Box sx={styles.page}>
+    <Box className="events-page">
       <Banner
         title="eventMangata"
         titleTwo="Mangata"
@@ -125,229 +128,169 @@ const Events = () => {
         titleButton="moreInformation"
         linkButton="Contact"
       />
-      <Container maxWidth="lg" sx={styles.container}>
-        <Box sx={styles.section}>
-          <Box sx={styles.sectionTitleRow}>
-            <Typography variant="h4" component="h2" sx={styles.sectionTitle}>
-              {t("events_types_title")}
+
+      {/* ── Intro Section ── */}
+      <Box
+        ref={introRef}
+        className={`events-intro events-scroll-reveal ${introVisible ? "revealed" : ""}`}
+        component="section"
+      >
+        <span className="events-intro-overline">
+          {t("events_allInclusive_overline")}
+        </span>
+        <Typography component="h2">{t("events_types_title")}</Typography>
+        <Typography component="p">{t("events_types_subtitle")}</Typography>
+      </Box>
+
+      {/* ── Sticky Event Types Section ── */}
+      <Box className="events-types-section" component="section">
+        <Box
+          ref={stickyHeaderRef}
+          className={`events-types-sticky-header events-scroll-reveal ${stickyHeaderVisible ? "revealed" : ""}`}
+        >
+          <Typography component="h2">{t("events_types_title")}</Typography>
+          <Box className="events-section-divider" />
+        </Box>
+
+        <Box className="events-scroll-track">
+          {eventTypes.map((event, i) => (
+            <Box
+              key={event.titleKey}
+              ref={setEventRef(i)}
+              className={`event-showcase ${i % 2 !== 0 ? "reverse" : ""} ${
+                i % 2 === 0 ? "events-scroll-reveal-left" : "events-scroll-reveal-right"
+              } ${eventVisible[i] ? "revealed" : ""}`}
+              sx={{ transitionDelay: `${i * 0.05}s` }}
+            >
+              <Box className="event-showcase-image">
+                {event.featured && (
+                  <span className="event-showcase-badge">
+                    {t("events_featured")}
+                  </span>
+                )}
+                <Box
+                  component="img"
+                  src={event.image}
+                  alt={t(event.titleKey)}
+                  loading="lazy"
+                />
+                <Box className="event-showcase-icon">
+                  {React.cloneElement(event.icon)}
+                </Box>
+              </Box>
+
+              <Box className="event-showcase-content">
+                <Box className="event-showcase-line" />
+                <Typography component="h3">{t(event.titleKey)}</Typography>
+                <Typography component="p">
+                  {t(event.descriptionKey)}
+                </Typography>
+              </Box>
+            </Box>
+          ))}
+        </Box>
+      </Box>
+
+      {/* ── Icons Band ── */}
+      <Box
+        ref={iconsRef}
+        className={`events-icons-band events-scroll-reveal-scale ${iconsVisible ? "revealed" : ""}`}
+      >
+        <Box component="img" src={Merrried} alt="Wedding" />
+        <Box component="img" src={Party} alt="Party" />
+        <Box component="img" src={Champagne} alt="Celebration" />
+      </Box>
+
+      {/* ── All-Inclusive Section ── */}
+      <Box className="events-fullwidth-section">
+        <Box className="events-split-container">
+          <Box
+            ref={allInclusiveTextRef}
+            className={`events-split-text dark-theme events-scroll-reveal-left ${allInclusiveTextVisible ? "revealed" : ""}`}
+          >
+            <span className="events-split-overline">
+              {t("events_allInclusive_overline")}
+            </span>
+            <Typography component="h2">
+              {t("events_allInclusive_title")}
             </Typography>
+            <Typography component="p" className="split-subtitle">
+              {t("events_allInclusive_subtitle")}
+            </Typography>
+            <Box className="events-list-grid">
+              {eventIncludes.map((item) => (
+                <Box key={item} className="events-list-item">
+                  <span>{t(item)}</span>
+                </Box>
+              ))}
+            </Box>
           </Box>
 
-          <Typography
-            variant="subtitle1"
-            align="center"
-            sx={styles.sectionSubtitle}
+          <Box
+            ref={allInclusiveImageRef}
+            className={`events-split-image events-scroll-reveal-right ${allInclusiveImageVisible ? "revealed" : ""}`}
           >
-            {t("events_types_subtitle")}
-          </Typography>
-
-          {/* Contenedor FLEX para las cards */}
-          <Box sx={styles.cardsWrapper}>
-            {eventTypes.map((event) => (
-              <Paper
-                key={event.titleKey}
-                elevation={2}
-                sx={styles.eventCard(event.color)}
-              >
-                {/* Imagen tipo Home + overlay */}
-                <Box sx={styles.eventImageWrap}>
-                  <Box
-                    component="img"
-                    src={event.image}
-                    alt={t(event.titleKey)}
-                    className="event-image"
-                    sx={styles.eventImage}
-                  />
-
-                  {/* Overlay para legibilidad */}
-                  <Box sx={styles.eventImageOverlay} />
-
-                  {!!event.featured && (
-                    <Chip
-                      label={t("events_featured")}
-                      size="small"
-                      sx={styles.featuredChip}
-                    />
-                  )}
-
-                  <Box sx={styles.eventTitleRow}>
-                    <Avatar className="event-icon" sx={styles.eventIcon}>
-                      {React.cloneElement(event.icon, {
-                        sx: {
-                          fontSize: 22,
-                          color: "white",
-                        },
-                      })}
-                    </Avatar>
-                    <Typography
-                      variant="h6"
-                      component="h3"
-                      sx={styles.eventTitle}
-                    >
-                      {t(event.titleKey)}
-                    </Typography>
-                  </Box>
-                </Box>
-
-                {/* Contenido */}
-                <Box sx={styles.eventContent}>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={styles.eventDescription}
-                  >
-                    {t(event.descriptionKey)}
-                  </Typography>
-                </Box>
-              </Paper>
-            ))}
+            <Box
+              component="img"
+              src="/images/MangataBeach.webp"
+              alt="Mangata Beach Events"
+              loading="lazy"
+            />
           </Box>
         </Box>
+      </Box>
 
-        {/* Sección de servicios incluidos */}
-        <Box sx={styles.fullWidthSection}>
-          <Grid container sx={styles.splitContainer}>
-            {/* Panel izquierdo (texto) */}
-            <Grid size={{ xs: 12, md: 6 }}>
-              <Box sx={styles.allInclusiveTextPanel}>
-                <Box sx={styles.splitContentWrap}>
-                  <Typography variant="overline" sx={styles.overline}>
-                    {t("events_allInclusive_overline")}
-                  </Typography>
-
-                  <Typography
-                    variant="h3"
-                    component="h2"
-                    sx={styles.splitTitle}
-                  >
-                    {t("events_allInclusive_title")}
-                  </Typography>
-
-                  <Typography variant="subtitle1" sx={styles.splitSubtitle}>
-                    {t("events_allInclusive_subtitle")}
-                  </Typography>
-
-                  <Grid container spacing={{ xs: 1.5, sm: 2 }}>
-                    {eventIncludes.map((item) => (
-                      <Grid
-                        key={item}
-                        size={{ xs: 12, sm: 6 }}
-                        sx={{
-                          borderBottom: `1px solid ${alpha("#fff", 0.12)}`,
-                        }}
-                      >
-                        <Box sx={styles.splitListRow}>
-                          <Typography variant="body1" sx={styles.splitListText}>
-                            {t(item)}
-                          </Typography>
-                        </Box>
-                      </Grid>
-                    ))}
-                  </Grid>
-                </Box>
-              </Box>
-            </Grid>
-
-            {/* Panel derecho (imagen) */}
-            <Grid size={{ xs: 12, md: 6 }}>
-              <Box sx={styles.splitImagePanel(eventIncludesImage)} />
-            </Grid>
-          </Grid>
-        </Box>
-
-        <Box className="d-flex align-items-center justify-content-center flex-wrap flex-row gap-16">
+      {/* ── Customize Section ── */}
+      <Box className="events-fullwidth-section" sx={{ mt: 0 }}>
+        <Box className="events-split-container">
           <Box
-            component="img"
-            src={Merrried}
-            alt="Mangata Beach"
-            width={{ xs: 80, lg: 80 }}
-          />
-          <Box
-            component="img"
-            src={Party}
-            alt="Mangata Beach"
-            width={{ xs: 80, lg: 80 }}
-          />
-          <Box
-            component="img"
-            src={Champagne}
-            alt="Mangata Beach"
-            width={{ xs: 80, lg: 80 }}
-          />
-        </Box>
-
-        {/* Personaliza tu experiencia */}
-        <Box sx={{ ...styles.fullWidthSection, marginBottom: 4 }}>
-          <Grid container sx={styles.splitContainer}>
-            {/* Panel izquierdo (imagen) */}
-            <Grid size={{ xs: 12, md: 6 }}>
-              <Box sx={styles.splitImagePanel(additionalServicesImage)} />
-            </Grid>
-
-            {/* Panel derecho (texto) */}
-            <Grid size={{ xs: 12, md: 6 }}>
-              <Box sx={styles.customizeTextPanel}>
-                <Box sx={styles.splitContentWrap}>
-                  <Typography
-                    variant="h3"
-                    component="h2"
-                    sx={styles.splitTitle}
-                  >
-                    {t("events_customize_title")}
-                  </Typography>
-
-                  <Typography variant="subtitle1" sx={styles.splitSubtitle}>
-                    {t("events_customize_subtitle")}
-                  </Typography>
-
-                  <Grid container spacing={{ xs: 1.5, sm: 2 }}>
-                    {additionalServices.map((service) => (
-                      <Grid
-                        key={service}
-                        size={{ xs: 12, sm: 6 }}
-                        sx={{
-                          borderBottom: `1px solid ${alpha("#fff", 0.12)}`,
-                        }}
-                      >
-                        <Box sx={styles.splitListRow}>
-                          <Typography variant="body1" sx={styles.splitListText}>
-                            {t(service)}
-                          </Typography>
-                        </Box>
-                      </Grid>
-                    ))}
-                  </Grid>
-                </Box>
-              </Box>
-            </Grid>
-          </Grid>
-        </Box>
-
-        {/* Llamada a la acción */}
-        <Paper elevation={0} sx={styles.ctaPaper}>
-          <Box sx={styles.ctaOverlay} />
-
-          <Typography variant="h4" component="h3" sx={styles.ctaTitle}>
-            {t("events_cta_title")}
-          </Typography>
-
-          <Typography variant="h6" sx={styles.ctaSubtitle}>
-            {t("events_cta_subtitle")}
-          </Typography>
-
-          <Button
-            variant="contained"
-            size="large"
-            startIcon={<EventIcon />}
-            endIcon={<NavigateNextIcon />}
-            component={NavLink}
-            to="/Contact"
-            sx={styles.ctaButton}
+            ref={customizeImageRef}
+            className={`events-split-image events-scroll-reveal-left ${customizeImageVisible ? "revealed" : ""}`}
           >
-            {t("events_cta_button")}
-          </Button>
-        </Paper>
-      </Container>
+            <Box
+              component="img"
+              src="/images/MangataChampagne.webp"
+              alt="Mangata Champagne"
+              loading="lazy"
+            />
+          </Box>
+
+          <Box
+            ref={customizeTextRef}
+            className={`events-split-text brand-theme events-scroll-reveal-right ${customizeTextVisible ? "revealed" : ""}`}
+          >
+            <Typography component="h2">
+              {t("events_customize_title")}
+            </Typography>
+            <Typography component="p" className="split-subtitle">
+              {t("events_customize_subtitle")}
+            </Typography>
+            <Box className="events-list-grid">
+              {additionalServices.map((service) => (
+                <Box key={service} className="events-list-item">
+                  <span>{t(service)}</span>
+                </Box>
+              ))}
+            </Box>
+          </Box>
+        </Box>
+      </Box>
+
+      {/* ── CTA Section ── */}
+      <Box
+        ref={ctaRef}
+        className={`events-cta events-scroll-reveal-scale ${ctaVisible ? "revealed" : ""}`}
+        component="section"
+      >
+        <Typography component="h3">{t("events_cta_title")}</Typography>
+        <Typography component="p">{t("events_cta_subtitle")}</Typography>
+        <NavLink to="/Contact" className="events-cta-btn">
+          <EventIcon sx={{ fontSize: 20 }} />
+          <span>{t("events_cta_button")}</span>
+          <NavigateNextIcon sx={{ fontSize: 20 }} />
+        </NavLink>
+      </Box>
+
       <Footer />
     </Box>
   );
