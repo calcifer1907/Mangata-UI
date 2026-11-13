@@ -8,18 +8,15 @@ import IconButton from "@mui/material/IconButton";
 
 
 import CloseIcon from "@mui/icons-material/Close";
+import DownloadIcon from "@mui/icons-material/Download";
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
 import { useTranslation } from "react-i18next";
 
-import "react-pdf/dist/Page/AnnotationLayer.css";
-import "react-pdf/dist/Page/TextLayer.css";
-
-
 import "./styleMenu.css";
 import Footer from "../../components/Footer/Footer";
 
-import Loading from "../../components/Loading/Loading";
 import Banner from "../../components/Banner/Banner";
 import { buildWhatsAppUrl } from "../../generalFunctions/generalFunction";
 import {
@@ -35,6 +32,27 @@ interface DishData {
   image: string;
   label: string;
 }
+
+const MENU_PDFS = [
+  {
+    id: "es",
+    file: "menu-espanol.pdf",
+    titleKey: "menuPdfSpanish",
+    descKey: "menuPdfSpanishDesc",
+  },
+  {
+    id: "en",
+    file: "menu-ingles.pdf",
+    titleKey: "menuPdfEnglish",
+    descKey: "menuPdfEnglishDesc",
+  },
+  {
+    id: "night",
+    file: "menu-noche.pdf",
+    titleKey: "menuPdfNight",
+    descKey: "menuPdfNightDesc",
+  },
+] as const;
 
 const FEATURED_DISHES: DishData[] = [
   {
@@ -202,12 +220,35 @@ const Menu = () => {
             flexDirection: "column",
             alignItems: "center",
             overflow: "auto",
-            padding: "2rem",
-            minHeight: 600,
+            padding: { xs: "1.25rem", md: "2rem" },
             background: "#fafbfd",
           }}
         >
-
+          <Typography className="menu-pdf-hint">
+            {t("downloadMenuHint")}
+          </Typography>
+          <Box className="menu-pdf-grid">
+            {MENU_PDFS.map((menu) => (
+              <a
+                key={menu.id}
+                className="menu-pdf-card"
+                href={`/Menus/${menu.file}`}
+                download={menu.file}
+              >
+                <Box className="menu-pdf-icon">
+                  <PictureAsPdfIcon />
+                </Box>
+                <Box className="menu-pdf-card-text">
+                  <Typography component="h3">{t(menu.titleKey)}</Typography>
+                  <Typography component="p">{t(menu.descKey)}</Typography>
+                </Box>
+                <span className="menu-pdf-download">
+                  <DownloadIcon fontSize="small" />
+                  {t("downloadMenu")}
+                </span>
+              </a>
+            ))}
+          </Box>
         </DialogContent>
       </Dialog>
 
