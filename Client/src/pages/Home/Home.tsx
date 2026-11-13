@@ -23,7 +23,7 @@ const serviceCards = [
   {
     titleKey: "titleCardLoding",
     img: "/images/Hotel.webp",
-    redirectTo: "https://engine.ayenda.co/mangata-beach-9a99c4fa-disabled-sale",
+    redirectTo: "https://engine.ayenda.co/mangata-beach",
   },
   {
     titleKey: "titleCardBoat",
@@ -112,7 +112,7 @@ const Home = () => {
                   {t("dockReturn")}
                 </Typography>
                 <Typography className="home-schedule-time">
-                  4:00 p.m.
+                  3:00 p.m.
                 </Typography>
               </Paper>
             </Grid>

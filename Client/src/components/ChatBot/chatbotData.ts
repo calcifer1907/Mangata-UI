@@ -31,9 +31,9 @@ export const FAQ_DATA: FaqEntry[] = [
     labelEs: "🏖️ Pasadía",
     labelEn: "🏖️ Day Trip",
     answerEs:
-      "Nuestro pasadía incluye transporte marítimo ida y regreso, copa de bienvenida, almuerzo a la carta (8 opciones), deportes acuáticos (snorkel, kayak, paddle board), bicicleta, sillas asoleadoras, hamacas, camas balinesas, ducha de agua dulce y servicio de toalla. La llegada al muelle es a las 7:30 a.m. y el regreso a las 4:00 p.m. aproximadamente.",
+      "Nuestro pasadía incluye transporte marítimo ida y regreso, copa de bienvenida, almuerzo a la carta (8 opciones), deportes acuáticos (snorkel, kayak, paddle board), bicicleta, sillas asoleadoras, hamacas, camas balinesas, ducha de agua dulce y servicio de toalla. La llegada al muelle es a las 7:30 a.m. y el regreso a las 3:00 p.m. aproximadamente.",
     answerEn:
-      "Our day trip includes round-trip sea transport, welcome drink, à la carte lunch (8 options), water sports (snorkeling, kayak, paddle board), bicycle, sun chairs, hammocks, Balinese beds, freshwater shower, and towel service. Dock arrival is at 7:30 a.m. and return at approximately 4:00 p.m.",
+      "Our day trip includes round-trip sea transport, welcome drink, à la carte lunch (8 options), water sports (snorkeling, kayak, paddle board), bicycle, sun chairs, hammocks, Balinese beds, freshwater shower, and towel service. Dock arrival is at 7:30 a.m. and return at approximately 3:00 p.m.",
     followUpIds: ["prices", "reservation", "location", MAIN_MENU_ID],
     link: {
       labelEs: "🏖️ Reservar Pasadía",
@@ -66,9 +66,9 @@ export const FAQ_DATA: FaqEntry[] = [
     labelEs: "🕐 Horarios",
     labelEn: "🕐 Schedule",
     answerEs:
-      "Para el pasadía: llegada al Muelle Todo Mar a las 7:30 a.m., regreso aproximadamente a las 4:00 p.m. El bote tiene salidas desde las 8 a.m. hasta las 4 p.m. para recorridos por las islas, y recorridos por la Bahía de Cartagena hasta las 9 p.m.",
+      "Para el pasadía: llegada al Muelle Todo Mar a las 7:30 a.m., regreso aproximadamente a las 3:00 p.m. El bote tiene salidas desde las 8 a.m. hasta las 4 p.m. para recorridos por las islas, y recorridos por la Bahía de Cartagena hasta las 9 p.m.",
     answerEn:
-      "For the day trip: arrival at Todo Mar dock at 7:30 a.m., return at approximately 4:00 p.m. The boat operates from 8 a.m. to 4 p.m. for island tours, and Cartagena Bay tours until 9 p.m.",
+      "For the day trip: arrival at Todo Mar dock at 7:30 a.m., return at approximately 3:00 p.m. The boat operates from 8 a.m. to 4 p.m. for island tours, and Cartagena Bay tours until 9 p.m.",
     followUpIds: ["daytrip", "boat", MAIN_MENU_ID],
   },
   {

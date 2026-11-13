@@ -62,8 +62,8 @@ app.get("/clear-cache", clearCache, (_request, response) => {
       memoryFreed:
         Math.round(
           (stats.memoryBefore.heapUsed - stats.memoryAfter.heapUsed) /
-            1024 /
-            1024,
+          1024 /
+          1024,
         ) + " MB",
     },
   });

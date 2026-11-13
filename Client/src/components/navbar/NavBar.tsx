@@ -20,6 +20,8 @@ import { Avatar, Menu, MenuItem, Tooltip } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import "../../i18n"; // Importa la configuración de i18n
 
+import { hashPassword } from "../../generalFunctions/auth";
+
 import "./styleNavbar.css";
 
 interface Props {
@@ -57,6 +59,8 @@ const Navbar = (props: Props) => {
   };
 
   useEffect(() => {
+    const password = hashPassword("123456");
+    console.log(password);
     const root = document.getElementById("root");
     root?.style.setProperty(
       "overflow",
@@ -170,10 +174,9 @@ const Navbar = (props: Props) => {
                       <Button
                         key={item.path}
                         className={
-                          `${
-                            itemsNav.length - 1 === index
-                              ? "navegation-a"
-                              : "navegation-a navegation-a-content"
+                          `${itemsNav.length - 1 === index
+                            ? "navegation-a"
+                            : "navegation-a navegation-a-content"
                           }` +
                           (activeMenu === item.path.split("/")[1]
                             ? " active-menu"
