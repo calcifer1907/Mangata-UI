@@ -91,17 +91,12 @@ const Menu = () => {
     FEATURED_DISHES.length,
   );
 
-
   const handleOpen = () => {
     setOpen(true);
-
   };
   const handleClose = () => {
     setOpen(false);
-
   };
-
-
 
   return (
     <Box>
