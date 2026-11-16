@@ -40,6 +40,7 @@ const AccompanistContext: FC<AccompanistContextProps> = (props) => {
   const [valueCel, setValueCel] = useState<string>("");
   const [valueEmail, setValueEmail] = useState<string>("");
   const [errors, setErrors] = useState<IErrorFieldAccompanist[]>([]);
+  const [showValidation, setShowValidation] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState<CountryType | null>(
     null,
   );
@@ -97,6 +98,8 @@ const AccompanistContext: FC<AccompanistContextProps> = (props) => {
       setFields,
       errors,
       setErrors,
+      showValidation,
+      setShowValidation,
       valueCel,
       setValueCel,
       valueEmail,
@@ -120,6 +123,7 @@ const AccompanistContext: FC<AccompanistContextProps> = (props) => {
       getUserId,
       fields,
       errors,
+      showValidation,
       valueCel,
       valueEmail,
       dateChange,

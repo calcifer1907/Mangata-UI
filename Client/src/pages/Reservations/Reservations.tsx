@@ -44,6 +44,7 @@ const NameLunchForm: FC = () => {
     optionsLunches,
     dateChange,
     errors,
+    showValidation,
     valueCel,
     valueEmail,
     fields,
@@ -164,6 +165,7 @@ const NameLunchForm: FC = () => {
                     type="number"
                     iconName="phone-calling-rounded"
                     helperText={t("fieldRequired")}
+                    error={showValidation && valueCel === ""}
                   />
                   <TextFieldComponent
                     value={valueEmail}
@@ -173,6 +175,7 @@ const NameLunchForm: FC = () => {
                     placeholder={t("enterEmail")}
                     iconName="letter-opened"
                     helperText={t("fieldRequired")}
+                    error={showValidation && valueEmail === ""}
                   />
                 </Box>
                 <Box>

@@ -61,7 +61,8 @@ const Accompanist: FC<IPropsAccompanist> = ({
           value={field.name}
           label={t("fullName")}
           onChange={(value) => onChange(index, KEY_NAME, value)}
-          helperText={errors.name ? t("nameRequired") : ""}
+          helperText={t("nameRequired")}
+          error={errors.name}
           iconName="user"
           placeholder=""
         />
