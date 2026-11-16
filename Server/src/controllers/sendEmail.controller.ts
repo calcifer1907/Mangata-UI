@@ -1,4 +1,4 @@
-import nodemailer, { SendMailOptions } from "nodemailer";
+import nodemailer, { SendMailOptions, type SentMessageInfo } from "nodemailer";
 import { Request, Response } from "express";
 
 import { leerArchivoHtml } from "../functions/readFile";
@@ -167,7 +167,7 @@ export const sendContactFormEmail = async (
     };
     transporter.sendMail(
       mailOptions,
-      (error: Error | null, info: nodemailer.SentMessageInfo) => {
+      (error: Error | null, info: SentMessageInfo) => {
         if (error) {
           console.log(error);
           response.status(500);
