@@ -162,7 +162,7 @@ const NameLunchForm: FC = () => {
                     onChange={handleOnchangeCel}
                     label="Celular"
                     placeholder={t("cellPhone")}
-                    type="number"
+                    type="tel"
                     iconName="phone-calling-rounded"
                     helperText={t("fieldRequired")}
                     error={showValidation && valueCel === ""}
