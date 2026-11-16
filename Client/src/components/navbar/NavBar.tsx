@@ -170,10 +170,9 @@ const Navbar = (props: Props) => {
                       <Button
                         key={item.path}
                         className={
-                          `${
-                            itemsNav.length - 1 === index
-                              ? "navegation-a"
-                              : "navegation-a navegation-a-content"
+                          `${itemsNav.length - 1 === index
+                            ? "navegation-a"
+                            : "navegation-a navegation-a-content"
                           }` +
                           (activeMenu === item.path.split("/")[1]
                             ? " active-menu"
@@ -192,7 +191,7 @@ const Navbar = (props: Props) => {
                 <Box className="d-flex align-items-center ">
                   {userInfo.TOKEN && (
                     <Box>
-                      <Tooltip title="Configuraciónes">
+                      <Tooltip title="Configuraciones">
                         <IconButton onClick={handleOpenUserMenu}>
                           <Avatar alt={userInfo.USER_INFO.USER_NAME} />
                         </IconButton>

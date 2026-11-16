@@ -17,7 +17,7 @@ const footerLinks = [
   { titleKey: "dayTrip", path: "/DayTrip" },
   {
     titleKey: "Lodging",
-    path: "https://engine.ayenda.co/mangata-beach-9a99c4fa-disabled-sale",
+    path: "https://engine.ayenda.co/mangata-beach",
   },
   { titleKey: "Menu", path: "/Menu" },
   { titleKey: "Events", path: "/Events" },

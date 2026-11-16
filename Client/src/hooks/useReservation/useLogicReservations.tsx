@@ -39,6 +39,7 @@ const useLogicReservations = () => {
     fields,
     errors,
     setErrors,
+    setShowValidation,
     setFields,
     valueCel,
     valueEmail,
@@ -108,6 +109,7 @@ const useLogicReservations = () => {
 
   // Valida que todos los campos estén llenos
   const validateFields = (): boolean => {
+    setShowValidation(true);
     const validationErrors = fields.map((field: IFields) => ({
       name: field.name.trim() === "",
       lunch: field.lunch.value === 0,
@@ -115,7 +117,9 @@ const useLogicReservations = () => {
     setErrors(validationErrors);
     return (
       !validationErrors.some((error) => error.name || error.lunch) &&
-      valueCel !== ""
+      valueCel !== "" &&
+      valueEmail !== "" &&
+      selectedCountry !== null
     );
   };
 
@@ -197,17 +201,23 @@ const useLogicReservations = () => {
     const updatedFields = [...fields];
     updatedFields[index] = { ...updatedFields[index], [fieldName]: value };
     setFields(updatedFields);
-    const errorValue =
+
+    // Solo limpia el error si el campo ya se había marcado como obligatorio
+    if (!errors[index]?.[fieldName as "name" | "lunch"]) return;
+
+    const isEmpty =
       fieldName === "name"
         ? (value as string).trim() === ""
-        : (value as IOptions).label === "";
-    // Limpiar errores al cambiar algo
-    const updatedErrors = [...errors];
-    updatedErrors[index] = {
-      ...updatedErrors[index],
-      [fieldName]: errorValue,
-    };
-    setErrors(updatedErrors);
+        : (value as IOptions).value === 0;
+
+    if (!isEmpty) {
+      const updatedErrors = [...errors];
+      updatedErrors[index] = {
+        ...updatedErrors[index],
+        [fieldName]: false,
+      };
+      setErrors(updatedErrors);
+    }
   };
 
   const handleOnchangeCel = (value: string) => {

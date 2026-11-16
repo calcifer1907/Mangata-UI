@@ -227,7 +227,7 @@ const PayMenetMethod = ({ amount, payment_id, name, email }: IProps) => {
             type="hidden"
             name="description"
             id="description"
-            value="Nombre del Produto"
+            value="Nombre del producto"
           />
           <Button type="submit" variant="contained">
             Pagar

@@ -8,7 +8,10 @@ import { useContextAccompanist } from "../../hooks/useReservation/useContextRese
 
 const CountrySelect = () => {
   const { t } = useTranslation("reserve");
-  const { selectedCountry, setSelectedCountry } = useContextAccompanist();
+  const { selectedCountry, setSelectedCountry, showValidation } =
+    useContextAccompanist();
+  const showError = showValidation && !selectedCountry;
+
   return (
     <Autocomplete
       options={countries}
@@ -42,10 +45,10 @@ const CountrySelect = () => {
           {...params}
           variant="filled"
           fullWidth
-          helperText={!selectedCountry ? t("chooseCountryRequired") : ""}
+          helperText={showError ? t("chooseCountryRequired") : ""}
           label={t("chooseCountry")}
           placeholder={t("enterCountry")}
-          error={!selectedCountry}
+          error={showError}
           value={selectedCountry}
           sx={{
             background: "#FFFFFF",

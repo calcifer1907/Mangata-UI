@@ -1,5 +1,6 @@
 import { Box, Container, Grid, Paper, Stack, Typography } from "@mui/material";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
+import PaymentsOutlinedIcon from "@mui/icons-material/PaymentsOutlined";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import { useTranslation } from "react-i18next";
 
@@ -23,7 +24,7 @@ const serviceCards = [
   {
     titleKey: "titleCardLoding",
     img: "/images/Hotel.webp",
-    redirectTo: "https://engine.ayenda.co/mangata-beach-9a99c4fa-disabled-sale",
+    redirectTo: "https://engine.ayenda.co/mangata-beach",
   },
   {
     titleKey: "titleCardBoat",
@@ -101,7 +102,7 @@ const Home = () => {
                   {t("arrivalTime")}
                 </Typography>
                 <Typography className="home-schedule-time">
-                  7:30 a.m.
+                  7:20 a.m.
                 </Typography>
               </Paper>
             </Grid>
@@ -112,11 +113,26 @@ const Home = () => {
                   {t("dockReturn")}
                 </Typography>
                 <Typography className="home-schedule-time">
-                  4:00 p.m.
+                  3:00 p.m.
                 </Typography>
               </Paper>
             </Grid>
           </Grid>
+          <Paper elevation={0} className="home-schedule-card home-schedule-fee">
+            <PaymentsOutlinedIcon className="home-schedule-icon" />
+            <Typography className="home-schedule-kicker">
+              {t("islandInsuranceKicker")}
+            </Typography>
+            <Typography className="home-schedule-label">
+              {t("islandInsuranceLabel")}
+            </Typography>
+            <Typography className="home-schedule-time">
+              {t("islandInsuranceAmount")}
+            </Typography>
+            <Typography className="home-schedule-cash">
+              {t("islandInsuranceCash")}
+            </Typography>
+          </Paper>
         </Container>
       </Box>
       <Box className="home-map-section">

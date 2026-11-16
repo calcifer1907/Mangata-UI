@@ -17,14 +17,14 @@ export interface Room {
 
 export const rooms: Room[] = [
   {
-    id: "villa-superior-1",
-    title: "VILLA SUPERIOR 1",
+    id: "101",
+    title: "Cabaña 101",
     roomCount: 1,
     maxCapacity: 2,
     size: "90 M²",
     description:
       "En medio de la naturaleza disfrutará de una estancia lujosa, una villa superior con detalles extras pensados para aquellos que quieren celebrar...",
-    price: "$ 1.800.000",
+    price: "$ 892.500 COP",
     images: [
       {
         id: 1,
@@ -39,14 +39,14 @@ export const rooms: Room[] = [
     ],
   },
   {
-    id: "villa-superior-2",
-    title: "VILLA SUPERIOR 2",
+    id: "102",
+    title: "Cabaña 102",
     roomCount: 2,
     maxCapacity: 3,
     size: "90 M²",
     description:
       "En medio de la naturaleza disfrutará de una estancia lujosa, una villa superior con detalles extras pensados para aquellos que quieren celebrar...",
-    price: "$ 1.800.000",
+    price: "$ 892.500 COP",
     images: [
       {
         id: 1,
@@ -66,14 +66,14 @@ export const rooms: Room[] = [
     ],
   },
   {
-    id: "villa-superior-3",
-    title: "VILLA SUPERIOR 3",
+    id: "103",
+    title: "Cabaña 103",
     roomCount: 1,
     maxCapacity: 2,
     size: "90 M²",
     description:
       "En medio de la naturaleza disfrutará de una estancia lujosa, una villa superior con detalles extras pensados para aquellos que quieren celebrar...",
-    price: "$ 1.800.000",
+    price: "$ 892.500 COP",
     images: [
       {
         id: 1,
@@ -93,14 +93,14 @@ export const rooms: Room[] = [
     ],
   },
   {
-    id: "villa-superior-4",
-    title: "VILLA SUPERIOR 4",
+    id: "104",
+    title: "Cabaña 104",
     roomCount: 2,
     maxCapacity: 4,
     size: "90 M²",
     description:
       "En medio de la naturaleza disfrutará de una estancia lujosa, una villa superior con detalles extras pensados para aquellos que quieren celebrar...",
-    price: "$ 1.800.000",
+    price: "$ 1.106.700 COP",
     images: [
       {
         id: 1,
@@ -109,21 +109,5 @@ export const rooms: Room[] = [
       },
     ],
   },
-  {
-    id: "villa-superior-5",
-    title: "VILLA SUPERIOR 5",
-    roomCount: 1,
-    maxCapacity: 2,
-    size: "90 M²",
-    description:
-      "En medio de la naturaleza disfrutará de una estancia lujosa, una villa superior con detalles extras pensados para aquellos que quieren celebrar...",
-    price: "$ 1.800.000",
-    images: [
-      {
-        id: 1,
-        url: "/images/Lodging/IMG_4313.webp",
-        alt: "Vista principal de la villa",
-      },
-    ],
-  },
+
 ];

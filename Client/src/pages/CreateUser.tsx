@@ -229,10 +229,10 @@ const CreateUser = () => {
             name="FIRST_NAME"
             control={control}
             rules={{
-              required: "El nombre es obligario",
+              required: "El nombre es obligatorio",
               pattern: {
                 value: /^[a-zA-Z]/,
-                message: "Ingrese un nombre valido",
+                message: "Ingrese un nombre válido",
               },
             }}
             render={({ field, fieldState }) => (
@@ -270,10 +270,10 @@ const CreateUser = () => {
             name="LAST_NAME"
             control={control}
             rules={{
-              required: "El apellido es obligario",
+              required: "El apellido es obligatorio",
               pattern: {
                 value: /^[a-zA-Z]/,
-                message: "Ingrese un apellido valido",
+                message: "Ingrese un apellido válido",
               },
             }}
             render={({ field, fieldState }) => (
@@ -314,10 +314,10 @@ const CreateUser = () => {
               name="IDENTITY"
               control={control}
               rules={{
-                required: "La cedúla es obligario",
+                required: "La cédula es obligatoria",
                 pattern: {
                   value: /^[0-9]/,
-                  message: "Ingrese una cedúla valida",
+                  message: "Ingrese una cédula válida",
                 },
               }}
               render={({ field, fieldState }) => (
@@ -325,7 +325,7 @@ const CreateUser = () => {
                   {...field}
                   fullWidth
                   type="number"
-                  label="Cedúla"
+                  label="Cédula"
                   variant="filled"
                   margin="none"
                   slotProps={{
@@ -413,7 +413,7 @@ const CreateUser = () => {
                 value:
                   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*+?&#=])[A-Za-z\d@$!%*+?&#=]{8,}$/,
                 message:
-                  "Ingrese una contraseña segura caractered validos @$!%*+?&#= una letra en mayuscula.",
+                  "Usa al menos 8 caracteres, una mayúscula, un número y un símbolo (@$!%*+?&#=).",
               },
             }}
             render={({ field, fieldState }) => (
@@ -471,7 +471,7 @@ const CreateUser = () => {
             <Controller
               name="ROLE_ID"
               control={control}
-              rules={{ required: "El role obligario" }}
+              rules={{ required: "El rol es obligatorio" }}
               render={({
                 field: { onChange, value, ...field },
                 fieldState,
@@ -479,7 +479,7 @@ const CreateUser = () => {
                 <TextField
                   {...field}
                   select
-                  label="Role"
+                  label="Rol"
                   fullWidth
                   sx={{
                     background: "var(--color-theme-white)",
@@ -489,7 +489,7 @@ const CreateUser = () => {
                   }}
                   variant="filled"
                   margin="none"
-                  placeholder="Seleccione un role"
+                  placeholder="Seleccione un rol"
                   error={!!fieldState.error}
                   helperText={fieldState.error?.message}
                   slotProps={{
@@ -535,7 +535,7 @@ const CreateUser = () => {
             <>
               <Controller
                 name="BANK_NAME"
-                rules={{ required: "El banco obligario" }}
+                rules={{ required: "El banco es obligatorio" }}
                 control={control}
                 render={({
                   field: { onChange, value, ...field },
@@ -589,7 +589,7 @@ const CreateUser = () => {
               />
               <Controller
                 name="BANK_TYPE_ACCOUNT"
-                rules={{ required: "El type de cuenta obligario" }}
+                rules={{ required: "El tipo de cuenta es obligatorio" }}
                 control={control}
                 render={({
                   field: { onChange, value, ...field },
@@ -607,7 +607,7 @@ const CreateUser = () => {
                     }}
                     variant="filled"
                     margin="none"
-                    placeholder="Seleccione un typo"
+                    placeholder="Seleccione un tipo"
                     error={!!fieldState.error}
                     helperText={fieldState.error?.message}
                     slotProps={{
@@ -648,14 +648,14 @@ const CreateUser = () => {
               />
               <Controller
                 name="BANK_ACCOUNT"
-                rules={{ required: "La cuenta es obligario" }}
+                rules={{ required: "La cuenta es obligatoria" }}
                 control={control}
                 render={({ field, fieldState }) => (
                   <TextField
                     {...field}
                     fullWidth
                     type="number"
-                    label="Numero de Cuenta"
+                    label="Número de cuenta"
                     variant="filled"
                     margin="none"
                     slotProps={{

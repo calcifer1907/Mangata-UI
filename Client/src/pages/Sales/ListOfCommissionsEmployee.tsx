@@ -263,7 +263,7 @@ const ListOfCommissions = () => {
                 height={24}
                 color="#A93D3F"
               />
-              <Typography>Rechazada Bank.</Typography>
+              <Typography>Rechazada por el banco</Typography>
             </Box>
             <Box
               sx={{
@@ -303,7 +303,7 @@ const ListOfCommissions = () => {
             marginInlineStart: 24,
           }}
         >
-          Comision por diá
+          Comisión por día
         </h2>
       </Box>
       <Box>

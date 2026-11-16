@@ -45,6 +45,8 @@ export interface IAccompanistContext {
   setFields: React.Dispatch<React.SetStateAction<IFields[]>>;
   errors: IErrorFieldAccompanist[];
   setErrors: React.Dispatch<React.SetStateAction<IErrorFieldAccompanist[]>>;
+  showValidation: boolean;
+  setShowValidation: React.Dispatch<React.SetStateAction<boolean>>;
   valueCel: string;
   setValueCel: React.Dispatch<React.SetStateAction<string>>;
   valueEmail: string;

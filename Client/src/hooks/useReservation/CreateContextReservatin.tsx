@@ -13,6 +13,8 @@ const initialState: IAccompanistContext = {
   setFields: () => {},
   errors: [],
   setErrors: () => {},
+  showValidation: false,
+  setShowValidation: () => {},
   valueCel: "",
   setValueCel: () => {},
   valueEmail: "",

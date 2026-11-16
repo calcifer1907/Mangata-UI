@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import {
   Card,
   CardMedia,
@@ -33,17 +34,18 @@ interface RoomCardProps {
 
 const RoomCard: React.FC<RoomCardProps> = ({
   id,
-  title,
   maxCapacity,
   size,
   price,
   images,
 }) => {
+  const { t } = useTranslation("home");
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const cabinTitle = t("roomDetailCabinTitle", { id });
 
   const handleOpen = (index: number = 0) => {
     setSelectedImageIndex(index);
@@ -87,7 +89,7 @@ const RoomCard: React.FC<RoomCardProps> = ({
           <CardMedia
             component="img"
             image={images[0]?.url || ""}
-            alt={images[0]?.alt || title}
+            alt={images[0]?.alt || cabinTitle}
             className="roomCardMedia"
           />
 
@@ -108,14 +110,15 @@ const RoomCard: React.FC<RoomCardProps> = ({
               component="h2"
               className="roomCardTitle"
             >
-              {title}
+              {cabinTitle}
             </Typography>
 
             <Typography
               variant="subtitle2"
               className="roomCardSubtitle"
             >
-              Desde <span className="roomCardSubtitlePrice">{price}</span>
+              {t("roomDetailFrom")}{" "}
+              <span className="roomCardSubtitlePrice">{price}</span>
             </Typography>
 
             {/* Capacidad y tamaño, sin mostrar número de habitaciones */}
@@ -124,7 +127,11 @@ const RoomCard: React.FC<RoomCardProps> = ({
             >
               <Box className="roomCardMetaItem">
                 <Typography variant="body2">{maxCapacity}</Typography>
-                <Typography variant="body2">personas</Typography>
+                <Typography variant="body2">
+                  {maxCapacity === 1
+                    ? t("roomCardPersonSingular")
+                    : t("roomCardPersonPlural")}
+                </Typography>
               </Box>
 
               <Box className="roomCardMetaItem">
@@ -135,7 +142,7 @@ const RoomCard: React.FC<RoomCardProps> = ({
 
           {images.length > 1 && (
             <Chip
-              label={`+${images.length - 1} más`}
+              label={t("roomCardMorePhotos", { count: images.length - 1 })}
               size="small"
               className="roomCardMoreChip"
             />
@@ -153,7 +160,7 @@ const RoomCard: React.FC<RoomCardProps> = ({
               navigate(`/Lodging/rooms/${id}`);
             }}
           >
-            Ver detalle
+            {t("roomCardViewDetail")}
           </Button>
         </Box>
       </Card>
@@ -174,8 +181,14 @@ const RoomCard: React.FC<RoomCardProps> = ({
             pb: 1,
           }}
         >
-          <Typography variant="h6">{title} - Galería</Typography>
-          <IconButton onClick={handleClose} size="small">
+          <Typography variant="h6">
+            {t("roomCardGallery", { title: cabinTitle })}
+          </Typography>
+          <IconButton
+            onClick={handleClose}
+            size="small"
+            aria-label={t("roomCardClose")}
+          >
             <CloseIcon />
           </IconButton>
         </DialogTitle>
@@ -201,6 +214,7 @@ const RoomCard: React.FC<RoomCardProps> = ({
               <>
                 <IconButton
                   onClick={handlePrevImage}
+                  aria-label={t("roomDetailPrevImage")}
                   sx={{
                     position: "absolute",
                     left: 16,
@@ -218,6 +232,7 @@ const RoomCard: React.FC<RoomCardProps> = ({
 
                 <IconButton
                   onClick={handleNextImage}
+                  aria-label={t("roomDetailNextImage")}
                   sx={{
                     position: "absolute",
                     right: 16,
@@ -309,7 +324,10 @@ const RoomCard: React.FC<RoomCardProps> = ({
           <Box sx={{ p: 2 }}>
             <Typography variant="body2" color="text.secondary">
               {images[selectedImageIndex]?.alt ||
-                `Imagen ${selectedImageIndex + 1} de ${images.length}`}
+                t("roomCardImageOf", {
+                  current: selectedImageIndex + 1,
+                  total: images.length,
+                })}
             </Typography>
             <Typography variant="caption" color="text.secondary">
               {selectedImageIndex + 1} / {images.length}

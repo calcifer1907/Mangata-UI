@@ -56,14 +56,14 @@ const DialogUserInfo = ({ open, setOpen, currentItem }: IProps) => {
         <Box className="d-flex align-items-center gap-4 margin-buttom-8">
           <PhoneEnabled />
           <Box>
-            <Typography className="color-blue-dark">Celúlar</Typography>
+            <Typography className="color-blue-dark">Celular</Typography>
             <strong>{currentItem?.telephone}</strong>
           </Box>
         </Box>
         <Box className="d-flex align-items-center gap-4 margin-buttom-8">
           <Tag />
           <Box>
-            <Typography className="color-blue-dark">Cod de Reserva:</Typography>
+            <Typography className="color-blue-dark">Código de reserva</Typography>
             <strong>{currentItem?.code_reservation}</strong>
           </Box>
         </Box>
@@ -71,7 +71,7 @@ const DialogUserInfo = ({ open, setOpen, currentItem }: IProps) => {
           <Today />
           <Box>
             <Typography className="color-blue-dark">
-              Fecha de pasa día
+              Fecha de pasadía
             </Typography>
             <strong>{currentItem?.created_at}</strong>
           </Box>
