@@ -36,7 +36,7 @@ const MenuLeft: FC<IProps> = ({ callBack, setSelectView, selectView }) => {
         <TextFieldComponent
           iconName=""
           label=""
-          placeholder="Busqueda..."
+          placeholder="Búsqueda..."
           onChange={(value) => {
             setValues(value);
             callBack(value);

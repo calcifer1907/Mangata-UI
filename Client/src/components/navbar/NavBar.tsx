@@ -195,7 +195,7 @@ const Navbar = (props: Props) => {
                 <Box className="d-flex align-items-center ">
                   {userInfo.TOKEN && (
                     <Box>
-                      <Tooltip title="Configuraciónes">
+                      <Tooltip title="Configuraciones">
                         <IconButton onClick={handleOpenUserMenu}>
                           <Avatar alt={userInfo.USER_INFO.USER_NAME} />
                         </IconButton>

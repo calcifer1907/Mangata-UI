@@ -32,7 +32,7 @@ const TextFieldComponent: FC<IProps> = ({
   const showError = () => {
     if (type === "email") {
       if (!validEmail(value)) {
-        enqueueSnackbar("Correo invalido!", {
+        enqueueSnackbar("Correo inválido", {
           variant: "error",
           anchorOrigin: {
             vertical: "top",

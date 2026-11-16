@@ -160,10 +160,13 @@ const RoomDetail = () => {
 
             <Stack direction="row" spacing={1} className="roomDetailChips">
               <Chip
-                label={`${room.roomCount} HABITACIONES`}
+                label={`${room.roomCount} ${room.roomCount === 1 ? "HABITACIÓN" : "HABITACIONES"}`}
                 variant="outlined"
               />
-              <Chip label={`${room.maxCapacity} PERSONAS`} variant="outlined" />
+              <Chip
+                label={`${room.maxCapacity} ${room.maxCapacity === 1 ? "PERSONA" : "PERSONAS"}`}
+                variant="outlined"
+              />
               <Chip label={room.size} variant="outlined" />
             </Stack>
 
