@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import {
   Box,
   Button,
@@ -24,32 +25,35 @@ import bedIcon from "../../assets/Icons/Bed.svg";
 import towelIcon from "../../assets/Icons/Towel.svg";
 
 const RoomDetail = () => {
+  const { t } = useTranslation("home");
   const navigate = useNavigate();
   const { roomId } = useParams<{ roomId: string }>();
   const room = useMemo(() => rooms.find((r) => r.id === roomId), [roomId]);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  const [isReady, setIsReady] = useState(false);
+  const [loadedImageUrl, setLoadedImageUrl] = useState<string | null>(null);
+
+  const imageUrl = room?.images[selectedImageIndex]?.url;
+  const isReady = !imageUrl || loadedImageUrl === imageUrl;
 
   useEffect(() => {
-    if (!room) return;
+    if (!imageUrl) return;
 
-    const imageUrl = room.images[selectedImageIndex]?.url;
-    if (!imageUrl) {
-      setIsReady(true);
-      return;
-    }
-
-    setIsReady(false);
+    let cancelled = false;
     const img = new Image();
-    img.onload = () => setIsReady(true);
-    img.onerror = () => setIsReady(true);
+    img.onload = () => {
+      if (!cancelled) setLoadedImageUrl(imageUrl);
+    };
+    img.onerror = () => {
+      if (!cancelled) setLoadedImageUrl(imageUrl);
+    };
     img.src = imageUrl;
 
     return () => {
+      cancelled = true;
       img.onload = null;
       img.onerror = null;
     };
-  }, [roomId, room, selectedImageIndex]);
+  }, [imageUrl]);
 
   if (!room) return <NotFound />;
 
@@ -76,10 +80,10 @@ const RoomDetail = () => {
             className="roomDetailHeaderRow"
           >
             <Button variant="text" onClick={() => navigate("/Lodging")}>
-              Volver
+              {t("roomDetailBack")}
             </Button>
             <Typography variant="body1" color="text.secondary">
-              Desde{" "}
+              {t("roomDetailFrom")}{" "}
               <Box
                 component="span"
                 sx={{ color: "text.primary", fontWeight: 700 }}
@@ -110,14 +114,14 @@ const RoomDetail = () => {
             <>
               <IconButton
                 onClick={handlePrevImage}
-                aria-label="Imagen anterior"
+                aria-label={t("roomDetailPrevImage")}
                 className="roomDetailNavButton roomDetailNavButtonLeft"
               >
                 <ArrowBackIos />
               </IconButton>
               <IconButton
                 onClick={handleNextImage}
-                aria-label="Siguiente imagen"
+                aria-label={t("roomDetailNextImage")}
                 className="roomDetailNavButton roomDetailNavButtonRight"
               >
                 <ArrowForwardIos />
@@ -155,45 +159,56 @@ const RoomDetail = () => {
               fontWeight="bold"
               className="roomDetailTitle"
             >
-              {room.title}
+              {t("roomDetailCabinTitle", { id: room.id })}
             </Typography>
 
             <Stack direction="row" spacing={1} className="roomDetailChips">
               <Chip
-                label={`${room.roomCount} ${room.roomCount === 1 ? "HABITACIÓN" : "HABITACIONES"}`}
+                label={`${room.roomCount} ${
+                  room.roomCount === 1
+                    ? t("roomDetailRoomSingular")
+                    : t("roomDetailRoomPlural")
+                }`}
                 variant="outlined"
               />
               <Chip
-                label={`${room.maxCapacity} ${room.maxCapacity === 1 ? "PERSONA" : "PERSONAS"}`}
+                label={`${room.maxCapacity} ${
+                  room.maxCapacity === 1
+                    ? t("roomDetailPersonSingular")
+                    : t("roomDetailPersonPlural")
+                }`}
                 variant="outlined"
               />
               <Chip label={room.size} variant="outlined" />
             </Stack>
 
-            <Box className="roomDetailAmenities" aria-label="Amenidades">
+            <Box
+              className="roomDetailAmenities"
+              aria-label={t("roomDetailAmenities")}
+            >
               <Box className="roomDetailAmenity">
                 <img
                   src={wifiIcon}
-                  alt="WiFi"
+                  alt={t("roomDetailWifi")}
                   className="roomDetailAmenityIcon"
                 />
-                <Typography variant="body2">WiFi</Typography>
+                <Typography variant="body2">{t("roomDetailWifi")}</Typography>
               </Box>
               <Box className="roomDetailAmenity">
                 <img
                   src={towelIcon}
-                  alt="Ducha"
+                  alt={t("roomDetailShower")}
                   className="roomDetailAmenityIcon"
                 />
-                <Typography variant="body2">Ducha</Typography>
+                <Typography variant="body2">{t("roomDetailShower")}</Typography>
               </Box>
               <Box className="roomDetailAmenity">
                 <img
                   src={bedIcon}
-                  alt="Cama"
+                  alt={t("roomDetailBed")}
                   className="roomDetailAmenityIcon"
                 />
-                <Typography variant="body2">Cama</Typography>
+                <Typography variant="body2">{t("roomDetailBed")}</Typography>
               </Box>
             </Box>
 
@@ -202,15 +217,18 @@ const RoomDetail = () => {
               color="text.secondary"
               className="roomDetailDescription"
             >
-              {room.description}
+              {t("roomDetailDescription")}
             </Typography>
 
             <Button
               variant="outlined"
               className="roomDetailReserveBtn"
               color="inherit"
+              href="https://engine.ayenda.co/mangata-beach"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              Reserva ahora
+              {t("roomDetailBookNow")}
             </Button>
           </Stack>
         </Container>
