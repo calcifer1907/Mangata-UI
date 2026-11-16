@@ -27,6 +27,11 @@
   margin: 0 !important;
 }
 
+.daytrip-price-skeleton {
+  display: block;
+  transform: none;
+}
+
 .daytrip-price-kicker {
   color: var(--color-theme-dark-blue) !important;
   font-size: 0.95rem !important;

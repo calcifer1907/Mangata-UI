@@ -25,7 +25,12 @@ import { cacheManager, scheduleAutoCleanup } from "./utils/cacheManager";
 
 const app = express();
 
-app.use(helmet());
+app.use(
+  helmet({
+    // UI and API are different origins. same-origin blocks the browser from reading the response.
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+  }),
+);
 app.disable("x-powered-by"); // Oculta información del servidor
 
 // Middlewares de optimización y rendimiento

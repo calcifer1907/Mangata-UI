@@ -74,30 +74,21 @@ const NameLunchForm: FC = () => {
 
   useEffect(() => {
     const body = document.getElementById("body");
-    const isMobile = window.innerWidth < 900;
 
-    // Solo establecer overflow hidden en desktop
-    if (!isMobile) {
-      body?.style.setProperty("overflow-y", "hidden");
-    }
-
-    const heightContainer =
-      document.getElementById("contentPrimary")?.offsetHeight;
-    setMaxHeight(heightContainer || 0);
-
-    // Listener para cambios de ventana
     const handleResize = () => {
-      const newIsMobile = window.innerWidth < 900;
-      if (newIsMobile) {
-        body?.style.setProperty("overflow-y", "auto");
-      } else {
-        body?.style.setProperty("overflow-y", "hidden");
-      }
+      const isMobile = window.innerWidth < 900;
+      body?.style.setProperty("overflow-y", isMobile ? "auto" : "hidden");
+      const heightContainer =
+        document.getElementById("contentPrimary")?.offsetHeight;
+      setMaxHeight(heightContainer || 0);
     };
 
     window.addEventListener("resize", handleResize);
+    // Defer initial measure so setState is not sync inside the effect body
+    const frameId = requestAnimationFrame(handleResize);
 
     return () => {
+      cancelAnimationFrame(frameId);
       body?.style.setProperty("overflow-y", "auto");
       window.removeEventListener("resize", handleResize);
     };
@@ -137,7 +128,7 @@ const NameLunchForm: FC = () => {
           <Box style={{ marginBottom: 20 }}>
             <Box style={{ marginBottom: 15 }}>
               <Typography className="color-blue-dark title-reservation">
-                {t("reserveD")} {CODE_RESERVATION}
+                {t("reserveD")}
               </Typography>
               <Box className="background-blue-dark container-asesor p-absolute" />
               {dataCodeReservation && (

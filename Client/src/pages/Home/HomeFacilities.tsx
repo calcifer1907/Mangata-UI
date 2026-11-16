@@ -3,7 +3,10 @@ import { Box, Typography } from "@mui/material";
 import BeachAccessOutlinedIcon from "@mui/icons-material/BeachAccessOutlined";
 import DeckOutlinedIcon from "@mui/icons-material/DeckOutlined";
 import DryCleaningOutlinedIcon from "@mui/icons-material/DryCleaningOutlined";
+import ExploreOutlinedIcon from "@mui/icons-material/ExploreOutlined";
 import KingBedOutlinedIcon from "@mui/icons-material/KingBedOutlined";
+import RestaurantOutlinedIcon from "@mui/icons-material/RestaurantOutlined";
+import ScubaDivingOutlinedIcon from "@mui/icons-material/ScubaDivingOutlined";
 import ShowerOutlinedIcon from "@mui/icons-material/ShowerOutlined";
 import type { SvgIconComponent } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
@@ -12,6 +15,7 @@ import "./HomeFacilities.css";
 
 const FACILITIES: {
   key: string;
+  detailKey?: string;
   Icon: SvgIconComponent;
   accent: string;
 }[] = [
@@ -20,6 +24,18 @@ const FACILITIES: {
   { key: "BalineseBeds", Icon: KingBedOutlinedIcon, accent: "#4672a5" },
   { key: "Freshwater", Icon: ShowerOutlinedIcon, accent: "#5a8fc4" },
   { key: "towelService", Icon: DryCleaningOutlinedIcon, accent: "#2b3d5e" },
+  { key: "panoramicTour", Icon: ExploreOutlinedIcon, accent: "#4672a5" },
+  {
+    key: "sunkenPlaneSnorkel",
+    detailKey: "sunkenPlaneSnorkelTime",
+    Icon: ScubaDivingOutlinedIcon,
+    accent: "#6490c7",
+  },
+  {
+    key: "aLaCarteLunchDrink",
+    Icon: RestaurantOutlinedIcon,
+    accent: "#b99734",
+  },
 ];
 
 const HomeFacilities = () => {
@@ -74,7 +90,7 @@ const HomeFacilities = () => {
             </Typography>
 
             <Box className="home-facilities-grid" role="list">
-              {FACILITIES.map(({ key, Icon, accent }, index) => (
+              {FACILITIES.map(({ key, detailKey, Icon, accent }, index) => (
                 <Box
                   key={key}
                   className="home-facility-card"
@@ -89,6 +105,14 @@ const HomeFacilities = () => {
                   </Box>
                   <Typography className="home-facility-card-label">
                     {t(key)}
+                    {detailKey ? (
+                      <Box
+                        component="span"
+                        className="home-facility-card-detail"
+                      >
+                        {t(detailKey)}
+                      </Box>
+                    ) : null}
                   </Typography>
                 </Box>
               ))}

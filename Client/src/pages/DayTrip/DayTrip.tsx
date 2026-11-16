@@ -80,10 +80,18 @@ const DayTrip = () => {
               </Typography>
             ) : (
               <Skeleton
-                variant="text"
-                width={220}
-                height={72}
-                sx={{ mx: "auto", my: 0.5, transform: "none" }}
+                className="daytrip-price-skeleton"
+                variant="rounded"
+                animation="wave"
+                aria-label={t("dayTripPriceLoading")}
+                sx={{
+                  width: "min(240px, 70%)",
+                  height: "clamp(2.6rem, 6vw, 3.75rem)",
+                  mx: "auto",
+                  mt: 0.25,
+                  borderRadius: "12px",
+                  bgcolor: "rgba(15, 42, 74, 0.1)",
+                }}
               />
             )}
             <Typography className="daytrip-price-kicker">
