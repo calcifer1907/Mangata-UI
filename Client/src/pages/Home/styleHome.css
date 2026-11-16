@@ -125,6 +125,30 @@
   letter-spacing: 0.02em;
 }
 
+.home-schedule-fee {
+  margin: 1.5rem auto 0;
+  max-width: 520px;
+  border-color: rgba(185, 151, 52, 0.45) !important;
+}
+
+.home-schedule-kicker {
+  color: var(--color-theme-harvest-gold) !important;
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 0.35rem !important;
+}
+
+.home-schedule-cash {
+  color: var(--color-theme-dark-blue) !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-top: 0.35rem !important;
+}
+
 .title-home {
   font-size: clamp(1.25rem, 2.5vw, 1.5rem);
   font-weight: 600;

@@ -1,5 +1,6 @@
 import { Box, Container, Grid, Paper, Stack, Typography } from "@mui/material";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
+import PaymentsOutlinedIcon from "@mui/icons-material/PaymentsOutlined";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import { useTranslation } from "react-i18next";
 
@@ -117,6 +118,21 @@ const Home = () => {
               </Paper>
             </Grid>
           </Grid>
+          <Paper elevation={0} className="home-schedule-card home-schedule-fee">
+            <PaymentsOutlinedIcon className="home-schedule-icon" />
+            <Typography className="home-schedule-kicker">
+              {t("islandInsuranceKicker")}
+            </Typography>
+            <Typography className="home-schedule-label">
+              {t("islandInsuranceLabel")}
+            </Typography>
+            <Typography className="home-schedule-time">
+              {t("islandInsuranceAmount")}
+            </Typography>
+            <Typography className="home-schedule-cash">
+              {t("islandInsuranceCash")}
+            </Typography>
+          </Paper>
         </Container>
       </Box>
       <Box className="home-map-section">

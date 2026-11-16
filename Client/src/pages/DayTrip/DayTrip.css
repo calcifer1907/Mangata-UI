@@ -1,3 +1,19 @@
+.daytrip-fee {
+  background:
+   
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #ffffff 45%,
+      var(--color-theme-sand-light) 100%
+    );
+  padding: 4rem 1rem 3.5rem;
+}
+
+.daytrip-fee .home-schedule-fee {
+  margin-top: 0;
+}
+
 .noInclude {
   padding: 2rem;
   text-align: center;

@@ -1,11 +1,15 @@
 import { useEffect } from "react";
 import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
+import PaymentsOutlinedIcon from "@mui/icons-material/PaymentsOutlined";
 
 import Card from "../../components/Cards/Cards";
 import { useTranslation } from "react-i18next";
 
 import "./DayTrip.css";
+import "../Home/styleHome.css";
 import QuiltedImageList from "../../components/QuiltedImageList/QuiltedImageList";
 import Footer from "../../components/Footer/Footer";
 import Banner from "../../components/Banner/Banner";
@@ -40,31 +44,31 @@ const DayTrip = () => {
         <Box
           component="img"
           src={SpeedBoat}
-          alt="Mangata Beach"
+          alt="Speed Boat"
           width={{ xs: 64, lg: 128 }}
         />
         <Box
           component="img"
           src={Champagne}
-          alt="Mangata Beach"
+          alt="Champagne"
           width={{ xs: 64, lg: 128 }}
         />
         <Box
           component="img"
           src={Towel}
-          alt="Mangata Beach"
+          alt="Towel"
           width={{ xs: 64, lg: 128 }}
         />
         <Box
           component="img"
           src={hammocks}
-          alt="Mangata Beach"
+          alt="Hammocks"
           width={{ xs: 64, lg: 128 }}
         />
         <Box
           component="img"
           src={Wifi}
-          alt="Mangata Beach"
+          alt="Wifi"
           width={{ xs: 64, lg: 128 }}
         />
       </Box>
@@ -141,6 +145,25 @@ const DayTrip = () => {
         <Box sx={{ bgcolor: "background.paper", p: 2, borderRadius: 2 }}>
           <QuiltedImageList images={images} />
         </Box>
+      </Box>
+      <Box className="daytrip-fee">
+        <Container maxWidth="md">
+          <Paper elevation={0} className="home-schedule-card home-schedule-fee">
+            <PaymentsOutlinedIcon className="home-schedule-icon" />
+            <Typography className="home-schedule-kicker">
+              {t("islandInsuranceKicker")}
+            </Typography>
+            <Typography className="home-schedule-label">
+              {t("islandInsuranceLabel")}
+            </Typography>
+            <Typography className="home-schedule-time">
+              {t("islandInsuranceAmount")}
+            </Typography>
+            <Typography className="home-schedule-cash">
+              {t("islandInsuranceCash")}
+            </Typography>
+          </Paper>
+        </Container>
       </Box>
       <Box className="noInclude">
         <Typography>{t("noInclude")}</Typography>
