@@ -102,7 +102,7 @@ const Home = () => {
                   {t("arrivalTime")}
                 </Typography>
                 <Typography className="home-schedule-time">
-                  7:30 a.m.
+                  7:20 a.m.
                 </Typography>
               </Paper>
             </Grid>
