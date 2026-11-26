@@ -20,6 +20,7 @@ const transporter = nodemailer.createTransport({
 });
 
 const MAIL_MANGATA = "mangata.cartagena.2022@gmail.com";
+const MAIL_MANGATA2 = "app.mangata.beach.club@gmail.com";
 
 interface IEmailData {
   from: string;
@@ -79,7 +80,7 @@ const optionsEmail = async (
   const mailOptions: IEmailData = {
     from: USER_EMAIL ?? "",
     to: clientEmail,
-    cc: MAIL_MANGATA,
+    cc: [MAIL_MANGATA, MAIL_MANGATA2].join(","),
     subject,
     html: htmlTemplate,
     headers: {
