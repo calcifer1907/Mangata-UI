@@ -51,11 +51,52 @@ export const paymentBold = async (request: Request, response: Response) => {
   }
 };
 
+const sendEmailWithRetries = async (
+  payment_id: string,
+  extraRetries: number = 2,
+) => {
+  const maxAttempts = 1 + extraRetries;
+
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    try {
+      console.log(
+        `Intento ${attempt} de ${maxAttempts} para enviar correo del pago: ${payment_id}`,
+      );
+      await sendEmail(payment_id);
+      return;
+    } catch (error) {
+      console.error(
+        `Error en intento ${attempt} de ${maxAttempts} al enviar correo para ${payment_id}:`,
+        error,
+      );
+
+      if (attempt === maxAttempts) {
+        console.error(
+          `No se pudo enviar el correo para ${payment_id} después de ${maxAttempts} intentos.`,
+        );
+        return;
+      }
+
+      const waitTime = Math.min(1000 * Math.pow(2, attempt), 8000);
+      await new Promise((resolve) => setTimeout(resolve, waitTime));
+    }
+  }
+};
+
 export const webhookBold = async (request: Request, response: Response) => {
   try {
     const { data, type } = request.body;
     const status = STATUS_BOLD[type as keyof typeof STATUS_BOLD];
-    const payment_id = data.metadata.reference;
+    if (!status) {
+      console.warn(`Tipo de evento Bold no manejado: ${type}`);
+      response.sendStatus(200);
+      return;
+    }
+    const payment_id = data?.metadata?.reference;
+    console.log("data: ", JSON.stringify(data, null, 2));
+    if (!payment_id) {
+      throw new Error("No se recibió payment_id (data.metadata.reference)");
+    }
     // Primero obtenemos el estado actual de la reservación
     const { rows } = await pool.query(
       "SELECT STATUS_RESERVATION FROM reservations WHERE PAYMENT_ID = $1",
@@ -75,7 +116,7 @@ export const webhookBold = async (request: Request, response: Response) => {
       );
       // Solo enviamos el correo si el nuevo estado es "approved"
       if (status === "approved") {
-        await sendEmail(payment_id);
+        await sendEmailWithRetries(payment_id, 2);
       }
     }
 
@@ -115,6 +156,6 @@ export const testEmail = async (request: Request, response: Response) => {
     await sendEmail(key);
     response.status(200).json({ mesagge: "Send email test" });
   } catch (error) {
-    response.status(500);
+    response.status(500).json({ message: "Error sending email" });
   }
 };

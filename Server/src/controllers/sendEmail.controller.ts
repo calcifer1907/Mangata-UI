@@ -1,4 +1,4 @@
-import nodemailer, { SendMailOptions, type SentMessageInfo } from "nodemailer";
+import nodemailer, { type SentMessageInfo } from "nodemailer";
 import { Request, Response } from "express";
 
 import { leerArchivoHtml } from "../functions/readFile";
@@ -50,7 +50,7 @@ interface IBoatDataEmail {
   id_employee: number | string;
   email: string;
   current_commission: number;
-  clientName: string;
+  clientName?: string;
 }
 
 const assignValuesBoatData = async (dataEmail: IBoatDataEmail) => {
@@ -101,50 +101,32 @@ export const sendEmail = async (payment_id: string) => {
   try {
     const dataEmail = await dataSendEmail(payment_id);
     if (!dataEmail) {
-      throw new Error("No se encontraron datos para el payment_id:");
+      throw new Error(
+        `No se encontraron datos para el payment_id: ${payment_id}`,
+      );
     }
     const { id_employee, email, clientName } = dataEmail;
+    if (!email) {
+      throw new Error(
+        `No se encontró un correo electrónico para el payment_id: ${payment_id}`,
+      );
+    }
     const boat = await assignValuesBoatData(dataEmail);
 
     let TEMPLATE = "htmlTemplateDayPass.html";
 
     if (id_employee === "30" || id_employee === 30) {
-      boat.clientName = clientName;
+      boat.clientName = clientName ?? "";
       TEMPLATE = "htmlTemplateReservationBoat.html";
     }
     const mailOptions = await optionsEmail(TEMPLATE, boat, email);
 
-    await sendEmailAttemps(mailOptions);
+    const info = await transporter.sendMail(mailOptions);
+    console.log("Email enviado:", info.messageId);
+    return { success: true, info };
   } catch (error) {
     console.error("Error al enviar el correo:", error);
-  }
-};
-
-const sendEmailAttemps = async (mailOptions: SendMailOptions) => {
-  let attempts = 0;
-  const maxAttempts = 3;
-
-  while (attempts < maxAttempts) {
-    try {
-      attempts++;
-      console.log(`Intento ${attempts} de envío de email`);
-
-      const info = await transporter.sendMail(mailOptions);
-      console.log("Email enviado:", info.messageId);
-      return { success: true, info };
-    } catch (error) {
-      console.error(`Error en intento ${attempts}:`, (error as Error).message);
-
-      if (attempts === maxAttempts) {
-        throw new Error(
-          `Fallo después de ${maxAttempts} intentos: ${(error as Error).message}`,
-        );
-      }
-
-      // Esperar antes de reintentar (backoff exponencial)
-      const waitTime = Math.min(1000 * Math.pow(2, attempts), 8000);
-      await new Promise((resolve) => setTimeout(resolve, waitTime));
-    }
+    throw error;
   }
 };
 
