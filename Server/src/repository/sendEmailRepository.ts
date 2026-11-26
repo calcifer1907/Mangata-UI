@@ -7,18 +7,18 @@ export const dataSendEmail = async (payment_id: string) => {
 
     const { rows, rowCount } = await pool.query(QUERY, [payment_id]);
 
-    if (rowCount) {
+    if (rowCount && rows.length > 0) {
       const [resultData] = rows;
 
       if (resultData.id_employee === "30" || resultData.id_employee === 30) {
         const nameClient = await findNameClient(resultData.code_reservation);
-        if (nameClient) {
-          return {
-            ...resultData,
-            clientName: nameClient,
-          };
-        }
+        return {
+          ...resultData,
+          clientName: nameClient,
+        };
       }
+
+      return resultData;
     }
     return null;
   } catch (error) {
@@ -32,8 +32,8 @@ const findNameClient = async (code_reservation: string): Promise<string> => {
   const { rows, rowCount } = await pool.query(QUERY_NAME_CLIENT, [
     code_reservation,
   ]);
-  if (rowCount === 0) {
-    throw new Error("No se encontró el código de reserva");
+  if (!rowCount || rows.length === 0) {
+    return "";
   }
   return rows[0].name_accompanist ?? "";
 };
