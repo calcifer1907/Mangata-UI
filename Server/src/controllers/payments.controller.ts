@@ -40,7 +40,6 @@ export const paymentBold = async (request: Request, response: Response) => {
     const { payload } = await requestApis.post("/online/link/v1", body, {
       headers,
     });
-    console.log("payload: ", payload);
     await pool.query(
       "UPDATE reservations SET PAYMENT_ID=$1 WHERE CODE_RESERVATION=$2",
       [payload.payment_link, payment_id],
@@ -88,7 +87,6 @@ export const webhookBold = async (request: Request, response: Response) => {
     const { data, type } = request.body;
     const status = STATUS_BOLD[type as keyof typeof STATUS_BOLD];
     if (!status) {
-      console.warn(`Tipo de evento Bold no manejado: ${type}`);
       response.sendStatus(200);
       return;
     }
