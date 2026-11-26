@@ -46,37 +46,42 @@ const CheckReservation = () => {
   const payment_id = searchParams.get("bold-order-id");
   const status = searchParams.get("bold-tx-status");
 
-  const statusReservation = useCallback(async () => {
-    try {
-      if (payment_id) {
-        setLoading(true);
+  useEffect(() => {
+    if (!payment_id) return;
+    let cancelled = false;
+
+    const fetchStatus = async () => {
+      try {
         const response = await checkReservation.statusReservation({
           payment_id,
         });
         const { data } = (await getOrderIdBold({ order_id: payment_id })) as {
           data: { payment_method: string };
         };
+        if (cancelled) return;
 
         setInfoCheckReservation({
           ...response,
           payment_method: data.payment_method || "",
         });
         setLoading(false);
+      } catch (error: unknown) {
+        if (cancelled) return;
+        setLoading(false);
+        if (
+          error instanceof Error &&
+          (error as { status?: number }).status === 404
+        ) {
+          navigate("/404");
+        }
       }
-    } catch (error: unknown) {
-      setLoading(false);
-      if (
-        error instanceof Error &&
-        (error as { status?: number }).status === 404
-      ) {
-        navigate("/404");
-      }
-    }
-  }, [payment_id, navigate]);
+    };
 
-  useEffect(() => {
-    statusReservation();
-  }, [statusReservation]);
+    fetchStatus();
+    return () => {
+      cancelled = true;
+    };
+  }, [payment_id, navigate]);
 
   const handleLabelStatus = useCallback((status: string) => {
     const statusReservation = {
@@ -166,12 +171,12 @@ const CheckReservation = () => {
                 <TableCell>
                   {
                     PAYMENT_METHODS[
-                      infoCheckReservation.payment_method as keyof typeof PAYMENT_METHODS
+                    infoCheckReservation.payment_method as keyof typeof PAYMENT_METHODS
                     ]
                   }
                 </TableCell>
                 <TableCell>
-                  {formatDate(infoCheckReservation.created_at)}
+                  {formatDate(infoCheckReservation.created_at, "YYYY-MM-DD")}
                 </TableCell>
               </TableRow>
             </TableBody>
